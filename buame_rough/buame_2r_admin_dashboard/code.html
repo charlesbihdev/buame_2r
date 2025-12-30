@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BUAME 2R Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "primary-hover": "#0ec90e",
+                        "primary-light": "#e0fce0",
+                        "background-light": "#f8fcf8",
+                        "background-dark": "#102210",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2e1a",
+                        "text-main": "#0d1b0d",
+                        "text-sub": "#4c9a4c",
+                        "border-color": "#cfe7cf",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-border-color hidden lg:flex flex-col flex-shrink-0 transition-all duration-300">
+<div class="h-16 flex items-center px-6 border-b border-border-color">
+<div class="flex items-center gap-3">
+<div class="bg-primary/20 p-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">eco</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-lg font-bold leading-none tracking-tight">BUAME 2R</h1>
+<span class="text-text-sub text-xs font-medium mt-0.5">Admin Panel</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-4 space-y-1">
+<!-- Dashboard (Active) -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-text-main group transition-colors" href="#">
+<span class="material-symbols-outlined icon-fill text-primary group-hover:text-primary-hover">dashboard</span>
+<span class="font-semibold text-sm">Dashboard</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-xs font-bold text-text-sub uppercase tracking-wider">Management</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">group</span>
+<span class="font-medium text-sm">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">engineering</span>
+<span class="font-medium text-sm">Service Providers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">storefront</span>
+<span class="font-medium text-sm">Marketplace</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">work</span>
+<span class="font-medium text-sm">Jobs</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-xs font-bold text-text-sub uppercase tracking-wider">Logistics</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">directions_bus</span>
+<span class="font-medium text-sm">Transport</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-main hover:bg-background-light dark:hover:bg-background-dark/50 group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-sub group-hover:text-primary">hotel</span>
+<span class="font-medium text-sm">Hospitality</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-color">
+<div class="bg-background-light dark:bg-background-dark rounded-xl p-4 border border-border-color">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30 p-1 rounded-md text-sm">warning</span>
+<span class="text-xs font-bold text-text-main">System Alert</span>
+</div>
+<p class="text-xs text-text-sub leading-snug mb-2">Road Block reported on Route B (Sefwi Wiawso Rd). Alert active for drivers.</p>
+<button class="text-xs font-bold text-primary hover:text-primary-hover flex items-center gap-1">
+                    Manage Alerts <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Top Navbar -->
+<header class="h-16 bg-surface-light dark:bg-surface-dark border-b border-border-color flex items-center justify-between px-4 lg:px-8 flex-shrink-0 z-10">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="p-2 -ml-2 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 text-text-main">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-text-main text-lg font-bold">BUAME 2R</div>
+</div>
+<!-- Search -->
+<div class="hidden lg:flex max-w-md w-full relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-sub">search</span>
+<input class="w-full bg-background-light dark:bg-background-dark border-none rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/50 text-text-main placeholder-text-sub/70" placeholder="Search users, booking IDs, providers..." type="text"/>
+</div>
+<div class="flex items-center gap-3 lg:gap-6">
+<!-- Mobile Search Trigger -->
+<button class="lg:hidden p-2 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 text-text-main">
+<span class="material-symbols-outlined">search</span>
+</button>
+<!-- Actions -->
+<div class="flex items-center gap-2">
+<button class="relative p-2 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 text-text-main transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light"></span>
+</button>
+<button class="p-2 rounded-lg hover:bg-background-light dark:hover:bg-background-dark/50 text-text-main transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Profile -->
+<div class="flex items-center gap-3 pl-3 lg:border-l border-border-color">
+<div class="hidden md:flex flex-col items-end">
+<span class="text-sm font-bold text-text-main leading-none">Admin User</span>
+<span class="text-xs text-text-sub mt-1">Super Admin</span>
+</div>
+<div class="h-9 w-9 rounded-full bg-cover bg-center border-2 border-primary/20" data-alt="Portrait of the admin user smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzeqrAOSmBsb0sveiP3SJIZe_56tmqVs5MzoMLxuWdD86B-h1ThS0j6nSvmRsEqKw2eX5wo4irNLR9sCuf_lCsdw9j3jbpiTcspBz_cLP7CGzKtCecrWHoCvopWS_uwsFyo4756hN8ZaKWXByDo_V9XT6Ge-OYY_VpZX-Oob7Pr2XOGFZeYmJboceQTWX-2rrHMJi2BWu3-dARPYo53D32XLDyTwC3rN_pbvjy7i_GSQac7TuK8CUTCxSf4WR8lVIgObkdO7kJPR0');">
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 lg:p-8">
+<div class="max-w-[1400px] mx-auto space-y-8">
+<!-- Welcome & Date -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold text-text-main tracking-tight">Dashboard Overview</h2>
+<p class="text-text-sub text-sm mt-1">Welcome back. Here's what's happening in Sefwi Bekwai today.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-surface-light dark:bg-surface-dark border border-border-color hover:bg-gray-50 dark:hover:bg-surface-dark/80 px-4 py-2 rounded-lg text-sm font-semibold text-text-main shadow-sm transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Export Report
+                        </button>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary-hover px-4 py-2 rounded-lg text-sm font-bold text-black shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                            New Listing
+                        </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat Card 1 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">payments</span>
+</div>
+<div class="relative z-10">
+<p class="text-text-sub text-sm font-medium mb-1">Total Revenue</p>
+<h3 class="text-2xl font-bold text-text-main">GH₵ 45,200</h3>
+<div class="flex items-center gap-1 mt-2 text-green-600 text-sm font-bold">
+<span class="material-symbols-outlined text-base">trending_up</span>
+<span>+12.5%</span>
+<span class="text-text-sub font-normal ml-1 text-xs">vs last month</span>
+</div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">handyman</span>
+</div>
+<div class="relative z-10">
+<p class="text-text-sub text-sm font-medium mb-1">Active Artisans</p>
+<h3 class="text-2xl font-bold text-text-main">1,203</h3>
+<div class="flex items-center gap-1 mt-2 text-green-600 text-sm font-bold">
+<span class="material-symbols-outlined text-base">trending_up</span>
+<span>+5.2%</span>
+<span class="text-text-sub font-normal ml-1 text-xs">new registrations</span>
+</div>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">directions_bus</span>
+</div>
+<div class="relative z-10">
+<p class="text-text-sub text-sm font-medium mb-1">Rides Today</p>
+<h3 class="text-2xl font-bold text-text-main">342</h3>
+<div class="flex items-center gap-1 mt-2 text-green-600 text-sm font-bold">
+<span class="material-symbols-outlined text-base">trending_up</span>
+<span>+23%</span>
+<span class="text-text-sub font-normal ml-1 text-xs">peak season</span>
+</div>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-border-color shadow-sm relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">work_outline</span>
+</div>
+<div class="relative z-10">
+<p class="text-text-sub text-sm font-medium mb-1">Open Jobs</p>
+<h3 class="text-2xl font-bold text-text-main">89</h3>
+<div class="flex items-center gap-1 mt-2 text-text-sub text-sm font-medium">
+<span class="material-symbols-outlined text-base">remove</span>
+<span>0%</span>
+<span class="text-text-sub font-normal ml-1 text-xs">stable</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Moderation Queue (Span 2) -->
+<div class="xl:col-span-2 bg-surface-light dark:bg-surface-dark rounded-xl border border-border-color shadow-sm flex flex-col">
+<div class="p-6 border-b border-border-color flex justify-between items-center">
+<div>
+<h3 class="text-lg font-bold text-text-main">Attention Needed</h3>
+<p class="text-sm text-text-sub">Pending approvals for providers and listings.</p>
+</div>
+<button class="text-primary hover:text-primary-hover text-sm font-bold flex items-center gap-1">
+                                View All <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-background-light dark:bg-background-dark/50 text-text-sub text-xs uppercase font-semibold">
+<tr>
+<th class="px-6 py-4 rounded-tl-lg">Entity Name</th>
+<th class="px-6 py-4">Type</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 rounded-tr-lg text-right">Action</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-border-color">
+<tr class="group hover:bg-background-light dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined text-lg">carpenter</span>
+</div>
+                                                Kofi's Carpentry
+                                            </div>
+</td>
+<td class="px-6 py-4 text-text-sub">Artisan</td>
+<td class="px-6 py-4 text-text-sub">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                                Pending Verification
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-main hover:text-primary font-bold text-sm">Review</button>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-lg">directions_car</span>
+</div>
+                                                Toyota Sienna - WR 223
+                                            </div>
+</td>
+<td class="px-6 py-4 text-text-sub">Transport</td>
+<td class="px-6 py-4 text-text-sub">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                                License Check
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-main hover:text-primary font-bold text-sm">Review</button>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-lg">bed</span>
+</div>
+                                                Ama's Guesthouse
+                                            </div>
+</td>
+<td class="px-6 py-4 text-text-sub">Hospitality</td>
+<td class="px-6 py-4 text-text-sub">Oct 23, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                                                Listing Approval
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-main hover:text-primary font-bold text-sm">Review</button>
+</td>
+</tr>
+<tr class="group hover:bg-background-light dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 font-medium text-text-main">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+<span class="material-symbols-outlined text-lg">storefront</span>
+</div>
+                                                Cocoa Beans Bulk
+                                            </div>
+</td>
+<td class="px-6 py-4 text-text-sub">Marketplace</td>
+<td class="px-6 py-4 text-text-sub">Oct 23, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                Moderation
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-main hover:text-primary font-bold text-sm">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Column: Activity & Marketplace (Span 1) -->
+<div class="flex flex-col gap-8">
+<!-- Live Activity Feed -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-color shadow-sm p-6 flex-1">
+<h3 class="text-lg font-bold text-text-main mb-4">Live Activity</h3>
+<div class="space-y-6 relative before:absolute before:left-[15px] before:top-2 before:bottom-2 before:w-[1px] before:bg-border-color">
+<!-- Feed Item -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark border-2 border-primary flex items-center justify-center z-10">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<p class="text-sm text-text-main font-semibold">New User Registration</p>
+<p class="text-xs text-text-sub mt-0.5">Kwame Mensah joined from Sefwi Bekwai</p>
+<span class="text-[10px] text-text-sub/70 font-medium block mt-1">2 mins ago</span>
+</div>
+<!-- Feed Item -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark border-2 border-border-color flex items-center justify-center z-10">
+<div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+</div>
+<p class="text-sm text-text-main font-semibold">Job Posted</p>
+<p class="text-xs text-text-sub mt-0.5">"Farm Manager" posted by Ohene Agro</p>
+<span class="text-[10px] text-text-sub/70 font-medium block mt-1">15 mins ago</span>
+</div>
+<!-- Feed Item -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-surface-light dark:bg-surface-dark border-2 border-border-color flex items-center justify-center z-10">
+<div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+</div>
+<p class="text-sm text-text-main font-semibold">Transport Dispatch</p>
+<p class="text-xs text-text-sub mt-0.5">Bus WR-204 departed for Kumasi</p>
+<span class="text-[10px] text-text-sub/70 font-medium block mt-1">42 mins ago</span>
+</div>
+</div>
+</div>
+<!-- Marketplace Snapshot -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-color shadow-sm p-6">
+<h3 class="text-lg font-bold text-text-main mb-4">Top Categories</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-text-main font-medium">Agriculture</span>
+<span class="text-text-sub font-bold">45%</span>
+</div>
+<div class="h-2 w-full bg-background-light dark:bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-text-main font-medium">Electronics</span>
+<span class="text-text-sub font-bold">25%</span>
+</div>
+<div class="h-2 w-full bg-background-light dark:bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-green-600 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="text-text-main font-medium">Clothing</span>
+<span class="text-text-sub font-bold">15%</span>
+</div>
+<div class="h-2 w-full bg-background-light dark:bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-green-800 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Quick Actions Widget -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<button class="bg-primary/10 hover:bg-primary/20 transition-colors rounded-xl p-4 flex items-center gap-4 text-left border border-transparent hover:border-primary/30">
+<div class="w-12 h-12 rounded-full bg-primary text-black flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<div>
+<p class="font-bold text-text-main text-sm">Approve Driver</p>
+<p class="text-xs text-text-sub">Review license documents</p>
+</div>
+</button>
+<button class="bg-primary/10 hover:bg-primary/20 transition-colors rounded-xl p-4 flex items-center gap-4 text-left border border-transparent hover:border-primary/30">
+<div class="w-12 h-12 rounded-full bg-primary text-black flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<p class="font-bold text-text-main text-sm">Verify Guest House</p>
+<p class="text-xs text-text-sub">Check safety compliance</p>
+</div>
+</button>
+<button class="bg-primary/10 hover:bg-primary/20 transition-colors rounded-xl p-4 flex items-center gap-4 text-left border border-transparent hover:border-primary/30">
+<div class="w-12 h-12 rounded-full bg-primary text-black flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">notification_important</span>
+</div>
+<div>
+<p class="font-bold text-text-main text-sm">Post System Alert</p>
+<p class="text-xs text-text-sub">Broadcast to region</p>
+</div>
+</button>
+<button class="bg-surface-light dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-surface-dark/80 transition-colors rounded-xl p-4 flex items-center gap-4 text-left border border-border-color border-dashed">
+<div class="w-12 h-12 rounded-full bg-background-light dark:bg-background-dark text-text-sub flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">add</span>
+</div>
+<div>
+<p class="font-bold text-text-main text-sm">Add Custom Action</p>
+<p class="text-xs text-text-sub">Configure shortcut</p>
+</div>
+</button>
+</div>
+</div>
+<footer class="mt-12 text-center text-xs text-text-sub pb-4">
+<p>© 2023 BUAME 2R Platform. Designed for Western North Region, Ghana.</p>
+</footer>
+</main>
+</div>
+</body></html>

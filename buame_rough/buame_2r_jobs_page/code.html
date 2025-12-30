@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BUAME 2R - Jobs Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                        "text-main": "#0d1b0d",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a331a",
+                        "border-light": "#e7f3e7",
+                        "border-dark": "#2a4a2a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark px-10 py-3 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-8 flex items-center justify-center rounded-lg bg-primary/20 text-primary">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<h2 class="text-text-main dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">BUAME 2R</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="../buame_2r_home_page/code.html">Home</a>
+<a class="text-primary text-sm font-bold leading-normal" href="code.html">Jobs</a>
+<a class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="../buame_2r_explore/marketplace_page/code.html">Market</a>
+<a class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="../buame_2r_transport_page/code.html">Transport</a>
+<a class="text-text-main dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="../buame_2r_food_&_stay_page/code.html">Guest Houses</a>
+</nav>
+<div class="flex gap-2">
+<button onclick="window.location.href='../buame_2r_employer_dashboard/code.html'" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 transition-colors text-[#0d1b0d] text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Post a Job</span>
+</button>
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-border-light dark:bg-card-dark text-text-main dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="truncate">Sign In</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<div class="w-full bg-background-light dark:bg-background-dark">
+<div class="relative flex flex-col items-center justify-center px-4 py-16 md:py-24 bg-cover bg-center" data-alt="Worker in a cocoa farm or construction site in Ghana" style='background-image: linear-gradient(rgba(16, 34, 16, 0.7), rgba(16, 34, 16, 0.85)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDps-PZhFxs3H1eBF7mhQLysfNFQJpa-eZ4jbYkF68CSBeADZuY3_mBqxFB2GtVfgd6x4vX_MtOfClOtfho3dtFIYgDs3Fz2_PxSsJ22MF6HFiPjysy3UKXo-dtYhieaV1aP_QP1kYBtjk3dlTBFzPlSGSZxzqI2hixrsMoslT8XIOmfE9VBDhNsDndPd0L96ehxNyjEOxQitdsjpufNs8A_GNKI1J4cxJ1G7tGwjeoNnBHKodVRO6Rso4UeYpPXdorQehK_JBcZng");'>
+<div class="max-w-[800px] text-center space-y-4">
+<h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">
+                        Find Work in Sefwi Bekwai
+                    </h1>
+<p class="text-gray-200 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                        Connecting local talent with employers in the Western North Region. Browse daily wage, full-time, and apprenticeship opportunities.
+                    </p>
+<div class="mt-8 flex flex-col md:flex-row gap-2 w-full max-w-[600px] mx-auto p-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/20">
+<div class="flex-1 flex items-center bg-background-light dark:bg-card-dark rounded-lg px-3 h-12 md:h-14">
+<span class="material-symbols-outlined text-gray-500 mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-text-main dark:text-white placeholder:text-gray-500" placeholder="Job title, skill, or keyword..." type="text"/>
+</div>
+<div class="w-full md:w-1/3 flex items-center bg-background-light dark:bg-card-dark rounded-lg px-3 h-12 md:h-14 border-l border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-500 mr-2">location_on</span>
+<select class="bg-transparent border-none focus:ring-0 w-full text-text-main dark:text-white p-0 text-sm cursor-pointer">
+<option>Sefwi Bekwai</option>
+<option>Bibiani</option>
+<option>Sefwi Wiawso</option>
+</select>
+</div>
+<button onclick="document.querySelector('input[type=text]').value && window.location.href='code.html'" class="h-12 md:h-14 px-6 rounded-lg bg-primary text-[#0d1b0d] font-bold hover:bg-primary/90 transition-colors w-full md:w-auto">
+                            Search
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Layout -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-6 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm">
+<a class="text-gray-500 hover:text-primary transition-colors" href="../buame_2r_home_page/code.html">Home</a>
+<span class="text-gray-400">/</span>
+<span class="text-text-main dark:text-white font-medium">Jobs</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Sidebar Filters -->
+<aside class="lg:col-span-3 space-y-8">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl border border-border-light dark:border-border-dark shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">Filters</h3>
+<button class="text-xs text-primary font-medium hover:underline">Clear all</button>
+</div>
+<!-- Job Type Filter -->
+<div class="space-y-3 mb-6">
+<h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Job Type</h4>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Full Time</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Part Time</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="font-medium text-text-main dark:text-white group-hover:text-primary transition-colors">Daily Wage</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Apprenticeship</span>
+</label>
+</div>
+<!-- Categories Filter -->
+<div class="space-y-3 mb-6">
+<h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Categories</h4>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Agriculture</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Construction</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Hospitality</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Transport</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="group-hover:text-primary transition-colors">Domestic Help</span>
+</label>
+</div>
+<!-- Salary Range -->
+<div class="space-y-3">
+<h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Wage Range (GHS)</h4>
+<input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" max="2000" min="50" type="range"/>
+<div class="flex justify-between text-sm text-gray-500">
+<span>50</span>
+<span>2000+</span>
+</div>
+</div>
+</div>
+<!-- Promo Card -->
+<div class="bg-primary/10 rounded-xl p-6 border border-primary/20 text-center">
+<div class="w-12 h-12 bg-primary text-[#0d1b0d] rounded-full flex items-center justify-center mx-auto mb-3">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+<h4 class="font-bold text-lg mb-2 text-text-main dark:text-white">Hiring Now?</h4>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Post a job to reach thousands of locals in Sefwi Bekwai today.</p>
+<button onclick="window.location.href='../buame_2r_employer_dashboard/code.html'" class="w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d1b0d] font-bold rounded-lg text-sm transition-colors">
+                            Post a Free Job
+                        </button>
+</div>
+</aside>
+<!-- Job Listings -->
+<div class="lg:col-span-9 flex flex-col">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+<h1 class="text-2xl md:text-3xl font-bold text-text-main dark:text-white">Latest Job Openings</h1>
+<div class="flex items-center gap-2">
+<span class="text-sm text-gray-500">Sort by:</span>
+<select class="bg-transparent border border-gray-300 dark:border-gray-600 rounded-lg text-sm py-1 px-3 focus:ring-primary focus:border-primary cursor-pointer text-text-main dark:text-white dark:bg-card-dark">
+<option>Newest</option>
+<option>Highest Pay</option>
+<option>Urgent</option>
+</select>
+</div>
+</div>
+<!-- Filter Chips (Horizontal Scroll on Mobile) -->
+<div class="flex gap-3 overflow-x-auto pb-4 mb-2 no-scrollbar">
+<button class="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-[#0d1b0d] border border-primary px-4 py-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">briefcase_meal</span>
+<span class="text-sm font-bold">All Jobs</span>
+</button>
+<button class="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 px-4 py-2 hover:border-primary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">clock_loader_60</span>
+<span class="text-sm font-medium">Daily Wage</span>
+</button>
+<button class="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 px-4 py-2 hover:border-primary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">calendar_month</span>
+<span class="text-sm font-medium">Full Time</span>
+</button>
+<button class="flex shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 px-4 py-2 hover:border-primary hover:text-primary transition-colors group">
+<span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">local_fire_department</span>
+<span class="text-sm font-medium">Urgent</span>
+</button>
+</div>
+<!-- Job Cards List -->
+<div class="space-y-4">
+<!-- Job Card 1 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="w-14 h-14 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400 text-2xl">construction</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:justify-between mb-1">
+<h3 class="text-lg font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Mason / Bricklayer</h3>
+<div class="flex items-center gap-2 mt-2 md:mt-0">
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                                Urgent
+                                            </span>
+<span class="text-xs text-gray-500 font-medium">Posted 2 hours ago</span>
+</div>
+</div>
+<p class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Cocoa Depot Construction Site • Sefwi Bekwai</p>
+<div class="flex flex-wrap gap-2 my-3">
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                                            Daily Wage
+                                        </span>
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                            Temporary
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 line-clamp-2 mb-4">
+                                        Urgent need for 3 experienced masons for a foundation work near the new cocoa depot. Must have own tools. Payment is daily.
+                                    </p>
+<div class="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-800">
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex-1 md:flex-none px-6 py-2 bg-primary text-[#0d1b0d] text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                                            Apply Now
+                                        </button>
+<button class="flex-1 md:flex-none px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-text-main dark:text-white text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-green-600">chat</span>
+                                            WhatsApp
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Job Card 2 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="w-14 h-14 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">hotel</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:justify-between mb-1">
+<h3 class="text-lg font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Front Desk Receptionist</h3>
+<div class="flex items-center gap-2 mt-2 md:mt-0">
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                                Verified Employer
+                                            </span>
+<span class="text-xs text-gray-500 font-medium">Posted 5 hours ago</span>
+</div>
+</div>
+<p class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Adom Guest House • Sefwi Bekwai</p>
+<div class="flex flex-wrap gap-2 my-3">
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                                            Full Time
+                                        </span>
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">school</span>
+                                            Entry Level
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 line-clamp-2 mb-4">
+                                        Looking for a friendly and organized front desk officer. Basic computer skills required. Shift work included.
+                                    </p>
+<div class="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-800">
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex-1 md:flex-none px-6 py-2 bg-primary text-[#0d1b0d] text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                                            Apply Now
+                                        </button>
+<button class="flex-1 md:flex-none px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-text-main dark:text-white text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-green-600">chat</span>
+                                            WhatsApp
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Job Card 3 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="w-14 h-14 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">two_wheeler</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:justify-between mb-1">
+<h3 class="text-lg font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Delivery Rider</h3>
+<div class="flex items-center gap-2 mt-2 md:mt-0">
+<span class="text-xs text-gray-500 font-medium">Posted 1 day ago</span>
+</div>
+</div>
+<p class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">BUAME Logistics • Sefwi Bekwai</p>
+<div class="flex flex-wrap gap-2 my-3">
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">percent</span>
+                                            Commission
+                                        </span>
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">id_card</span>
+                                            License Req.
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 line-clamp-2 mb-4">
+                                        We need reliable motorbike riders for local deliveries. Must know the town well. Own bike is a plus but not mandatory.
+                                    </p>
+<div class="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-800">
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex-1 md:flex-none px-6 py-2 bg-primary text-[#0d1b0d] text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                                            Apply Now
+                                        </button>
+<button class="flex-1 md:flex-none px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-text-main dark:text-white text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-green-600">chat</span>
+                                            WhatsApp
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Job Card 4 -->
+<div class="bg-card-light dark:bg-card-dark rounded-xl p-5 border border-border-light dark:border-border-dark shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex flex-col md:flex-row gap-4">
+<div class="w-14 h-14 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">school</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-col md:flex-row md:justify-between mb-1">
+<h3 class="text-lg font-bold text-text-main dark:text-white group-hover:text-primary transition-colors">Hairdressing Apprentice</h3>
+<div class="flex items-center gap-2 mt-2 md:mt-0">
+<span class="text-xs text-gray-500 font-medium">Posted 3 days ago</span>
+</div>
+</div>
+<p class="text-sm font-medium text-gray-600 dark:text-gray-300 mb-2">Classy Cuts Salon • Sefwi Bekwai</p>
+<div class="flex flex-wrap gap-2 my-3">
+<span class="inline-flex items-center gap-1 rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 text-xs font-medium text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-[16px]">book</span>
+                                            Apprenticeship
+                                        </span>
+</div>
+<p class="text-sm text-gray-500 line-clamp-2 mb-4">
+                                        Open slot for a dedicated apprentice willing to learn modern hair styling. Small allowance provided for lunch.
+                                    </p>
+<div class="flex gap-3 pt-2 border-t border-gray-100 dark:border-gray-800">
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex-1 md:flex-none px-6 py-2 bg-primary text-[#0d1b0d] text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                                            Apply Now
+                                        </button>
+<button class="flex-1 md:flex-none px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-text-main dark:text-white text-sm font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-green-600">chat</span>
+                                            WhatsApp
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-8 flex justify-center">
+<nav class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-[#0d1b0d] font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors dark:text-white">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors dark:text-white">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-auto">
+<div class="max-w-[1280px] mx-auto px-6 py-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-4">
+<div class="size-6 flex items-center justify-center rounded bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-[16px]">dataset</span>
+</div>
+<h3 class="font-bold text-lg text-text-main dark:text-white">BUAME 2R</h3>
+</div>
+<p class="text-sm text-gray-500 mb-4">
+                            The heart of Sefwi Bekwai's digital economy. Connecting you to jobs, markets, transport, and more.
+                        </p>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-text-main dark:text-white">Services</h4>
+<ul class="space-y-2 text-sm text-gray-500">
+<li><a class="hover:text-primary transition-colors" href="code.html">Job Market</a></li>
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_explore/marketplace_page/code.html">Local Marketplace</a></li>
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_transport_page/code.html">Transport Services</a></li>
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_food_&_stay_page/code.html">Guest Houses</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-text-main dark:text-white">Support</h4>
+<ul class="space-y-2 text-sm text-gray-500">
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_help_&_safety_page/code.html">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_help_&_safety_page/code.html">Safety Tips</a></li>
+<li><a class="hover:text-primary transition-colors" href="../buame_2r_contact_us_page/code.html">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4 text-text-main dark:text-white">Legal</h4>
+<ul class="space-y-2 text-sm text-gray-500">
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+<p>© 2024 BUAME 2R. All rights reserved.</p>
+<div class="flex gap-4 mt-4 md:mt-0">
+<a class="hover:text-primary" href="#"><span class="material-symbols-outlined">language</span></a>
+<a class="hover:text-primary" href="#"><span class="material-symbols-outlined">share</span></a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

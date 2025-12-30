@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Join BUAME 2R - Provider Onboarding</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "primary-dark": "#0fa80f",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a331a",
+                        "text-main": "#0d1b0d",
+                        "text-light": "#f0fdf0",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-light transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-[#e7f3e7] dark:border-[#1a331a] bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+<div class="px-4 md:px-10 py-3 flex items-center justify-between mx-auto max-w-7xl">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-3xl">local_mall</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em] text-text-main dark:text-white">BUAME 2R</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary" href="../buame_2r_home_page/code.html">Home</a>
+<a class="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary" href="../buame_2r_services_page/code.html">Services</a>
+<a class="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary" href="../buame_2r_about_us_page/code.html">About Us</a>
+<a class="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary" href="../buame_2r_contact_us_page/code.html">Contact</a>
+</nav>
+<button onclick="window.location.href='../buame_2r_login/register_page/code.html'" class="flex items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary hover:bg-primary-dark transition-colors text-black text-sm font-bold tracking-[0.015em]">
+Login
+</button>
+</div>
+<!-- Mobile Menu Icon (Placeholder) -->
+<button class="md:hidden p-2 text-text-main dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col">
+<!-- Hero Section -->
+<section class="relative w-full">
+<div class="mx-auto max-w-7xl px-4 md:px-10 py-5">
+<div class="relative overflow-hidden rounded-2xl bg-cover bg-center bg-no-repeat min-h-[520px] flex items-center justify-center text-center p-6 md:p-12 shadow-xl" data-alt="Busy Ghanaian marketplace scene with sellers and tricycles under bright sunlight" style='background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEwWUlx4qs2ZbadN8nxg_qyKa3M4UzuE7gOqg8E8CDMjxOQKhMsbkUeFFiWizr102hvPF7rEj_sK8FN8iyDaeB8jeMzpoFnNG4i6Oln97sfbe2-QwgIsdRF55OQbz7T3Ux2Fy_cyt67Qyc6EogckIL_m5rwOHNLc1CpqvCxE0Z8Uj-QPAuTiXuWxEmlU944mg1w7s43RvBPVC9PKDXLFfuGnI6ckeaxvL28gJG9oIq-ZD6Bs5Tjn2bDDv2MI3zYjG1aeJLaA8DCAE");'>
+<div class="relative z-10 flex flex-col items-center gap-6 max-w-3xl">
+<span class="inline-flex items-center gap-2 rounded-full bg-primary/20 backdrop-blur-md px-4 py-1.5 text-sm font-bold text-white border border-white/20">
+<span class="material-symbols-outlined text-base">location_on</span> Sefwi Bekwai &amp; Western North Region
+                            </span>
+<h1 class="text-white text-4xl md:text-6xl font-black leading-tight tracking-tight drop-shadow-sm">
+                                Grow Your Business with <span class="text-primary">BUAME 2R</span>
+</h1>
+<p class="text-gray-100 text-lg md:text-xl font-medium leading-relaxed max-w-2xl drop-shadow-md">
+                                Connect with customers, find reliable jobs, and expand your reach. Join the Western North Region's #1 Digital Marketplace today.
+                            </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
+<a class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary hover:bg-primary-dark text-black text-base font-bold transition-all transform hover:scale-105 shadow-lg shadow-primary/25" href="#choose-path">
+                                    Get Started
+                                </a>
+<button onclick="window.location.href='../buame_2r_about_us_page/code.html'" class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/30 text-base font-bold transition-colors">
+                                    Learn More
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Headline Section -->
+<section class="w-full py-12 md:py-16" id="choose-path">
+<div class="mx-auto max-w-7xl px-4 md:px-10 flex flex-col items-center">
+<div class="text-center max-w-2xl mb-12">
+<h2 class="text-text-main dark:text-white text-3xl md:text-4xl font-black leading-tight mb-4">Choose Your Path</h2>
+<p class="text-gray-600 dark:text-gray-400 text-lg">Select the role that fits your trade. Whether you drive, build, sell, or hire, we have a place for you.</p>
+</div>
+<!-- Persona Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
+<!-- Artisan Card -->
+<div class="group flex flex-col gap-6 rounded-2xl border border-[#e7f3e7] dark:border-[#2a442a] bg-surface-light dark:bg-surface-dark p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1">
+<div class="flex items-center justify-between">
+<div class="size-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined text-3xl">handyman</span>
+</div>
+<span class="bg-[#f0fdf0] dark:bg-[#102210] text-primary text-xs font-bold px-2 py-1 rounded border border-primary/20">POPULAR</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Artisan</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Plumbers, Carpenters, Electricians</p>
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Get instant job alerts nearby</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Showcase your portfolio</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Secure direct payments</span>
+</div>
+</div>
+<button class="w-full rounded-lg h-11 bg-primary text-black font-bold text-sm hover:bg-primary-dark transition-colors shadow-md shadow-primary/20">
+                                Register as Artisan
+                            </button>
+</div>
+<!-- Driver Card -->
+<div class="group flex flex-col gap-6 rounded-2xl border border-[#e7f3e7] dark:border-[#2a442a] bg-surface-light dark:bg-surface-dark p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1">
+<div class="flex items-center justify-between">
+<div class="size-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined text-3xl">directions_car</span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Driver</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Taxi, Pragya, Delivery</p>
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Set your own schedule</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Keep 100% of your tips</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Verified rider profile</span>
+</div>
+</div>
+<button class="w-full rounded-lg h-11 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-main dark:text-white font-bold text-sm hover:border-primary hover:text-primary transition-colors">
+                                Register as Driver
+                            </button>
+</div>
+<!-- Trader Card -->
+<div class="group flex flex-col gap-6 rounded-2xl border border-[#e7f3e7] dark:border-[#2a442a] bg-surface-light dark:bg-surface-dark p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1">
+<div class="flex items-center justify-between">
+<div class="size-12 rounded-xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-3xl">storefront</span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Trader</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Market Sellers, Shop Owners</p>
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Sell to the whole region</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Manage inventory easily</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Digital storefront included</span>
+</div>
+</div>
+<button class="w-full rounded-lg h-11 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-main dark:text-white font-bold text-sm hover:border-primary hover:text-primary transition-colors">
+                                Register as Trader
+                            </button>
+</div>
+<!-- Employer Card -->
+<div class="group flex flex-col gap-6 rounded-2xl border border-[#e7f3e7] dark:border-[#2a442a] bg-surface-light dark:bg-surface-dark p-6 transition-all duration-300 hover:shadow-xl hover:border-primary/50 hover:-translate-y-1">
+<div class="flex items-center justify-between">
+<div class="size-12 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-3xl">business_center</span>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Employer</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Companies, Homeowners</p>
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Find verified local talent</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Post job listings free</span>
+</div>
+<div class="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined text-primary text-[20px]">check_circle</span>
+<span>Review applicant history</span>
+</div>
+</div>
+<button class="w-full rounded-lg h-11 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-text-main dark:text-white font-bold text-sm hover:border-primary hover:text-primary transition-colors">
+                                Register as Employer
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works -->
+<section class="w-full bg-[#e7f3e7]/30 dark:bg-[#1a331a]/30 py-16">
+<div class="mx-auto max-w-7xl px-4 md:px-10">
+<div class="flex flex-col md:flex-row gap-12 items-center">
+<div class="flex-1 space-y-6">
+<h2 class="text-3xl md:text-4xl font-black text-text-main dark:text-white leading-tight">
+                                How It Works
+                            </h2>
+<p class="text-lg text-gray-600 dark:text-gray-300 max-w-md">
+                                Join the fastest growing community in Sefwi Bekwai in three simple steps. We make it easy to start earning.
+                            </p>
+<div class="space-y-6 mt-8">
+<div class="flex gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark border border-transparent hover:border-primary/30 transition-colors">
+<div class="shrink-0 size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary-dark dark:text-primary">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-main dark:text-white">1. Create Account</h3>
+<p class="text-gray-500 dark:text-gray-400">Select your provider type and fill in your basic details.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark border border-transparent hover:border-primary/30 transition-colors">
+<div class="shrink-0 size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary-dark dark:text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-main dark:text-white">2. Get Verified</h3>
+<p class="text-gray-500 dark:text-gray-400">Upload your ID and any necessary licenses to get the trust badge.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 rounded-xl bg-surface-light dark:bg-surface-dark border border-transparent hover:border-primary/30 transition-colors">
+<div class="shrink-0 size-12 rounded-full bg-primary/20 flex items-center justify-center text-primary-dark dark:text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-text-main dark:text-white">3. Start Earning</h3>
+<p class="text-gray-500 dark:text-gray-400">Connect with customers instantly and grow your income.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full relative">
+<div class="relative w-full aspect-square md:aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img alt="An artisan working on a wood project with focus and precision" class="object-cover w-full h-full" data-alt="Close up of carpenter hands working on wood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDen-TFs-LihTPReXZiGGr4GXOmi9In4n9lDiPTvAwjsiA8IS2NmGyspWiB0bSNAhzFHn-jSp9PziGER3l3OLiTik0vQmP3oZ92zo3_tqO39NagMkjiGbfJXrMnGhGfFpxOK9US7fD_xWRDDivce0Gakn-6eHBK_wR9zUjVI17-hXsx2Wg2zjh0prq0B5YnuWphl98yR_sPXngZdmhLmvmspAhoEx40schdAj91HziY1OJW3z2dbv1dgvcDfMWav68YWTYY9e5QUN4"/>
+<div class="absolute bottom-6 left-6 right-6 z-20 text-white">
+<div class="flex items-center gap-2 mb-2">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white bg-gray-300"></div>
+<div class="size-8 rounded-full border-2 border-white bg-gray-400"></div>
+<div class="size-8 rounded-full border-2 border-white bg-gray-500"></div>
+</div>
+<span class="text-sm font-medium">500+ Providers in Sefwi Bekwai</span>
+</div>
+</div>
+</div>
+<!-- Floating Badge -->
+<div class="absolute -top-6 -right-6 md:right-10 bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 animate-bounce duration-1000 hidden md:block">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500 text-3xl">trending_up</span>
+<div>
+<p class="text-xs text-gray-500 uppercase font-bold">Weekly Earnings</p>
+<p class="text-lg font-bold text-text-main dark:text-white">+ 45% Growth</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-16 md:py-24">
+<div class="mx-auto max-w-7xl px-4 md:px-10">
+<h2 class="text-3xl font-bold text-center mb-12 text-text-main dark:text-white">Voices from our Community</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm relative">
+<span class="material-symbols-outlined absolute top-6 right-6 text-primary/20 text-6xl">format_quote</span>
+<p class="text-gray-600 dark:text-gray-300 italic mb-6 relative z-10">"Since joining BUAME 2R as a carpenter, I get jobs every week without walking around looking for work. It has changed my life."</p>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-gray-200 dark:bg-gray-700 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAltQin9SN6YJrmhpMeRVaCvj1iRwbavzOmDZvqVSr3mhilvKQozLatUifclCuI_jo65kaZx8HvhfAv17LlN66Mig40YpwNFlAZg-YXhKrJLQ6xEC5A2IlXsm5nGFiv0ZzBQa2628e1MaSP-iWBK1OsP0IKgwQteL383Y3hqyda-UxIg7TPSIhDwTtMBNlzJ8iCGBbyBEleFpB40kXLSqibefMqdLHLBUioIm5OJPFdUwUF9hLcQ76NVLUvvHiA9IIeEmnFqE1aeU8')"></div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white">Kwame O.</h4>
+<p class="text-xs text-gray-500 uppercase">Carpenter, Sefwi Bekwai</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm relative">
+<span class="material-symbols-outlined absolute top-6 right-6 text-primary/20 text-6xl">format_quote</span>
+<p class="text-gray-600 dark:text-gray-300 italic mb-6 relative z-10">"I can now sell my fabrics to people in other towns. The delivery drivers on the platform help me send goods safely."</p>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-gray-200 dark:bg-gray-700 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACJGeXlhYL3rx_v8TTDBF00-YIBLuiGdCk2dpDXJmPj-eo7tMVmqxO2GTOFBV_y0HOT3yLsd7mrv2zyqOr47KZZ3qKH0KaYdfV88uKoY_Mug7ObbgQ-NfceOXgvHIsf4KrrXbFHgahoZ5rFf2TobuCKsBhtMgsXNTNaexqR97tCdEvRF2K03sp3v2iByQinVBi1o-Yq9E_pOeUM_SvX5l2FwmK3yJ6ITUoBQHSKSMXAr2BU0Yixm4GU8TvPz0VcQA6rZw0UBXyuo0')"></div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white">Ama Serwaa</h4>
+<p class="text-xs text-gray-500 uppercase">Trader, Bibiani</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm relative">
+<span class="material-symbols-outlined absolute top-6 right-6 text-primary/20 text-6xl">format_quote</span>
+<p class="text-gray-600 dark:text-gray-300 italic mb-6 relative z-10">"Driving my Pragya is more profitable now. I set my own hours and get passengers through the app easily."</p>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-gray-200 dark:bg-gray-700 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAg89CeMOkPnhBnd47R9nOc_7zwbFbL92E0bTBqalG09PkcVa1X6l2w0UBV2un3tmJMog98vy9Q_fiMoUYmq5fh_RhQu9MIikRqB7RoziaqaCflpgxkcMAmKHNbQpR0Jw-Oa0qlaD_YOYFJJrtUGwzuyV-Ql57eEK9gXNOfR-csMZ7-Xco2iwdwXmy0NaqAOOZrASd1KCB-Jo3YsfcOkqhhA_KCuNgjKbw1LTB6GJiQQ2S1Rdnwzc-310ajtC0uz04_GZApbVOm4Wk')"></div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white">Isaac T.</h4>
+<p class="text-xs text-gray-500 uppercase">Driver, Wiawso</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="w-full bg-white dark:bg-[#152a15] py-16">
+<div class="mx-auto max-w-4xl px-4 md:px-10">
+<h2 class="text-2xl md:text-3xl font-bold text-center mb-10 text-text-main dark:text-white">Frequently Asked Questions</h2>
+<div class="flex flex-col gap-4">
+<details class="group rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark open:shadow-md transition-all">
+<summary class="flex cursor-pointer list-none items-center justify-between p-6 font-medium text-text-main dark:text-white">
+<span>Is it free to join BUAME 2R?</span>
+<span class="transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<div class="text-gray-600 dark:text-gray-300 px-6 pb-6 pt-0">
+                                Yes, registering as a provider is completely free. We may charge a small commission on completed jobs or successful sales, depending on your category.
+                            </div>
+</details>
+<details class="group rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark open:shadow-md transition-all">
+<summary class="flex cursor-pointer list-none items-center justify-between p-6 font-medium text-text-main dark:text-white">
+<span>What documents do I need for verification?</span>
+<span class="transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<div class="text-gray-600 dark:text-gray-300 px-6 pb-6 pt-0">
+                                You will need a valid Ghana Card. Drivers will also need a valid driver's license. Traders may need business registration documents for higher tiers.
+                            </div>
+</details>
+<details class="group rounded-lg border border-gray-200 dark:border-gray-700 bg-surface-light dark:bg-surface-dark open:shadow-md transition-all">
+<summary class="flex cursor-pointer list-none items-center justify-between p-6 font-medium text-text-main dark:text-white">
+<span>How do I get paid?</span>
+<span class="transition group-open:rotate-180">
+<span class="material-symbols-outlined">expand_more</span>
+</span>
+</summary>
+<div class="text-gray-600 dark:text-gray-300 px-6 pb-6 pt-0">
+                                Payments are secured through Mobile Money (MTN, Vodafone, AirtelTigo). You can withdraw your earnings directly to your wallet instantly.
+                            </div>
+</details>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background-light dark:bg-background-dark border-t border-[#e7f3e7] dark:border-[#1a331a] pt-16 pb-8">
+<div class="mx-auto max-w-7xl px-4 md:px-10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-4 text-text-main dark:text-white">
+<div class="flex items-center justify-center size-8 rounded bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-xl">local_mall</span>
+</div>
+<h3 class="font-bold text-lg">BUAME 2R</h3>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                            Empowering Sefwi Bekwai through digital connection. The Western North's trusted marketplace.
+                        </p>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-4">Quick Links</h4>
+<ul class="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Find a Service</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Become a Partner</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Jobs Board</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">News &amp; Updates</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-4">Support</h4>
+<ul class="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400">
+<li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Safety Guidelines</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-text-main dark:text-white mb-4">Contact Us</h4>
+<ul class="flex flex-col gap-3 text-sm text-gray-500 dark:text-gray-400">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                Main Street, Sefwi Bekwai, WN/R
+                            </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">call</span>
+                                +233 24 000 0000
+                            </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">mail</span>
+                                support@buame2r.com
+                            </li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-sm text-gray-400">© 2023 BUAME 2R. All rights reserved.</p>
+<div class="flex gap-4">
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="sr-only">Facebook</span>FB</a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="sr-only">Twitter</span>TW</a>
+<a class="text-gray-400 hover:text-primary transition-colors" href="#"><span class="sr-only">Instagram</span>IG</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,43 @@
+import { usePage } from '@inertiajs/react';
+import { useState } from 'react';
+
+export function ServicesHeader() {
+    const page = usePage();
+    const currentCategory = new URLSearchParams(page.url.split('?')[1] || '').get('category') || 'all';
+    const [activeCategory, setActiveCategory] = useState(currentCategory);
+
+    const categories = [
+        { id: 'all', name: 'All', url: '/services' },
+        { id: 'artisans', name: 'Artisans', url: '/services?category=artisans' },
+        { id: 'market', name: 'Market', url: '/marketplace' },
+        { id: 'jobs', name: 'Jobs', url: '/jobs' },
+    ];
+
+    return (
+        <section className="flex flex-col gap-3 pt-4">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-3xl leading-tight font-bold tracking-tight text-[#0d1b0d] md:text-4xl dark:text-white">Our Core Services</h2>
+                    <p className="text-base font-normal text-[#4c9a4c] dark:text-gray-400">Explore the platform features designed for the region.</p>
+                </div>
+                {/* Filter/Category Tabs */}
+                {/* <div className="hidden gap-2 rounded-lg border border-[#e7f3e7] bg-white p-1 md:flex dark:border-white/10 dark:bg-white/5">
+                    {categories.map((category) => (
+                        <Link
+                            key={category.id}
+                            href={category.url}
+                            onClick={() => setActiveCategory(category.id)}
+                            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                                activeCategory === category.id
+                                    ? 'bg-[#13ec13]/10 font-bold text-[#13ec13]'
+                                    : 'text-[#4c9a4c] hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10'
+                            }`}
+                        >
+                            {category.name}
+                        </Link>
+                    ))}
+                </div> */}
+            </div>
+        </section>
+    );
+}
