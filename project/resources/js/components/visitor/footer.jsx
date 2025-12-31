@@ -53,7 +53,7 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/services?category=transport" className="transition-colors hover:text-[#13ec13]">
+                                <Link href="/transport" className="transition-colors hover:text-[#13ec13]">
                                     Transport
                                 </Link>
                             </li>

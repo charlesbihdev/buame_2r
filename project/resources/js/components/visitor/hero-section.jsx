@@ -11,10 +11,10 @@ export function HeroSection() {
 
     const categories = [
         { name: 'All Categories', url: '/services', active: true },
-        { name: 'Artisans', url: '/services?category=artisans' },
-        { name: 'Hotel', url: '/food-stay?category=hotel' },
-        { name: 'Okada', url: '/services?category=okada' },
-        { name: 'Rentals', url: '/services?category=rentals' },
+        { name: 'Artisans', url: '/artisans' },
+        { name: 'Hotel', url: '/hotels' },
+        { name: 'Okada & Cars', url: '/transport' },
+        { name: 'Rentals', url: '/rentals' },
         { name: 'Marketplace', url: '/marketplace' },
         { name: 'Jobs', url: '/jobs' },
     ];
@@ -96,11 +96,10 @@ export function HeroSection() {
                             <Link
                                 key={category.name}
                                 href={category.url}
-                                className={`rounded-full px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors ${
-                                    category.active
-                                        ? 'bg-[#13ec13]/20 text-[#0d1b0d] hover:bg-[#13ec13]/30'
-                                        : 'text-gray-500 hover:text-[#13ec13] dark:text-gray-400'
-                                }`}
+                                className={`rounded-full px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors ${category.active
+                                    ? 'bg-[#13ec13]/20 text-[#0d1b0d] hover:bg-[#13ec13]/30'
+                                    : 'text-gray-500 hover:text-[#13ec13] dark:text-gray-400'
+                                    }`}
                             >
                                 {category.name}
                             </Link>

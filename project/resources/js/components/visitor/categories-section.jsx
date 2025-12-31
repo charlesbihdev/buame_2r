@@ -6,25 +6,25 @@ export function CategoriesSection() {
         {
             name: 'Artisans',
             description: 'Skilled workers',
-            url: '/services?category=artisans',
+            url: '/artisans',
             image: '/assets/visitors/categories/artisans.jpg',
         },
         {
             name: 'Hotel',
             description: 'Accommodation',
-            url: '/food-stay?category=hotel',
+            url: '/hotels',
             image: '/assets/visitors/categories/hotel.jpg',
         },
         {
-            name: 'Okada',
-            description: 'Motorcycle transport',
-            url: '/services?category=okada',
+            name: 'Okada & Cars',
+            description: 'Motorcycle & car transport',
+            url: '/transport',
             image: '/assets/visitors/categories/okada.jpg',
         },
         {
             name: 'Rentals',
             description: 'Property rentals',
-            url: '/services?category=rentals',
+            url: '/rentals',
             image: '/assets/visitors/categories/rentals.jpg',
         },
         {

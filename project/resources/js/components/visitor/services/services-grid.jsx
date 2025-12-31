@@ -24,10 +24,10 @@ export function ServicesGrid() {
         {
             icon: Bike,
             category: 'Mobility',
-            title: 'Okada',
-            description: 'Book reliable motorcycle taxis (Okada) for quick and affordable transportation across town.',
+            title: 'Okada & Cars',
+            description: 'Book reliable motorcycle taxis (Okada) and cars for quick and affordable transportation across town.',
             image: '/assets/visitors/services/okada.jpg',
-            buttonText: 'Book Okada',
+            buttonText: 'Book Ride',
             buttonUrl: '/services?category=okada',
         },
         {
