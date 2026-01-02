@@ -12,12 +12,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('category', ['artisans', 'hotels', 'transport', 'rentals', 'marketplace', 'jobs'])->index();
-            $table->boolean('is_paid')->default(false);
             $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('set null');
             $table->timestamp('expires_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
-            
+
             $table->unique(['user_id', 'category']);
         });
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('category', ['artisans', 'hotels', 'transport', 'rentals', 'marketplace', 'jobs'])->index();
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('GHS');
-            $table->enum('payment_method', ['mobile_money', 'bank_transfer', 'card', 'cash']);
+            $table->enum('payment_method', ['paystack'])->default('paystack');
             $table->string('transaction_id')->nullable()->index();
             $table->string('payment_reference')->nullable()->index();
             $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending')->index();

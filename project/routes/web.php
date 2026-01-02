@@ -33,12 +33,14 @@ Route::get('/jobs', function () {
 })->name('jobs');
 
 Route::get('/join-as-provider', function () {
-    return Inertia::render('visitor/join-as-provider');
+    return Inertia::render('user/choose-path');
 })->name('join-as-provider');
 
-Route::get('/artisans', function () {
-    return Inertia::render('visitor/artisans/index');
-})->name('artisans');
+Route::get('/choose-path', function () {
+    return Inertia::render('user/choose-path');
+})->name('choose-path');
+
+Route::get('/artisans', [\App\Http\Controllers\Visitor\ArtisansController::class, 'index'])->name('artisans');
 
 Route::get('/hotels', function () {
     return Inertia::render('visitor/hotels/index');
@@ -61,9 +63,7 @@ Route::get('/restaurants', function () {
 })->name('restaurants');
 
 // View pages for categories
-Route::get('/artisans/{id}', function ($id) {
-    return Inertia::render('visitor/artisans/view', ['artisan' => null]);
-})->name('artisans.view');
+Route::get('/artisans/{id}', [\App\Http\Controllers\Visitor\ArtisansController::class, 'show'])->name('artisans.view');
 
 Route::get('/hotels/{id}', function ($id) {
     return Inertia::render('visitor/hotels/view', ['hotel' => null]);
@@ -81,12 +81,16 @@ Route::get('/jobs/{id}', function ($id) {
     return Inertia::render('visitor/jobs/view', ['job' => null]);
 })->name('jobs.view');
 
-// Dashboard Routes (Auth Required)
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-});
+// Dashboard route moved to routes/user/dashboard.php
+
+// Paystack Payment Routes
+Route::get('/payment/callback', [\App\Http\Controllers\PaymentController::class, 'handleCallback'])
+    ->name('payment.callback');
+
+// Paystack Webhook (must be outside auth middleware and exclude CSRF)
+Route::post('/payment/webhook', [\App\Http\Controllers\PaymentController::class, 'handleWebhook'])
+    ->name('paystack.webhook')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

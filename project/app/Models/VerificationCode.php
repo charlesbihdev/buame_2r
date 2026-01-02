@@ -24,19 +24,4 @@ class VerificationCode extends Model
             'verified_at' => 'datetime',
         ];
     }
-
-    public function isExpired(): bool
-    {
-        return $this->expires_at->isPast();
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->verified_at !== null;
-    }
-
-    public function incrementAttempts(): void
-    {
-        $this->increment('attempts');
-    }
 }

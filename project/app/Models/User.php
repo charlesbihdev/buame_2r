@@ -17,20 +17,17 @@ class User extends Authenticatable
         'profile_image',
         'is_active',
         'phone_verified_at',
-        'verification_code',
-        'verification_code_expires_at',
         'last_login_at',
     ];
 
     protected $hidden = [
-        'verification_code',
+        // No hidden fields needed
     ];
 
     protected function casts(): array
     {
         return [
             'phone_verified_at' => 'datetime',
-            'verification_code_expires_at' => 'datetime',
             'last_login_at' => 'datetime',
             'is_active' => 'boolean',
         ];
@@ -52,6 +49,11 @@ class User extends Authenticatable
         return $this->hasOne(UserActiveCategory::class);
     }
 
+    /**
+     * Get the artisan profiles for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function artisans()
     {
         return $this->hasMany(Artisan::class);
@@ -97,13 +99,28 @@ class User extends Authenticatable
     {
         return $this->categories()
             ->where('category', $category)
-            ->where('is_paid', true)
             ->where('is_active', true)
+            ->whereHas('payment', function ($query) {
+                $query->where('status', 'completed');
+            })
             ->exists();
     }
 
-    public function getActiveCategoryAttribute()
+    /**
+     * Check if phone is verified
+     */
+    public function hasVerifiedPhone(): bool
     {
-        return $this->activeCategory?->active_category;
+        return ! is_null($this->phone_verified_at);
+    }
+
+    /**
+     * Mark phone as verified
+     */
+    public function markPhoneAsVerified(): void
+    {
+        $this->forceFill([
+            'phone_verified_at' => $this->freshTimestamp(),
+        ])->save();
     }
 }

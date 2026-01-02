@@ -47,9 +47,9 @@ export function AppHeader({ breadcrumbs = [] }) {
                     </div>
 
                     <div className="ml-auto flex items-center space-x-2">
-                        <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
+                            <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
                             <Search className="!size-5 opacity-80 group-hover:opacity-100" />
-                        </Button>
+                            </Button>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="size-10 rounded-full p-1">

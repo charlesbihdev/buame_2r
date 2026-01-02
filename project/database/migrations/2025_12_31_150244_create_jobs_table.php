@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
@@ -34,13 +34,13 @@ return new class extends Migration
             $table->integer('views_count')->default(0);
             $table->integer('applications_count')->default(0);
             $table->timestamps();
-            
+
             $table->index(['salary_min', 'salary_max']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('job_listings');
     }
 };

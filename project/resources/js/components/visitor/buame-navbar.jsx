@@ -8,6 +8,8 @@ import { useState } from 'react';
 export function BuameNavbar() {
     const page = usePage();
     const currentUrl = page.url;
+    const { auth } = page.props;
+    const user = auth?.user;
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const navItems = [
@@ -46,19 +48,38 @@ export function BuameNavbar() {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
-                    <Button
-                        asChild
-                        className="hidden h-10 items-center justify-center rounded-lg bg-[#13ec13] px-4 text-sm font-bold text-[#0d1b0d] shadow-sm shadow-green-200/50 transition-colors hover:bg-[#0eb50e] sm:flex"
-                    >
-                        <Link href="/join-as-provider">Join as Provider</Link>
-                    </Button>
-                    <Button
-                        asChild
-                        variant="outline"
-                        className="flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                    >
-                        <Link href="/login">Log In</Link>
-                    </Button>
+                    {user ? (
+                        <>
+                            <Button
+                                asChild
+                                className="hidden h-10 items-center justify-center rounded-lg bg-[#13ec13] px-4 text-sm font-bold text-[#0d1b0d] shadow-sm shadow-green-200/50 transition-colors hover:bg-[#0eb50e] sm:flex"
+                            >
+                                <Link href={route('user.dashboard.index')}>Dashboard</Link>
+                            </Button>
+                            <div className="flex h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 dark:border-gray-700 dark:bg-gray-800">
+                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#13ec13]/20">
+                                    <span className="text-xs font-bold text-[#13ec13]">{user?.name?.charAt(0).toUpperCase() || 'U'}</span>
+                                </div>
+                                <span className="hidden text-sm font-semibold text-[#0d1b0d] sm:inline dark:text-white">{user?.name}</span>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                asChild
+                                className="hidden h-10 items-center justify-center rounded-lg bg-[#13ec13] px-4 text-sm font-bold text-[#0d1b0d] shadow-sm shadow-green-200/50 transition-colors hover:bg-[#0eb50e] sm:flex"
+                            >
+                                <Link href="/choose-path">Join as Provider</Link>
+                            </Button>
+                            <Button
+                                asChild
+                                variant="outline"
+                                className="flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                            >
+                                <Link href={route('user.login')}>Log In</Link>
+                            </Button>
+                        </>
+                    )}
 
                     {/* Mobile Menu Button */}
                     <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
@@ -98,16 +119,39 @@ export function BuameNavbar() {
                                     </Link>
                                 ))}
                                 <div className="flex flex-col gap-3 border-t border-gray-200 pt-4 dark:border-gray-700">
-                                    <Button asChild className="h-10 w-full bg-[#13ec13] font-bold text-[#0d1b0d] hover:bg-[#0eb50e]">
-                                        <Link href="/join-as-provider" onClick={() => setMobileMenuOpen(false)}>
-                                            Join as Provider
-                                        </Link>
-                                    </Button>
-                                    <Button asChild variant="outline" className="h-10 w-full">
-                                        <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                                            Log In
-                                        </Link>
-                                    </Button>
+                                    {user ? (
+                                        <>
+                                            <Button asChild className="h-10 w-full bg-[#13ec13] font-bold text-[#0d1b0d] hover:bg-[#0eb50e]">
+                                                <Link href={route('user.dashboard.index')} onClick={() => setMobileMenuOpen(false)}>
+                                                    Dashboard
+                                                </Link>
+                                            </Button>
+                                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
+                                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#13ec13]/20">
+                                                    <span className="text-xs font-bold text-[#13ec13]">
+                                                        {user?.name?.charAt(0).toUpperCase() || 'U'}
+                                                    </span>
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="truncate text-sm font-semibold text-[#0d1b0d] dark:text-white">{user?.name}</p>
+                                                    <p className="truncate text-xs text-gray-500 dark:text-gray-400">{user?.phone}</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Button asChild className="h-10 w-full bg-[#13ec13] font-bold text-[#0d1b0d] hover:bg-[#0eb50e]">
+                                                <Link href="/choose-path" onClick={() => setMobileMenuOpen(false)}>
+                                                    Join as Provider
+                                                </Link>
+                                            </Button>
+                                            <Button asChild variant="outline" className="h-10 w-full">
+                                                <Link href={route('user.login')} onClick={() => setMobileMenuOpen(false)}>
+                                                    Log In
+                                                </Link>
+                                            </Button>
+                                        </>
+                                    )}
                                 </div>
                             </nav>
                         </SheetContent>

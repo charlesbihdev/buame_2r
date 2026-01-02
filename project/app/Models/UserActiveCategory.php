@@ -9,6 +9,8 @@ class UserActiveCategory extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_active_category';
+
     protected $fillable = [
         'user_id',
         'active_category',

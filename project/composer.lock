@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "756e0d90557419f113a132f741777e64",
+    "content-hash": "6d1915e33762c8d7bac40d5e7b66abd9",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,87 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "devrabiul/laravel-paystack",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/devrabiul/laravel-paystack.git",
+                "reference": "a07ba49228b34d330b476da73295a212b1113653"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/devrabiul/laravel-paystack/zipball/a07ba49228b34d330b476da73295a212b1113653",
+                "reference": "a07ba49228b34d330b476da73295a212b1113653",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6|~7|~8|~9",
+                "illuminate/support": "~6|~7|~8|~9|^10.0|^11.0|^12.0",
+                "php": "^7.2|^8.0|^8.1|^8.2|^8.3|^8.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^8.4|^9.0|^10.5|^12.3",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Paystack": "Unicodeveloper\\Paystack\\Facades\\Paystack"
+                    },
+                    "providers": [
+                        "Unicodeveloper\\Paystack\\PaystackServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Support/helpers.php"
+                ],
+                "psr-4": {
+                    "Unicodeveloper\\Paystack\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "unicodeveloper",
+                    "email": "prosperotemuyiwa@gmail.com"
+                },
+                {
+                    "name": "iamfunsho",
+                    "email": "info@devfunsho.com"
+                }
+            ],
+            "description": "A Laravel Package for Paystack",
+            "keywords": [
+                "github",
+                "laravel",
+                "laravel 10",
+                "laravel 11",
+                "laravel 12",
+                "laravel 6",
+                "laravel 7",
+                "laravel 8",
+                "laravel 9",
+                "open source",
+                "payments",
+                "paystack",
+                "paystack.co",
+                "php",
+                "subscription"
+            ],
+            "support": {
+                "source": "https://github.com/devrabiul/laravel-paystack/tree/v1.0"
+            },
+            "time": "2025-10-21T09:24:11+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -1462,6 +1543,74 @@
                 "source": "https://github.com/laravel/serializable-closure"
             },
             "time": "2025-02-11T15:03:05+00:00"
+        },
+        {
+            "name": "laravel/telescope",
+            "version": "v5.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/telescope.git",
+                "reference": "a868e91a0912d6a44363636f7467a8578db83026"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/telescope/zipball/a868e91a0912d6a44363636f7467a8578db83026",
+                "reference": "a868e91a0912d6a44363636f7467a8578db83026",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^8.37|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0",
+                "symfony/console": "^5.3|^6.0|^7.0",
+                "symfony/var-dumper": "^5.0|^6.0|^7.0"
+            },
+            "require-dev": {
+                "ext-gd": "*",
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "laravel/octane": "^1.4|^2.0",
+                "orchestra/testbench": "^6.47.1|^7.55|^8.36|^9.15|^10.8",
+                "phpstan/phpstan": "^1.10"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Telescope\\TelescopeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Telescope\\": "src/",
+                    "Laravel\\Telescope\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                },
+                {
+                    "name": "Mohamed Said",
+                    "email": "mohamed@laravel.com"
+                }
+            ],
+            "description": "An elegant debug assistant for the Laravel framework.",
+            "keywords": [
+                "debugging",
+                "laravel",
+                "monitoring"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/telescope/issues",
+                "source": "https://github.com/laravel/telescope/tree/v5.16.0"
+            },
+            "time": "2025-12-09T13:34:29+00:00"
         },
         {
             "name": "laravel/tinker",

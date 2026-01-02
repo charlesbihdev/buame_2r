@@ -11,12 +11,7 @@ return new class extends Migration
         Schema::create('artisan_specialties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('artisan_id')->constrained()->onDelete('cascade');
-            $table->enum('specialty', [
-                'furniture', 'roofing', 'wiring', 'installation', 'pipe_fitting', 
-                'drainage', 'floor_tiles', 'wall_tiles', 'clothing', 'alterations', 
-                'metal_work', 'repairs', 'interior', 'exterior', 'doors_windows', 
-                'plumbing', 'electrical', 'painting', 'welding', 'other'
-            ])->index();
+            $table->string('specialty', 255)->index();
             $table->timestamps();
         });
     }

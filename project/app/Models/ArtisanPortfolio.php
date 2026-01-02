@@ -9,9 +9,12 @@ class ArtisanPortfolio extends Model
 {
     use HasFactory;
 
+    protected $table = 'artisan_portfolios';
+
     protected $fillable = [
         'artisan_id',
         'item',
+        'image_path',
     ];
 
     public function artisan()

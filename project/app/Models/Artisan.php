@@ -64,11 +64,6 @@ class Artisan extends Model
         return $this->hasMany(ArtisanPortfolio::class);
     }
 
-    public function images()
-    {
-        return $this->hasMany(ArtisanImage::class);
-    }
-
     public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewable');
@@ -77,10 +72,5 @@ class Artisan extends Model
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
-    }
-
-    public function primaryImage()
-    {
-        return $this->hasOne(ArtisanImage::class)->where('is_primary', true);
     }
 }
