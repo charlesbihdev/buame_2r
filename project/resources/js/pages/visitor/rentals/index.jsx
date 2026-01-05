@@ -1,6 +1,6 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Search, MapPin, Home, Wrench, Tractor, Car, Store } from 'lucide-react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { Pagination } from '@/components/ui/pagination';
 
@@ -137,23 +137,45 @@ export default function Rentals() {
                         {/* Quick Categories */}
                         <div className="flex flex-wrap justify-center gap-3">
                             {[
-                                { icon: Home, label: 'Room', count: 15 },
-                                { icon: Wrench, label: 'Tools', count: 28 },
-                                { icon: Tractor, label: 'Equipment', count: 12 },
-                                { icon: Car, label: 'Vehicles', count: 8 },
-                                { icon: Store, label: 'Store', count: 10 },
-                            ].map((cat) => (
-                                <button
-                                    key={cat.label}
-                                    className="flex items-center gap-2 rounded-full border-2 border-[#13ec13]/30 bg-white px-5 py-2.5 font-semibold transition-all hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:bg-[#162816]"
-                                >
-                                    <cat.icon className="h-5 w-5 text-[#13ec13]" />
-                                    <span className="text-sm dark:text-white">{cat.label}</span>
-                                    <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
-                                        {cat.count}
-                                    </span>
-                                </button>
-                            ))}
+                                { type: 'house', icon: Home, label: 'House' },
+                                { type: 'tools', icon: Wrench, label: 'Tools' },
+                                { type: 'equipment', icon: Tractor, label: 'Equipment' },
+                                { type: 'vehicle', icon: Car, label: 'Vehicles' },
+                                { type: 'store', icon: Store, label: 'Store' },
+                            ].map((cat) => {
+                                const count = typeCounts?.[cat.type] || 0;
+                                const isActive = filters?.type === cat.type;
+                                return (
+                                    <button
+                                        key={cat.type}
+                                        onClick={() => {
+                                            router.get(
+                                                '/rentals',
+                                                {
+                                                    ...filters,
+                                                    type: isActive ? null : cat.type,
+                                                    page: null,
+                                                },
+                                                {
+                                                    preserveState: true,
+                                                    preserveScroll: true,
+                                                }
+                                            );
+                                        }}
+                                        className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
+                                            isActive
+                                                ? 'border-[#13ec13] bg-[#13ec13]/10'
+                                                : 'border-[#13ec13]/30 bg-white hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:bg-[#162816]'
+                                        }`}
+                                    >
+                                        <cat.icon className="h-5 w-5 text-[#13ec13]" />
+                                        <span className="text-sm dark:text-white">{cat.label}</span>
+                                        <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
+                                            {count}
+                                        </span>
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

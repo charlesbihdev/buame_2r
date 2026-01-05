@@ -50,13 +50,9 @@ Route::get('/transport', function () {
     return Inertia::render('visitor/transport/index');
 })->name('transport');
 
-Route::get('/rentals', function () {
-    return Inertia::render('visitor/rentals/index');
-})->name('rentals');
+Route::get('/rentals', [\App\Http\Controllers\Visitor\RentalsController::class, 'index'])->name('rentals');
 
-Route::get('/rentals/{id}', function ($id) {
-    return Inertia::render('visitor/rentals/view', ['rental' => null]);
-})->name('rentals.view');
+Route::get('/rentals/{id}', [\App\Http\Controllers\Visitor\RentalsController::class, 'show'])->name('rentals.view');
 
 Route::get('/restaurants', function () {
     return Inertia::render('visitor/restaurants');
