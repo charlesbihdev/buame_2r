@@ -6,6 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\UserCategory> $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Artisan> $artisans
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Hotel> $hotels
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TransportRide> $transportRides
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Rental> $rentals
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MarketplaceProduct> $marketplaceProducts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Job> $jobs
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Favorite> $favorites
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -42,11 +54,6 @@ class User extends Authenticatable
     public function categories()
     {
         return $this->hasMany(UserCategory::class);
-    }
-
-    public function activeCategory()
-    {
-        return $this->hasOne(UserActiveCategory::class);
     }
 
     /**
