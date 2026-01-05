@@ -80,10 +80,15 @@ class PhoneVerificationService
 
     /**
      * Check if phone can request new OTP (rate limiting)
+     * Rate limiting applies to all OTP requests (registration and login)
+     * Only checks for recent unverified codes to prevent abuse
      */
     public function canRequestOtp(string $phone): array
     {
+        // Check for recent unverified codes (codes that haven't been verified yet)
+        // This prevents abuse regardless of whether phone was previously verified
         $recentCode = VerificationCode::where('phone', $phone)
+            ->whereNull('verified_at') // Only check unverified codes
             ->where('created_at', '>', Carbon::now()->subMinutes(2))
             ->orderBy('created_at', 'desc')
             ->first();

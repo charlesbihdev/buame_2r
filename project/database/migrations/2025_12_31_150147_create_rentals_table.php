@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->enum('type', ['room', 'equipment', 'tools', 'land', 'commercial', 'vehicle', 'store'])->index();
+            $table->enum('type', ['house', 'equipment', 'tools', 'land', 'commercial', 'vehicle', 'store'])->index();
             $table->decimal('price', 10, 2)->index();
             $table->enum('period', ['day', 'week', 'month'])->index();
             $table->string('location')->index();
@@ -23,11 +23,6 @@ return new class extends Migration
             $table->string('whatsapp', 20)->nullable();
             $table->string('email')->nullable();
             $table->text('description')->nullable();
-            $table->integer('bedrooms')->nullable();
-            $table->integer('bathrooms')->nullable();
-            $table->string('area', 50)->nullable();
-            $table->string('furnished', 100)->nullable();
-            $table->date('available_from')->nullable();
             $table->text('rental_terms')->nullable();
             $table->boolean('is_verified')->default(false)->index();
             $table->boolean('is_active')->default(true)->index();

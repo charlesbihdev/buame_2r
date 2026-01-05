@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserActiveCategory;
 use App\Services\CategoryProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,14 +13,47 @@ use Inertia\Response;
 class DashboardController extends Controller
 {
     /**
-     * Show the main dashboard.
+     * Show the main dashboard - redirects to first paid category.
      */
-    public function index(Request $request): Response|RedirectResponse
+    public function index(): RedirectResponse
     {
         $user = Auth::user();
 
         if (! $user) {
             return redirect()->route('user.login');
+        }
+
+        // Get first paid category
+        $firstPaidCategory = $user->categories()
+            ->whereHas('payment', function ($query) {
+                $query->where('status', 'completed');
+            })
+            ->first();
+
+        // If no paid categories, redirect to choose path
+        if (! $firstPaidCategory) {
+            return redirect()->route('choose-path')
+                ->with('info', 'Please select a category and complete payment to access your dashboard.');
+        }
+
+        // Redirect to first paid category
+        return redirect()->route('user.dashboard.category', ['category' => $firstPaidCategory->category]);
+    }
+
+    /**
+     * Show category-specific dashboard.
+     */
+    public function showCategory(Request $request, string $category): Response|RedirectResponse
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return redirect()->route('user.login');
+        }
+
+        // Validate category
+        if (! in_array($category, config('categories.valid'))) {
+            return redirect()->route('user.dashboard.index');
         }
 
         $activeSection = $request->query('section', 'profile');
@@ -34,31 +66,19 @@ class DashboardController extends Controller
             ->with('payment')
             ->get();
 
-        // Get active category
-        $activeCategory = $user->activeCategory?->active_category;
+        // Check if user has access to this category
+        $hasAccess = $paidCategories->contains('category', $category);
 
-        // If no active category but has paid categories, set first one as active
-        if (! $activeCategory && $paidCategories->isNotEmpty()) {
-            $firstCategory = $paidCategories->first();
-            UserActiveCategory::updateOrCreate(
-                ['user_id' => $user->id],
-                ['active_category' => $firstCategory->category, 'switched_at' => now()]
-            );
-            $activeCategory = $firstCategory->category;
+        if (! $hasAccess) {
+            return redirect()->route('user.dashboard.index')
+                ->withErrors(['category' => 'You need to pay for this category to access it.']);
         }
 
-        // If no paid categories, redirect to choose path
-        if ($paidCategories->isEmpty()) {
-            return redirect()->route('choose-path')
-                ->with('info', 'Please select a category and complete payment to access your dashboard.');
-        }
-
-        // Get category-specific data based on active category
-        $categoryData = $this->getCategoryData($user, $activeCategory);
+        // Get category-specific data
+        $categoryData = $this->getCategoryData($user, $category);
 
         // Get all categories (paid and unpaid) for switcher
-        $allCategories = ['artisans', 'hotels', 'transport', 'rentals', 'marketplace', 'jobs'];
-        $unpaidCategories = collect($allCategories)
+        $unpaidCategories = collect(config('categories.valid'))
             ->diff($paidCategories->pluck('category'))
             ->values()
             ->toArray();
@@ -93,47 +113,11 @@ class DashboardController extends Controller
                 ];
             }),
             'unpaidCategories' => $unpaidCategories,
-            'activeCategory' => $activeCategory,
+            'activeCategory' => $category,
             'activeSection' => $activeSection,
             'categoryData' => $categoryData,
             'payments' => $payments,
         ]);
-    }
-
-    /**
-     * Switch active category.
-     */
-    public function switchCategory(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'category' => ['required', 'string', 'in:artisans,hotels,transport,rentals,marketplace,jobs'],
-        ]);
-
-        $user = Auth::user();
-
-        if (! $user) {
-            return redirect()->route('user.login');
-        }
-
-        // Check if user has paid for this category
-        $hasAccess = $user->hasCategoryAccess($request->category);
-
-        if (! $hasAccess) {
-            return redirect()->route('user.dashboard')
-                ->withErrors(['category' => 'You need to pay for this category to access it.']);
-        }
-
-        // Update active category
-        UserActiveCategory::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'active_category' => $request->category,
-                'switched_at' => now(),
-            ]
-        );
-
-        return redirect()->route('user.dashboard')
-            ->with('success', 'Category switched successfully.');
     }
 
     /**
@@ -166,7 +150,7 @@ class DashboardController extends Controller
             ],
             'hotels' => [
                 'profile' => $profileService->getOrCreateProfile($user, 'hotels'),
-                'listings' => $user->hotels()->latest()->get(),
+                'listings' => $user->hotels()->with('images')->latest()->get(),
                 'stats' => [
                     'total' => $user->hotels()->count(),
                     'active' => $user->hotels()->where('is_active', true)->count(),
@@ -175,7 +159,7 @@ class DashboardController extends Controller
             ],
             'transport' => [
                 'profile' => $profileService->getOrCreateProfile($user, 'transport'),
-                'listings' => $user->transportRides()->latest()->get(),
+                'listings' => $user->transportRides()->with('images')->latest()->get(),
                 'stats' => [
                     'total' => $user->transportRides()->count(),
                     'active' => $user->transportRides()->where('is_active', true)->count(),
@@ -184,7 +168,7 @@ class DashboardController extends Controller
             ],
             'rentals' => [
                 'profile' => $profileService->getOrCreateProfile($user, 'rentals'),
-                'listings' => $user->rentals()->latest()->get(),
+                'listings' => $user->rentals()->with('images')->latest()->get(),
                 'stats' => [
                     'total' => $user->rentals()->count(),
                     'active' => $user->rentals()->where('is_active', true)->count(),

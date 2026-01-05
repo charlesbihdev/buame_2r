@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
-    // Registration routes
+    // Registration routes (guest only - before OTP verification)
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
@@ -26,16 +26,6 @@ Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
         ->name('register.verify');
 
     Route::post('register/verify-otp', [RegisteredUserController::class, 'verifyOtp']);
-
-    Route::get('register/category', [RegisteredUserController::class, 'showCategorySelection'])
-        ->name('register.category');
-
-    Route::post('register/category', [RegisteredUserController::class, 'selectCategory']);
-
-    Route::get('register/payment', [RegisteredUserController::class, 'showPayment'])
-        ->name('register.payment');
-
-    Route::post('register/payment', [PaymentController::class, 'processPayment']);
 
     Route::post('register/resend-otp', [RegisteredUserController::class, 'resendOtp'])
         ->name('register.resend-otp');
@@ -53,6 +43,19 @@ Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
 
     Route::post('login/resend-otp', [AuthenticatedSessionController::class, 'resendOtp'])
         ->name('login.resend-otp');
+});
+
+// Registration payment routes - accessible after OTP verification (user is logged in)
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('register/category', [RegisteredUserController::class, 'showCategorySelection'])
+        ->name('register.category');
+
+    Route::post('register/category', [RegisteredUserController::class, 'selectCategory']);
+
+    Route::get('register/payment', [RegisteredUserController::class, 'showPayment'])
+        ->name('register.payment');
+
+    Route::post('register/payment', [PaymentController::class, 'processPayment']);
 });
 
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
