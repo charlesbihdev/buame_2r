@@ -52,11 +52,6 @@ class Hotel extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function amenities()
-    {
-        return $this->hasMany(HotelAmenity::class);
-    }
-
     public function features()
     {
         return $this->hasMany(HotelFeature::class);

@@ -21,11 +21,11 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'marketplace':
                 return <MarketplaceSection activeTab={activeSection} data={categoryData} />;
             case 'hotels':
-                return <HotelsSection activeTab={activeSection} data={categoryData} />;
+                return <HotelsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'transport':
-                return <TransportSection activeTab={activeSection} data={categoryData} />;
+                return <TransportSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'rentals':
-                return <RentalsSection activeTab={activeSection} data={categoryData} />;
+                return <RentalsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'jobs':
                 return <JobsSection activeTab={activeSection} data={categoryData} />;
             default:

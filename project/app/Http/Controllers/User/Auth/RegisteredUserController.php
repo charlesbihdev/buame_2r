@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Services\PhoneVerificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -85,7 +86,7 @@ class RegisteredUserController extends Controller
             $request->session()->put('selected_category', $validated['category']);
         }
 
-        // Check rate limiting
+        // Check rate limiting (applies to all OTP requests)
         $rateLimitCheck = $this->phoneVerificationService->canRequestOtp($validated['phone']);
         if (! $rateLimitCheck['can_request']) {
             return back()->withErrors(['phone' => $rateLimitCheck['message']]);
@@ -150,14 +151,19 @@ class RegisteredUserController extends Controller
             'phone_verified_at' => now(),
         ]);
 
+        // Login user immediately after successful OTP verification
+        Auth::login($user);
+        $request->session()->regenerate();
+
         // Check if category is selected
         $selectedCategory = $request->session()->get('selected_category');
 
         if (! $selectedCategory) {
-            return redirect()->route('choose-path')->withErrors(['category' => 'Please select a category first.']);
+            // If no category was selected, redirect to category selection page
+            return redirect()->route('user.register.category');
         }
 
-        // Redirect to payment
+        // Redirect to payment (user is now logged in)
         return redirect()->route('user.register.payment');
     }
 
@@ -166,13 +172,17 @@ class RegisteredUserController extends Controller
      */
     public function showCategorySelection(Request $request): Response|RedirectResponse
     {
-        $userId = $request->session()->get('registration_user_id');
+        // Check if user is authenticated (logged in after OTP verification)
+        $user = Auth::user();
 
-        if (! $userId) {
-            return redirect()->route('user.register');
+        // Fallback to session user_id if not authenticated
+        if (! $user) {
+            $userId = $request->session()->get('registration_user_id');
+            if (! $userId) {
+                return redirect()->route('user.register');
+            }
+            $user = User::find($userId);
         }
-
-        $user = User::find($userId);
 
         if (! $user || ! $user->phone_verified_at) {
             return redirect()->route('user.register');
@@ -205,13 +215,17 @@ class RegisteredUserController extends Controller
             'category' => ['required', 'string', 'in:artisans,hotels,transport,rentals,marketplace,jobs'],
         ]);
 
-        $userId = $request->session()->get('registration_user_id');
+        // Check if user is authenticated (logged in after OTP verification)
+        $user = Auth::user();
 
-        if (! $userId) {
-            return redirect()->route('user.register');
+        // Fallback to session user_id if not authenticated
+        if (! $user) {
+            $userId = $request->session()->get('registration_user_id');
+            if (! $userId) {
+                return redirect()->route('user.register');
+            }
+            $user = User::find($userId);
         }
-
-        $user = User::find($userId);
 
         if (! $user || ! $user->phone_verified_at) {
             return redirect()->route('user.register');
@@ -229,17 +243,25 @@ class RegisteredUserController extends Controller
      */
     public function showPayment(Request $request): Response|RedirectResponse
     {
-        $userId = $request->session()->get('registration_user_id');
+        // Check if user is authenticated (logged in after OTP verification)
+        $user = Auth::user();
         $selectedCategory = $request->session()->get('selected_category');
 
-        if (! $userId || ! $selectedCategory) {
-            return redirect()->route('user.register');
+        // Fallback to session user_id if not authenticated
+        if (! $user) {
+            $userId = $request->session()->get('registration_user_id');
+            if (! $userId || ! $selectedCategory) {
+                return redirect()->route('user.register');
+            }
+            $user = User::find($userId);
         }
-
-        $user = User::find($userId);
 
         if (! $user || ! $user->phone_verified_at) {
             return redirect()->route('user.register');
+        }
+
+        if (! $selectedCategory) {
+            return redirect()->route('user.register.category');
         }
 
         $categoryPrices = [
@@ -283,7 +305,7 @@ class RegisteredUserController extends Controller
             return redirect()->route('user.register');
         }
 
-        // Check rate limiting
+        // Check rate limiting (applies to all OTP requests)
         $rateLimitCheck = $this->phoneVerificationService->canRequestOtp($registrationData['phone']);
         if (! $rateLimitCheck['can_request']) {
             return back()->withErrors(['code' => $rateLimitCheck['message']]);

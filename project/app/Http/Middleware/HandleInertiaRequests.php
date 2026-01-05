@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'categories' => config('categories.list'),
         ];
     }
 }
