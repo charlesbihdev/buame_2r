@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\User;
-use App\Models\UserActiveCategory;
 use App\Models\UserCategory;
 use App\Services\PaystackService;
 use Illuminate\Auth\Events\Registered;
@@ -23,20 +22,57 @@ class PaymentController extends Controller
     ) {}
 
     /**
-     * Initialize Paystack payment and redirect to Paystack checkout.
+     * Initialize Paystack payment for category purchase.
+     * Works for both registration and existing users adding categories.
      */
     public function processPayment(Request $request): RedirectResponse|Response
     {
-        $userId = $request->session()->get('registration_user_id');
-        $selectedCategory = $request->session()->get('selected_category');
+        $authenticatedUser = Auth::user();
+        $sessionCategory = $request->session()->get('selected_category');
 
-        if (! $userId || ! $selectedCategory) {
-            return redirect()->route('user.register');
-        }
+        // Check if this is a registration payment (category in session)
+        // This takes priority even if user is authenticated (after OTP verification)
+        if ($sessionCategory) {
+            // Registration payment flow
+            $user = $authenticatedUser;
+            $selectedCategory = $sessionCategory;
 
-        $user = User::find($userId);
+            // If not authenticated, fall back to session user_id
+            if (! $user) {
+                $userId = $request->session()->get('registration_user_id');
+                if (! $userId) {
+                    return redirect()->route('user.register');
+                }
+                $user = User::find($userId);
+            }
 
-        if (! $user || ! $user->phone_verified_at) {
+            if (! $user || ! $user->phone_verified_at) {
+                return redirect()->route('user.register');
+            }
+
+            // Mark as registration payment (not authenticated dashboard user)
+            $isRegistrationPayment = true;
+        } elseif ($authenticatedUser) {
+            // Dashboard category purchase (no session category, must be from dashboard)
+            $validated = $request->validate([
+                'category' => ['required', 'string', 'in:'.implode(',', config('categories.valid'))],
+            ]);
+
+            $user = $authenticatedUser;
+            $selectedCategory = $validated['category'];
+
+            // Check if user already has this category
+            $hasCategory = UserCategory::where('user_id', $user->id)
+                ->where('category', $selectedCategory)
+                ->exists();
+
+            if ($hasCategory) {
+                return back()->withErrors(['payment' => 'You already have access to this category.']);
+            }
+
+            $isRegistrationPayment = false;
+        } else {
+            // No session category and not authenticated - redirect to register
             return redirect()->route('user.register');
         }
 
@@ -71,7 +107,7 @@ class PaymentController extends Controller
                 'metadata' => [
                     'user_id' => $user->id,
                     'category' => $selectedCategory,
-                    'registration_user_id' => $userId,
+                    'is_authenticated' => ! $isRegistrationPayment,
                 ],
             ];
 
@@ -82,7 +118,7 @@ class PaymentController extends Controller
             return Inertia::location($authorizationUrl->url);
         } catch (\Exception $e) {
             Log::error('Paystack payment initialization failed', [
-                'user_id' => $userId,
+                'user_id' => $user->id,
                 'category' => $selectedCategory,
                 'error' => $e->getMessage(),
             ]);
@@ -93,6 +129,7 @@ class PaymentController extends Controller
 
     /**
      * Handle Paystack payment callback.
+     * Handles both registration and dashboard category purchases.
      */
     public function handleCallback(Request $request): RedirectResponse
     {
@@ -125,7 +162,7 @@ class PaymentController extends Controller
                     ->withErrors(['payment' => 'Payment was not successful. Please try again.']);
             }
 
-            // Payment successful - complete registration
+            // Payment successful - process category purchase
             DB::beginTransaction();
 
             // Update payment record
@@ -151,37 +188,51 @@ class PaymentController extends Controller
                 'is_active' => true,
             ]);
 
-            // Set active category
-            UserActiveCategory::updateOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'active_category' => $selectedCategory,
-                    'switched_at' => now(),
-                ]
-            );
+            // Check if this is a new registration or existing user
+            $isAuthenticated = $paymentData['metadata']['is_authenticated'] ?? false;
 
-            // Activate user account
-            $user->update(['is_active' => true]);
+            if (! $isAuthenticated) {
+                // New user registration - user should already be logged in after OTP verification
+                // But if session was lost, log them in again as fallback
+                $user->update(['is_active' => true]);
 
-            DB::commit();
+                DB::commit();
 
-            // Fire registered event
-            event(new Registered($user));
+                // Fire registered event
+                event(new Registered($user));
 
-            // Login user
-            Auth::login($user);
-            $request->session()->regenerate();
-            $request->session()->forget(['registration_user_id', 'selected_category']);
+                // If user is not already authenticated, log them in (fallback for session loss)
+                if (!Auth::check()) {
+                    Auth::login($user);
+                    $request->session()->regenerate();
+                }
 
-            // Redirect to dashboard
-            return redirect()->route('user.dashboard.index')
-                ->with('success', 'Registration successful! Welcome to BUAME 2R.');
+                // Clear registration session data
+                $request->session()->forget(['registration_user_id', 'selected_category']);
+
+                // Redirect to category dashboard
+                return redirect()->route('user.dashboard.category', ['category' => $selectedCategory])
+                    ->with('success', 'Registration successful! Welcome to BUAME 2R.');
+            } else {
+                // Existing user adding category
+                DB::commit();
+
+                // Redirect to newly purchased category
+                return redirect()->route('user.dashboard.category', ['category' => $selectedCategory])
+                    ->with('success', "Successfully added {$selectedCategory} category! You can now start managing your profile.");
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Paystack callback processing failed', [
                 'reference' => $reference,
                 'error' => $e->getMessage(),
             ]);
+
+            // Determine where to redirect on error
+            if (Auth::check()) {
+                return redirect()->route('user.dashboard.index')
+                    ->withErrors(['payment' => 'Payment verification failed. Please contact support.']);
+            }
 
             return redirect()->route('user.register.payment')
                 ->withErrors(['payment' => 'Payment verification failed. Please contact support.']);
@@ -256,15 +307,6 @@ class PaymentController extends Controller
                             ]
                         );
 
-                        // Set active category
-                        UserActiveCategory::updateOrCreate(
-                            ['user_id' => $user->id],
-                            [
-                                'active_category' => $selectedCategory,
-                                'switched_at' => now(),
-                            ]
-                        );
-
                         // Activate user account
                         $user->update(['is_active' => true]);
                     }
@@ -288,19 +330,10 @@ class PaymentController extends Controller
     }
 
     /**
-     * Get category price.
+     * Get category price from config.
      */
     protected function getCategoryPrice(string $category): float
     {
-        $prices = [
-            'artisans' => 50.00,
-            'hotels' => 100.00,
-            'transport' => 30.00,
-            'rentals' => 75.00,
-            'marketplace' => 40.00,
-            'jobs' => 60.00,
-        ];
-
-        return $prices[$category] ?? 50.00;
+        return config("categories.list.{$category}.price", config('categories.default_price'));
     }
 }

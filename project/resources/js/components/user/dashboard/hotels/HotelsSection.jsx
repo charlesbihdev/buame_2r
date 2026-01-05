@@ -1,24 +1,18 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { HotelGallery } from './HotelGallery';
+import { HotelProfile } from './HotelProfile';
+import { HotelSettings } from './HotelSettings';
 import { HotelsListings } from './HotelsListings';
 
-export function HotelsSection({ activeTab, onTabChange, data }) {
-    return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">Hotels Dashboard</h2>
-                <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your hotel listings</p>
-            </div>
-
-            <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
-                <TabsList className="grid w-full grid-cols-1">
-                    <TabsTrigger value="listings" activeValue={activeTab}>My Hotels</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="listings" activeValue={activeTab} className="mt-6">
-                    <HotelsListings listings={data?.listings || []} />
-                </TabsContent>
-            </Tabs>
-        </div>
-    );
+export function HotelsSection({ activeSection, profile }) {
+    // Handle different sections based on URL query parameter
+    switch (activeSection) {
+        case 'gallery':
+            return <HotelGallery profile={profile} />;
+        case 'settings':
+            return <HotelSettings profile={profile} />;
+        case 'profile':
+        default:
+            return <HotelProfile profile={profile} />;
+    }
 }
 

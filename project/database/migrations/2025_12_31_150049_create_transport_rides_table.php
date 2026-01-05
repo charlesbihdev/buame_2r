@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('company_name');
-            $table->enum('type', ['taxi', 'bus', 'okada_car', 'cargo', 'other'])->index();
+            $table->enum('type', ['okada', 'car', 'taxi', 'bus', 'cargo', 'other'])->index();
             $table->decimal('price_per_seat', 10, 2);
             $table->integer('seats_available');
             $table->string('location')->index();
