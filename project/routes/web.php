@@ -46,13 +46,9 @@ Route::get('/hotels', [\App\Http\Controllers\Visitor\HotelsController::class, 'i
 
 Route::get('/transport', [\App\Http\Controllers\Visitor\TransportController::class, 'index'])->name('transport');
 
-Route::get('/rentals', function () {
-    return Inertia::render('visitor/rentals/index');
-})->name('rentals');
+Route::get('/rentals', [\App\Http\Controllers\Visitor\RentalsController::class, 'index'])->name('rentals');
 
-Route::get('/rentals/{id}', function ($id) {
-    return Inertia::render('visitor/rentals/view', ['rental' => null]);
-})->name('rentals.view');
+Route::get('/rentals/{id}', [\App\Http\Controllers\Visitor\RentalsController::class, 'show'])->name('rentals.view');
 
 Route::get('/restaurants', function () {
     return Inertia::render('visitor/restaurants');

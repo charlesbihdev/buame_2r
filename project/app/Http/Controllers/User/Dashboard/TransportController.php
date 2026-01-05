@@ -73,7 +73,6 @@ class TransportController extends Controller
             'company_name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:okada,car,taxi,bus,cargo,other'],
             'location' => ['required', 'string', 'max:255'],
-            'address' => ['nullable', 'string'],
             'phone' => ['required', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],

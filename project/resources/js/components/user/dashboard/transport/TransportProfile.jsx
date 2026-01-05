@@ -29,7 +29,6 @@ export function TransportProfile({ profile }) {
         type: profile?.type || 'okada',
         description: profile?.description || '',
         location: profile?.location || '',
-        address: profile?.address || '',
         phone: profile?.phone || '',
         whatsapp: profile?.whatsapp || '',
         email: profile?.email || '',
@@ -213,7 +212,7 @@ export function TransportProfile({ profile }) {
                     <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="location">Base Location</Label>
+                            <Label htmlFor="location">Working Location</Label>
                             <Input
                                 id="location"
                                 value={data.location}
@@ -222,18 +221,6 @@ export function TransportProfile({ profile }) {
                                 placeholder="Sefwi Bekwai"
                             />
                             <FormError error={errors.location || pageErrors?.location} className="mt-1" />
-                        </div>
-
-                        <div>
-                            <Label htmlFor="address">Station/Pickup Address</Label>
-                            <Input
-                                id="address"
-                                value={data.address}
-                                onChange={(e) => setData('address', e.target.value)}
-                                className="mt-1"
-                                placeholder="Main Lorry Station, Bekwai"
-                            />
-                            <FormError error={errors.address || pageErrors?.address} className="mt-1" />
                         </div>
 
                         <div>

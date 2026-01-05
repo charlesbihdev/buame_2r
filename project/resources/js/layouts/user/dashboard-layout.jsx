@@ -26,6 +26,11 @@ export default function DashboardLayout({ user, children, activeCategory, active
                     { id: 'profile', label: 'Profile', icon: User },
                     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
                 ];
+            case 'rentals':
+                return [
+                    { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'gallery', label: 'Gallery', icon: ImageIcon },
+                ];
             default:
                 return [];
         }

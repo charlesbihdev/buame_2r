@@ -105,11 +105,11 @@ class CategoryProfileService
      */
     protected function getOrCreateRental(User $user): Rental
     {
-        return $user->rentals()->with(['images'])->firstOrCreate(
+        return $user->rentals()->with(['images', 'features'])->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => '',
-                'type' => 'room',
+                'type' => 'house',
                 'price' => 0,
                 'period' => 'month',
                 'location' => '',

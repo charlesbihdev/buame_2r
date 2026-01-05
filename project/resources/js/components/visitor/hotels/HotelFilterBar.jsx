@@ -50,3 +50,4 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
 }
 
 
+

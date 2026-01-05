@@ -168,7 +168,7 @@ class DashboardController extends Controller
             ],
             'rentals' => [
                 'profile' => $profileService->getOrCreateProfile($user, 'rentals'),
-                'listings' => $user->rentals()->latest()->get(),
+                'listings' => $user->rentals()->with('images')->latest()->get(),
                 'stats' => [
                     'total' => $user->rentals()->count(),
                     'active' => $user->rentals()->where('is_active', true)->count(),

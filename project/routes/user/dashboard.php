@@ -46,6 +46,12 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
     // Rentals routes
     Route::resource('rentals', RentalsController::class)->except(['show']);
 
+    // Rental images routes
+    Route::post('rentals/{rental}/images', [RentalsController::class, 'storeImage'])->name('rentals.images.store');
+    Route::put('rentals/{rental}/images/{image}', [RentalsController::class, 'updateImage'])->name('rentals.images.update');
+    Route::post('rentals/{rental}/images/{image}/set-primary', [RentalsController::class, 'setPrimaryImage'])->name('rentals.images.set-primary');
+    Route::delete('rentals/{rental}/images/{image}', [RentalsController::class, 'destroyImage'])->name('rentals.images.destroy');
+
     // Jobs routes
     Route::resource('jobs', JobsController::class)->except(['show']);
 });

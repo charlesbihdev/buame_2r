@@ -1,0 +1,395 @@
+import { FormError } from '@/components/ui/form-error';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm, usePage } from '@inertiajs/react';
+import { CheckCircle2, Loader2, Upload, X, Plus } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+
+export function RentalProfile({ profile }) {
+    const { errors: pageErrors } = usePage().props;
+    const [imagePreview, setImagePreview] = useState(null);
+    const fileInputRef = useRef(null);
+
+    if (!profile) {
+        return (
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[#162816]">
+                <p className="text-gray-600 dark:text-gray-400">Loading rental profile...</p>
+            </div>
+        );
+    }
+
+    const [features, setFeatures] = useState(
+        profile?.features?.map((f) => f.feature || f) || []
+    );
+    const [newFeature, setNewFeature] = useState('');
+
+    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+        _method: 'PUT',
+        name: profile?.name || '',
+        type: profile?.type || 'house',
+        description: profile?.description || '',
+        price: profile?.price || '',
+        period: profile?.period || 'month',
+        location: profile?.location || '',
+        phone: profile?.phone || '',
+        whatsapp: profile?.whatsapp || '',
+        email: profile?.email || '',
+        rental_terms: profile?.rental_terms || '',
+        is_active: profile?.is_active ?? true,
+        primary_image: null,
+        features: features,
+    });
+
+    const rentalTypes = [
+        { value: 'house', label: 'House' },
+        { value: 'equipment', label: 'Equipment' },
+        { value: 'tools', label: 'Tools' },
+        { value: 'land', label: 'Land' },
+        { value: 'commercial', label: 'Commercial' },
+        { value: 'vehicle', label: 'Vehicle' },
+        { value: 'store', label: 'Store' },
+    ];
+
+    const periods = [
+        { value: 'day', label: 'Per Day' },
+        { value: 'week', label: 'Per Week' },
+        { value: 'month', label: 'Per Month' },
+    ];
+
+    // Sync features when profile changes
+    useEffect(() => {
+        const profileFeatures = profile?.features?.map((f) => f.feature || f) || [];
+        setFeatures(profileFeatures);
+        setData('features', profileFeatures);
+    }, [profile?.features]);
+
+    const addFeature = () => {
+        if (newFeature.trim() && !features.includes(newFeature.trim())) {
+            const updatedFeatures = [...features, newFeature.trim()];
+            setFeatures(updatedFeatures);
+            setData('features', updatedFeatures);
+            setNewFeature('');
+        }
+    };
+
+    const removeFeature = (index) => {
+        const updatedFeatures = features.filter((_, i) => i !== index);
+        setFeatures(updatedFeatures);
+        setData('features', updatedFeatures);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('user.dashboard.rentals.update', profile.id), {
+            forceFormData: true,
+        });
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setData('primary_image', file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const primaryImage = profile?.images?.find((img) => img.is_primary) || profile?.images?.[0];
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Primary Image Upload */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Primary Image</h3>
+                <div className="flex items-start gap-6">
+                    <div
+                        className="relative h-40 w-40 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                        onClick={() => fileInputRef.current?.click()}
+                    >
+                        {imagePreview || primaryImage?.image_path ? (
+                            <img
+                                src={imagePreview || primaryImage?.image_path}
+                                alt="Rental preview"
+                                className="h-full w-full object-cover"
+                            />
+                        ) : (
+                            <div className="flex h-full w-full flex-col items-center justify-center text-gray-400">
+                                <Upload className="mb-2 h-8 w-8" />
+                                <span className="text-xs">Click to upload</span>
+                            </div>
+                        )}
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="hidden"
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                            Upload a primary image for your rental listing. This will be the main image shown in search results.
+                        </p>
+                        <p className="mt-2 text-xs text-gray-500">Recommended: 800x600px, max 5MB</p>
+                        <FormError error={errors.primary_image || pageErrors?.primary_image} className="mt-2" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Basic Information */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Basic Information</h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                        <Label htmlFor="name">Rental Name</Label>
+                        <Input
+                            id="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            className="mt-1"
+                            placeholder="2 Bedroom Apartment in Bekwai"
+                        />
+                        <FormError error={errors.name || pageErrors?.name} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="type">Rental Type</Label>
+                        <select
+                            id="type"
+                            value={data.type}
+                            onChange={(e) => setData('type', e.target.value)}
+                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#0d1b0d] dark:text-white"
+                        >
+                            {rentalTypes.map((type) => (
+                                <option key={type.value} value={type.value}>
+                                    {type.label}
+                                </option>
+                            ))}
+                        </select>
+                        <FormError error={errors.type || pageErrors?.type} className="mt-1" />
+                    </div>
+
+                    <div className="md:col-span-2">
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea
+                            id="description"
+                            value={data.description}
+                            onChange={(e) => setData('description', e.target.value)}
+                            className="mt-1"
+                            rows={4}
+                            placeholder="Describe your rental property or item..."
+                        />
+                        <FormError error={errors.description || pageErrors?.description} className="mt-1" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Pricing Section */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Pricing</h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                        <Label htmlFor="price">Price (GH₵)</Label>
+                        <Input
+                            id="price"
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={data.price}
+                            onChange={(e) => setData('price', e.target.value)}
+                            className="mt-1"
+                            placeholder="500.00"
+                        />
+                        <FormError error={errors.price || pageErrors?.price} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="period">Rental Period</Label>
+                        <select
+                            id="period"
+                            value={data.period}
+                            onChange={(e) => setData('period', e.target.value)}
+                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#0d1b0d] dark:text-white"
+                        >
+                            {periods.map((period) => (
+                                <option key={period.value} value={period.value}>
+                                    {period.label}
+                                </option>
+                            ))}
+                        </select>
+                        <FormError error={errors.period || pageErrors?.period} className="mt-1" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Location & Contact Section */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Location & Contact</h3>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                        <Label htmlFor="location">Location</Label>
+                        <Input
+                            id="location"
+                            value={data.location}
+                            onChange={(e) => setData('location', e.target.value)}
+                            className="mt-1"
+                            placeholder="Sefwi Bekwai"
+                        />
+                        <FormError error={errors.location || pageErrors?.location} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input
+                            id="phone"
+                            value={data.phone}
+                            onChange={(e) => setData('phone', e.target.value)}
+                            className="mt-1"
+                            placeholder="+233 24 123 4567"
+                        />
+                        <FormError error={errors.phone || pageErrors?.phone} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
+                        <Input
+                            id="whatsapp"
+                            value={data.whatsapp}
+                            onChange={(e) => setData('whatsapp', e.target.value)}
+                            className="mt-1"
+                            placeholder="+233 24 123 4567"
+                        />
+                        <FormError error={errors.whatsapp || pageErrors?.whatsapp} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="email">Email (optional)</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            className="mt-1"
+                            placeholder="contact@example.com"
+                        />
+                        <FormError error={errors.email || pageErrors?.email} className="mt-1" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Features Section */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Features</h3>
+                <div className="space-y-4">
+                    {/* Add Feature Input */}
+                    <div className="flex gap-2">
+                        <Input
+                            value={newFeature}
+                            onChange={(e) => setNewFeature(e.target.value)}
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    addFeature();
+                                }
+                            }}
+                            placeholder="Add a feature (e.g., WiFi, Parking, Furnished)"
+                            className="flex-1"
+                        />
+                        <Button
+                            type="button"
+                            onClick={addFeature}
+                            className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
+                        >
+                            <Plus className="h-4 w-4" />
+                        </Button>
+                    </div>
+
+                    {/* Features List */}
+                    {features.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                            {features.map((feature, index) => (
+                                <div
+                                    key={index}
+                                    className="flex items-center gap-2 rounded-full bg-[#13ec13]/10 px-4 py-2 text-sm font-semibold text-[#0d1b0d] dark:text-[#13ec13]"
+                                >
+                                    <span>{feature}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => removeFeature(index)}
+                                        className="rounded-full p-0.5 hover:bg-[#13ec13]/20 transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {features.length === 0 && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            No features added yet. Add features like "WiFi", "Parking", "Furnished", etc.
+                        </p>
+                    )}
+                </div>
+                <FormError error={errors.features || pageErrors?.features} className="mt-2" />
+            </div>
+
+            {/* Rental Terms Section */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Rental Terms</h3>
+                <div>
+                    <Label htmlFor="rental_terms">Rental Terms (optional)</Label>
+                    <Textarea
+                        id="rental_terms"
+                        value={data.rental_terms}
+                        onChange={(e) => setData('rental_terms', e.target.value)}
+                        className="mt-1"
+                        rows={3}
+                        placeholder="Minimum 6 months lease, 2 months advance required..."
+                    />
+                    <FormError error={errors.rental_terms || pageErrors?.rental_terms} className="mt-1" />
+                </div>
+            </div>
+
+            {/* Status & Save */}
+            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        <Switch
+                            id="is_active"
+                            checked={data.is_active}
+                            onCheckedChange={(checked) => setData('is_active', checked)}
+                        />
+                        <Label htmlFor="is_active" className="cursor-pointer">
+                            {data.is_active ? 'Listing is Active' : 'Listing is Inactive'}
+                        </Label>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        {recentlySuccessful && (
+                            <span className="flex items-center gap-1 text-sm text-green-600">
+                                <CheckCircle2 className="h-4 w-4" />
+                                Saved successfully
+                            </span>
+                        )}
+                        <Button type="submit" disabled={processing} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
+                            {processing ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Saving...
+                                </>
+                            ) : (
+                                'Save Changes'
+                            )}
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    );
+}

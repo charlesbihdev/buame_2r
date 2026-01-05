@@ -268,12 +268,6 @@ export default function TransportView({ ride }) {
                                             <span className="break-all font-medium text-gray-700 dark:text-gray-300">{ride.email}</span>
                                         </div>
                                     )}
-                                    {ride?.address && (
-                                        <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-                                            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#13ec13]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{ride.address}</span>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
 
