@@ -2,11 +2,10 @@ import { FormError } from '@/components/ui/form-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
-import { CheckCircle2, Loader2, Upload, X, Plus } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { CheckCircle2, Loader2, Upload } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -20,11 +19,6 @@ export function RentalProfile({ profile }) {
             </div>
         );
     }
-
-    const [features, setFeatures] = useState(
-        profile?.features?.map((f) => f.feature || f) || []
-    );
-    const [newFeature, setNewFeature] = useState('');
 
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         _method: 'PUT',
@@ -40,7 +34,6 @@ export function RentalProfile({ profile }) {
         rental_terms: profile?.rental_terms || '',
         is_active: profile?.is_active ?? true,
         primary_image: null,
-        features: features,
     });
 
     const rentalTypes = [
@@ -58,28 +51,6 @@ export function RentalProfile({ profile }) {
         { value: 'week', label: 'Per Week' },
         { value: 'month', label: 'Per Month' },
     ];
-
-    // Sync features when profile changes
-    useEffect(() => {
-        const profileFeatures = profile?.features?.map((f) => f.feature || f) || [];
-        setFeatures(profileFeatures);
-        setData('features', profileFeatures);
-    }, [profile?.features]);
-
-    const addFeature = () => {
-        if (newFeature.trim() && !features.includes(newFeature.trim())) {
-            const updatedFeatures = [...features, newFeature.trim()];
-            setFeatures(updatedFeatures);
-            setData('features', updatedFeatures);
-            setNewFeature('');
-        }
-    };
-
-    const removeFeature = (index) => {
-        const updatedFeatures = features.filter((_, i) => i !== index);
-        setFeatures(updatedFeatures);
-        setData('features', updatedFeatures);
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -283,74 +254,18 @@ export function RentalProfile({ profile }) {
                 </div>
             </div>
 
-            {/* Features Section */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Features</h3>
-                <div className="space-y-4">
-                    {/* Add Feature Input */}
-                    <div className="flex gap-2">
-                        <Input
-                            value={newFeature}
-                            onChange={(e) => setNewFeature(e.target.value)}
-                            onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    addFeature();
-                                }
-                            }}
-                            placeholder="Add a feature (e.g., WiFi, Parking, Furnished)"
-                            className="flex-1"
-                        />
-                        <Button
-                            type="button"
-                            onClick={addFeature}
-                            className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
-                        >
-                            <Plus className="h-4 w-4" />
-                        </Button>
-                    </div>
-
-                    {/* Features List */}
-                    {features.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
-                            {features.map((feature, index) => (
-                                <div
-                                    key={index}
-                                    className="flex items-center gap-2 rounded-full bg-[#13ec13]/10 px-4 py-2 text-sm font-semibold text-[#0d1b0d] dark:text-[#13ec13]"
-                                >
-                                    <span>{feature}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => removeFeature(index)}
-                                        className="rounded-full p-0.5 hover:bg-[#13ec13]/20 transition-colors"
-                                    >
-                                        <X className="h-3 w-3" />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    {features.length === 0 && (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                            No features added yet. Add features like "WiFi", "Parking", "Furnished", etc.
-                        </p>
-                    )}
-                </div>
-                <FormError error={errors.features || pageErrors?.features} className="mt-2" />
-            </div>
-
             {/* Rental Terms Section */}
             <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                 <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Rental Terms</h3>
                 <div>
-                    <Label htmlFor="rental_terms">Rental Terms (optional)</Label>
+                    <Label htmlFor="rental_terms">Terms & Conditions (optional)</Label>
                     <Textarea
                         id="rental_terms"
                         value={data.rental_terms}
                         onChange={(e) => setData('rental_terms', e.target.value)}
                         className="mt-1"
-                        rows={3}
-                        placeholder="Minimum 6 months lease, 2 months advance required..."
+                        rows={4}
+                        placeholder="Minimum 6 months lease, 2 months advance required, no pets allowed..."
                     />
                     <FormError error={errors.rental_terms || pageErrors?.rental_terms} className="mt-1" />
                 </div>
@@ -360,10 +275,12 @@ export function RentalProfile({ profile }) {
             <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                        <Switch
+                        <input
+                            type="checkbox"
                             id="is_active"
                             checked={data.is_active}
-                            onCheckedChange={(checked) => setData('is_active', checked)}
+                            onChange={(e) => setData('is_active', e.target.checked)}
+                            className="h-5 w-5 rounded border-gray-300 text-[#13ec13] focus:ring-[#13ec13]"
                         />
                         <Label htmlFor="is_active" className="cursor-pointer">
                             {data.is_active ? 'Listing is Active' : 'Listing is Inactive'}

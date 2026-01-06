@@ -4,28 +4,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
 import { Loader2, Upload, X } from 'lucide-react';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 
 export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
-    const [imagePreview, setImagePreview] = useState(null);
+    const [imagePreview, setImagePreview] = useState(image?.image_path || null);
     const fileInputRef = useRef(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         image: null,
         display_order: image?.display_order || 0,
     });
-
-    useEffect(() => {
-        if (image) {
-            setImagePreview(image.image_path);
-            setData('display_order', image.display_order || 0);
-        } else {
-            setImagePreview(null);
-            reset();
-        }
-    }, [image, isOpen]);
-
-    if (!isOpen) return null;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,19 +23,19 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
             post(route('user.dashboard.rentals.images.update', { rental: rentalId, image: image.id }), {
                 forceFormData: true,
                 onSuccess: () => {
-                    onClose();
                     reset();
                     setImagePreview(null);
+                    onClose();
                 },
             });
         } else {
-            // Create new image
-            post(route('user.dashboard.rentals.images.store', rentalId), {
+            // Add new image
+            post(route('user.dashboard.rentals.images.store', { rental: rentalId }), {
                 forceFormData: true,
                 onSuccess: () => {
-                    onClose();
                     reset();
                     setImagePreview(null);
+                    onClose();
                 },
             });
         }
@@ -66,10 +54,12 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
     };
 
     const handleClose = () => {
-        onClose();
         reset();
-        setImagePreview(null);
+        setImagePreview(image?.image_path || null);
+        onClose();
     };
+
+    if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -80,7 +70,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                     </h3>
                     <button
                         onClick={handleClose}
-                        className="rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        className="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                         <X className="h-5 w-5" />
                     </button>
@@ -91,31 +81,30 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                     <div>
                         <Label>Image</Label>
                         <div
-                            className="mt-2 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                            className="mt-2 flex h-48 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
                             onClick={() => fileInputRef.current?.click()}
                         >
                             {imagePreview ? (
-                                <div className="relative aspect-video">
-                                    <img src={imagePreview} alt="Preview" className="h-full w-full object-cover" />
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity hover:opacity-100">
-                                        <span className="text-sm font-semibold text-white">Click to change</span>
-                                    </div>
-                                </div>
+                                <img
+                                    src={imagePreview}
+                                    alt="Preview"
+                                    className="h-full w-full object-cover"
+                                />
                             ) : (
-                                <div className="flex aspect-video flex-col items-center justify-center text-gray-400">
-                                    <Upload className="mb-2 h-8 w-8" />
-                                    <span className="text-sm">Click to upload image</span>
-                                    <span className="mt-1 text-xs">Max 5MB, JPG/PNG/WebP</span>
+                                <div className="flex flex-col items-center text-gray-400">
+                                    <Upload className="mb-2 h-10 w-10" />
+                                    <span className="text-sm">Click to upload</span>
+                                    <span className="text-xs">Max 5MB (JPEG, PNG, WebP)</span>
                                 </div>
                             )}
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                            />
                         </div>
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="hidden"
-                        />
                         <FormError error={errors.image} className="mt-1" />
                     </div>
 
@@ -136,7 +125,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex justify-end gap-3 pt-4">
+                    <div className="flex justify-end gap-3 pt-2">
                         <Button type="button" variant="outline" onClick={handleClose}>
                             Cancel
                         </Button>

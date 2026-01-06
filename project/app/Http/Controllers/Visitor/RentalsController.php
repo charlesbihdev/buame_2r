@@ -16,8 +16,7 @@ class RentalsController extends Controller
     public function index(Request $request): Response
     {
         $query = Rental::with(['images', 'features', 'user'])
-            ->where('is_active', true)
-            ->where('is_verified', true);
+            ->where('is_active', true);
 
         // Search by name or location
         if ($request->has('search') && $request->search) {
@@ -50,17 +49,13 @@ class RentalsController extends Controller
 
         // Get counts by type for quick filters
         $typeCounts = Rental::where('is_active', true)
-            ->where('is_verified', true)
             ->selectRaw('type, COUNT(*) as count')
             ->groupBy('type')
             ->pluck('count', 'type')
             ->toArray();
 
-        // Paginate
-        $rentals = $query->paginate(12)->withQueryString();
-
-        // Format rentals for frontend
-        $formattedRentals = $rentals->map(function ($rental) {
+        // Paginate with formatting
+        $rentals = $query->paginate(12)->withQueryString()->through(function ($rental) {
             $primaryImage = $rental->images()->where('is_primary', true)->first()
                 ?? $rental->images()->orderBy('display_order')->first();
 
@@ -77,20 +72,9 @@ class RentalsController extends Controller
         });
 
         return Inertia::render('visitor/rentals/index', [
-            'rentals' => $formattedRentals,
-            'filters' => [
-                'search' => $request->search,
-                'type' => $request->type,
-                'location' => $request->location,
-                'sort' => $sort,
-            ],
+            'rentals' => $rentals,
+            'filters' => $request->only(['search', 'location', 'type', 'sort']),
             'typeCounts' => $typeCounts,
-            'pagination' => [
-                'current_page' => $rentals->currentPage(),
-                'last_page' => $rentals->lastPage(),
-                'per_page' => $rentals->perPage(),
-                'total' => $rentals->total(),
-            ],
         ]);
     }
 
@@ -101,7 +85,6 @@ class RentalsController extends Controller
     {
         $rental = Rental::with(['images', 'features', 'user', 'reviews'])
             ->where('is_active', true)
-            ->where('is_verified', true)
             ->findOrFail($id);
 
         // Increment views
@@ -140,4 +123,3 @@ class RentalsController extends Controller
         ]);
     }
 }
-

@@ -65,21 +65,16 @@ class CategoryProfileService
      */
     protected function getOrCreateHotel(User $user): Hotel
     {
-        $hotel = $user->hotels()->firstOrCreate(
+        return $user->hotels()->with(['amenities', 'features', 'images'])->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => '',
                 'type' => 'guest_house',
                 'price_per_night' => 0,
                 'location' => '',
-                'phone' => $user->phone ?? '',
+                'phone' => $user->phone,
             ]
         );
-
-        // Always load relationships to ensure they're available
-        $hotel->load(['features', 'images']);
-
-        return $hotel;
     }
 
     /**
@@ -91,7 +86,7 @@ class CategoryProfileService
             ['user_id' => $user->id],
             [
                 'company_name' => '',
-                'type' => 'okada',
+                'type' => 'okada_car',
                 'price_per_seat' => 0,
                 'seats_available' => 1,
                 'location' => '',
@@ -113,7 +108,7 @@ class CategoryProfileService
                 'price' => 0,
                 'period' => 'month',
                 'location' => '',
-                'phone' => $user->phone,
+                'phone' => $user->phone ?? '',
             ]
         );
     }

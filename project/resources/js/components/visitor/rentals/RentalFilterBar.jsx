@@ -1,36 +1,52 @@
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
-export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFilters }) {
-    const hasActiveFilters = filters?.type || (filters?.sort && filters.sort !== 'rating');
+export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFilters }) {
+    const hasActiveFilters = filters?.type || (filters?.sort && filters.sort !== 'newest');
+
+    const getTypeLabel = (type) => {
+        const labels = {
+            house: 'House',
+            equipment: 'Equipment',
+            tools: 'Tools',
+            land: 'Land',
+            commercial: 'Commercial',
+            vehicle: 'Vehicle',
+            store: 'Store',
+        };
+        return labels[type] || type;
+    };
 
     return (
         <div className="mb-8 flex flex-wrap items-center gap-3">
             <span className="font-semibold text-gray-700 dark:text-gray-300">Filter by:</span>
 
-            {/* Hotel Type Filter */}
+            {/* Rental Type Filter */}
             <select
                 value={filters?.type || 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
             >
                 <option value="all">All Types</option>
-                <option value="hotel">Hotel</option>
-                <option value="guest_house">Guest House</option>
-                <option value="lodge">Lodge</option>
-                <option value="short_stay">Short Stay</option>
+                <option value="house">House</option>
+                <option value="equipment">Equipment</option>
+                <option value="tools">Tools</option>
+                <option value="land">Land</option>
+                <option value="commercial">Commercial</option>
+                <option value="vehicle">Vehicle</option>
+                <option value="store">Store</option>
             </select>
 
             {/* Sort Filter */}
             <select
-                value={filters?.sort || 'rating'}
+                value={filters?.sort || 'newest'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
             >
-                <option value="rating">Sort: Top Rated</option>
+                <option value="newest">Sort: Newest</option>
                 <option value="price_low">Price: Low to High</option>
                 <option value="price_high">Price: High to Low</option>
-                <option value="newest">Newest First</option>
+                <option value="top_rated">Most Viewed</option>
             </select>
 
             {/* Clear Filters Button */}
@@ -43,13 +59,11 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
 
             {/* Results Count */}
             <div className="ml-auto text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-bold text-[#0d1b0d] dark:text-white">{totalCount}</span> hotels found
+                <span className="font-bold text-[#0d1b0d] dark:text-white">{totalCount}</span> rentals found
             </div>
         </div>
     );
 }
-
-
 
 
 

@@ -1,12 +1,10 @@
+import { Button } from '@/components/ui/button';
+import { RentalImageGallery } from '@/components/visitor/rentals/RentalImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Phone, Mail, MessageCircle, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { ArrowLeft, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 
 export default function RentalView({ rental }) {
-    const [selectedImage, setSelectedImage] = useState(0);
-
     if (!rental) {
         return (
             <VisitorLayout>
@@ -46,8 +44,6 @@ export default function RentalView({ rental }) {
     const whatsappNumber = rental.whatsapp || rental.phone;
     const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=Hello, I'm interested in renting ${rental.name}.`;
 
-    const displayImages = rental.images && rental.images.length > 0 ? rental.images : (rental.primary_image ? [rental.primary_image] : []);
-
     return (
         <VisitorLayout>
             <Head title={`${rental.name} - ${getTypeLabel(rental.type)} Rental | BUAME 2R`} />
@@ -64,34 +60,7 @@ export default function RentalView({ rental }) {
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         {/* Image Gallery */}
-                        {displayImages.length > 0 && (
-                            <div className="mb-6">
-                                <div className="relative h-96 overflow-hidden rounded-xl bg-gray-200">
-                                    <img
-                                        src={displayImages[selectedImage]}
-                                        alt={rental.name}
-                                        className="h-full w-full object-cover"
-                                    />
-                                </div>
-                                {displayImages.length > 1 && (
-                                    <div className="mt-4 flex gap-2 overflow-x-auto">
-                                        {displayImages.map((img, idx) => (
-                                            <button
-                                                key={idx}
-                                                onClick={() => setSelectedImage(idx)}
-                                                className={`h-20 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
-                                                    selectedImage === idx
-                                                        ? 'border-[#13ec13]'
-                                                        : 'border-gray-200 dark:border-gray-700'
-                                                }`}
-                                            >
-                                                <img src={img} alt={`${rental.name} ${idx + 1}`} className="h-full w-full object-cover" />
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )}
+                        <RentalImageGallery images={rental.images} primaryImage={rental.primary_image} rentalName={rental.name} />
 
                         {/* Header */}
                         <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
@@ -163,7 +132,7 @@ export default function RentalView({ rental }) {
                                     {rental.phone && (
                                         <a
                                             href={`tel:${rental.phone}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:border-gray-700 dark:bg-gray-800"
                                         >
                                             <Phone className="h-5 w-5 text-[#13ec13]" />
                                             <span className="font-semibold text-[#0d1b0d] dark:text-white">{rental.phone}</span>
@@ -174,7 +143,7 @@ export default function RentalView({ rental }) {
                                             href={whatsappUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:border-gray-700 dark:bg-gray-800"
                                         >
                                             <MessageCircle className="h-5 w-5 text-[#13ec13]" />
                                             <span className="font-semibold text-[#0d1b0d] dark:text-white">WhatsApp</span>
@@ -183,7 +152,7 @@ export default function RentalView({ rental }) {
                                     {rental.email && (
                                         <a
                                             href={`mailto:${rental.email}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:border-gray-700 dark:bg-gray-800"
                                         >
                                             <Mail className="h-5 w-5 text-[#13ec13]" />
                                             <span className="font-semibold text-[#0d1b0d] dark:text-white">{rental.email}</span>
@@ -195,10 +164,7 @@ export default function RentalView({ rental }) {
                             {/* Action Buttons */}
                             <div className="space-y-3">
                                 {whatsappNumber && (
-                                    <Button
-                                        asChild
-                                        className="w-full bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
-                                    >
+                                    <Button asChild className="w-full bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
                                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                             <MessageCircle className="mr-2 h-5 w-5" />
                                             Contact via WhatsApp
