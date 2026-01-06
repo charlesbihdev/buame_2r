@@ -1,28 +1,20 @@
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, Home } from 'lucide-react';
 import { useState } from 'react';
 
-export function HotelImageGallery({ images }) {
+export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental' }) {
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-    if (!images || images.length === 0) {
+    // Combine primary image with other images
+    const allImages = primaryImage ? [primaryImage, ...(images || [])] : images || [];
+
+    if (allImages.length === 0) {
         return (
-            <div className="rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center dark:border-gray-700 dark:bg-gray-900">
-                <p className="text-gray-500 dark:text-gray-400">No images available yet</p>
+            <div className="mb-6 flex h-96 items-center justify-center overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800">
+                <Home className="h-24 w-24 text-gray-400" />
             </div>
         );
     }
-
-    // Sort images: primary first, then by display_order
-    const sortedImages = [...images].sort((a, b) => {
-        if (a.is_primary) return -1;
-        if (b.is_primary) return 1;
-        return a.display_order - b.display_order;
-    });
-
-    const primaryImage = sortedImages.find((img) => img.is_primary) || sortedImages[0];
-    const otherImages = sortedImages.filter((img) => !img.is_primary);
 
     const openLightbox = (index) => {
         setSelectedIndex(index);
@@ -34,25 +26,22 @@ export function HotelImageGallery({ images }) {
     };
 
     const nextSlide = () => {
-        setCurrentSlideIndex((prev) => (prev + 1) % sortedImages.length);
+        setCurrentSlideIndex((prev) => (prev + 1) % allImages.length);
     };
 
     const prevSlide = () => {
-        setCurrentSlideIndex((prev) => (prev - 1 + sortedImages.length) % sortedImages.length);
+        setCurrentSlideIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
     };
 
     return (
         <>
             {/* Main Image Display */}
             <div className="mb-4 h-96 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800">
-                {primaryImage ? (
-                    <button
-                        onClick={() => openLightbox(0)}
-                        className="group relative h-full w-full"
-                    >
+                {allImages[0] ? (
+                    <button onClick={() => openLightbox(0)} className="group relative h-full w-full">
                         <img
-                            src={primaryImage.image_path}
-                            alt={primaryImage.is_primary ? 'Primary' : 'Hotel'}
+                            src={allImages[0]}
+                            alt={rentalName}
                             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/40">
@@ -61,23 +50,23 @@ export function HotelImageGallery({ images }) {
                     </button>
                 ) : (
                     <div className="flex h-full w-full items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">No image available</span>
+                        <Home className="h-24 w-24 text-gray-400" />
                     </div>
                 )}
             </div>
 
             {/* Thumbnail Grid */}
-            {otherImages.length > 0 && (
+            {allImages.length > 1 && (
                 <div className="grid grid-cols-4 gap-2">
-                    {otherImages.slice(0, 4).map((image, index) => (
+                    {allImages.slice(1, 5).map((image, index) => (
                         <button
-                            key={image.id}
+                            key={index}
                             onClick={() => openLightbox(index + 1)}
                             className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
                         >
                             <img
-                                src={image.image_path}
-                                alt={`Hotel image ${index + 2}`}
+                                src={image}
+                                alt={`${rentalName} ${index + 2}`}
                                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                             />
                             <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/40">
@@ -85,17 +74,17 @@ export function HotelImageGallery({ images }) {
                             </div>
                         </button>
                     ))}
-                    {otherImages.length > 4 && (
+                    {allImages.length > 5 && (
                         <button
                             onClick={() => openLightbox(5)}
                             className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
                         >
                             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                                <span className="text-sm font-semibold text-white">+{otherImages.length - 4}</span>
+                                <span className="text-sm font-semibold text-white">+{allImages.length - 5}</span>
                             </div>
-                            {otherImages[4] && (
+                            {allImages[5] && (
                                 <img
-                                    src={otherImages[4].image_path}
+                                    src={allImages[5]}
                                     alt="More images"
                                     className="h-full w-full object-cover opacity-50"
                                 />
@@ -117,7 +106,7 @@ export function HotelImageGallery({ images }) {
                     </button>
 
                     {/* Previous Button */}
-                    {sortedImages.length > 1 && (
+                    {allImages.length > 1 && (
                         <button
                             onClick={prevSlide}
                             className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -128,10 +117,10 @@ export function HotelImageGallery({ images }) {
 
                     {/* Main Image */}
                     <div className="relative max-h-[85vh] max-w-5xl">
-                        {sortedImages[currentSlideIndex]?.image_path ? (
+                        {allImages[currentSlideIndex] ? (
                             <img
-                                src={sortedImages[currentSlideIndex].image_path}
-                                alt={`Hotel image ${currentSlideIndex + 1}`}
+                                src={allImages[currentSlideIndex]}
+                                alt={`${rentalName} ${currentSlideIndex + 1}`}
                                 className="max-h-[85vh] w-full rounded-lg object-contain"
                             />
                         ) : (
@@ -143,13 +132,13 @@ export function HotelImageGallery({ images }) {
                         {/* Image Counter */}
                         <div className="mt-4 text-center">
                             <p className="text-sm text-gray-400">
-                                {currentSlideIndex + 1} / {sortedImages.length}
+                                {currentSlideIndex + 1} / {allImages.length}
                             </p>
                         </div>
                     </div>
 
                     {/* Next Button */}
-                    {sortedImages.length > 1 && (
+                    {allImages.length > 1 && (
                         <button
                             onClick={nextSlide}
                             className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -159,11 +148,11 @@ export function HotelImageGallery({ images }) {
                     )}
 
                     {/* Thumbnail Navigation */}
-                    {sortedImages.length > 1 && (
+                    {allImages.length > 1 && (
                         <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/50 p-2 backdrop-blur-sm">
-                            {sortedImages.map((image, index) => (
+                            {allImages.map((image, index) => (
                                 <button
-                                    key={image.id}
+                                    key={index}
                                     onClick={() => setCurrentSlideIndex(index)}
                                     className={`h-2 w-2 rounded-full transition-all ${
                                         index === currentSlideIndex ? 'w-8 bg-[#13ec13]' : 'bg-white/50 hover:bg-white/75'
@@ -177,8 +166,6 @@ export function HotelImageGallery({ images }) {
         </>
     );
 }
-
-
 
 
 

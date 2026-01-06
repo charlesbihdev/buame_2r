@@ -78,8 +78,6 @@ class RentalsController extends Controller
             'period' => ['required', 'string', 'in:day,week,month'],
             'description' => ['nullable', 'string'],
             'rental_terms' => ['nullable', 'string'],
-            'features' => ['nullable', 'array'],
-            'features.*' => ['required', 'string', 'max:255'],
             'is_active' => ['boolean'],
             'primary_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
         ]);
@@ -106,20 +104,10 @@ class RentalsController extends Controller
             ]);
         }
 
-        // Handle features
-        $features = $validated['features'] ?? [];
-        unset($validated['features']);
-
         // Remove primary_image from validated data before updating
         unset($validated['primary_image']);
 
         $rental->update($validated);
-
-        // Sync features
-        $rental->features()->delete();
-        foreach ($features as $feature) {
-            $rental->features()->create(['feature' => $feature]);
-        }
 
         return back()->with('success', 'Rental updated successfully.');
     }
@@ -246,5 +234,40 @@ class RentalsController extends Controller
         $image->update(['is_primary' => true]);
 
         return back()->with('success', 'Primary image updated.');
+    }
+
+    // Feature Management Methods
+    public function storeFeature(Request $request, Rental $rental): RedirectResponse
+    {
+        $user = Auth::user();
+        if ($rental->user_id !== $user->id) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'feature' => ['required', 'string', 'max:100'],
+        ]);
+
+        // Check if feature already exists
+        $exists = $rental->features()->where('feature', $validated['feature'])->exists();
+        if ($exists) {
+            return back()->with('error', 'This feature already exists.');
+        }
+
+        $rental->features()->create($validated);
+
+        return back()->with('success', 'Feature added successfully.');
+    }
+
+    public function destroyFeature(Rental $rental, \App\Models\RentalFeature $feature): RedirectResponse
+    {
+        $user = Auth::user();
+        if ($rental->user_id !== $user->id) {
+            abort(403);
+        }
+
+        $feature->delete();
+
+        return back()->with('success', 'Feature removed successfully.');
     }
 }

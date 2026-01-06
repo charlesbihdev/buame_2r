@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
-import { Menu, X, Bell, LogOut, User, Image as ImageIcon } from 'lucide-react';
+import { Menu, X, Bell, LogOut, User, Image as ImageIcon, Building2, Car, Home, ListChecks } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function DashboardLayout({ user, children, activeCategory, activeSection }) {
@@ -17,18 +17,18 @@ export default function DashboardLayout({ user, children, activeCategory, active
                 ];
             case 'hotels':
                 return [
-                    { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'profile', label: 'Profile', icon: Building2 },
                     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
-                    { id: 'settings', label: 'Settings', icon: User },
                 ];
             case 'transport':
                 return [
-                    { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'profile', label: 'Profile', icon: Car },
                     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
                 ];
             case 'rentals':
                 return [
-                    { id: 'profile', label: 'Profile', icon: User },
+                    { id: 'profile', label: 'Profile', icon: Home },
+                    { id: 'features', label: 'Features', icon: ListChecks },
                     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
                 ];
             default:
@@ -37,6 +37,10 @@ export default function DashboardLayout({ user, children, activeCategory, active
     };
 
     const navItems = getCategoryNavItems();
+
+    const handleNavClick = (section) => {
+        router.get(route('user.dashboard.index'), { section }, { preserveState: true, preserveScroll: true, only: ['activeSection', 'categoryData'] });
+    };
 
     return (
         <div className="flex h-screen w-full overflow-hidden bg-[#f6f8f6] dark:bg-[#102210]">
@@ -65,11 +69,10 @@ export default function DashboardLayout({ user, children, activeCategory, active
                                 {navItems.map((item) => {
                                     const Icon = item.icon;
                                     const isActive = activeSection === item.id;
-                                    const href = activeCategory ? `/user/dashboard/${activeCategory}?section=${item.id}` : '#';
                                     return (
-                                        <Link
+                                        <button
                                             key={item.id}
-                                            href={href}
+                                            onClick={() => handleNavClick(item.id)}
                                             className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                                                 isActive
                                                     ? 'bg-[#e7f3e7] dark:bg-[#254225] text-[#0d1b0d] dark:text-white'
@@ -78,7 +81,7 @@ export default function DashboardLayout({ user, children, activeCategory, active
                                         >
                                             <Icon className="h-5 w-5" />
                                             <span>{item.label}</span>
-                                        </Link>
+                                        </button>
                                     );
                                 })}
                             </nav>

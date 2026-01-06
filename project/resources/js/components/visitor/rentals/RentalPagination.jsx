@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
 
-export function HotelPagination({ hotels, filters }) {
-    if (hotels.last_page <= 1) return null;
+export function RentalPagination({ rentals, filters }) {
+    if (!rentals || rentals.last_page <= 1) {
+        return null;
+    }
 
     const buildPageUrl = (page) => {
         const params = new URLSearchParams();
@@ -12,15 +14,15 @@ export function HotelPagination({ hotels, filters }) {
         if (filters?.type) params.set('type', filters.type);
         if (filters?.sort) params.set('sort', filters.sort);
 
-        return `/hotels?${params.toString()}`;
+        return `/rentals?${params.toString()}`;
     };
 
     return (
         <div className="mt-12 flex items-center justify-center gap-2">
             {/* Previous Button */}
-            {hotels.prev_page_url ? (
+            {rentals.prev_page_url ? (
                 <Button asChild variant="outline" size="sm">
-                    <Link href={hotels.prev_page_url} preserveState preserveScroll>
+                    <Link href={rentals.prev_page_url} preserveState preserveScroll>
                         Previous
                     </Link>
                 </Button>
@@ -32,14 +34,14 @@ export function HotelPagination({ hotels, filters }) {
 
             {/* Page Numbers */}
             <div className="flex gap-1">
-                {Array.from({ length: hotels.last_page }, (_, i) => i + 1).map((page) => {
+                {Array.from({ length: rentals.last_page }, (_, i) => i + 1).map((page) => {
                     // Show first page, last page, current page, and pages around current
                     const showPage =
-                        page === 1 || page === hotels.last_page || (page >= hotels.current_page - 1 && page <= hotels.current_page + 1);
+                        page === 1 || page === rentals.last_page || (page >= rentals.current_page - 1 && page <= rentals.current_page + 1);
 
                     if (!showPage) {
                         // Show ellipsis
-                        if (page === hotels.current_page - 2 || page === hotels.current_page + 2) {
+                        if (page === rentals.current_page - 2 || page === rentals.current_page + 2) {
                             return (
                                 <span key={page} className="px-3 py-1 text-sm text-gray-500">
                                     ...
@@ -49,7 +51,7 @@ export function HotelPagination({ hotels, filters }) {
                         return null;
                     }
 
-                    const isActive = page === hotels.current_page;
+                    const isActive = page === rentals.current_page;
                     return (
                         <Button
                             key={page}
@@ -71,9 +73,9 @@ export function HotelPagination({ hotels, filters }) {
             </div>
 
             {/* Next Button */}
-            {hotels.next_page_url ? (
+            {rentals.next_page_url ? (
                 <Button asChild variant="outline" size="sm">
-                    <Link href={hotels.next_page_url} preserveState preserveScroll>
+                    <Link href={rentals.next_page_url} preserveState preserveScroll>
                         Next
                     </Link>
                 </Button>
@@ -85,8 +87,4 @@ export function HotelPagination({ hotels, filters }) {
         </div>
     );
 }
-
-
-
-
 

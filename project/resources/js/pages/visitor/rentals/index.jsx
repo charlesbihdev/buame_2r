@@ -1,10 +1,12 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
-import { Search, MapPin, Home, Wrench, Tractor, Car, Store } from 'lucide-react';
-import { Head, Link, router } from '@inertiajs/react';
+import { Search, MapPin, Home, Wrench, Tractor, Car, Store, Building2, Map } from 'lucide-react';
+import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
-import { Pagination } from '@/components/ui/pagination';
+import { RentalCard } from '@/components/visitor/rentals/RentalCard';
+import { RentalFilterBar } from '@/components/visitor/rentals/RentalFilterBar';
+import { RentalPagination } from '@/components/visitor/rentals/RentalPagination';
 
-export default function Rentals({ rentals, filters, typeCounts, pagination }) {
+export default function Rentals({ rentals, filters, typeCounts }) {
     const [searchQuery, setSearchQuery] = useState(filters?.search || '');
     const [location, setLocation] = useState(filters?.location || '');
 
@@ -25,14 +27,46 @@ export default function Rentals({ rentals, filters, typeCounts, pagination }) {
         );
     };
 
+    const handleFilterChange = (filterName, value) => {
+        router.get(
+            '/rentals',
+            {
+                search: searchQuery,
+                location: location,
+                [filterName]: value === 'all' ? null : value,
+                ...(filterName !== 'type' && filters?.type && { type: filters.type }),
+                ...(filterName !== 'sort' && filters?.sort && { sort: filters.sort }),
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+            }
+        );
+    };
+
+    const handleClearFilters = () => {
+        router.get(
+            '/rentals',
+            {
+                search: searchQuery,
+                location: location,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+            }
+        );
+    };
+
     const handleTypeFilter = (type) => {
         router.get(
             '/rentals',
             {
                 search: searchQuery,
                 location: location,
-                type: type === 'all' ? null : type,
+                type: type === 'all' || type === null ? null : type,
                 sort: filters?.sort,
+                page: null,
             },
             {
                 preserveState: true,
@@ -41,48 +75,19 @@ export default function Rentals({ rentals, filters, typeCounts, pagination }) {
         );
     };
 
-    const handleSort = (sort) => {
-        router.get(
-            '/rentals',
-            {
-                search: searchQuery,
-                location: location,
-                type: filters?.type,
-                sort: sort,
-            },
-            {
-                preserveState: true,
-                preserveScroll: true,
-            }
-        );
-    };
-
-    const getTypeLabel = (type) => {
-        const labels = {
-            house: 'House',
-            equipment: 'Equipment',
-            tools: 'Tools',
-            land: 'Land',
-            commercial: 'Commercial',
-            vehicle: 'Vehicle',
-            store: 'Store',
-        };
-        return labels[type] || type;
-    };
-
-    const typeIcons = {
-        house: Home,
-        equipment: Tractor,
-        tools: Wrench,
-        land: Tractor,
-        commercial: Store,
-        vehicle: Car,
-        store: Store,
-    };
-
-    const getPeriodLabel = (period) => {
-        return period === 'day' ? '/day' : period === 'week' ? '/week' : '/month';
-    };
+    // Quick category buttons with real counts
+    const quickCategories = [
+        { type: 'house', icon: Home, label: 'House' },
+        { type: 'tools', icon: Wrench, label: 'Tools' },
+        { type: 'equipment', icon: Tractor, label: 'Equipment' },
+        { type: 'vehicle', icon: Car, label: 'Vehicles' },
+        { type: 'store', icon: Store, label: 'Store' },
+        { type: 'land', icon: Map, label: 'Land' },
+        { type: 'commercial', icon: Building2, label: 'Commercial' },
+    ].map((cat) => ({
+        ...cat,
+        count: typeCounts?.[cat.type] || 0,
+    }));
 
     return (
         <VisitorLayout>
@@ -128,22 +133,22 @@ export default function Rentals({ rentals, filters, typeCounts, pagination }) {
 
                         {/* Quick Categories */}
                         <div className="flex flex-wrap justify-center gap-3">
-                            {Object.entries(typeCounts || {}).map(([type, count]) => {
-                                const Icon = typeIcons[type] || Home;
+                            {quickCategories.map((cat) => {
+                                const isActive = filters?.type === cat.type;
                                 return (
                                     <button
-                                        key={type}
-                                        onClick={() => handleTypeFilter(type)}
+                                        key={cat.type}
+                                        onClick={() => handleTypeFilter(isActive ? null : cat.type)}
                                         className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
-                                            filters?.type === type
+                                            isActive
                                                 ? 'border-[#13ec13] bg-[#13ec13]/10'
                                                 : 'border-[#13ec13]/30 bg-white hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:bg-[#162816]'
                                         }`}
                                     >
-                                        <Icon className="h-5 w-5 text-[#13ec13]" />
-                                        <span className="text-sm dark:text-white">{getTypeLabel(type)}</span>
+                                        <cat.icon className="h-5 w-5 text-[#13ec13]" />
+                                        <span className="text-sm dark:text-white">{cat.label}</span>
                                         <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
-                                            {count}
+                                            {cat.count}
                                         </span>
                                     </button>
                                 );
@@ -155,138 +160,46 @@ export default function Rentals({ rentals, filters, typeCounts, pagination }) {
 
             {/* Main Content */}
             <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
-                {/* Filters Row */}
-                <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex flex-wrap gap-2">
-                        {['all', 'house', 'equipment', 'tools', 'vehicle', 'land', 'store', 'commercial'].map((filter) => (
+                {/* Filter Bar Component */}
+                <RentalFilterBar
+                    filters={filters}
+                    totalCount={rentals?.total || 0}
+                    onFilterChange={handleFilterChange}
+                    onClearFilters={handleClearFilters}
+                />
+
+                {/* Type Filter Buttons */}
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {['All', 'House', 'Equipment', 'Tools', 'Vehicles', 'Land', 'Store', 'Commercial'].map((filter) => {
+                        const filterType = filter === 'All' ? null : filter.toLowerCase() === 'vehicles' ? 'vehicle' : filter.toLowerCase();
+                        const isActive = filter === 'All' ? !filters?.type : filters?.type === filterType;
+                        return (
                             <button
                                 key={filter}
-                                onClick={() => handleTypeFilter(filter)}
+                                onClick={() => handleTypeFilter(filterType)}
                                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                                    (filter === 'all' && !filters?.type) || filters?.type === filter
+                                    isActive
                                         ? 'bg-[#13ec13] text-[#0d1b0d]'
                                         : 'border border-gray-300 bg-white hover:border-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white'
                                 }`}
                             >
-                                {filter === 'all' ? 'All' : getTypeLabel(filter)}
+                                {filter}
                             </button>
-                        ))}
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <select
-                            value={filters?.sort || 'newest'}
-                            onChange={(e) => handleSort(e.target.value)}
-                            className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
-                        >
-                            <option value="newest">Newest</option>
-                            <option value="price_low">Price: Low to High</option>
-                            <option value="price_high">Price: High to Low</option>
-                            <option value="top_rated">Most Viewed</option>
-                        </select>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                            <span className="font-bold text-[#0d1b0d] dark:text-white">{pagination?.total || 0}</span> rentals available
-                        </div>
-                    </div>
+                        );
+                    })}
                 </div>
 
-                {/* Rentals Grid - 4 columns */}
-                {rentals && rentals.length > 0 ? (
+                {/* Rentals Grid */}
+                {rentals && rentals.data && rentals.data.length > 0 ? (
                     <>
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                            {rentals.map((rental) => (
-                                <div
-                                    key={rental.id}
-                                    className="group overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-[#13ec13]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[#162816]"
-                                >
-                                    {/* Image */}
-                                    <div className="relative h-48 overflow-hidden bg-gray-200">
-                                        {rental.image ? (
-                                            <img
-                                                src={rental.image}
-                                                alt={rental.name}
-                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                            />
-                                        ) : (
-                                            <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
-                                                <Home className="h-12 w-12" />
-                                            </div>
-                                        )}
-                                        <div className="absolute right-3 top-3 rounded-full bg-[#13ec13] px-3 py-1 text-xs font-bold text-[#0d1b0d]">
-                                            {getTypeLabel(rental.type)}
-                                        </div>
-                                    </div>
-
-                                    {/* Content */}
-                                    <div className="p-4">
-                                        <h3 className="mb-2 text-lg font-bold text-[#0d1b0d] dark:text-white">{rental.name}</h3>
-
-                                        <div className="mb-3 flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-                                            <MapPin className="h-4 w-4" />
-                                            {rental.location}
-                                        </div>
-
-                                        {/* Features */}
-                                        {rental.features && rental.features.length > 0 && (
-                                            <div className="mb-4 flex flex-wrap gap-1">
-                                                {rental.features.slice(0, 3).map((feature, idx) => (
-                                                    <span
-                                                        key={idx}
-                                                        className="rounded-md bg-[#13ec13]/10 px-2 py-0.5 text-xs font-semibold text-[#0d1b0d] dark:text-[#13ec13]"
-                                                    >
-                                                        {feature}
-                                                    </span>
-                                                ))}
-                                                {rental.features.length > 3 && (
-                                                    <span className="rounded-md bg-[#13ec13]/10 px-2 py-0.5 text-xs font-semibold text-[#0d1b0d] dark:text-[#13ec13]">
-                                                        +{rental.features.length - 3}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {/* Price & Action */}
-                                        <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
-                                            <div>
-                                                <div className="text-xl font-black text-[#0d1b0d] dark:text-[#13ec13]">
-                                                    ₵{parseFloat(rental.price).toLocaleString()}
-                                                </div>
-                                                <div className="text-xs text-gray-500">{getPeriodLabel(rental.period)}</div>
-                                            </div>
-                                            <Link
-                                                href={`/rentals/${rental.id}`}
-                                                className="rounded-lg bg-[#13ec13] px-4 py-2 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
-                                            >
-                                                View Details
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
+                            {rentals.data.map((rental) => (
+                                <RentalCard key={rental.id} rental={rental} />
                             ))}
                         </div>
 
                         {/* Pagination */}
-                        {pagination && pagination.last_page > 1 && (
-                            <div className="mt-12">
-                                <Pagination
-                                    currentPage={pagination.current_page}
-                                    totalPages={pagination.last_page}
-                                    onPageChange={(page) => {
-                                        router.get(
-                                            '/rentals',
-                                            {
-                                                ...filters,
-                                                page: page,
-                                            },
-                                            {
-                                                preserveState: true,
-                                                preserveScroll: true,
-                                            }
-                                        );
-                                    }}
-                                    mode="pagination"
-                                />
-                            </div>
-                        )}
+                        <RentalPagination rentals={rentals} filters={filters} />
                     </>
                 ) : (
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[#162816]">
