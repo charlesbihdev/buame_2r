@@ -92,3 +92,5 @@ export function HotelPagination({ hotels, filters }) {
 
 
 
+
+

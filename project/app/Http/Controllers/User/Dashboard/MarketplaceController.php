@@ -37,7 +37,6 @@ class MarketplaceController extends Controller
     {
         $user = Auth::user();
         $store = $user->store;
-
         if (!$store) {
             return back()->withErrors(['store' => 'Store not found. Please set up your store first.']);
         }
@@ -48,7 +47,6 @@ class MarketplaceController extends Controller
                 'limit' => 'You have reached your product limit (' . $store->product_limit . '). Please upgrade your tier to add more products.',
             ]);
         }
-
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:electronics,furniture,food,agriculture,clothes,others'],
@@ -59,15 +57,17 @@ class MarketplaceController extends Controller
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'description' => ['nullable', 'string'],
-            'delivery_available' => ['boolean'],
+            'delivery_available' => ['nullable', 'boolean'],
             'warranty' => ['nullable', 'string', 'max:255'],
-            'images' => ['nullable', 'array', 'max:10'],
+            'images' => ['required', 'array', 'max:10'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
         ]);
 
+
+
         $validated['user_id'] = $user->id;
         $validated['store_id'] = $store->id;
-        $validated['delivery_available'] = $request->has('delivery_available') ? (bool) $request->delivery_available : false;
+        $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
 
         // Remove images from validated data before creating product
         $images = $request->file('images', []);
@@ -86,8 +86,10 @@ class MarketplaceController extends Controller
             ]);
         }
 
-        return redirect()->route('user.dashboard.index')
-            ->with('success', 'Product created successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'marketplace',
+            'section' => 'products',
+        ])->with('success', 'Product created successfully.');
     }
 
     /**
@@ -119,7 +121,7 @@ class MarketplaceController extends Controller
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'description' => ['nullable', 'string'],
-            'delivery_available' => ['boolean'],
+            'delivery_available' => ['nullable', 'boolean'],
             'warranty' => ['nullable', 'string', 'max:255'],
             'images' => ['nullable', 'array', 'max:10'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
@@ -127,7 +129,7 @@ class MarketplaceController extends Controller
             'remove_images.*' => ['integer', 'exists:product_images,id'],
         ]);
 
-        $validated['delivery_available'] = $request->has('delivery_available') ? (bool) $request->delivery_available : false;
+        $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
 
         // Remove images and remove_images from validated data
         $newImages = $request->file('images', []);
@@ -168,8 +170,10 @@ class MarketplaceController extends Controller
             }
         }
 
-        return redirect()->route('user.dashboard.index')
-            ->with('success', 'Product updated successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'marketplace',
+            'section' => 'products',
+        ])->with('success', 'Product updated successfully.');
     }
 
     /**

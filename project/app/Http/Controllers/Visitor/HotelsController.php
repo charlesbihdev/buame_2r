@@ -124,3 +124,5 @@ class HotelsController extends Controller
 
 
 
+
+
