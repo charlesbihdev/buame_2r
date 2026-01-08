@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, router } from '@inertiajs/react';
-import { Menu, X, Bell, LogOut, User, Image as ImageIcon, Building2, Car, Home, ListChecks } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Link } from '@inertiajs/react';
+import { Menu, X, Bell, LogOut, User, Image as ImageIcon, Building2, Car, Home, ListChecks, Package, Store } from 'lucide-react';
+import { navigateToSection } from '@/services/dashboardNavigation';
 
-export default function DashboardLayout({ user, children, activeCategory, activeSection }) {
+export default function DashboardLayout({ user, children, activeCategory, activeSection, categoryData }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const getCategoryNavItems = () => {
@@ -31,6 +31,11 @@ export default function DashboardLayout({ user, children, activeCategory, active
                     { id: 'features', label: 'Features', icon: ListChecks },
                     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
                 ];
+            case 'marketplace':
+                return [
+                    { id: 'store', label: 'Store Settings', icon: Store },
+                    { id: 'products', label: 'Products', icon: Package },
+                ];
             default:
                 return [];
         }
@@ -39,7 +44,7 @@ export default function DashboardLayout({ user, children, activeCategory, active
     const navItems = getCategoryNavItems();
 
     const handleNavClick = (section) => {
-        router.get(route('user.dashboard.index'), { section }, { preserveState: true, preserveScroll: true, only: ['activeSection', 'categoryData'] });
+        navigateToSection(section);
     };
 
     return (
@@ -121,7 +126,12 @@ export default function DashboardLayout({ user, children, activeCategory, active
                         {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </button>
                     <span className="text-lg font-bold text-[#0d1b0d] dark:text-white">BUAME 2R</span>
-                    <div className="h-6 w-6" />
+                    <div className="flex items-center gap-2">
+                        <button className="relative rounded-full p-2 hover:bg-[#f6f8f6] dark:hover:bg-[#1f3d1f] transition-colors">
+                            <Bell className="h-5 w-5 text-[#4c9a4c] dark:text-[#8fcc8f]" />
+                            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-[#1a331a]" />
+                        </button>
+                    </div>
                 </header>
 
                 {/* Desktop Header */}

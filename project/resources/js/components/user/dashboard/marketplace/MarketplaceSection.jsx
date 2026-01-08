@@ -1,30 +1,25 @@
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MyProducts } from './MyProducts';
 import { StoreSettings } from './StoreSettings';
+import { ProductFormModal } from './ProductFormModal';
 
-export function MarketplaceSection({ activeTab, onTabChange, data }) {
+export function MarketplaceSection({ activeTab, data }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <div className="space-y-6">
-            <div>
-                <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">Marketplace Dashboard</h2>
-                <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your products and store settings</p>
-            </div>
+            {activeTab === 'store' ? (
+                <StoreSettings store={data?.store} tiers={data?.tiers} />
+            ) : (
+                <MyProducts
+                    products={data?.products || []}
+                    store={data?.store}
+                    tiers={data?.tiers}
+                    onAddProduct={() => setIsModalOpen(true)}
+                />
+            )}
 
-            <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="products" activeValue={activeTab}>My Products</TabsTrigger>
-                    <TabsTrigger value="store" activeValue={activeTab}>Store Settings</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="products" activeValue={activeTab} className="mt-6">
-                    <MyProducts products={data?.products || []} />
-                </TabsContent>
-
-                <TabsContent value="store" activeValue={activeTab} className="mt-6">
-                    <StoreSettings />
-                </TabsContent>
-            </Tabs>
+            <ProductFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} store={data?.store} />
         </div>
     );
 }

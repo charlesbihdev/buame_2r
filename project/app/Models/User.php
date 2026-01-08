@@ -86,6 +86,11 @@ class User extends Authenticatable
         return $this->hasMany(MarketplaceProduct::class);
     }
 
+    public function store()
+    {
+        return $this->hasOne(Store::class);
+    }
+
     public function jobs()
     {
         return $this->hasMany(Job::class);

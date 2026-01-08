@@ -6,12 +6,15 @@ use App\Http\Controllers\User\Dashboard\HotelsController;
 use App\Http\Controllers\User\Dashboard\JobsController;
 use App\Http\Controllers\User\Dashboard\MarketplaceController;
 use App\Http\Controllers\User\Dashboard\RentalsController;
+use App\Http\Controllers\User\Dashboard\StoreController;
 use App\Http\Controllers\User\Dashboard\TransportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::post('/switch-category', [DashboardController::class, 'switchCategory'])->name('switch-category');
+
+    // Payment route for adding new categories from dashboard
+    Route::post('/payment/initialize', [\App\Http\Controllers\PaymentController::class, 'processPayment'])->name('payment.initialize');
 
     // Artisans routes
     Route::resource('artisans', ArtisansController::class)->except(['show']);
@@ -23,6 +26,11 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Marketplace routes
     Route::resource('marketplace', MarketplaceController::class)->except(['show']);
+
+    // Store routes
+    Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
+    Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
+    Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
 
     // Hotels routes
     Route::resource('hotels', HotelsController::class)->except(['show']);

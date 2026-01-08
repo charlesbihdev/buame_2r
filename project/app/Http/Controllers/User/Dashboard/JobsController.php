@@ -12,14 +12,10 @@ use Inertia\Response;
 
 class JobsController extends Controller
 {
-    public function index(): Response
+    public function index(): RedirectResponse
     {
-        $user = Auth::user();
-        $jobs = $user->jobs()->latest()->get();
-
-        return Inertia::render('user/dashboard/jobs/index', [
-            'jobs' => $jobs,
-        ]);
+        // Redirect to main dashboard - category content is rendered there
+        return redirect()->route('user.dashboard.index');
     }
 
     public function create(): Response

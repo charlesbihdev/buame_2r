@@ -12,24 +12,21 @@ class MarketplaceProduct extends Model
 
     protected $fillable = [
         'user_id',
+        'store_id',
         'title',
         'category',
         'price',
         'price_type',
         'condition',
         'location',
-        'address',
         'latitude',
         'longitude',
-        'phone',
-        'whatsapp',
-        'email',
         'description',
         'delivery_available',
         'warranty',
         'rating',
         'reviews_count',
-        'is_verified',
+        'is_approved',
         'is_active',
         'views_count',
     ];
@@ -42,7 +39,7 @@ class MarketplaceProduct extends Model
             'longitude' => 'decimal:8',
             'rating' => 'decimal:2',
             'delivery_available' => 'boolean',
-            'is_verified' => 'boolean',
+            'is_approved' => 'boolean',
             'is_active' => 'boolean',
         ];
     }
@@ -50,6 +47,11 @@ class MarketplaceProduct extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 
     public function specifications()

@@ -56,6 +56,9 @@ Route::prefix('user')->name('user.')->group(function () {
         ->name('register.payment');
 
     Route::post('register/payment', [PaymentController::class, 'processPayment']);
+
+    Route::post('register/payment/tier', [RegisteredUserController::class, 'updateTier'])
+        ->name('register.payment.tier');
 });
 
 Route::prefix('user')->name('user.')->middleware('auth')->group(function () {

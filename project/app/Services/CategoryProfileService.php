@@ -6,8 +6,10 @@ use App\Models\Artisan;
 use App\Models\Hotel;
 use App\Models\Job;
 use App\Models\Rental;
+use App\Models\Store;
 use App\Models\TransportRide;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class CategoryProfileService
 {
@@ -21,7 +23,7 @@ class CategoryProfileService
             'hotels' => $this->getOrCreateHotel($user),
             'transport' => $this->getOrCreateTransport($user),
             'rentals' => $this->getOrCreateRental($user),
-            'marketplace' => null, // Marketplace doesn't have a single profile, it has products
+            'marketplace' => $this->getOrCreateStore($user),
             'jobs' => $this->getOrCreateJob($user),
             default => null,
         };
@@ -130,5 +132,34 @@ class CategoryProfileService
                 'description' => '',
             ]
         );
+    }
+
+    /**
+     * Get or create store.
+     */
+    protected function getOrCreateStore(User $user): ?Store
+    {
+        $store = $user->store;
+
+        if (!$store) {
+            $baseSlug = Str::slug($user->name);
+            $slug = $baseSlug;
+            $counter = 1;
+
+            while (Store::where('slug', $slug)->exists()) {
+                $slug = $baseSlug . '-' . $counter;
+                $counter++;
+            }
+
+            $store = Store::create([
+                'user_id' => $user->id,
+                'name' => $user->name . "'s Store",
+                'slug' => $slug,
+                'tier' => 'starter',
+                'is_active' => false,
+            ]);
+        }
+
+        return $store->load('products');
     }
 }

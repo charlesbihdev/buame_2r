@@ -19,8 +19,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 location: location,
                 type: filters?.type,
                 sort: filters?.sort,
-            },
-            {
+        },
+        {
                 preserveState: true,
                 preserveScroll: true,
             }
@@ -67,8 +67,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 type: type === 'all' || type === null ? null : type,
                 sort: filters?.sort,
                 page: null,
-            },
-            {
+        },
+        {
                 preserveState: true,
                 preserveScroll: true,
             }
@@ -136,7 +136,7 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                             {quickCategories.map((cat) => {
                                 const isActive = filters?.type === cat.type;
                                 return (
-                                    <button
+                                <button
                                         key={cat.type}
                                         onClick={() => handleTypeFilter(isActive ? null : cat.type)}
                                         className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
@@ -144,13 +144,13 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                                 ? 'border-[#13ec13] bg-[#13ec13]/10'
                                                 : 'border-[#13ec13]/30 bg-white hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:bg-[#162816]'
                                         }`}
-                                    >
-                                        <cat.icon className="h-5 w-5 text-[#13ec13]" />
-                                        <span className="text-sm dark:text-white">{cat.label}</span>
-                                        <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
-                                            {cat.count}
-                                        </span>
-                                    </button>
+                                >
+                                    <cat.icon className="h-5 w-5 text-[#13ec13]" />
+                                    <span className="text-sm dark:text-white">{cat.label}</span>
+                                    <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
+                                        {cat.count}
+                                    </span>
+                                </button>
                                 );
                             })}
                         </div>
@@ -192,19 +192,19 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 {/* Rentals Grid */}
                 {rentals && rentals.data && rentals.data.length > 0 ? (
                     <>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {rentals.data.map((rental) => (
                                 <RentalCard key={rental.id} rental={rental} />
-                            ))}
-                        </div>
+                    ))}
+                </div>
 
-                        {/* Pagination */}
+                {/* Pagination */}
                         <RentalPagination rentals={rentals} filters={filters} />
                     </>
                 ) : (
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[#162816]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">No rentals found. Try adjusting your filters.</p>
-                    </div>
+                </div>
                 )}
             </div>
         </VisitorLayout>

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\PhoneLoginRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
 use App\Models\User;
-use App\Models\UserActiveCategory;
 use App\Services\PhoneVerificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -111,6 +110,9 @@ class AuthenticatedSessionController extends Controller
             ->exists();
 
         if (! $hasPaidCategory) {
+            // Login user FIRST (they verified OTP, they're legitimate)
+            Auth::login($user);
+            $request->session()->regenerate();
             // Phone verified but no payment - redirect to payment
             $request->session()->put('registration_user_id', $user->id);
             if (! $request->session()->has('selected_category')) {
@@ -130,28 +132,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $request->session()->forget('login_phone');
 
-        // Redirect to active category dashboard
-        $activeCategory = $user->activeCategory?->active_category;
-        if ($activeCategory) {
-            return redirect()->route('user.dashboard.index');
-        }
-
-        // If no active category but has paid categories, set first one as active
-        $firstPaidCategory = $user->categories()
-            ->whereHas('payment', function ($query) {
-                $query->where('status', 'completed');
-            })
-            ->first();
-
-        if ($firstPaidCategory) {
-            UserActiveCategory::updateOrCreate(
-                ['user_id' => $user->id],
-                ['active_category' => $firstPaidCategory->category, 'switched_at' => now()]
-            );
-
-            return redirect()->route('user.dashboard.index');
-        }
-
+        // Redirect to dashboard (category is determined by query string, defaults to first paid)
         return redirect()->route('user.dashboard.index');
     }
 
