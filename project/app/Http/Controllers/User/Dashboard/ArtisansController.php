@@ -18,15 +18,10 @@ class ArtisansController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(): RedirectResponse
     {
-        /** @var User $user */
-        $user = Auth::user();
-        $artisans = $user->artisans()->latest()->get();
-
-        return Inertia::render('user/dashboard/artisans/index', [
-            'artisans' => $artisans,
-        ]);
+        // Redirect to main dashboard - category content is rendered there
+        return redirect()->route('user.dashboard.index');
     }
 
     /**

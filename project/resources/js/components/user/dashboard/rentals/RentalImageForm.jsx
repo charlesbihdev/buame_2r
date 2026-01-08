@@ -1,6 +1,5 @@
 import { FormError } from '@/components/ui/form-error';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
 import { Loader2, Upload, X } from 'lucide-react';
@@ -12,7 +11,6 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         image: null,
-        display_order: image?.display_order || 0,
     });
 
     const handleSubmit = (e) => {
@@ -106,22 +104,6 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                             />
                         </div>
                         <FormError error={errors.image} className="mt-1" />
-                    </div>
-
-                    {/* Display Order */}
-                    <div>
-                        <Label htmlFor="display_order">Display Order</Label>
-                        <Input
-                            id="display_order"
-                            type="number"
-                            min="0"
-                            value={data.display_order}
-                            onChange={(e) => setData('display_order', parseInt(e.target.value) || 0)}
-                            className="mt-1"
-                            placeholder="0"
-                        />
-                        <p className="mt-1 text-xs text-gray-500">Lower numbers appear first</p>
-                        <FormError error={errors.display_order} className="mt-1" />
                     </div>
 
                     {/* Actions */}

@@ -188,14 +188,16 @@ class RegisteredUserController extends Controller
             return redirect()->route('user.register');
         }
 
-        $categories = [
-            ['value' => 'artisans', 'label' => 'Artisans', 'description' => 'Skilled workers', 'price' => 50],
-            ['value' => 'hotels', 'label' => 'Hotel', 'description' => 'Accommodation services', 'price' => 100],
-            ['value' => 'transport', 'label' => 'Okada', 'description' => 'Motorcycle transport', 'price' => 30],
-            ['value' => 'rentals', 'label' => 'Rentals', 'description' => 'Property rentals', 'price' => 75],
-            ['value' => 'marketplace', 'label' => 'Marketplace', 'description' => 'Buy & Sell goods', 'price' => 40],
-            ['value' => 'jobs', 'label' => 'Jobs', 'description' => 'Career & Hiring', 'price' => 60],
-        ];
+        // Build categories from config
+        $categories = [];
+        foreach (config('categories.list', []) as $key => $categoryConfig) {
+            $categories[] = [
+                'value' => $key,
+                'label' => $categoryConfig['label'],
+                'description' => $categoryConfig['description'],
+                'price' => $categoryConfig['price'],
+            ];
+        }
 
         return Inertia::render('user/auth/select-category', [
             'categories' => $categories,
@@ -245,12 +247,11 @@ class RegisteredUserController extends Controller
     {
         // Check if user is authenticated (logged in after OTP verification)
         $user = Auth::user();
-        $selectedCategory = $request->session()->get('selected_category');
 
         // Fallback to session user_id if not authenticated
         if (! $user) {
             $userId = $request->session()->get('registration_user_id');
-            if (! $userId || ! $selectedCategory) {
+            if (! $userId) {
                 return redirect()->route('user.register');
             }
             $user = User::find($userId);
@@ -260,38 +261,80 @@ class RegisteredUserController extends Controller
             return redirect()->route('user.register');
         }
 
+        // Get category from query parameter or session (for backward compatibility)
+        $selectedCategory = $request->query('category') ?? $request->session()->get('selected_category');
+
         if (! $selectedCategory) {
             return redirect()->route('user.register.category');
         }
 
-        $categoryPrices = [
-            'artisans' => 50,
-            'hotels' => 100,
-            'transport' => 30,
-            'rentals' => 75,
-            'marketplace' => 40,
-            'jobs' => 60,
-        ];
+        // Get category config
+        $categoryConfig = config("categories.list.{$selectedCategory}");
+        if (! $categoryConfig) {
+            return redirect()->route('user.register.category')
+                ->withErrors(['category' => 'Invalid category selected.']);
+        }
 
-        // Get all categories for switching
-        $allCategories = [
-            ['value' => 'artisans', 'label' => 'Artisans', 'price' => 50],
-            ['value' => 'hotels', 'label' => 'Hotel', 'price' => 100],
-            ['value' => 'transport', 'label' => 'Okada', 'price' => 30],
-            ['value' => 'rentals', 'label' => 'Rentals', 'price' => 75],
-            ['value' => 'marketplace', 'label' => 'Marketplace', 'price' => 40],
-            ['value' => 'jobs', 'label' => 'Jobs', 'price' => 60],
-        ];
+        // Get default amount (for non-tiered categories or default tier)
+        $defaultAmount = $categoryConfig['price'] ?? config('categories.default_price');
+
+        // Check if marketplace has tiers
+        $tiers = null;
+        if ($selectedCategory === 'marketplace' && isset($categoryConfig['tiers'])) {
+            $tiers = $categoryConfig['tiers'];
+            // Default to starter tier
+            $defaultAmount = $tiers['starter']['price'] ?? $defaultAmount;
+        }
+
+        // Get selected tier from query or default to starter for marketplace
+        $selectedTier = $request->query('tier') ?? 'starter';
+
+        // Calculate amount based on tier if marketplace
+        $amount = $defaultAmount;
+        if ($selectedCategory === 'marketplace' && $selectedTier && isset($tiers[$selectedTier])) {
+            $amount = $tiers[$selectedTier]['price'];
+        }
+
+        // Build all categories from config for switching
+        $allCategories = [];
+        foreach (config('categories.list', []) as $key => $catConfig) {
+            $allCategories[] = [
+                'value' => $key,
+                'label' => $catConfig['label'],
+                'price' => $catConfig['price'],
+            ];
+        }
 
         return Inertia::render('user/auth/payment', [
             'category' => $selectedCategory,
-            'amount' => $categoryPrices[$selectedCategory] ?? 50,
+            'amount' => $amount,
+            'tiers' => $tiers,
+            'selectedTier' => $selectedTier,
             'categories' => $allCategories,
             'user' => [
                 'name' => $user->name,
                 'phone' => $user->phone,
             ],
         ]);
+    }
+
+    /**
+     * Update selected tier for marketplace.
+     */
+    public function updateTier(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'tier' => ['required', 'string', 'in:starter,professional,enterprise'],
+        ]);
+
+        $selectedCategory = $request->session()->get('selected_category');
+        if ($selectedCategory !== 'marketplace') {
+            return back()->withErrors(['tier' => 'Tier selection is only available for marketplace.']);
+        }
+
+        $request->session()->put('selected_tier', $request->tier);
+
+        return redirect()->route('user.register.payment');
     }
 
     /**

@@ -14,14 +14,10 @@ use Inertia\Response;
 
 class RentalsController extends Controller
 {
-    public function index(): Response
+    public function index(): RedirectResponse
     {
-        $user = Auth::user();
-        $rentals = $user->rentals()->with('images')->latest()->get();
-
-        return Inertia::render('user/dashboard/rentals/index', [
-            'rentals' => $rentals,
-        ]);
+        // Redirect to main dashboard - category content is rendered there
+        return redirect()->route('user.dashboard.index');
     }
 
     public function create(): Response
@@ -44,7 +40,7 @@ class RentalsController extends Controller
         $user = Auth::user();
         $user->rentals()->create($validated);
 
-        return redirect()->route('user.dashboard.category', ['category' => 'rentals'])
+        return redirect()->route('user.dashboard.index')
             ->with('success', 'Rental listing created successfully.');
     }
 
@@ -129,7 +125,7 @@ class RentalsController extends Controller
 
         $rental->delete();
 
-        return redirect()->route('user.dashboard.category', ['category' => 'rentals'])
+        return redirect()->route('user.dashboard.index')
             ->with('success', 'Rental listing deleted successfully.');
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserActiveCategory;
 use App\Services\CategoryProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +14,8 @@ class DashboardController extends Controller
 {
     /**
      * Show the main dashboard.
+     * Category is determined by ?category= query string.
+     * Section is determined by ?section= query string.
      */
     public function index(Request $request): Response|RedirectResponse
     {
@@ -24,8 +25,6 @@ class DashboardController extends Controller
             return redirect()->route('user.login');
         }
 
-        $activeSection = $request->query('section', 'profile');
-
         // Get paid categories
         $paidCategories = $user->categories()
             ->whereHas('payment', function ($query) {
@@ -34,24 +33,30 @@ class DashboardController extends Controller
             ->with('payment')
             ->get();
 
-        // Get active category
-        $activeCategory = $user->activeCategory?->active_category;
-
-        // If no active category but has paid categories, set first one as active
-        if (! $activeCategory && $paidCategories->isNotEmpty()) {
-            $firstCategory = $paidCategories->first();
-            UserActiveCategory::updateOrCreate(
-                ['user_id' => $user->id],
-                ['active_category' => $firstCategory->category, 'switched_at' => now()]
-            );
-            $activeCategory = $firstCategory->category;
-        }
-
-        // If no paid categories, redirect to choose path
+        // If no paid categories, redirect to category selection for payment
         if ($paidCategories->isEmpty()) {
-            return redirect()->route('choose-path')
+            return redirect()->route('user.register.category')
                 ->with('info', 'Please select a category and complete payment to access your dashboard.');
         }
+
+        // Get category from query string, default to first paid category
+        $paidCategoryList = $paidCategories->pluck('category')->toArray();
+        $requestedCategory = $request->query('category');
+
+        // Validate requested category - must be one of user's paid categories
+        if ($requestedCategory && in_array($requestedCategory, $paidCategoryList)) {
+            $activeCategory = $requestedCategory;
+        } else {
+            // Default to first paid category
+            $activeCategory = $paidCategoryList[0] ?? null;
+        }
+
+        // Default section based on category
+        $defaultSection = match ($activeCategory) {
+            'marketplace' => 'store',
+            default => 'profile',
+        };
+        $activeSection = $request->query('section', $defaultSection);
 
         // Get category-specific data based on active category
         $categoryData = $this->getCategoryData($user, $activeCategory);
@@ -77,6 +82,20 @@ class DashboardController extends Controller
                 ];
             });
 
+        // Build categories from config for PaymentModal
+        $categories = [];
+        foreach (config('categories.list', []) as $key => $categoryConfig) {
+            $categories[$key] = [
+                'label' => $categoryConfig['label'],
+                'description' => $categoryConfig['description'],
+                'price' => $categoryConfig['price'],
+            ];
+            // Add tiers for marketplace
+            if ($key === 'marketplace' && isset($categoryConfig['tiers'])) {
+                $categories[$key]['tiers'] = $categoryConfig['tiers'];
+            }
+        }
+
         return Inertia::render('user/dashboard/index', [
             'user' => [
                 'id' => $user->id,
@@ -97,43 +116,8 @@ class DashboardController extends Controller
             'activeSection' => $activeSection,
             'categoryData' => $categoryData,
             'payments' => $payments,
+            'categories' => $categories,
         ]);
-    }
-
-    /**
-     * Switch active category.
-     */
-    public function switchCategory(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'category' => ['required', 'string', 'in:artisans,hotels,transport,rentals,marketplace,jobs'],
-        ]);
-
-        $user = Auth::user();
-
-        if (! $user) {
-            return redirect()->route('user.login');
-        }
-
-        // Check if user has paid for this category
-        $hasAccess = $user->hasCategoryAccess($request->category);
-
-        if (! $hasAccess) {
-            return redirect()->route('user.dashboard')
-                ->withErrors(['category' => 'You need to pay for this category to access it.']);
-        }
-
-        // Update active category
-        UserActiveCategory::updateOrCreate(
-            ['user_id' => $user->id],
-            [
-                'active_category' => $request->category,
-                'switched_at' => now(),
-            ]
-        );
-
-        return redirect()->route('user.dashboard')
-            ->with('success', 'Category switched successfully.');
     }
 
     /**
@@ -157,7 +141,19 @@ class DashboardController extends Controller
                 ],
             ],
             'marketplace' => [
-                'products' => $user->marketplaceProducts()->latest()->get(),
+                'store' => $user->store ? [
+                    'id' => $user->store->id,
+                    'name' => $user->store->name,
+                    'slug' => $user->store->slug,
+                    'description' => $user->store->description,
+                    'tier' => $user->store->tier,
+                    'is_active' => $user->store->is_active,
+                    'product_limit' => $user->store->product_limit,
+                    'remaining_slots' => $user->store->remaining_product_slots,
+                    'products_count' => $user->store->products()->count(),
+                ] : null,
+                'products' => $user->marketplaceProducts()->with(['images', 'store'])->latest()->get(),
+                'tiers' => config('categories.list.marketplace.tiers', []),
                 'stats' => [
                     'total' => $user->marketplaceProducts()->count(),
                     'active' => $user->marketplaceProducts()->where('is_active', true)->count(),

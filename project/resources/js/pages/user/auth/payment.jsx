@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { Check, CreditCard } from 'lucide-react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { Check, CheckCircle, CreditCard } from 'lucide-react';
+import { useState } from 'react';
 
 const categoryLabels = {
     artisans: 'Artisans',
@@ -11,13 +12,46 @@ const categoryLabels = {
     jobs: 'Jobs',
 };
 
-export default function Payment({ category, amount, categories, user }) {
-    const { post, processing, errors } = useForm({});
+export default function Payment({ category, amount, categories, user, tiers, selectedTier }) {
+    const [selectedTierState, setSelectedTierState] = useState(selectedTier || 'starter');
+    const { data, setData, post, processing, errors } = useForm({
+        category: category,
+        tier: category === 'marketplace' ? selectedTier || 'starter' : undefined,
+    });
+
+    const handleTierChange = (tierKey) => {
+        setSelectedTierState(tierKey);
+        setData('tier', tierKey);
+    };
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('user.register.payment'));
+
+        // Prepare form data
+        const formData = {
+            category: category,
+        };
+
+        // Only include tier for marketplace
+        if (category === 'marketplace') {
+            formData.tier = selectedTierState || 'starter';
+        }
+
+        console.log('Submitting payment with data:', formData);
+
+        // Use router.post directly to ensure data is sent correctly
+        router.post(route('user.register.payment'), formData, {
+            onError: (errors) => {
+                console.error('Payment submission errors:', errors);
+            },
+            onSuccess: () => {
+                console.log('Payment submitted successfully');
+            },
+        });
     };
+
+    // Calculate amount based on selected tier
+    const displayAmount = category === 'marketplace' && tiers && tiers[selectedTierState] ? tiers[selectedTierState].price : amount;
 
     return (
         <>
@@ -39,7 +73,7 @@ export default function Payment({ category, amount, categories, user }) {
                                     {categories.map((cat) => (
                                         <Link
                                             key={cat.value}
-                                            href={`/user/register?category=${cat.value}`}
+                                            href={route('user.register', { category: cat.value })}
                                             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                                                 cat.value === category
                                                     ? 'bg-[#13ec13] text-[#0d1b0d]'
@@ -53,6 +87,41 @@ export default function Payment({ category, amount, categories, user }) {
                             </div>
                         )}
 
+                        {/* Tier Selection for Marketplace */}
+                        {category === 'marketplace' && tiers && (
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+                                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Select Your Store Plan</h3>
+                                <div className="space-y-3">
+                                    {Object.entries(tiers).map(([tierKey, tier]) => (
+                                        <button
+                                            key={tierKey}
+                                            type="button"
+                                            onClick={() => handleTierChange(tierKey)}
+                                            className={`w-full rounded-lg border-2 p-4 text-left transition-all ${
+                                                selectedTierState === tierKey
+                                                    ? 'border-[#13ec13] bg-[#13ec13]/10'
+                                                    : 'border-gray-200 bg-white hover:border-[#13ec13]/50 dark:border-gray-700 dark:bg-[#162816]'
+                                            }`}
+                                        >
+                                            <div className="flex items-start justify-between">
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <h4 className="font-bold text-[#0d1b0d] dark:text-white">{tier.name}</h4>
+                                                        {selectedTierState === tierKey && <CheckCircle className="h-5 w-5 text-[#13ec13]" />}
+                                                    </div>
+                                                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{tier.description}</p>
+                                                    <p className="mt-2 text-xs text-gray-500">Up to {tier.product_limit} products</p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="text-xl font-bold text-[#13ec13]">GH₵ {tier.price}</p>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Order Summary */}
                         <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
                             <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Order Summary</h3>
@@ -61,14 +130,20 @@ export default function Payment({ category, amount, categories, user }) {
                                     <span className="text-gray-600 dark:text-gray-400">Category</span>
                                     <span className="font-semibold text-[#0d1b0d] dark:text-white">{categoryLabels[category]}</span>
                                 </div>
+                                {category === 'marketplace' && tiers && tiers[selectedTierState] && (
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-600 dark:text-gray-400">Plan</span>
+                                        <span className="font-semibold text-[#0d1b0d] dark:text-white">{tiers[selectedTierState].name}</span>
+                                    </div>
+                                )}
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-600 dark:text-gray-400">Registration Fee</span>
-                                    <span className="font-semibold text-[#0d1b0d] dark:text-white">GH₵ {amount}</span>
+                                    <span className="font-semibold text-[#0d1b0d] dark:text-white">GH₵ {displayAmount}</span>
                                 </div>
                                 <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
                                     <div className="flex justify-between">
                                         <span className="font-bold text-[#0d1b0d] dark:text-white">Total</span>
-                                        <span className="text-2xl font-bold text-[#13ec13]">GH₵ {amount}</span>
+                                        <span className="text-2xl font-bold text-[#13ec13]">GH₵ {displayAmount}</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +177,7 @@ export default function Payment({ category, amount, categories, user }) {
                                 disabled={processing}
                                 className="h-12 w-full bg-[#13ec13] text-base font-bold text-[#0d1b0d] hover:bg-[#0eb50e] disabled:opacity-50"
                             >
-                                {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${amount} with Paystack`}
+                                {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${displayAmount} with Paystack`}
                             </Button>
                         </form>
 

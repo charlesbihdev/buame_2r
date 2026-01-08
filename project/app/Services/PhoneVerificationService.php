@@ -85,17 +85,29 @@ class PhoneVerificationService
      */
     public function canRequestOtp(string $phone): array
     {
+        $twoMinutesAgo = Carbon::now()->subMinutes(2);
+        
         // Check for recent unverified codes (codes that haven't been verified yet)
         // This prevents abuse regardless of whether phone was previously verified
         $recentCode = VerificationCode::where('phone', $phone)
             ->whereNull('verified_at') // Only check unverified codes
-            ->where('created_at', '>', Carbon::now()->subMinutes(2))
+            ->where('created_at', '>', $twoMinutesAgo) // Only codes created in last 2 minutes
             ->orderBy('created_at', 'desc')
             ->first();
 
         if ($recentCode) {
-            $secondsSinceCreation = Carbon::now()->diffInSeconds($recentCode->created_at);
-            $waitTime = max(0, 120 - $secondsSinceCreation); // Ensure never negative
+            // Calculate seconds since code was created
+            $secondsSinceCreation = (int) Carbon::now()->diffInSeconds($recentCode->created_at);
+            
+            // Safety check: if code is older than 2 minutes, allow request
+            if ($secondsSinceCreation >= 120) {
+                return [
+                    'can_request' => true,
+                ];
+            }
+            
+            // Calculate remaining wait time (rounded to whole seconds)
+            $waitTime = (int) max(0, 120 - $secondsSinceCreation);
 
             if ($waitTime > 0) {
                 return [

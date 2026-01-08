@@ -19,7 +19,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'artisans':
                 return <ArtisansSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'marketplace':
-                return <MarketplaceSection activeTab={activeSection} data={categoryData} />;
+                return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} />;
             case 'hotels':
                 return <HotelsSection activeTab={activeSection} data={categoryData} />;
             case 'transport':
@@ -34,7 +34,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
     };
 
     return (
-        <DashboardLayout user={user} activeCategory={activeCategory} activeSection={activeSection}>
+        <DashboardLayout user={user} activeCategory={activeCategory} activeSection={activeSection} categoryData={categoryData}>
             <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : 'BUAME 2R'}`} />
             <div className="mx-auto w-full max-w-[1400px] p-4 md:p-6 lg:p-8">
                 <CategorySwitcher paidCategories={paidCategories} activeCategory={activeCategory} unpaidCategories={unpaidCategories} />

@@ -14,15 +14,10 @@ use Inertia\Response;
 
 class HotelsController extends Controller
 {
-    public function index(): Response
+    public function index(): RedirectResponse
     {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $hotels = $user->hotels()->latest()->get();
-
-        return Inertia::render('user/dashboard/hotels/index', [
-            'hotels' => $hotels,
-        ]);
+        // Redirect to main dashboard - category content is rendered there
+        return redirect()->route('user.dashboard.index');
     }
 
     public function create(): Response
@@ -93,7 +88,7 @@ class HotelsController extends Controller
                 }
             }
 
-            return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'settings'])
+            return redirect()->route('user.dashboard.index', ['section' => 'settings'])
                 ->with('success', 'Settings saved successfully.');
         }
 
@@ -168,7 +163,7 @@ class HotelsController extends Controller
             }
         }
 
-        return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'profile'])
+        return redirect()->route('user.dashboard.index', ['section' => 'profile'])
             ->with('success', 'Hotel profile updated successfully.');
     }
 
@@ -203,7 +198,7 @@ class HotelsController extends Controller
         $hotel = $user->hotels()->first();
 
         if (! $hotel) {
-            return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'gallery'])
+            return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
                 ->withErrors(['error' => 'Hotel profile not found.']);
         }
 
@@ -229,7 +224,7 @@ class HotelsController extends Controller
             'display_order' => $maxOrder + 1,
         ]);
 
-        return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
             ->with('success', 'Image added successfully.');
     }
 
@@ -265,7 +260,7 @@ class HotelsController extends Controller
 
         $image->update(['image_path' => $imagePath]);
 
-        return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
             ->with('success', 'Image updated successfully.');
     }
 
@@ -288,7 +283,7 @@ class HotelsController extends Controller
         // Set this as primary
         $image->update(['is_primary' => true]);
 
-        return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
             ->with('success', 'Primary image updated successfully.');
     }
 
@@ -313,7 +308,7 @@ class HotelsController extends Controller
 
         $image->delete();
 
-        return redirect()->route('user.dashboard.category', ['category' => 'hotels', 'section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
             ->with('success', 'Image deleted successfully.');
     }
 }

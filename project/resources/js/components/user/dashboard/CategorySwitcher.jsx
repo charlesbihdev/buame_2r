@@ -1,14 +1,7 @@
 import PaymentModal from '@/components/user/dashboard/PaymentModal';
-import { router } from '@inertiajs/react';
+import { switchCategory } from '@/services/dashboardNavigation';
 import { Bike, Briefcase, Hammer, Home, Hotel, Lock, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
-
-const route = (name, params = {}) => {
-    const routes = {
-        'user.dashboard.category': (p) => `/user/dashboard/${p.category}`,
-    };
-    return routes[name] ? routes[name](params) : '/';
-};
 
 const categoryConfig = {
     artisans: { label: 'Artisans', icon: Hammer, color: 'blue' },
@@ -24,7 +17,7 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleSwitch = (category) => {
-        router.visit(route('user.dashboard.category', { category }));
+        switchCategory(category);
     };
 
     const handleAddCategory = (category) => {

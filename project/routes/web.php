@@ -54,6 +54,8 @@ Route::get('/rentals', [\App\Http\Controllers\Visitor\RentalsController::class, 
 
 Route::get('/rentals/{id}', [\App\Http\Controllers\Visitor\RentalsController::class, 'show'])->name('rentals.view');
 
+Route::get('/store/{slug}', [\App\Http\Controllers\Visitor\StoreController::class, 'show'])->name('store.show');
+
 Route::get('/restaurants', function () {
     return Inertia::render('visitor/restaurants');
 })->name('restaurants');
@@ -88,5 +90,5 @@ Route::post('/payment/webhook', [\App\Http\Controllers\PaymentController::class,
     ->name('paystack.webhook')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';

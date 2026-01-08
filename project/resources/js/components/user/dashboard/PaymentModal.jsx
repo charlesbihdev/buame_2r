@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { router, usePage } from '@inertiajs/react';
-import { AlertCircle, Bike, Briefcase, CreditCard, Hammer, Home, Hotel, ShoppingBag } from 'lucide-react';
+import { AlertCircle, Bike, Briefcase, CheckCircle, CreditCard, Hammer, Home, Hotel, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
 const categoryIcons = {
@@ -15,28 +15,39 @@ const categoryIcons = {
 
 export default function PaymentModal({ isOpen, onClose, category }) {
     const [isProcessing, setIsProcessing] = useState(false);
+    const [selectedTier, setSelectedTier] = useState('starter');
     const { categories } = usePage().props;
 
     const categoryData = categories?.[category];
     if (!categoryData) return null;
 
     const Icon = categoryIcons[category] || Briefcase;
+    const tiers = categoryData.tiers;
+    const isMarketplace = category === 'marketplace';
+
+    // Calculate display amount based on tier for marketplace
+    const displayAmount = isMarketplace && tiers && tiers[selectedTier] ? tiers[selectedTier].price : categoryData.price;
 
     const handlePayment = () => {
         setIsProcessing(true);
-        router.post(
-            route('user.dashboard.payment.initialize'),
-            { category },
-            {
-                onFinish: () => setIsProcessing(false),
-                onError: () => setIsProcessing(false),
-            },
-        );
+        const data = { category };
+
+        // console.log(data);
+        // Only include tier for marketplace
+        if (isMarketplace) {
+            data.tier = selectedTier;
+        }
+        console.log(data);
+
+        router.post(route('user.dashboard.payment.initialize'), data, {
+            onFinish: () => setIsProcessing(false),
+            onError: () => setIsProcessing(false),
+        });
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="flex max-h-[90vh] flex-col sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-xl font-bold">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#13ec13]/10">
@@ -47,12 +58,47 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                     <DialogDescription>Subscribe to the {categoryData.label} category to start using its features</DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-4 py-4">
+                <div className="flex-1 space-y-4 overflow-y-auto py-4">
+                    {/* Tier Selection for Marketplace */}
+                    {isMarketplace && tiers && (
+                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+                            <h3 className="mb-3 text-sm font-bold text-[#0d1b0d] dark:text-white">Select Your Store Plan</h3>
+                            <div className="space-y-2">
+                                {Object.entries(tiers).map(([tierKey, tier]) => (
+                                    <button
+                                        key={tierKey}
+                                        type="button"
+                                        onClick={() => setSelectedTier(tierKey)}
+                                        className={`w-full rounded-lg border-2 p-3 text-left transition-all ${
+                                            selectedTier === tierKey
+                                                ? 'border-[#13ec13] bg-[#13ec13]/10'
+                                                : 'border-gray-200 bg-white hover:border-[#13ec13]/50 dark:border-gray-700 dark:bg-[#162816]'
+                                        }`}
+                                    >
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2">
+                                                    <h4 className="text-sm font-bold text-[#0d1b0d] dark:text-white">{tier.name}</h4>
+                                                    {selectedTier === tierKey && <CheckCircle className="h-4 w-4 text-[#13ec13]" />}
+                                                </div>
+                                                <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">{tier.description}</p>
+                                                <p className="mt-1 text-xs text-gray-500">Up to {tier.product_limit} products</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-lg font-bold text-[#13ec13]">GH₵ {tier.price}</p>
+                                            </div>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Price Card */}
                     <div className="rounded-lg border-2 border-[#13ec13]/20 bg-[#13ec13]/5 p-4">
                         <div className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Subscription Fee</div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-black text-[#0d1b0d] dark:text-white">GH₵ {categoryData.price.toFixed(2)}</span>
+                            <span className="text-4xl font-black text-[#0d1b0d] dark:text-white">GH₵ {displayAmount.toFixed(2)}</span>
                             <span className="text-sm text-gray-500 dark:text-gray-400">one-time</span>
                         </div>
                     </div>
@@ -108,7 +154,7 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         ) : (
                             <>
                                 <CreditCard className="h-4 w-4" />
-                                Pay GH₵ {categoryData.price.toFixed(2)}
+                                Pay GH₵ {displayAmount.toFixed(2)}
                             </>
                         )}
                     </Button>

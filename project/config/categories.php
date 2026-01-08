@@ -35,8 +35,28 @@ return [
         ],
         'marketplace' => [
             'label' => 'Marketplace',
-            'price' => 40.00,
+            'price' => 20.00, // Base price (deprecated, use tiers)
             'description' => 'Sell products and goods online',
+            'tiers' => [
+                'starter' => [
+                    'name' => 'Starter Store',
+                    'price' => 20.00,
+                    'product_limit' => 5,
+                    'description' => 'Perfect for small sellers just getting started',
+                ],
+                'professional' => [
+                    'name' => 'Professional Store',
+                    'price' => 35.00,
+                    'product_limit' => 10,
+                    'description' => 'Ideal for growing businesses',
+                ],
+                'enterprise' => [
+                    'name' => 'Enterprise Store',
+                    'price' => 50.00,
+                    'product_limit' => 20,
+                    'description' => 'For established sellers with large catalogs',
+                ],
+            ],
         ],
         'jobs' => [
             'label' => 'Jobs',
