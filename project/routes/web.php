@@ -40,9 +40,7 @@ Route::get('/choose-path', function () {
 
 Route::get('/artisans', [\App\Http\Controllers\Visitor\ArtisansController::class, 'index'])->name('artisans');
 
-Route::get('/hotels', function () {
-    return Inertia::render('visitor/hotels/index');
-})->name('hotels');
+Route::get('/hotels', [\App\Http\Controllers\Visitor\HotelsController::class, 'index'])->name('hotels');
 
 Route::get('/transport', function () {
     return Inertia::render('visitor/transport/index');

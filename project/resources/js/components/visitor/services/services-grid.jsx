@@ -10,7 +10,7 @@ export function ServicesGrid() {
             description: 'Find skilled carpenters, masons, electricians, and plumbers nearby tailored for your construction needs.',
             image: '/assets/visitors/artisan.jpg',
             buttonText: 'Explore Artisans',
-            buttonUrl: '/services?category=artisans',
+            buttonUrl: '/artisans',
         },
         {
             icon: Hotel,
@@ -19,7 +19,7 @@ export function ServicesGrid() {
             description: 'Discover comfortable hotels and guest houses for short or long stays in the Western North Region.',
             image: '/assets/visitors/hotels.jpg',
             buttonText: 'Find Hotels',
-            buttonUrl: '/food-stay?category=hotel',
+            buttonUrl: '/hotels',
         },
         {
             icon: Bike,
@@ -28,7 +28,7 @@ export function ServicesGrid() {
             description: 'Book reliable motorcycle taxis (Okada) and cars for quick and affordable transportation across town.',
             image: '/assets/visitors/okada2.jpg',
             buttonText: 'Book Ride',
-            buttonUrl: '/services?category=okada',
+            buttonUrl: '/transport',
         },
         {
             icon: Home,
@@ -37,7 +37,7 @@ export function ServicesGrid() {
             description: 'Find houses, apartments, and commercial spaces for rent in Sefwi Bekwai and surrounding areas.',
             image: '/assets/visitors/hotels1.jpg',
             buttonText: 'Browse Rentals',
-            buttonUrl: '/services?category=rentals',
+            buttonUrl: '/rentals',
         },
         {
             icon: ShoppingBag,
