@@ -7,37 +7,37 @@ export function CategoriesSection() {
             name: 'Artisans',
             description: 'Skilled workers',
             url: '/artisans',
-            image: '/assets/visitors/categories/artisans.jpg',
+            image: '/assets/visitors/artisan.jpg',
         },
         {
             name: 'Hotel',
             description: 'Accommodation',
             url: '/hotels',
-            image: '/assets/visitors/categories/hotel.jpg',
+            image: '/assets/visitors/hotels.jpg',
         },
         {
             name: 'Okada & Cars',
             description: 'Motorcycle & car transport',
             url: '/transport',
-            image: '/assets/visitors/categories/okada.jpg',
+            image: '/assets/visitors/okada2.jpg',
         },
         {
             name: 'Rentals',
             description: 'Property rentals',
             url: '/rentals',
-            image: '/assets/visitors/categories/rentals.jpg',
+            image: '/assets/visitors/hotels1.jpg',
         },
         {
             name: 'Marketplace',
             description: 'Buy & sell goods',
             url: '/marketplace',
-            image: '/assets/visitors/categories/marketplace.jpg',
+            image: '/assets/visitors/marketplace.jpg',
         },
         {
             name: 'Jobs',
             description: 'Career & Hiring',
             url: '/jobs',
-            image: '/assets/visitors/categories/jobs.jpg',
+            image: '/assets/visitors/jobs.jpg',
         },
     ];
 
@@ -62,7 +62,7 @@ export function CategoriesSection() {
                         >
                             <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700">
                                 <div
-                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    className="absolute inset-0 bg-cover bg-top transition-transform duration-500 group-hover:scale-110"
                                     style={{
                                         backgroundImage: `url(${category.image})`,
                                     }}

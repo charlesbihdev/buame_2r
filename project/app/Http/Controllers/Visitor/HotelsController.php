@@ -26,14 +26,14 @@ class HotelsController extends Controller
 
         // Filter by location
         if ($request->filled('location')) {
-            $query->where('location', 'like', '%'.$request->location.'%');
+            $query->where('location', 'like', '%' . $request->location . '%');
         }
 
         // Search by name or description
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -46,9 +46,13 @@ class HotelsController extends Controller
             default => $query->orderByDesc('rating')->orderByDesc('reviews_count'),
         };
 
-        $hotels = $query->paginate(12)->through(function ($hotel) {
+        $hotels = $query->paginate(12)->withQueryString();
+
+        // Format hotels for frontend
+        $formattedHotels = $hotels->items();
+        $formattedHotels = collect($formattedHotels)->map(function ($hotel) {
             $primaryImage = $hotel->images()->where('is_primary', true)->first() ?? $hotel->images()->first();
-            
+
             return [
                 'id' => $hotel->id,
                 'name' => $hotel->name,
@@ -62,8 +66,32 @@ class HotelsController extends Controller
             ];
         });
 
+        // Build pagination URLs
+        $baseUrl = $request->url();
+        $queryParams = $request->except('page');
+        $currentPage = $hotels->currentPage();
+        $lastPage = $hotels->lastPage();
+
+        $prevPageUrl = $currentPage > 1
+            ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage - 1]))
+            : null;
+
+        $nextPageUrl = $currentPage < $lastPage
+            ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage + 1]))
+            : null;
+
         return Inertia::render('visitor/hotels/index', [
-            'hotels' => $hotels,
+            'hotels' => [
+                'data' => $formattedHotels,
+                'current_page' => $currentPage,
+                'last_page' => $lastPage,
+                'per_page' => $hotels->perPage(),
+                'total' => $hotels->total(),
+                'from' => $hotels->firstItem(),
+                'to' => $hotels->lastItem(),
+                'prev_page_url' => $prevPageUrl,
+                'next_page_url' => $nextPageUrl,
+            ],
             'filters' => $request->only(['search', 'location', 'type', 'sort']),
         ]);
     }
@@ -117,10 +145,3 @@ class HotelsController extends Controller
         ]);
     }
 }
-
-
-
-
-
-
-

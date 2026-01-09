@@ -5,12 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { router } from '@inertiajs/react';
-import { ImagePlus, X } from 'lucide-react';
+import { useForm } from '@inertiajs/react';
+import { ImagePlus, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function ProductFormModal({ isOpen, onClose, store }) {
-    const [data, setData] = useState({
+    const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
         title: '',
         category: '',
         price: '',
@@ -22,88 +22,61 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         description: '',
         delivery_available: false,
         warranty: '',
+        images: [],
+        specifications: [],
     });
-    const [images, setImages] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]);
-    const [processing, setProcessing] = useState(false);
-    const [errors, setErrors] = useState({});
-
-    const handleChange = (field, value) => {
-        setData((prev) => ({ ...prev, [field]: value }));
-    };
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        const totalImages = images.length + files.length;
+        const totalImages = data.images.length + files.length;
 
         if (totalImages > 10) {
-            setErrors((prev) => ({ ...prev, images: 'Maximum 10 images allowed' }));
             return;
         }
 
-        const newImages = [...images, ...files];
-        setImages(newImages);
+        const newImages = [...data.images, ...files];
+        setData('images', newImages);
 
-        // Create previews
         const newPreviews = files.map((file) => URL.createObjectURL(file));
         setImagePreviews((prev) => [...prev, ...newPreviews]);
     };
 
     const removeImage = (index) => {
         URL.revokeObjectURL(imagePreviews[index]);
-        setImages((prev) => prev.filter((_, i) => i !== index));
+        setData('images', data.images.filter((_, i) => i !== index));
         setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    };
+
+    const addSpecification = () => {
+        setData('specifications', [...data.specifications, '']);
+    };
+
+    const updateSpecification = (index, value) => {
+        const updated = [...data.specifications];
+        updated[index] = value;
+        setData('specifications', updated);
+    };
+
+    const removeSpecification = (index) => {
+        setData('specifications', data.specifications.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setProcessing(true);
-        setErrors({});
-
-        const formData = new FormData();
-        Object.keys(data).forEach((key) => {
-            if (data[key] !== '' && data[key] !== null) {
-                formData.append(key, data[key]);
-            }
-        });
-
-        images.forEach((image) => {
-            formData.append('images[]', image);
-        });
-
-        router.post(route('user.dashboard.marketplace.store'), formData, {
+        post(route('user.dashboard.marketplace.store'), {
             preserveScroll: true,
             onSuccess: () => {
                 handleClose();
-            },
-            onError: (errs) => {
-                setErrors(errs);
-            },
-            onFinish: () => {
-                setProcessing(false);
             },
         });
     };
 
     const handleClose = () => {
-        // Cleanup previews
         imagePreviews.forEach((preview) => URL.revokeObjectURL(preview));
-        setData({
-            title: '',
-            category: '',
-            price: '',
-            price_type: '',
-            condition: 'new',
-            location: '',
-            latitude: '',
-            longitude: '',
-            description: '',
-            delivery_available: false,
-            warranty: '',
-        });
-        setImages([]);
+        reset();
+        clearErrors();
         setImagePreviews([]);
-        setErrors({});
         onClose();
     };
 
@@ -154,7 +127,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                     )}
                                 </div>
                             ))}
-                            {images.length < 10 && (
+                            {data.images.length < 10 && (
                                 <label className="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-[#13ec13] dark:border-gray-600">
                                     <input type="file" accept="image/*" multiple onChange={handleImageChange} className="hidden" />
                                     <ImagePlus className="h-6 w-6 text-gray-400" />
@@ -170,7 +143,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Input
                             id="title"
                             value={data.title}
-                            onChange={(e) => handleChange('title', e.target.value)}
+                            onChange={(e) => setData('title', e.target.value)}
                             placeholder="Enter product title"
                             required
                         />
@@ -180,7 +153,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                     {/* Category */}
                     <div>
                         <Label htmlFor="category">Category *</Label>
-                        <Select value={data.category} onValueChange={(value) => handleChange('category', value)}>
+                        <Select value={data.category} onValueChange={(value) => setData('category', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select category" />
                             </SelectTrigger>
@@ -205,7 +178,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                 step="0.01"
                                 min="0"
                                 value={data.price}
-                                onChange={(e) => handleChange('price', e.target.value)}
+                                onChange={(e) => setData('price', e.target.value)}
                                 placeholder="0.00"
                                 required
                             />
@@ -216,7 +189,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                             <Input
                                 id="price_type"
                                 value={data.price_type}
-                                onChange={(e) => handleChange('price_type', e.target.value)}
+                                onChange={(e) => setData('price_type', e.target.value)}
                                 placeholder="e.g., /kg, /bunch"
                             />
                         </div>
@@ -225,7 +198,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                     {/* Condition */}
                     <div>
                         <Label htmlFor="condition">Condition</Label>
-                        <Select value={data.condition} onValueChange={(value) => handleChange('condition', value)}>
+                        <Select value={data.condition} onValueChange={(value) => setData('condition', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select condition" />
                             </SelectTrigger>
@@ -245,7 +218,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Input
                             id="location"
                             value={data.location}
-                            onChange={(e) => handleChange('location', e.target.value)}
+                            onChange={(e) => setData('location', e.target.value)}
                             placeholder="Enter location"
                             required
                         />
@@ -258,7 +231,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Textarea
                             id="description"
                             value={data.description}
-                            onChange={(e) => handleChange('description', e.target.value)}
+                            onChange={(e) => setData('description', e.target.value)}
                             placeholder="Describe your product..."
                             rows={4}
                         />
@@ -270,7 +243,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                             type="checkbox"
                             id="delivery_available"
                             checked={data.delivery_available}
-                            onChange={(e) => handleChange('delivery_available', e.target.checked)}
+                            onChange={(e) => setData('delivery_available', e.target.checked)}
                             className="h-4 w-4 rounded border-gray-300"
                         />
                         <Label htmlFor="delivery_available" className="cursor-pointer">
@@ -284,9 +257,52 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Input
                             id="warranty"
                             value={data.warranty}
-                            onChange={(e) => handleChange('warranty', e.target.value)}
+                            onChange={(e) => setData('warranty', e.target.value)}
                             placeholder="e.g., 1 year warranty"
                         />
+                    </div>
+
+                    {/* Specifications */}
+                    <div>
+                        <div className="mb-2 flex items-center justify-between">
+                            <Label>Specifications</Label>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={addSpecification}
+                                className="h-8 gap-1 text-xs"
+                            >
+                                <Plus className="h-3 w-3" />
+                                Add Specification
+                            </Button>
+                        </div>
+                        <div className="space-y-2">
+                            {data.specifications.map((spec, index) => (
+                                <div key={index} className="flex gap-2">
+                                    <Input
+                                        value={spec}
+                                        onChange={(e) => updateSpecification(index, e.target.value)}
+                                        placeholder="e.g., 128GB Storage, 8GB RAM"
+                                        className="flex-1"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => removeSpecification(index)}
+                                        className="h-10 w-10 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            {data.specifications.length === 0 && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Add product specifications to help buyers understand your product better.
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     <DialogFooter>

@@ -190,7 +190,9 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
             )}
 
             {/* Edit Product Modal */}
-            <EditProductModal isOpen={!!editingProduct} onClose={() => setEditingProduct(null)} product={editingProduct} />
+            {editingProduct && (
+                <EditProductModal isOpen={true} onClose={() => setEditingProduct(null)} product={editingProduct} />
+            )}
         </div>
     );
 }

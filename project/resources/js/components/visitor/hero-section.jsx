@@ -1,28 +1,36 @@
 import { Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/react';
 import { MapPin, Search } from 'lucide-react';
 import { useState } from 'react';
 
 export function HeroSection() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedLocation, setSelectedLocation] = useState('Sefwi Bekwai');
-
-    const locations = ['Sefwi Bekwai', 'Bibiani', 'Wiawso', 'Juaboso'];
+    const [location, setLocation] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('marketplace');
 
     const categories = [
-        { name: 'All Categories', url: '/services', active: true },
-        { name: 'Artisans', url: '/artisans' },
-        { name: 'Hotel', url: '/hotels' },
-        { name: 'Okada & Cars', url: '/transport' },
-        { name: 'Rentals', url: '/rentals' },
-        { name: 'Marketplace', url: '/marketplace' },
-        { name: 'Jobs', url: '/jobs' },
+        { id: 'marketplace', name: 'Marketplace', url: '/marketplace' },
+        { id: 'artisans', name: 'Artisans', url: '/artisans' },
+        { id: 'hotels', name: 'Hotel', url: '/hotels' },
+        { id: 'transport', name: 'Okada & Cars', url: '/transport' },
+        { id: 'rentals', name: 'Rentals', url: '/rentals' },
+        { id: 'jobs', name: 'Jobs', url: '/jobs' },
     ];
 
     const handleSearch = () => {
+        const selectedCategoryData = categories.find((cat) => cat.id === selectedCategory);
+        if (!selectedCategoryData) return;
+
+        const params = new URLSearchParams();
         if (searchQuery.trim()) {
-            window.location.href = `/services?q=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(selectedLocation)}`;
+            params.set('search', searchQuery.trim());
         }
+        if (location.trim()) {
+            params.set('location', location.trim());
+        }
+
+        const queryString = params.toString();
+        const url = `${selectedCategoryData.url}${queryString ? '?' + queryString : ''}`;
+        window.location.href = url;
     };
 
     return (
@@ -32,7 +40,7 @@ export function HeroSection() {
                 <div
                     className="h-full w-full bg-cover bg-center"
                     style={{
-                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("/assets/visitors/hero-image.png")',
+                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("/assets/visitors/bekwai.JPG")',
                     }}
                 />
             </div>
@@ -51,7 +59,7 @@ export function HeroSection() {
 
                 {/* Search Component */}
                 <div className="w-full max-w-3xl rounded-2xl bg-white p-2 shadow-xl md:p-3 dark:bg-gray-900">
-                    <div className="flex flex-col gap-2 md:flex-row">
+                    <div className="flex flex-col gap-2 md:flex-row md:items-center">
                         {/* Search Input */}
                         <div className="focus-within:ring-primary/50 flex flex-1 items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 transition-all focus-within:ring-2 dark:border-gray-700 dark:bg-gray-800">
                             <Search className="mr-3 h-5 w-5 text-gray-400" />
@@ -65,44 +73,44 @@ export function HeroSection() {
                             />
                         </div>
 
-                        {/* Location Select */}
-                        <div className="flex items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 md:w-48 md:border-l-0 dark:border-gray-700 dark:bg-gray-800">
-                            <MapPin className="mr-3 h-5 w-5 text-gray-400" />
-                            <select
-                                value={selectedLocation}
-                                onChange={(e) => setSelectedLocation(e.target.value)}
-                                className="w-full cursor-pointer border-none bg-transparent text-base text-[#0d1b0d] outline-none focus:ring-0 dark:text-white"
-                            >
-                                {locations.map((location) => (
-                                    <option key={location} value={location}>
-                                        {location}
-                                    </option>
-                                ))}
-                            </select>
+                        {/* Location Input */}
+                        <div className="relative flex items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 md:w-48 md:border-l-0 dark:border-gray-700 dark:bg-gray-800">
+                            <MapPin className="absolute left-4 h-5 w-5 text-gray-400" />
+                            <input
+                                type="text"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                                placeholder="Location"
+                                className="w-full border-none bg-transparent pr-4 pl-12 text-base text-[#0d1b0d] outline-none placeholder:text-gray-400 focus:ring-0 dark:text-white"
+                            />
                         </div>
 
                         {/* Search Button */}
                         <Button
+                            type="button"
                             onClick={handleSearch}
-                            className="w-full rounded-xl bg-[#13ec13] px-8 py-3 text-base font-bold text-[#0d1b0d] shadow-lg shadow-green-200/50 transition-colors hover:bg-[#0eb50e] md:w-auto"
+                            className="h-[52px] w-full cursor-pointer rounded-xl bg-[#13ec13] px-8 text-base font-bold text-[#0d1b0d] shadow-lg shadow-green-200/50 transition-colors hover:bg-[#0eb50e] md:w-auto md:flex-shrink-0"
                         >
-                            Search
+                            {searchQuery.trim() || location.trim() ? 'Search' : 'Browse'}
                         </Button>
                     </div>
 
                     {/* Category Filters */}
                     <div className="scrollbar-hide mt-3 flex gap-4 overflow-x-auto px-2 pb-2 md:pb-0">
                         {categories.map((category) => (
-                            <Link
-                                key={category.name}
-                                href={category.url}
-                                className={`rounded-full px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors ${category.active
-                                    ? 'bg-[#13ec13]/20 text-[#0d1b0d] hover:bg-[#13ec13]/30'
-                                    : 'text-gray-500 hover:text-[#13ec13] dark:text-gray-400'
-                                    }`}
+                            <button
+                                key={category.id}
+                                type="button"
+                                onClick={() => setSelectedCategory(category.id)}
+                                className={`rounded-full px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors ${
+                                    selectedCategory === category.id
+                                        ? 'bg-[#13ec13]/20 text-[#0d1b0d] hover:bg-[#13ec13]/30 dark:text-white'
+                                        : 'text-gray-500 hover:text-[#13ec13] dark:text-gray-400'
+                                }`}
                             >
                                 {category.name}
-                            </Link>
+                            </button>
                         ))}
                     </div>
                 </div>
