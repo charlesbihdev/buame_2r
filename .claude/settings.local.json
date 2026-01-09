@@ -4,7 +4,8 @@
       "Bash(cat:*)",
       "Bash(cd:*)",
       "Bash(php artisan:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(mkdir:*)"
     ]
   }
 }
