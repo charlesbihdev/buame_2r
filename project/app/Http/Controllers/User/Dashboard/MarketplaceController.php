@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\MarketplaceProduct;
 use App\Models\ProductImage;
+use App\Models\ProductSpecification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,8 @@ class MarketplaceController extends Controller
             'warranty' => ['nullable', 'string', 'max:255'],
             'images' => ['required', 'array', 'max:10'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
+            'specifications' => ['nullable', 'array'],
+            'specifications.*' => ['string', 'max:255'],
         ]);
 
 
@@ -69,9 +72,10 @@ class MarketplaceController extends Controller
         $validated['store_id'] = $store->id;
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
 
-        // Remove images from validated data before creating product
+        // Remove images and specifications from validated data before creating product
         $images = $request->file('images', []);
-        unset($validated['images']);
+        $specifications = $request->input('specifications', []);
+        unset($validated['images'], $validated['specifications']);
 
         $product = MarketplaceProduct::create($validated);
 
@@ -84,6 +88,16 @@ class MarketplaceController extends Controller
                 'is_primary' => $index === 0,
                 'display_order' => $index,
             ]);
+        }
+
+        // Handle specifications
+        foreach ($specifications as $specification) {
+            if (!empty(trim($specification))) {
+                ProductSpecification::create([
+                    'product_id' => $product->id,
+                    'specification' => trim($specification),
+                ]);
+            }
         }
 
         return redirect()->route('user.dashboard.index', [
@@ -127,14 +141,20 @@ class MarketplaceController extends Controller
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'remove_images' => ['nullable', 'array'],
             'remove_images.*' => ['integer', 'exists:product_images,id'],
+            'specifications' => ['nullable', 'array'],
+            'specifications.*' => ['string', 'max:255'],
+            'remove_specifications' => ['nullable', 'array'],
+            'remove_specifications.*' => ['integer', 'exists:product_specifications,id'],
         ]);
 
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
 
-        // Remove images and remove_images from validated data
+        // Remove images, specifications and their removal arrays from validated data
         $newImages = $request->file('images', []);
         $removeImageIds = $request->input('remove_images', []);
-        unset($validated['images'], $validated['remove_images']);
+        $specifications = $request->input('specifications', []);
+        $removeSpecificationIds = $request->input('remove_specifications', []);
+        unset($validated['images'], $validated['remove_images'], $validated['specifications'], $validated['remove_specifications']);
 
         $marketplace->update($validated);
 
@@ -167,6 +187,23 @@ class MarketplaceController extends Controller
             $firstImage = $marketplace->images()->orderBy('display_order')->first();
             if ($firstImage) {
                 $firstImage->update(['is_primary' => true]);
+            }
+        }
+
+        // Remove selected specifications
+        if (!empty($removeSpecificationIds)) {
+            ProductSpecification::where('product_id', $marketplace->id)
+                ->whereIn('id', $removeSpecificationIds)
+                ->delete();
+        }
+
+        // Add new specifications
+        foreach ($specifications as $specification) {
+            if (!empty(trim($specification))) {
+                ProductSpecification::create([
+                    'product_id' => $marketplace->id,
+                    'specification' => trim($specification),
+                ]);
             }
         }
 

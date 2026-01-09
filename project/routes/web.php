@@ -20,9 +20,7 @@ Route::get('/contact', function () {
     return Inertia::render('visitor/contact');
 })->name('contact');
 
-Route::get('/marketplace', function () {
-    return Inertia::render('visitor/marketplace/index');
-})->name('marketplace');
+Route::get('/marketplace', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'index'])->name('marketplace');
 
 Route::get('/food-stay', function () {
     return Inertia::render('visitor/food-stay');
@@ -71,9 +69,7 @@ Route::get('/transport/{id}', function ($id) {
     return Inertia::render('visitor/transport/view', ['ride' => null]);
 })->name('transport.view');
 
-Route::get('/marketplace/{id}', function ($id) {
-    return Inertia::render('visitor/marketplace/view', ['product' => null]);
-})->name('marketplace.view');
+Route::get('/marketplace/{id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
 
 Route::get('/jobs/{id}', function ($id) {
     return Inertia::render('visitor/jobs/view', ['job' => null]);

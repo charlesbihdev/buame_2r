@@ -6,3 +6,5 @@ export default function HeadingSmall({ title, description, ...props }) {
         </div>
     );
 }
+
+

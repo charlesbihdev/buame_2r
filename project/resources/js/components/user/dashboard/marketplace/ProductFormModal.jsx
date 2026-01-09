@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
-import { ImagePlus, X } from 'lucide-react';
+import { ImagePlus, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function ProductFormModal({ isOpen, onClose, store }) {
@@ -23,6 +23,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         delivery_available: false,
         warranty: '',
         images: [],
+        specifications: [],
     });
     const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -45,6 +46,20 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         URL.revokeObjectURL(imagePreviews[index]);
         setData('images', data.images.filter((_, i) => i !== index));
         setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    };
+
+    const addSpecification = () => {
+        setData('specifications', [...data.specifications, '']);
+    };
+
+    const updateSpecification = (index, value) => {
+        const updated = [...data.specifications];
+        updated[index] = value;
+        setData('specifications', updated);
+    };
+
+    const removeSpecification = (index) => {
+        setData('specifications', data.specifications.filter((_, i) => i !== index));
     };
 
     const handleSubmit = (e) => {
@@ -245,6 +260,49 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                             onChange={(e) => setData('warranty', e.target.value)}
                             placeholder="e.g., 1 year warranty"
                         />
+                    </div>
+
+                    {/* Specifications */}
+                    <div>
+                        <div className="mb-2 flex items-center justify-between">
+                            <Label>Specifications</Label>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={addSpecification}
+                                className="h-8 gap-1 text-xs"
+                            >
+                                <Plus className="h-3 w-3" />
+                                Add Specification
+                            </Button>
+                        </div>
+                        <div className="space-y-2">
+                            {data.specifications.map((spec, index) => (
+                                <div key={index} className="flex gap-2">
+                                    <Input
+                                        value={spec}
+                                        onChange={(e) => updateSpecification(index, e.target.value)}
+                                        placeholder="e.g., 128GB Storage, 8GB RAM"
+                                        className="flex-1"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => removeSpecification(index)}
+                                        className="h-10 w-10 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            {data.specifications.length === 0 && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Add product specifications to help buyers understand your product better.
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     <DialogFooter>

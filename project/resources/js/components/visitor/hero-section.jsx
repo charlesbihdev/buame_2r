@@ -32,7 +32,7 @@ export function HeroSection() {
                 <div
                     className="h-full w-full bg-cover bg-center"
                     style={{
-                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("/assets/visitors/hero-image.png")',
+                        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("/assets/visitors/bekwai.JPG")',
                     }}
                 />
             </div>

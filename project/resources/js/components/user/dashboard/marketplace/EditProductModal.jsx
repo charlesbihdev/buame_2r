@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
-import { ImagePlus, X } from 'lucide-react';
+import { ImagePlus, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function EditProductModal({ isOpen, onClose, product }) {
@@ -25,10 +25,13 @@ export function EditProductModal({ isOpen, onClose, product }) {
         warranty: product?.warranty || '',
         images: [],
         remove_images: [],
+        specifications: [],
+        remove_specifications: [],
     });
 
     const [newImagePreviews, setNewImagePreviews] = useState([]);
     const [existingImages, setExistingImages] = useState(product?.images || []);
+    const [existingSpecifications, setExistingSpecifications] = useState(product?.specifications || []);
 
     // Update form data when product changes
     // useEffect(() => {
@@ -83,6 +86,30 @@ export function EditProductModal({ isOpen, onClose, product }) {
         setData('remove_images', newRemoveImages);
     };
 
+    const addSpecification = () => {
+        setData('specifications', [...data.specifications, '']);
+    };
+
+    const updateSpecification = (index, value) => {
+        const updated = [...data.specifications];
+        updated[index] = value;
+        setData('specifications', updated);
+    };
+
+    const removeSpecification = (index) => {
+        setData(
+            'specifications',
+            data.specifications.filter((_, i) => i !== index),
+        );
+    };
+
+    const toggleRemoveExistingSpecification = (specId) => {
+        const newRemoveSpecs = data.remove_specifications.includes(specId)
+            ? data.remove_specifications.filter((id) => id !== specId)
+            : [...data.remove_specifications, specId];
+        setData('remove_specifications', newRemoveSpecs);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('user.dashboard.marketplace.update', product.id), {
@@ -100,6 +127,7 @@ export function EditProductModal({ isOpen, onClose, product }) {
         clearErrors();
         setNewImagePreviews([]);
         setExistingImages([]);
+        setExistingSpecifications([]);
         onClose();
     };
 
@@ -323,6 +351,64 @@ export function EditProductModal({ isOpen, onClose, product }) {
                             onChange={(e) => setData('warranty', e.target.value)}
                             placeholder="e.g., 1 year warranty"
                         />
+                    </div>
+
+                    {/* Specifications */}
+                    <div>
+                        <div className="mb-2 flex items-center justify-between">
+                            <Label>Specifications</Label>
+                            <Button type="button" variant="outline" size="sm" onClick={addSpecification} className="h-8 gap-1 text-xs">
+                                <Plus className="h-3 w-3" />
+                                Add Specification
+                            </Button>
+                        </div>
+                        <div className="space-y-2">
+                            {/* Existing Specifications */}
+                            {existingSpecifications.map((spec, index) => {
+                                const isMarkedForRemoval = data.remove_specifications.includes(spec.id);
+                                return (
+                                    <div key={`existing-spec-${spec.id}`} className={`flex gap-2 ${isMarkedForRemoval ? 'opacity-40' : ''}`}>
+                                        <Input value={spec.specification} disabled className={`flex-1 ${isMarkedForRemoval ? 'line-through' : ''}`} />
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => toggleRemoveExistingSpecification(spec.id)}
+                                            className={`h-10 w-10 p-0 ${isMarkedForRemoval ? 'bg-green-500 text-white hover:bg-green-600' : ''}`}
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                );
+                            })}
+
+                            {/* New Specifications */}
+                            {data.specifications.map((spec, index) => (
+                                <div key={`new-spec-${index}`} className="flex gap-2">
+                                    <Input
+                                        value={spec}
+                                        onChange={(e) => updateSpecification(index, e.target.value)}
+                                        placeholder="e.g., 128GB Storage, 8GB RAM"
+                                        className="flex-1"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => removeSpecification(index)}
+                                        className="h-10 w-10 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+
+                            {existingSpecifications.length === 0 && data.specifications.length === 0 && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Add product specifications to help buyers understand your product better.
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     <DialogFooter>

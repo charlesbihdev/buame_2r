@@ -1,6 +1,5 @@
-import { Phone, MapPin, Clock, MessageCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/react';
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
 
 export function ContactSidebar() {
     const whatsappNumber = '233241234567';
@@ -19,7 +18,10 @@ export function ContactSidebar() {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-[#4c9a4c] dark:text-gray-400">Call Us Directly</p>
-                        <a href="tel:+233241234567" className="text-lg font-bold text-[#0d1b0d] transition-colors hover:text-[#13ec13] dark:text-white">
+                        <a
+                            href="tel:+233241234567"
+                            className="text-lg font-bold text-[#0d1b0d] transition-colors hover:text-[#13ec13] dark:text-white"
+                        >
                             +233 24 123 4567
                         </a>
                         <p className="mt-1 text-xs text-[#4c9a4c]">Available Mon-Fri, 8am-5pm</p>
@@ -33,13 +35,8 @@ export function ContactSidebar() {
                         </div>
                         <span className="font-bold text-gray-900 dark:text-white">Chat on WhatsApp</span>
                     </div>
-                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">
-                        Need a quick response? Chat with our support team instantly.
-                    </p>
-                    <Button
-                        asChild
-                        className="w-full rounded bg-[#25D366] py-2 text-sm font-bold text-white transition-colors hover:bg-[#20bd5a]"
-                    >
+                    <p className="mb-3 text-sm text-gray-600 dark:text-gray-300">Need a quick response? Chat with our support team instantly.</p>
+                    <Button asChild className="w-full rounded bg-[#25D366] py-2 text-sm font-bold text-white transition-colors hover:bg-[#20bd5a]">
                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                             Start Chat
                         </a>
@@ -73,11 +70,11 @@ export function ContactSidebar() {
                 <div
                     className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                     style={{
-                        backgroundImage: 'url(/assets/visitors/contact-map.jpg)',
+                        backgroundImage: 'url(/assets/visitors/bekwai.JPG)',
                     }}
                 />
                 <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-black/20" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-lg bg-white/90 px-4 py-3 backdrop-blur dark:bg-black/80">
+                <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between rounded-lg bg-white/90 px-4 py-3 backdrop-blur dark:bg-black/80">
                     <span className="truncate pr-2 text-sm font-bold">Locate us in Sefwi Bekwai</span>
                     <ArrowRight className="h-5 w-5 text-[#13ec13]" />
                 </div>
@@ -85,4 +82,3 @@ export function ContactSidebar() {
         </div>
     );
 }
-

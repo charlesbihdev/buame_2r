@@ -24,13 +24,13 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
     Route::put('artisans/portfolio/{portfolio}', [ArtisansController::class, 'updatePortfolio'])->name('artisans.portfolio.update');
     Route::delete('artisans/portfolio/{portfolio}', [ArtisansController::class, 'destroyPortfolio'])->name('artisans.portfolio.destroy');
 
-    // Marketplace routes
-    Route::resource('marketplace', MarketplaceController::class)->except(['show']);
-
-    // Store routes
+    // Store routes (must be before marketplace resource route to avoid route conflicts)
     Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
     Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
     Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
+
+    // Marketplace routes
+    Route::resource('marketplace', MarketplaceController::class)->except(['show']);
 
     // Hotels routes
     Route::resource('hotels', HotelsController::class)->except(['show']);
