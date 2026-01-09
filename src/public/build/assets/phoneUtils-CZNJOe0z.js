@@ -1,0 +1,1 @@
+function u(n){if(!n)return null;let t=n.replace(/\D/g,"");return t.startsWith("0")&&(t=t.substring(1)),t.startsWith("233")?t:t.length===9||t.length===10?"233"+t:t.length===12&&t.startsWith("233")?t:null}function i(n,t=""){const e=u(n);if(!e)return null;const r=encodeURIComponent(t);return`https://wa.me/${e}${t?`?text=${r}`:""}`}export{i as b};
