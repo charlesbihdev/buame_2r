@@ -15,7 +15,7 @@ export function RentalsListings({ listings }) {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Rentals</h3>
-                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Rental
                 </Button>
@@ -55,7 +55,7 @@ export function RentalsListings({ listings }) {
                 <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
                     <Home className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-4 text-gray-600 dark:text-gray-400">No rentals listed yet</p>
-                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Rental
                     </Button>

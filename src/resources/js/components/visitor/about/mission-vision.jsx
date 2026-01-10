@@ -19,9 +19,9 @@ export function MissionVision() {
                             To bridge the gap between local service providers and the community through accessible technology, fostering economic growth and simplifying daily life across Western North and beyond. We welcome customers from all backgrounds.
                         </p>
                     </div>
-                    {/* Vision Card */}
-                    <div className="group rounded-2xl border border-[var(--buame-border-light)] bg-background-light p-8 transition-colors hover:border-[var(--primary)]/50 dark:border-white/10 dark:bg-white/5">
-                        <div className="mb-6 flex size-12 items-center justify-center rounded-full bg-[var(--primary)]/20 text-[var(--primary)] transition-transform group-hover:scale-110">
+                    {/* Vision Card - Blue for future/trust */}
+                    <div className="group rounded-2xl border border-[var(--buame-border-light)] bg-background-light p-8 transition-colors hover:border-[var(--accent)]/50 dark:border-white/10 dark:bg-white/5">
+                        <div className="mb-6 flex size-12 items-center justify-center rounded-full bg-[var(--accent)]/20 text-[var(--accent)] transition-transform group-hover:scale-110">
                             <Eye className="h-6 w-6" />
                         </div>
                         <h3 className="mb-3 text-xl font-bold dark:text-white">Our Vision</h3>

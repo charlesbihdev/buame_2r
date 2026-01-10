@@ -60,6 +60,7 @@ export function ServicesGrid() {
             secondaryButtonText: 'Post a Job',
             secondaryButtonUrl: '/jobs',
             fullWidth: true,
+            isPremium: true, // Premium service - will get gold treatment
         },
     ];
 

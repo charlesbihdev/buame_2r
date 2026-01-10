@@ -31,12 +31,19 @@ export function HowItWorksSection() {
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     {steps.map((step, index) => {
                         const Icon = step.icon;
+                        // Strategic color variation: Green (primary), Gold (secondary), Blue (accent)
+                        const colorVariants = [
+                            { border: 'border-[var(--primary)]/40', bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]' }, // Step 1: Green
+                            { border: 'border-[var(--secondary)]/40', bg: 'bg-[var(--secondary)]/10', text: 'text-[var(--secondary)]' }, // Step 2: Gold
+                            { border: 'border-[var(--accent)]/40', bg: 'bg-[var(--accent)]/10', text: 'text-[var(--accent)]' }, // Step 3: Blue
+                        ];
+                        const colors = colorVariants[index % colorVariants.length];
                         return (
                             <div
                                 key={step.title}
-                                className="relative flex flex-col items-center rounded-2xl border border-dashed border-primary/40 bg-background p-6 text-center"
+                                className={`relative flex flex-col items-center rounded-2xl border border-dashed ${colors.border} bg-background p-6 text-center`}
                             >
-                                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-full ${colors.bg} ${colors.text}`}>
                                     <Icon className="h-8 w-8" />
                                 </div>
                                 <h3 className="mb-2 text-xl font-bold text-foreground">{step.title}</h3>

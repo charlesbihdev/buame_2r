@@ -8,7 +8,7 @@ export function MyServices({ data }) {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Services</h3>
-                <Button className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                <Button className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Service
                 </Button>
@@ -40,7 +40,7 @@ export function MyServices({ data }) {
                 <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
                     <Wrench className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-4 text-gray-600 dark:text-gray-400">No services added yet</p>
-                    <Button className="mt-4 bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                    <Button className="mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Service
                     </Button>

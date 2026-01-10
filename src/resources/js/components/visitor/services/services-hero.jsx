@@ -21,14 +21,14 @@ export function ServicesHero() {
                 <div className="z-10 mt-2 flex flex-wrap gap-4">
                     <Button
                         asChild
-                        className="flex h-12 items-center justify-center rounded-lg bg-[var(--primary)] px-6 text-base font-bold text-white transition-colors hover:bg-[#0fd60f]"
+                        className="flex h-12 items-center justify-center rounded-lg bg-[var(--primary)] px-6 text-base font-bold text-white transition-colors hover:bg-[var(--primary)]/90"
                     >
                         <Link href="/join-as-provider">Get Started</Link>
                     </Button>
                     <Button
                         asChild
                         variant="outline"
-                        className="flex h-12 items-center justify-center rounded-lg border border-white/20 bg-white/10 px-6 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                        className="flex h-12 items-center justify-center rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-6 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50"
                     >
                         <Link href="/about">Learn More</Link>
                     </Button>

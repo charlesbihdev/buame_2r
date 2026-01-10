@@ -415,7 +415,7 @@ export function EditProductModal({ isOpen, onClose, product }) {
                         <Button type="button" variant="outline" onClick={handleClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                             {processing ? 'Saving...' : 'Save Changes'}
                         </Button>
                     </DialogFooter>

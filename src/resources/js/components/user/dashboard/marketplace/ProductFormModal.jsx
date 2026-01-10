@@ -309,7 +309,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Button type="button" variant="outline" onClick={handleClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                             {processing ? 'Adding...' : 'Add Product'}
                         </Button>
                     </DialogFooter>

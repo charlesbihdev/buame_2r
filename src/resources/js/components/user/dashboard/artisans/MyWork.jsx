@@ -41,7 +41,7 @@ export function Portfolio({ profile }) {
 
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Portfolio</h3>
-                <Button onClick={handleAdd} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                <Button onClick={handleAdd} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Work
                 </Button>
@@ -87,7 +87,7 @@ export function Portfolio({ profile }) {
                 <div className="rounded-xl border-2 border-dashed border-gray-300 p-12 text-center dark:border-gray-700">
                     <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-4 text-gray-600 dark:text-gray-400">No portfolio items yet</p>
-                    <Button onClick={handleAdd} className="mt-4 bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                    <Button onClick={handleAdd} className="mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Work
                     </Button>

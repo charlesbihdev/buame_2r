@@ -45,7 +45,9 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
                                 key={value}
                                 onClick={() => !isActive && handleSwitch(value)}
                                 className={`flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                                    isActive ? 'border-[var(--primary)] bg-[var(--primary)]/10' : 'border-[var(--buame-border-light)] hover:border-[var(--primary)]/50 dark:border-[#2a4d2a]'
+                                    isActive
+                                        ? 'border-[var(--primary)] bg-[var(--primary)]/10'
+                                        : 'border-[var(--buame-border-light)] hover:border-[var(--primary)]/50 dark:border-[#2a4d2a]'
                                 }`}
                             >
                                 <div

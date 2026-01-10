@@ -15,7 +15,7 @@ export function ArtisansListings({ listings }) {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Artisan Listings</h3>
-                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     New Listing
                 </Button>
@@ -53,7 +53,7 @@ export function ArtisansListings({ listings }) {
             ) : (
                 <div className="rounded-xl border-2 border-dashed border-gray-300 p-12 text-center dark:border-gray-700">
                     <p className="text-gray-600 dark:text-gray-400">No listings yet</p>
-                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Create Your First Listing
                     </Button>

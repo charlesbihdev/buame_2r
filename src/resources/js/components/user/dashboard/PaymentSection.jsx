@@ -11,7 +11,7 @@ export function PaymentSection({ payments, paidCategories }) {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Payment Management</h2>
-                <Button onClick={handleAddCategory} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                <Button onClick={handleAddCategory} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Category
                 </Button>
@@ -42,9 +42,9 @@ export function PaymentSection({ payments, paidCategories }) {
                                 <div className="flex items-center gap-4">
                                     <span className="font-bold text-[var(--foreground)] dark:text-white">GH₵ {payment.amount}</span>
                                     {payment.status === 'completed' ? (
-                                        <CheckCircle className="h-5 w-5 text-green-500" />
+                                        <CheckCircle className="h-5 w-5 text-[var(--primary)]" />
                                     ) : payment.status === 'pending' ? (
-                                        <Clock className="h-5 w-5 text-yellow-500" />
+                                        <Clock className="h-5 w-5 text-[var(--secondary)]" />
                                     ) : (
                                         <XCircle className="h-5 w-5 text-red-500" />
                                     )}

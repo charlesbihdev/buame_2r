@@ -121,7 +121,7 @@ export function PortfolioForm({ portfolio, onClose }) {
                         <Button type="button" variant="outline" onClick={onClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                             {processing ? 'Saving...' : isEdit ? 'Update' : 'Add Item'}
                         </Button>
                     </div>

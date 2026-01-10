@@ -25,7 +25,7 @@ export function AboutHero() {
                         <Button
                             asChild
                             variant="outline"
-                            className="flex h-12 items-center justify-center rounded-lg border border-gray-200 px-6 text-base font-medium transition-all hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-white/5"
+                            className="flex h-12 items-center justify-center rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-6 text-base font-medium text-[var(--accent)] transition-all hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50 dark:text-[var(--accent)]"
                         >
                             <Link href="/services">View Services</Link>
                         </Button>

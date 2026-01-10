@@ -30,8 +30,8 @@ export function CTASection() {
                     </div>
                 </div>
 
-                {/* CTA 2: For Providers */}
-                <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/10 p-8 dark:bg-primary/5 md:p-12">
+                {/* CTA 2: For Providers - Premium/Secondary Action (Gold) */}
+                <div className="relative overflow-hidden rounded-2xl border border-[var(--secondary)]/20 bg-[var(--secondary)]/10 p-8 dark:bg-[var(--secondary)]/5 md:p-12">
                     <div className="relative z-10 flex h-full flex-col items-start justify-center">
                         <h3 className="mb-4 text-3xl font-bold text-foreground">Are you a Provider?</h3>
                         <p className="mb-8 max-w-md text-muted-foreground">
@@ -39,7 +39,7 @@ export function CTASection() {
                         </p>
                         <Button
                             asChild
-                            className="flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-bold text-accent-foreground transition-colors hover:bg-accent/90"
+                            className="flex items-center gap-2 rounded-lg bg-[var(--secondary)] px-6 py-3 font-bold text-[var(--secondary-foreground)] transition-colors hover:bg-[var(--secondary)]/90"
                         >
                             <Link href="/join-as-provider">
                                 Join as Provider <Building2 className="h-4 w-4" />

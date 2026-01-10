@@ -62,24 +62,24 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                 <Button
                     onClick={handleCreate}
                     disabled={!canAddProducts}
-                    className="bg-[var(--primary)] text-white hover:bg-[#0eb50e] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Product
                 </Button>
             </div>
 
-            {/* Limit Reached Warning */}
+            {/* Limit Reached Warning - Gold for premium upgrade */}
             {remainingSlots === 0 && (
-                <div className="rounded-xl border border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-900/20 p-4">
+                <div className="rounded-xl border border-[var(--secondary)]/30 bg-[var(--secondary)]/10 dark:border-[var(--secondary)]/20 dark:bg-[var(--secondary)]/5 p-4">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex items-start gap-3">
-                            <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+                            <AlertCircle className="h-5 w-5 text-[var(--secondary)] dark:text-[var(--secondary)] flex-shrink-0" />
                             <div>
-                                <p className="font-semibold text-yellow-900 dark:text-yellow-100">
+                                <p className="font-semibold text-[var(--secondary)] dark:text-[var(--secondary)]">
                                     Product Limit Reached
                                 </p>
-                                <p className="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
+                                <p className="mt-1 text-sm text-[var(--secondary)]/80 dark:text-[var(--secondary)]/70">
                                     You've reached your limit of {productLimit} products. Upgrade to add more.
                                 </p>
                             </div>
@@ -87,7 +87,7 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                         <Button
                             onClick={handleUpgrade}
                             size="sm"
-                            className="bg-yellow-600 text-white hover:bg-yellow-700 flex-shrink-0"
+                            className="bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90 flex-shrink-0"
                         >
                             <ArrowUpRight className="mr-2 h-4 w-4" />
                             Upgrade
@@ -96,15 +96,15 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                 </div>
             )}
 
-            {/* Store Not Active Warning */}
+            {/* Store Not Active Warning - Blue for info/action needed */}
             {store && !store.is_active && (
-                <div className="rounded-xl border border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-900/20 p-4">
+                <div className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5 p-4">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex items-start gap-3">
-                            <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400 flex-shrink-0" />
+                            <AlertCircle className="h-5 w-5 text-[var(--accent)] dark:text-[var(--accent)] flex-shrink-0" />
                             <div>
-                                <p className="font-semibold text-orange-900 dark:text-orange-100">Store Not Active</p>
-                                <p className="mt-1 text-sm text-orange-700 dark:text-orange-300">
+                                <p className="font-semibold text-[var(--accent)] dark:text-[var(--accent)]">Store Not Active</p>
+                                <p className="mt-1 text-sm text-[var(--accent)]/80 dark:text-[var(--accent)]/70">
                                     Your store is hidden from visitors. Activate it to make your products visible.
                                 </p>
                             </div>
@@ -113,7 +113,7 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                             onClick={() => navigateToSection('store')}
                             variant="outline"
                             size="sm"
-                            className="border-orange-300 text-orange-700 hover:bg-orange-100 dark:border-orange-600 dark:text-orange-300 dark:hover:bg-orange-900/40 flex-shrink-0"
+                            className="border-[var(--accent)]/30 text-[var(--accent)] hover:bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:text-[var(--accent)] dark:hover:bg-[var(--accent)]/10 flex-shrink-0"
                         >
                             Store Settings
                         </Button>

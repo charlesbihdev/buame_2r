@@ -1,17 +1,18 @@
-import { Link } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
+import { Link } from '@inertiajs/react';
 
 export function AboutCTA() {
     return (
-        <div className="relative overflow-hidden bg-[var(--buame-background-dark)] py-20 px-6 text-white lg:px-20">
+        <div className="relative overflow-hidden bg-[var(--buame-background-dark)] px-6 py-20 text-white lg:px-20">
             {/* Decorative circle */}
-            <div className="absolute -right-20 -top-20 size-96 rounded-full bg-[var(--primary)]/10 blur-3xl" />
+            <div className="absolute -top-20 -right-20 size-96 rounded-full bg-[var(--primary)]/10 blur-3xl" />
             <div className="relative z-10 mx-auto max-w-[960px] text-center">
-                <h2 className="mb-6 text-3xl font-black tracking-tight dark:text-white md:text-4xl">
+                <h2 className="mb-6 text-3xl font-black tracking-tight md:text-4xl dark:text-white">
                     Ready to be part of the Western North and beyond digital revolution?
                 </h2>
                 <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-300">
-                    Whether you are a buyer, seller, job seeker, or employer from any background, 2RBUAME has a place for you. Join our growing community today.
+                    Whether you are a buyer, seller, job seeker, or employer from any background, 2RBUAME has a place for you. Join our growing
+                    community today.
                 </p>
                 <div className="flex flex-col justify-center gap-4 sm:flex-row">
                     <Button
@@ -23,7 +24,7 @@ export function AboutCTA() {
                     <Button
                         asChild
                         variant="outline"
-                        className="rounded-lg border border-white/20 bg-white/10 px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-white/20"
+                        className="rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-8 py-3 text-lg font-bold text-white transition-colors hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/20"
                     >
                         <Link href="/contact">Contact Support</Link>
                     </Button>
@@ -32,4 +33,3 @@ export function AboutCTA() {
         </div>
     );
 }
-

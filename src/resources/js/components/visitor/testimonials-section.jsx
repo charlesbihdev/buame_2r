@@ -26,19 +26,27 @@ export function TestimonialsSection() {
                     Trusted Across Western North and Beyond
                 </h2>
                 <div className="grid gap-6 md:grid-cols-3">
-                    {testimonials.map((testimonial, index) => (
-                        <div
-                            key={index}
-                            className="rounded-xl border border-border bg-card p-6 shadow-sm"
-                        >
-                            <div className="mb-4 flex justify-center text-primary">
-                                <Quote className="h-6 w-6" />
+                    {testimonials.map((testimonial, index) => {
+                        // Use blue (accent) for trust elements - testimonials build trust
+                        const isTrustCard = index === 1; // Middle card gets blue accent
+                        return (
+                            <div
+                                key={index}
+                                className={`rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md ${
+                                    isTrustCard
+                                        ? 'border-[var(--accent)]/30 bg-[var(--accent)]/5'
+                                        : 'border-border'
+                                }`}
+                            >
+                                <div className={`mb-4 flex justify-center ${isTrustCard ? 'text-[var(--accent)]' : 'text-[var(--primary)]'}`}>
+                                    <Quote className="h-6 w-6" />
+                                </div>
+                                <p className="mb-6 italic text-muted-foreground">{testimonial.quote}</p>
+                                <div className="font-bold text-foreground">{testimonial.author}</div>
+                                <div className="text-xs text-muted-foreground">{testimonial.role}</div>
                             </div>
-                            <p className="mb-6 italic text-muted-foreground">{testimonial.quote}</p>
-                            <div className="font-bold text-foreground">{testimonial.author}</div>
-                            <div className="text-xs text-muted-foreground">{testimonial.role}</div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>

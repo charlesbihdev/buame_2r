@@ -40,14 +40,22 @@ export function EcosystemGrid() {
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-                    {ecosystemItems.map((item) => {
+                    {ecosystemItems.map((item, index) => {
                         const Icon = item.icon;
+                        // Strategic color variation: Green, Gold, Blue, Green
+                        const colorVariants = [
+                            { bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]', border: 'hover:border-[var(--primary)]/20' }, // Local Traders - Green
+                            { bg: 'bg-[var(--secondary)]/10', text: 'text-[var(--secondary)]', border: 'hover:border-[var(--secondary)]/20' }, // Transport - Gold
+                            { bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]', border: 'hover:border-[var(--primary)]/20' }, // Artisans - Green
+                            { bg: 'bg-[var(--accent)]/10', text: 'text-[var(--accent)]', border: 'hover:border-[var(--accent)]/20' }, // Employment - Blue (trust)
+                        ];
+                        const colors = colorVariants[index % colorVariants.length];
                         return (
                             <div
                                 key={item.title}
-                                className="group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all hover:border-[var(--primary)]/20 hover:shadow-lg dark:bg-white/5"
+                                className={`group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all ${colors.border} hover:shadow-lg dark:bg-white/5`}
                             >
-                                <div className="flex size-16 items-center justify-center rounded-full bg-[#e3fbe3] text-[var(--primary)] dark:bg-[var(--primary)]/20">
+                                <div className={`flex size-16 items-center justify-center rounded-full ${colors.bg} ${colors.text} dark:${colors.bg.replace('/10', '/20')}`}>
                                     <Icon className="h-8 w-8" />
                                 </div>
                                 <h3 className="font-bold dark:text-white">{item.title}</h3>

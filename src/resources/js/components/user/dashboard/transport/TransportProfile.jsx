@@ -274,9 +274,7 @@ export function TransportProfile({ profile }) {
                             className="mt-1"
                             placeholder="Daily: 5:00 AM - 8:00 PM"
                         />
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            When are you available for rides?
-                        </p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When are you available for rides?</p>
                         <FormError error={errors.operating_hours || pageErrors?.operating_hours} className="mt-1" />
                     </div>
                 </div>
@@ -292,7 +290,7 @@ export function TransportProfile({ profile }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[#0eb50e] disabled:pointer-events-none disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[var(--primary)]/90 disabled:pointer-events-none disabled:opacity-50"
                     >
                         <Save className="h-4 w-4" />
                         {processing ? 'Saving...' : 'Save Profile'}

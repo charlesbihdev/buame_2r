@@ -54,26 +54,36 @@ export function CategoriesSection() {
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-                    {categories.map((category) => (
-                        <Link
-                            key={category.name}
-                            href={category.url}
-                            className="group flex flex-col gap-3 rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/30 hover:shadow-lg"
-                        >
-                            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
-                                <div
-                                    className="absolute inset-0 bg-cover bg-top transition-transform duration-500 group-hover:scale-110"
-                                    style={{
-                                        backgroundImage: `url(${category.image})`,
-                                    }}
-                                />
-                            </div>
-                            <div>
-                                <h3 className="font-bold text-foreground">{category.name}</h3>
-                                <p className="mt-1 text-xs text-muted-foreground">{category.description}</p>
-                            </div>
-                        </Link>
-                    ))}
+                    {categories.map((category, index) => {
+                        // Strategic color accents: Premium services (Hotel, Jobs) get gold, others vary
+                        const isPremium = category.name === 'Hotel' || category.name === 'Jobs';
+                        const isInfo = category.name === 'Marketplace'; // Marketplace gets blue (info/e-commerce)
+                        const hoverBorder = isPremium
+                            ? 'hover:border-[var(--secondary)]/30'
+                            : isInfo
+                              ? 'hover:border-[var(--accent)]/30'
+                              : 'hover:border-[var(--primary)]/30';
+                        return (
+                            <Link
+                                key={category.name}
+                                href={category.url}
+                                className={`group flex flex-col gap-3 rounded-xl border border-border bg-card p-4 transition-all ${hoverBorder} hover:shadow-lg`}
+                            >
+                                <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
+                                    <div
+                                        className="absolute inset-0 bg-cover bg-top transition-transform duration-500 group-hover:scale-110"
+                                        style={{
+                                            backgroundImage: `url(${category.image})`,
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <h3 className="font-bold text-foreground">{category.name}</h3>
+                                    <p className="mt-1 text-xs text-muted-foreground">{category.description}</p>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
         </section>

@@ -126,10 +126,10 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         </ul>
                     </div>
 
-                    {/* Payment Info */}
-                    <div className="flex items-start gap-2 rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-900 dark:bg-blue-950/20">
-                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
-                        <p className="text-xs text-blue-800 dark:text-blue-300">
+                    {/* Payment Info - Blue for trust/information */}
+                    <div className="flex items-start gap-2 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-3 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5">
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)] dark:text-[var(--accent)]" />
+                        <p className="text-xs text-[var(--accent)] dark:text-[var(--accent)]/80">
                             You'll be redirected to Paystack for secure payment processing. After successful payment, you'll be automatically
                             redirected back to your dashboard.
                         </p>
@@ -144,7 +144,7 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         type="button"
                         onClick={handlePayment}
                         disabled={isProcessing}
-                        className="cursor-pointer gap-2 bg-[var(--primary)] text-white hover:bg-[#0ea80e]"
+                        className="cursor-pointer gap-2 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
                     >
                         {isProcessing ? (
                             <>

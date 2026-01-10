@@ -342,7 +342,7 @@ Stores transport/ride listings (Okada, Cars, Buses, etc.).
 | `id`              | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Unique ride identifier                             |
 | `user_id`         | bigint unsigned | NOT NULL, FOREIGN KEY       | References `users.id` (provider)                   |
 | `company_name`    | varchar(255)    | NOT NULL                    | Transport company/service name                     |
-| `type`            | enum            | NOT NULL                    | 'taxi', 'bus', 'okada_car', 'cargo', 'other'       |
+| `type`            | enum            | NOT NULL                    | 'okada', 'car', 'taxi', 'bus', 'cargo', 'other'    |
 | `price_per_seat`  | decimal(10,2)   | NOT NULL                    | Price per seat in GHS                              |
 | `seats_available` | integer         | NOT NULL                    | Number of available seats                          |
 | `location`        | varchar(255)    | NOT NULL                    | Current location                                   |
