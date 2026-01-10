@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { Globe, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { AppLogo } from './app-logo';
 
 export function Footer() {
     return (
@@ -8,11 +9,9 @@ export function Footer() {
                 <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
                     {/* Brand Column */}
                     <div className="flex flex-col gap-4">
-                        <div className="flex items-center gap-2">
-                            <img src="/assets/logo/2RBUAME.png" alt="BUAME 2R Logo" className="h-18 w-auto" />
-                        </div>
+                        <AppLogo className="pointer-events-auto" />
                         <p className="text-muted-foreground text-sm leading-relaxed">
-                            Connecting the Western North Region digitally. Empowering locals through service and opportunity.
+                            Connecting Western North and beyond digitally. Empowering communities through service and opportunity.
                         </p>
                         <div className="mt-2 flex gap-4">
                             <a
@@ -94,11 +93,11 @@ export function Footer() {
                             </li>
                             <li className="flex items-center gap-2">
                                 <Mail className="text-primary h-5 w-5" />
-                                <span>support@buame2r.com</span>
+                                <span>support@2RBUAME.com</span>
                             </li>
                             <li className="flex items-center gap-2">
                                 <MapPin className="text-primary h-5 w-5" />
-                                <span>Sefwi Bekwai, Western North</span>
+                                <span>Western North and beyond</span>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +105,7 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-border flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-                    <p className="text-muted-foreground text-xs">© 2023 BUAME 2R. All rights reserved.</p>
+                    <p className="text-muted-foreground text-xs">© 2023 2RBUAME. All rights reserved.</p>
                     <div className="text-muted-foreground flex gap-6 text-xs">
                         <Link href="/privacy" className="hover:text-primary transition-colors">
                             Privacy Policy

@@ -48,7 +48,7 @@ export function MarketplaceHero() {
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                        placeholder="Location (e.g., Sefwi Bekwai)"
+                                        placeholder="Location (e.g., Western North)"
                                         className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14 dark:text-white"
                                     />
                                 </div>

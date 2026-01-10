@@ -72,7 +72,7 @@ const categories = [
 export default function ChoosePath() {
     return (
         <VisitorLayout>
-            <Head title="Choose Your Path - BUAME 2R" />
+            <Head title="Choose Your Path - 2RBUAME" />
             <div className="bg-background py-16">
                 <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-40">
                     {/* Header */}

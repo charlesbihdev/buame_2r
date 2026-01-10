@@ -10,7 +10,9 @@
         "lint": "eslint . --fix",
         "replace-colors": "node scripts/replace-colors.js",
         "replace-colors:dry": "node scripts/replace-colors.js --dry-run",
-        "replace-colors:verbose": "node scripts/replace-colors.js --verbose"
+        "replace-colors:verbose": "node scripts/replace-colors.js --verbose",
+        "fix-buttons": "node scripts/fix-button-colors.js",
+        "fix-buttons:dry": "node scripts/fix-button-colors.js --dry-run"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",

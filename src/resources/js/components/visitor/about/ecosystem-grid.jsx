@@ -32,10 +32,10 @@ export function EcosystemGrid() {
                     <div className="max-w-xl">
                         <h2 className="mb-4 text-3xl font-bold dark:text-white">Our Connected Ecosystem</h2>
                         <p className="text-gray-600 dark:text-gray-400">
-                            BUAME 2R isn't just a website; it's a network of real people and businesses working together.
+                            2RBUAME isn't just a website; it's a network of real people and businesses working together.
                         </p>
                     </div>
-                    <Link href="/marketplace" className="flex items-center gap-1 font-bold text-[#13ec13] transition-all hover:underline">
+                    <Link href="/marketplace" className="flex items-center gap-1 font-bold text-[var(--primary)] transition-all hover:underline">
                         View Marketplace <ArrowRight className="h-4 w-4" />
                     </Link>
                 </div>
@@ -45,9 +45,9 @@ export function EcosystemGrid() {
                         return (
                             <div
                                 key={item.title}
-                                className="group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all hover:border-[#13ec13]/20 hover:shadow-lg dark:bg-white/5"
+                                className="group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all hover:border-[var(--primary)]/20 hover:shadow-lg dark:bg-white/5"
                             >
-                                <div className="flex size-16 items-center justify-center rounded-full bg-[#e3fbe3] text-[#13ec13] dark:bg-[#13ec13]/20">
+                                <div className="flex size-16 items-center justify-center rounded-full bg-[#e3fbe3] text-[var(--primary)] dark:bg-[var(--primary)]/20">
                                     <Icon className="h-8 w-8" />
                                 </div>
                                 <h3 className="font-bold dark:text-white">{item.title}</h3>

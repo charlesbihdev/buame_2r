@@ -51,18 +51,18 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">My Products</h2>
+                    <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">My Products</h2>
                     <p className="mt-1 text-gray-600 dark:text-gray-400">
                         {productsCount} / {productLimit} products
                         {remainingSlots > 0 && (
-                            <span className="ml-2 text-[#13ec13]">({remainingSlots} slots remaining)</span>
+                            <span className="ml-2 text-[var(--primary)]">({remainingSlots} slots remaining)</span>
                         )}
                     </p>
                 </div>
                 <Button
                     onClick={handleCreate}
                     disabled={!canAddProducts}
-                    className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[var(--primary)] text-white hover:bg-[#0eb50e] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Product
@@ -128,7 +128,7 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                         return (
                             <div
                                 key={product.id}
-                                className="rounded-xl border border-[#e7f3e7] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                                className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
                             >
                                 <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
                                     {primaryImage ? (
@@ -149,8 +149,8 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                                     )}
                                 </div>
                                 <div className="p-4">
-                                    <h4 className="font-bold text-[#0d1b0d] dark:text-white">{product.title}</h4>
-                                    <p className="mt-1 text-sm font-semibold text-[#13ec13]">GH₵ {product.price}</p>
+                                    <h4 className="font-bold text-[var(--foreground)] dark:text-white">{product.title}</h4>
+                                    <p className="mt-1 text-sm font-semibold text-[var(--primary)]">GH₵ {product.price}</p>
                                     <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                                         <MapPin className="h-3 w-3" />
                                         <span>{product.location}</span>

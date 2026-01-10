@@ -74,7 +74,7 @@ export function StoreSearch({
                             onClick={() => setShowFilters(!showFilters)}
                             className={`flex items-center gap-2 rounded-xl border px-4 py-3 font-semibold transition-all ${
                                 showFilters || hasActiveFilters
-                                    ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--foreground)] dark:text-white'
+                                    ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-white dark:text-white'
                                     : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-gray-700 dark:bg-[var(--card)] dark:text-gray-400'
                             }`}
                         >

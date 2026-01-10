@@ -12,7 +12,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
             <select
                 value={filters?.skill_type || 'all'}
                 onChange={(e) => onFilterChange('skill_type', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
                 <option value="all">All Skills</option>
                 <option value="carpenter">Carpenter</option>
@@ -30,7 +30,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
             <select
                 value={filters?.experience_level || 'all'}
                 onChange={(e) => onFilterChange('experience_level', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
                 <option value="all">All Experience Levels</option>
                 <option value="beginner">Beginner</option>
@@ -42,7 +42,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
             <select
                 value={filters?.sort || 'rating'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
                 <option value="rating">Sort: Top Rated</option>
                 <option value="experience">Most Experienced</option>
@@ -61,7 +61,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
 
             {/* Results Count */}
             <div className="ml-auto text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-bold text-[#0d1b0d] dark:text-white">{totalCount}</span> artisans found
+                <span className="font-bold text-[var(--foreground)] dark:text-white">{totalCount}</span> artisans found
             </div>
         </div>
     );

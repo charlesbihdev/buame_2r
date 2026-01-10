@@ -25,7 +25,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
             <select
                 value={filters?.type || 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
                 <option value="all">All Types</option>
                 <option value="house">House</option>
@@ -41,7 +41,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
             <select
                 value={filters?.sort || 'newest'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
                 <option value="newest">Sort: Newest</option>
                 <option value="price_low">Price: Low to High</option>
@@ -59,7 +59,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
 
             {/* Results Count */}
             <div className="ml-auto text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-bold text-[#0d1b0d] dark:text-white">{totalCount}</span> rentals found
+                <span className="font-bold text-[var(--foreground)] dark:text-white">{totalCount}</span> rentals found
             </div>
         </div>
     );

@@ -16,7 +16,7 @@ const transportTabs = [
 
 export default function Transport({ rides, typeCounts, filters }) {
     const totalCount = rides?.total || 0;
-    const [location, setLocation] = useState(filters?.location || 'Sefwi Bekwai');
+    const [location, setLocation] = useState(filters?.location || '');
 
     const handleLocationSearch = () => {
         router.get(
@@ -65,20 +65,20 @@ export default function Transport({ rides, typeCounts, filters }) {
 
     return (
         <VisitorLayout>
-            <Head title="Transport & Rides | BUAME 2R" />
+            <Head title="Transport & Rides | 2RBUAME" />
 
             {/* Hero with Location Search */}
-            <div className="bg-gradient-to-r from-[#13ec13]/20 via-[#13ec13]/10 to-transparent dark:from-[#13ec13]/10 dark:via-[#13ec13]/5">
+            <div className="bg-gradient-to-r from-[var(--primary)]/20 via-[var(--primary)]/10 to-transparent dark:from-[var(--primary)]/10 dark:via-[var(--primary)]/5">
                 <div className="mx-auto max-w-6xl px-4 py-12 md:px-8">
-                    <h1 className="mb-8 text-center text-4xl font-black text-[#0d1b0d] dark:text-white">
+                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white">
                         Find Rides Near You
                     </h1>
 
                     {/* Location Search */}
-                    <div className="mx-auto max-w-4xl rounded-2xl bg-white p-6 shadow-xl dark:bg-[#162816]">
+                    <div className="mx-auto max-w-4xl rounded-2xl bg-white p-6 shadow-xl dark:bg-[var(--card)]">
                         <div className="mb-4 flex items-center gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#13ec13]">
-                                <Navigation className="h-5 w-5 text-[#0d1b0d]" />
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)]">
+                                <Navigation className="h-5 w-5 text-[var(--foreground)]" />
                             </div>
                             <div className="flex-1">
                                 <label className="mb-1 block text-xs font-semibold text-gray-600 dark:text-gray-400">
@@ -89,12 +89,12 @@ export default function Transport({ rides, typeCounts, filters }) {
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                     placeholder="Enter your location"
-                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#0d1b0d] dark:text-white"
+                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
                                 />
                             </div>
                             <button
                                 onClick={handleLocationSearch}
-                                className="mt-6 rounded-lg bg-[#13ec13] px-6 py-3 font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
+                                className="mt-6 rounded-lg bg-[var(--primary)] px-6 py-3 font-bold text-white transition-colors hover:bg-[var(--primary)]"
                             >
                                 <MapPin className="h-5 w-5" />
                             </button>
@@ -102,14 +102,14 @@ export default function Transport({ rides, typeCounts, filters }) {
 
                         <div className="flex gap-3">
                             <button
-                                onClick={() => setLocation('Sefwi Bekwai')}
-                                className="flex-1 rounded-lg border-2 border-[#13ec13] bg-[#13ec13]/10 px-4 py-2 text-sm font-semibold text-[#0d1b0d] transition-colors hover:bg-[#13ec13]/20 dark:text-white"
+                                onClick={() => setLocation('')}
+                                className="flex-1 rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary)]/20 dark:text-white"
                             >
                                 Use Current Location
                             </button>
                             <button
                                 onClick={handleLocationSearch}
-                                className="flex-1 rounded-lg bg-[#13ec13] px-4 py-2 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
+                                className="flex-1 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[var(--primary)]"
                             >
                                 <Search className="mx-auto h-5 w-5" />
                             </button>
@@ -122,13 +122,13 @@ export default function Transport({ rides, typeCounts, filters }) {
             <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
                 <div className="mb-8 flex items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">Available Rides</h2>
+                        <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Available Rides</h2>
                         <p className="text-sm text-gray-600 dark:text-gray-400">{totalCount} transport options found</p>
                     </div>
                     <select
                         value={filters?.sort || 'rating'}
                         onChange={handleSortChange}
-                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
                     >
                         <option value="rating">Sort: Top Rated</option>
                         <option value="price_low">Price: Low to High</option>
@@ -145,8 +145,8 @@ export default function Transport({ rides, typeCounts, filters }) {
                             onClick={() => handleTypeFilter(tab.value)}
                             className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors ${
                                 filters?.type === tab.value || (!filters?.type && tab.value === null)
-                                    ? 'bg-[#13ec13] text-[#0d1b0d]'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-[#162816] dark:text-white dark:hover:bg-[#1a2e1a]'
+                                    ? 'bg-[var(--primary)] text-white'
+                                    : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-[var(--card)] dark:text-white dark:hover:bg-[#1a2e1a]'
                             }`}
                         >
                             <span className="text-lg">{tab.emoji}</span>
@@ -161,7 +161,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                         rides.data.map((ride) => (
                             <div
                                 key={ride.id}
-                                className="group overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-[#13ec13]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[#162816]"
+                                className="group overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)]"
                             >
                                 {/* Image */}
                                 <div className="relative h-48 overflow-hidden bg-gray-200 dark:bg-gray-800">
@@ -171,7 +171,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                                             style={{ backgroundImage: `url(${ride.image})` }}
                                         />
                                     ) : (
-                                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#13ec13]/10 to-[#13ec13]/5">
+                                        <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
                                             <span className="text-5xl">
                                                 {ride.type === 'okada' ? '🛺' :
                                                  ride.type === 'car' ? '🚙' :
@@ -181,19 +181,19 @@ export default function Transport({ rides, typeCounts, filters }) {
                                             </span>
                                         </div>
                                     )}
-                                    <div className="absolute right-3 top-3 rounded-full bg-[#13ec13] px-3 py-1 text-xs font-bold capitalize text-[#0d1b0d]">
+                                    <div className="absolute right-3 top-3 rounded-full bg-[var(--primary)] px-3 py-1 text-xs font-bold capitalize text-white">
                                         {ride.type}
                                     </div>
                                     {ride.is_verified && (
                                         <div className="absolute left-3 top-3">
-                                            <BadgeCheck className="h-5 w-5 fill-[#13ec13] text-white" />
+                                            <BadgeCheck className="h-5 w-5 fill-[var(--primary)] text-white" />
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Content */}
                                 <div className="p-4">
-                                    <h3 className="mb-1 text-lg font-bold text-[#0d1b0d] dark:text-white">{ride.company_name}</h3>
+                                    <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.company_name}</h3>
 
                                     <div className="mb-3 flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                                         <MapPin className="h-4 w-4" />
@@ -216,12 +216,12 @@ export default function Transport({ rides, typeCounts, filters }) {
                                     {/* Price & Book */}
                                     <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
                                         <div>
-                                            <div className="text-xl font-black text-[#0d1b0d] dark:text-[#13ec13]">GH₵{ride.price_per_seat}</div>
+                                            <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
                                             <div className="text-xs text-gray-500">per seat</div>
                                         </div>
                                         <Link
                                             href={`/transport/${ride.id}`}
-                                            className="rounded-lg bg-[#13ec13] px-4 py-2 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
+                                            className="rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[var(--primary)]"
                                         >
                                             View Details
                                         </Link>
@@ -232,7 +232,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                     ) : (
                         <div className="col-span-full py-12 text-center">
                             <p className="text-lg text-gray-500 dark:text-gray-400">No transport services found. Be the first to list your service!</p>
-                            <Link href="/join-as-provider" className="mt-4 inline-block text-[#13ec13] hover:underline">
+                            <Link href="/join-as-provider" className="mt-4 inline-block text-[var(--primary)] hover:underline">
                                 Join as Provider →
                             </Link>
                         </div>

@@ -49,12 +49,12 @@ export function HeroSection() {
             <div className="relative z-10 flex flex-col items-center justify-center px-4 py-24 text-center md:px-8 lg:px-40 lg:py-32">
                 {/* Headline */}
                 <h1 className="mb-4 max-w-4xl text-4xl leading-tight font-black tracking-tight text-white drop-shadow-sm md:text-5xl lg:text-6xl">
-                    Connecting Local Services & Opportunities in Western North Ghana
+                    Connecting Local Services & Opportunities in Western North and Beyond
                 </h1>
 
                 {/* Subtitle */}
                 <h2 className="mb-10 max-w-2xl text-lg font-medium text-gray-100 drop-shadow-sm md:text-xl">
-                    From artisans in Sefwi Bekwai to transport across the region—find what you need in seconds.
+                    From skilled artisans to transport services, find what you need in seconds. We welcome customers from all backgrounds.
                 </h2>
 
                 {/* Search Component */}

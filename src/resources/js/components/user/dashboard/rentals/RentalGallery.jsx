@@ -10,7 +10,7 @@ export function RentalGallery({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[#162816]">
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                 <p className="text-gray-600 dark:text-gray-400">Loading gallery...</p>
             </div>
         );
@@ -51,12 +51,12 @@ export function RentalGallery({ profile }) {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">Rental Gallery</h3>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Gallery</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
                         Manage images for your rental listing ({images.length} images)
                     </p>
                 </div>
-                <Button onClick={handleAddImage} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
+                <Button onClick={handleAddImage} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                     <ImagePlus className="mr-2 h-4 w-4" />
                     Add Image
                 </Button>
@@ -78,7 +78,7 @@ export function RentalGallery({ profile }) {
 
                             {/* Primary Badge */}
                             {image.is_primary && (
-                                <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-[#13ec13] px-2 py-1 text-xs font-bold text-[#0d1b0d]">
+                                <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-[var(--primary)] px-2 py-1 text-xs font-bold text-white">
                                     <Star className="h-3 w-3 fill-current" />
                                     Primary
                                 </div>
@@ -124,7 +124,7 @@ export function RentalGallery({ profile }) {
                     <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                         Add images to showcase your rental listing
                     </p>
-                    <Button onClick={handleAddImage} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
+                    <Button onClick={handleAddImage} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                         <ImagePlus className="mr-2 h-4 w-4" />
                         Add First Image
                     </Button>

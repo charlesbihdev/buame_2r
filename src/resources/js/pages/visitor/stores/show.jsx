@@ -65,7 +65,7 @@ export default function StoreShow({ store, products, filters, categoryCounts }) 
 
     return (
         <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
-            <Head title={`${store.name} | BUAME 2R`} />
+            <Head title={`${store.name} | 2RBUAME`} />
 
             {/* Sticky Header with Store Branding & Share */}
             <StoreHeader store={store} />

@@ -62,28 +62,28 @@ export default function VerifyOtp({ phone, type, status }) {
         <>
             <Head title="Verify OTP" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 dark:bg-[#102210]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 dark:bg-[var(--buame-background-dark)]">
                 <div className="w-full max-w-md">
                     <div className="mb-8 text-center">
-                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#13ec13]/10">
-                            <Shield className="h-8 w-8 text-[#13ec13]" />
+                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary)]/10">
+                            <Shield className="h-8 w-8 text-[var(--primary)]" />
                         </div>
-                        <h1 className="text-3xl font-bold text-[#0d1b0d] dark:text-white">Verify Your Phone</h1>
+                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Verify Your Phone</h1>
                         <p className="mt-2 text-gray-600 dark:text-gray-400">
-                            We sent a 6-digit code to <span className="font-semibold text-[#0d1b0d] dark:text-white">{phone}</span>
+                            We sent a 6-digit code to <span className="font-semibold text-[var(--foreground)] dark:text-white">{phone}</span>
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[#e7f3e7] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         {status && (
-                            <div className="mb-4 rounded-lg bg-[#13ec13]/10 p-3 text-sm font-medium text-[#13ec13]">
+                            <div className="mb-4 rounded-lg bg-[var(--primary)]/10 p-3 text-sm font-medium text-[var(--primary)]">
                                 {status}
                             </div>
                         )}
 
                         <form onSubmit={submit} className="space-y-6">
                             <div>
-                                <label htmlFor="code" className="mb-2 block text-sm font-semibold text-[#0d1b0d] dark:text-white">
+                                <label htmlFor="code" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
                                     Verification Code
                                 </label>
                                 <Input
@@ -103,7 +103,7 @@ export default function VerifyOtp({ phone, type, status }) {
                             <Button
                                 type="submit"
                                 disabled={processing || data.code.length !== 6}
-                                className="h-12 w-full bg-[#13ec13] text-base font-bold text-[#0d1b0d] hover:bg-[#0eb50e]"
+                                className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e]"
                             >
                                 {processing ? 'Verifying...' : 'Verify & Continue'}
                             </Button>
@@ -114,13 +114,13 @@ export default function VerifyOtp({ phone, type, status }) {
                                 <button
                                     onClick={handleResend}
                                     disabled={processing}
-                                    className="text-sm font-semibold text-[#13ec13] hover:underline disabled:opacity-50"
+                                    className="text-sm font-semibold text-[var(--primary)] hover:underline disabled:opacity-50"
                                 >
                                     Resend Code
                                 </button>
                             ) : (
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    Resend code in <span className="font-semibold text-[#0d1b0d] dark:text-white">{formatTime(countdown)}</span>
+                                    Resend code in <span className="font-semibold text-[var(--foreground)] dark:text-white">{formatTime(countdown)}</span>
                                 </p>
                             )}
                         </div>

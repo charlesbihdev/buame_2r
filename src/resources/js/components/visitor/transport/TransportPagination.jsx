@@ -56,7 +56,7 @@ export function TransportPagination({ rides, filters }) {
                             asChild={!isActive}
                             variant={isActive ? 'default' : 'outline'}
                             size="sm"
-                            className={isActive ? 'bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]' : ''}
+                            className={isActive ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary)]' : ''}
                         >
                             {isActive ? (
                                 <span>{page}</span>

@@ -63,7 +63,7 @@ export default function DashboardLayout({ user, children, activeCategory, active
                                 <span className="text-xl font-bold text-primary">B2R</span>
                             </div>
                             <div className="flex flex-col">
-                                <h1 className="text-lg font-bold text-foreground">BUAME 2R</h1>
+                                <h1 className="text-lg font-bold text-foreground">2RBUAME</h1>
                                 <p className="text-sm font-medium text-muted-foreground">Dashboard</p>
                             </div>
                         </div>
@@ -125,7 +125,7 @@ export default function DashboardLayout({ user, children, activeCategory, active
                     <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-foreground">
                         {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </button>
-                    <span className="text-lg font-bold text-foreground">BUAME 2R</span>
+                    <span className="text-lg font-bold text-foreground">2RBUAME</span>
                     <div className="flex items-center gap-2">
                         <button className="relative rounded-full p-2 hover:bg-muted transition-colors">
                             <Bell className="h-5 w-5 text-muted-foreground" />

@@ -21,7 +21,7 @@ export function FeaturedProvidersSection() {
             name: 'Adwoa B.',
             title: 'Transport Operator',
             rating: 4.9,
-            description: 'Reliable taxi service and small goods delivery between Sefwi Bekwai and Kumasi.',
+            description: 'Reliable taxi service and small goods delivery across Western North and beyond.',
             image: '/assets/visitors/providers/adwoa.jpg',
             profileUrl: '/artisan/adwoa',
         },

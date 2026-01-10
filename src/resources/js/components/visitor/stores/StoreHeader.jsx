@@ -21,7 +21,7 @@ export function StoreHeader({ store }) {
     };
 
     const handleWhatsAppShare = () => {
-        const text = `Check out ${store.name} on BUAME 2R! ${storeUrl}`;
+        const text = `Check out ${store.name} on 2RBUAME! ${storeUrl}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     };
 
@@ -30,7 +30,7 @@ export function StoreHeader({ store }) {
             try {
                 await navigator.share({
                     title: store.name,
-                    text: `Check out ${store.name} on BUAME 2R!`,
+                    text: `Check out ${store.name} on 2RBUAME!`,
                     url: storeUrl,
                 });
             } catch (err) {

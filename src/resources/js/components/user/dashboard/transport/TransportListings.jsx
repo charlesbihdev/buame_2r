@@ -14,8 +14,8 @@ export function TransportListings({ listings }) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">My Rides</h3>
-                <Button onClick={handleCreate} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Rides</h3>
+                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Ride
                 </Button>
@@ -26,11 +26,11 @@ export function TransportListings({ listings }) {
                     {listings.map((listing) => (
                         <div
                             key={listing.id}
-                            className="rounded-xl border border-[#e7f3e7] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                            className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
                         >
                             <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800" />
                             <div className="p-4">
-                                <h4 className="font-bold text-[#0d1b0d] dark:text-white">{listing.vehicle_type}</h4>
+                                <h4 className="font-bold text-[var(--foreground)] dark:text-white">{listing.vehicle_type}</h4>
                                 <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                                     <MapPin className="h-3 w-3" />
                                     <span>{listing.location}</span>
@@ -54,7 +54,7 @@ export function TransportListings({ listings }) {
                 <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
                     <Bike className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-4 text-gray-600 dark:text-gray-400">No rides listed yet</p>
-                    <Button onClick={handleCreate} className="mt-4 bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Ride
                     </Button>

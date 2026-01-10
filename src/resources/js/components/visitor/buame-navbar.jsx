@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { AppLogo } from './app-logo';
 
 export function BuameNavbar() {
     const page = usePage();
@@ -23,9 +24,7 @@ export function BuameNavbar() {
         <header className="border-border bg-background/95 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
             <div className="flex items-center justify-between px-4 py-3 md:px-8 lg:px-40">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
-                    <img src="/assets/logo/2RBUAME.png" alt="BUAME 2R Logo" className="h-18 w-auto" />
-                </Link>
+                <AppLogo />
 
                 {/* Desktop Navigation */}
                 <nav className="hidden items-center gap-8 lg:flex">
@@ -93,7 +92,7 @@ export function BuameNavbar() {
                         <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                             <SheetHeader>
                                 <SheetTitle className="flex items-center gap-2">
-                                    <img src="/assets/logo/2RBUAME LOGO PNG.png" alt="BUAME 2R Logo" className="h-10 w-auto" />
+                                    <AppLogo size="sm" className="pointer-events-none" />
                                 </SheetTitle>
                             </SheetHeader>
                             <nav className="mt-8 flex flex-col gap-4">

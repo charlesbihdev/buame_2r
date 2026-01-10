@@ -1,6 +1,6 @@
-# Color Replacement Script
+# Color Replacement Scripts for 2RBUAME
 
-This script automatically replaces hardcoded hex colors in your JSX/JS files with CSS variable references from `app.css`.
+These scripts automatically replace hardcoded hex colors in your JSX/JS files with CSS variable references from `app.css`, ensuring consistent brand colors and proper contrast.
 
 ## Usage
 
@@ -12,6 +12,12 @@ npm run replace-colors:dry
 ### Apply changes
 ```bash
 npm run replace-colors
+```
+
+### Fix button colors (ensure green buttons have white text)
+```bash
+npm run fix-buttons:dry    # Preview
+npm run fix-buttons        # Apply
 ```
 
 ### Verbose output (see detailed changes)
@@ -28,6 +34,12 @@ node scripts/replace-colors.js --path=resources/js/components/visitor
 ```bash
 node scripts/replace-colors.js --dry-run --verbose --path=resources/js/pages
 ```
+
+## Brand Identity
+- **Brand Name**: 2RBUAME (not BUAME 2R)
+- **Primary**: Deep Green (#0F6B3F) - Main actions, CTAs
+- **Secondary**: Golden Yellow (#F4B400) - Premium features, secondary actions
+- **Tertiary**: Dark Blue (#1F3A5F) - Info, trust elements
 
 ## Color Mappings
 
@@ -127,11 +139,35 @@ npm run replace-colors:verbose
 ### Need to add new color mappings
 Edit `src/scripts/replace-colors.js` and add to the `COLOR_MAPPINGS` object.
 
+## Button Color Rules
+
+### ✅ Green Buttons (Primary Actions)
+- **Background**: `bg-[var(--primary)]` or `bg-primary`
+- **Text**: **MUST be white** (`text-white` or `text-primary-foreground`)
+- **Example**: `<Button className="bg-[var(--primary)] text-white">Sign Up</Button>`
+
+### ✅ Gold Buttons (Secondary Actions)
+- **Background**: `bg-[var(--secondary)]` or `bg-secondary`
+- **Text**: Dark text (`text-[var(--secondary-foreground)]`)
+
+### ✅ Blue Buttons (Info Actions)
+- **Background**: `bg-[var(--accent)]` or `bg-accent`
+- **Text**: White (`text-white` or `text-accent-foreground`)
+
+## Strategic Color Usage
+
+See `COLOR_STRATEGY.md` for detailed guidelines on when to use each color:
+- 🟢 **Green**: Primary CTAs, success states, navigation
+- 🟡 **Gold**: Premium features, secondary actions, achievements
+- 🔵 **Blue**: Information, trust elements, tech features
+
 ## Best Practices
 
 1. **Always run dry-run first**: `npm run replace-colors:dry`
-2. **Review changes**: Use `--verbose` to see what will be changed
-3. **Commit before running**: Make sure your work is committed
-4. **Test after**: Build and test your app after running the script
-5. **Manual review**: Some edge cases may need manual fixes
+2. **Fix button colors**: Run `npm run fix-buttons:dry` after color replacement
+3. **Review changes**: Use `--verbose` to see what will be changed
+4. **Commit before running**: Make sure your work is committed
+5. **Test after**: Build and test your app after running the script
+6. **Use colors strategically**: Don't just use green everywhere - use gold and blue appropriately
+7. **Manual review**: Some edge cases may need manual fixes
 

@@ -31,7 +31,7 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
     };
 
     return (
-        <div className="mb-6 rounded-xl border border-[#e7f3e7] bg-white p-4 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+        <div className="mb-6 rounded-xl border border-[var(--buame-border-light)] bg-white p-4 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
             <h3 className="mb-4 text-sm font-bold tracking-wide text-[#4c9a4c] uppercase dark:text-[#8fcc8f]">Your Categories</h3>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {Object.entries(categoryConfig).map(([value, config]) => {
@@ -45,19 +45,19 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
                                 key={value}
                                 onClick={() => !isActive && handleSwitch(value)}
                                 className={`flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 p-3 transition-all ${
-                                    isActive ? 'border-[#13ec13] bg-[#13ec13]/10' : 'border-[#e7f3e7] hover:border-[#13ec13]/50 dark:border-[#2a4d2a]'
+                                    isActive ? 'border-[var(--primary)] bg-[var(--primary)]/10' : 'border-[var(--buame-border-light)] hover:border-[var(--primary)]/50 dark:border-[#2a4d2a]'
                                 }`}
                             >
                                 <div
                                     className={`flex h-10 w-10 items-center justify-center rounded-lg ${
-                                        isActive ? 'bg-[#13ec13] text-[#0d1b0d]' : 'bg-[#13ec13]/10 text-[#13ec13]'
+                                        isActive ? 'bg-[var(--primary)] text-white' : 'bg-[var(--primary)]/10 text-[var(--primary)]'
                                     }`}
                                 >
                                     <Icon className="h-5 w-5" />
                                 </div>
                                 <span
                                     className={`text-xs font-semibold ${
-                                        isActive ? 'text-[#0d1b0d] dark:text-white' : 'text-[#4c9a4c] dark:text-[#8fcc8f]'
+                                        isActive ? 'text-[var(--foreground)] dark:text-white' : 'text-[#4c9a4c] dark:text-[#8fcc8f]'
                                     }`}
                                 >
                                     {config.label}

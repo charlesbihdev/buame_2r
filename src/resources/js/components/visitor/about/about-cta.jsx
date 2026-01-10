@@ -8,17 +8,17 @@ export function AboutCTA() {
             <div className="absolute -right-20 -top-20 size-96 rounded-full bg-[var(--primary)]/10 blur-3xl" />
             <div className="relative z-10 mx-auto max-w-[960px] text-center">
                 <h2 className="mb-6 text-3xl font-black tracking-tight dark:text-white md:text-4xl">
-                    Ready to be part of the Sefwi Bekwai digital revolution?
+                    Ready to be part of the Western North and beyond digital revolution?
                 </h2>
                 <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-300">
-                    Whether you are a buyer, seller, job seeker, or employer, BUAME 2R has a place for you. Join our growing community today.
+                    Whether you are a buyer, seller, job seeker, or employer from any background, 2RBUAME has a place for you. Join our growing community today.
                 </p>
                 <div className="flex flex-col justify-center gap-4 sm:flex-row">
                     <Button
                         asChild
                         className="rounded-lg bg-[var(--primary)] px-8 py-3 text-lg font-bold text-[var(--primary-foreground)] transition-colors hover:bg-[var(--buame-primary-dark)]"
                     >
-                        <Link href="/register">Create Free Account</Link>
+                        <Link href="/choose-path">Join Us</Link>
                     </Button>
                     <Button
                         asChild

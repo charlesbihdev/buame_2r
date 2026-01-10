@@ -11,7 +11,7 @@ import { Head } from '@inertiajs/react';
 export default function About() {
     return (
         <VisitorLayout>
-            <Head title="About Us - BUAME 2R" />
+            <Head title="About Us - 2RBUAME" />
             <AboutHero />
             <StatsBar />
             <MissionVision />

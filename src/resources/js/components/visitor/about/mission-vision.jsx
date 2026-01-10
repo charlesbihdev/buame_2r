@@ -6,7 +6,7 @@ export function MissionVision() {
             <div className="mx-auto flex max-w-[1280px] flex-col gap-12">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="mb-4 text-3xl font-bold dark:text-white">Driven by Purpose</h2>
-                    <p className="text-gray-600 dark:text-gray-400">Our core values are rooted in uplifting the Western North Region.</p>
+                    <p className="text-gray-600 dark:text-gray-400">Our core values are rooted in uplifting Western North and beyond, welcoming customers from all backgrounds.</p>
                 </div>
                 <div className="grid gap-8 md:grid-cols-2">
                     {/* Mission Card */}
@@ -16,7 +16,7 @@ export function MissionVision() {
                         </div>
                         <h3 className="mb-3 text-xl font-bold dark:text-white">Our Mission</h3>
                         <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                            To bridge the gap between local service providers and the community through accessible technology, fostering economic growth and simplifying daily life in Sefwi Bekwai.
+                            To bridge the gap between local service providers and the community through accessible technology, fostering economic growth and simplifying daily life across Western North and beyond. We welcome customers from all backgrounds.
                         </p>
                     </div>
                     {/* Vision Card */}
@@ -26,7 +26,7 @@ export function MissionVision() {
                         </div>
                         <h3 className="mb-3 text-xl font-bold dark:text-white">Our Vision</h3>
                         <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-                            To become the premier digital marketplace for the entire Western North Region, where every artisan, trader, and business owner has the tools to thrive in the digital economy.
+                            To become the premier digital marketplace for Western North and beyond, where every artisan, trader, and business owner has the tools to thrive in the digital economy, serving customers from all backgrounds.
                         </p>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ export function StoreFooter({ store }) {
             try {
                 await navigator.share({
                     title: store.name,
-                    text: `Check out ${store.name} on BUAME 2R!`,
+                    text: `Check out ${store.name} on 2RBUAME!`,
                     url: storeUrl,
                 });
             } catch (err) {
@@ -38,7 +38,7 @@ export function StoreFooter({ store }) {
                         </div>
                         <div>
                             <h3 className="font-bold text-foreground dark:text-white">{store.name}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Powered by BUAME 2R</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Powered by 2RBUAME</p>
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@ export function StoreFooter({ store }) {
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                         Want your own online store?{' '}
                         <a href="/" className="font-semibold text-primary hover:underline">
-                            Create one on BUAME 2R
+                            Create one on 2RBUAME
                         </a>
                     </p>
                 </div>

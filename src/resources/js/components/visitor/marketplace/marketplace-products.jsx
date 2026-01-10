@@ -17,7 +17,7 @@ export function MarketplaceProducts({ products = [] }) {
             {products.map((product) => (
                 <div
                     key={product.id}
-                    className="group flex flex-col overflow-hidden rounded-xl border border-[#e7f3e7] bg-white transition-all duration-300 hover:border-[#13ec13]/50 hover:shadow-lg dark:border-white/10 dark:bg-white/5"
+                    className="group flex flex-col overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all duration-300 hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-white/10 dark:bg-white/5"
                 >
                     <div className="relative aspect-[4/3] overflow-hidden">
                         <div className="absolute top-3 left-3 z-10 rounded bg-white/90 px-2 py-1 text-xs font-bold tracking-wide text-gray-800 uppercase backdrop-blur">
@@ -33,19 +33,19 @@ export function MarketplaceProducts({ products = [] }) {
                     <div className="flex flex-1 flex-col p-4">
                         <div className="mb-2 flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                                <h3 className="text-base leading-tight font-bold text-[#0d1b0d] dark:text-white">{product.title}</h3>
+                                <h3 className="text-base leading-tight font-bold text-[var(--foreground)] dark:text-white">{product.title}</h3>
                                 {product.store && product.store.is_active && (
                                     <Link
                                         href={`/store/${product.store.slug}`}
                                         onClick={(e) => e.stopPropagation()}
-                                        className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-[#13ec13] transition-colors hover:text-[#0fdc0f] hover:underline"
+                                        className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-[var(--primary)] transition-colors hover:text-[var(--primary)] hover:underline"
                                     >
                                         <Store className="h-3.5 w-3.5" />
                                         <span className="truncate">{product.store.name}</span>
                                     </Link>
                                 )}
                             </div>
-                            {product.verified && <CheckCircle2 className="h-5 w-5 shrink-0 text-[#13ec13]" title="Verified" />}
+                            {product.verified && <CheckCircle2 className="h-5 w-5 shrink-0 text-[var(--primary)]" title="Verified" />}
                         </div>
                         {(product.rating > 0 || product.reviews > 0) && (
                             <div className="mb-3 flex items-center gap-1">
@@ -59,7 +59,7 @@ export function MarketplaceProducts({ products = [] }) {
                                 {product.specifications.slice(0, 3).map((spec, index) => (
                                     <span
                                         key={index}
-                                        className="rounded-full bg-[#13ec13]/10 px-2 py-0.5 text-xs font-medium text-[#13ec13] dark:bg-[#13ec13]/20"
+                                        className="rounded-full bg-[var(--primary)]/10 px-2 py-0.5 text-xs font-medium text-[var(--primary)] dark:bg-[var(--primary)]/20"
                                     >
                                         {spec}
                                     </span>
@@ -75,9 +75,9 @@ export function MarketplaceProducts({ products = [] }) {
                             <MapPin className="h-4 w-4 shrink-0" />
                             <span className="truncate">{product.location}</span>
                         </div>
-                        <div className="mt-auto flex items-center justify-between border-t border-[#e7f3e7] pt-4 dark:border-white/10">
-                            <span className="text-lg font-black text-[#0d1b0d] dark:text-[#13ec13]">{product.price}</span>
-                            <Button asChild variant="ghost" className="text-sm font-bold text-[#13ec13] hover:text-[#0fdc0f] hover:underline">
+                        <div className="mt-auto flex items-center justify-between border-t border-[var(--buame-border-light)] pt-4 dark:border-white/10">
+                            <span className="text-lg font-black text-[var(--foreground)] dark:text-[var(--primary)]">{product.price}</span>
+                            <Button asChild variant="ghost" className="text-sm font-bold text-[var(--primary)] hover:text-[var(--primary)] hover:underline">
                                 <Link href={`/marketplace/${product.id}`}>View Details</Link>
                             </Button>
                         </div>

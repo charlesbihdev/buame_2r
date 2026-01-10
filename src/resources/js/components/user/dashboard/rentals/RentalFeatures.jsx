@@ -9,7 +9,7 @@ export function RentalFeatures({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[#162816]">
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                 <p className="text-gray-600 dark:text-gray-400">Loading features...</p>
             </div>
         );
@@ -44,14 +44,14 @@ export function RentalFeatures({ profile }) {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">Rental Features</h3>
+                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Features</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                     Add features that describe your rental (e.g., 2 Bedrooms, Air Conditioning, WiFi)
                 </p>
             </div>
 
             {/* Add Feature Form */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                 <form onSubmit={handleAddFeature} className="flex gap-3">
                     <Input
                         value={newFeature}
@@ -62,7 +62,7 @@ export function RentalFeatures({ profile }) {
                     <Button
                         type="submit"
                         disabled={!newFeature.trim()}
-                        className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
+                        className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
                     >
                         <Plus className="h-5 w-5" />
                     </Button>
@@ -71,7 +71,7 @@ export function RentalFeatures({ profile }) {
 
             {/* Features List */}
             {features.length > 0 ? (
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <h4 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
                         Added Features ({features.length})
                     </h4>
@@ -79,7 +79,7 @@ export function RentalFeatures({ profile }) {
                         {features.map((feature) => (
                             <div
                                 key={feature.id}
-                                className="flex items-center gap-2 rounded-full bg-[#13ec13]/10 px-4 py-2 text-sm font-medium text-[#0d1b0d] dark:bg-[#13ec13]/20 dark:text-white"
+                                className="flex items-center gap-2 rounded-full bg-[var(--primary)]/10 px-4 py-2 text-sm font-medium text-white dark:bg-[var(--primary)]/20 dark:text-white"
                             >
                                 <span>{feature.feature}</span>
                                 <button

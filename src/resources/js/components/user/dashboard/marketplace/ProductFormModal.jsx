@@ -121,14 +121,14 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                         <X className="h-3 w-3" />
                                     </button>
                                     {index === 0 && (
-                                        <span className="absolute bottom-1 left-1 rounded bg-[#13ec13] px-1.5 py-0.5 text-xs font-medium text-[#0d1b0d]">
+                                        <span className="absolute bottom-1 left-1 rounded bg-[var(--primary)] px-1.5 py-0.5 text-xs font-medium text-white">
                                             Primary
                                         </span>
                                     )}
                                 </div>
                             ))}
                             {data.images.length < 10 && (
-                                <label className="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-[#13ec13] dark:border-gray-600">
+                                <label className="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-[var(--primary)] dark:border-gray-600">
                                     <input type="file" accept="image/*" multiple onChange={handleImageChange} className="hidden" />
                                     <ImagePlus className="h-6 w-6 text-gray-400" />
                                 </label>
@@ -309,7 +309,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Button type="button" variant="outline" onClick={handleClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[#0eb50e]">
                             {processing ? 'Adding...' : 'Add Product'}
                         </Button>
                     </DialogFooter>

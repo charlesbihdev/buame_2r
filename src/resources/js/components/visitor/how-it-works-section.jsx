@@ -23,9 +23,9 @@ export function HowItWorksSection() {
         <section className="bg-card py-16 px-4 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px]">
                 <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-foreground">How BUAME 2R Works</h2>
+                    <h2 className="mb-4 text-3xl font-bold text-foreground">How 2RBUAME Works</h2>
                     <p className="mx-auto max-w-2xl text-muted-foreground">
-                        We've made it simple to connect with trusted local providers and find opportunities right here in Sefwi Bekwai.
+                        We've made it simple to connect with trusted local providers and find opportunities across Western North and beyond. We welcome customers from all backgrounds.
                     </p>
                 </div>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

@@ -8,7 +8,7 @@ export function TestimonialsSection() {
             role: 'Shop Owner, Bekwai',
         },
         {
-            quote: '"As a taxi driver, BUAME 2R helps me get bookings even when I am parked. It has increased my income."',
+            quote: '"As a taxi driver, 2RBUAME helps me get bookings even when I am parked. It has increased my income."',
             author: 'Samuel O.',
             role: 'Driver, Bibiani',
         },
@@ -23,7 +23,7 @@ export function TestimonialsSection() {
         <section className="border-b border-border bg-background py-16 px-4 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px] text-center">
                 <h2 className="mb-12 text-2xl font-bold text-foreground md:text-3xl">
-                    Trusted by Locals in Sefwi Bekwai
+                    Trusted Across Western North and Beyond
                 </h2>
                 <div className="grid gap-6 md:grid-cols-3">
                     {testimonials.map((testimonial, index) => (

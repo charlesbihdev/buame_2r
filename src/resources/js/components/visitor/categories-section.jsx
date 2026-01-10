@@ -47,7 +47,7 @@ export function CategoriesSection() {
                 <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                     <div>
                         <h2 className="mb-2 text-3xl font-bold text-foreground">Browse Categories</h2>
-                        <p className="text-muted-foreground">Explore diverse opportunities in the Western North Region.</p>
+                        <p className="text-muted-foreground">Explore diverse opportunities across Western North and beyond. We welcome customers from all backgrounds.</p>
                     </div>
                     <Link href="/services" className="flex items-center gap-1 font-bold text-primary transition-all hover:gap-2">
                         View All Categories <ArrowRight className="h-4 w-4" />

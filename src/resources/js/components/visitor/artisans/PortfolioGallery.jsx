@@ -49,7 +49,7 @@ export function PortfolioGallery({ portfolio }) {
                                 </div>
                             </>
                         ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#13ec13]/10 to-[#13ec13]/5">
+                            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
                                 <span className="text-sm font-medium text-gray-600 dark:text-gray-400">No Image</span>
                             </div>
                         )}
@@ -124,7 +124,7 @@ export function PortfolioGallery({ portfolio }) {
                                     key={item.id}
                                     onClick={() => setCurrentSlideIndex(index)}
                                     className={`h-2 w-2 rounded-full transition-all ${
-                                        index === currentSlideIndex ? 'w-8 bg-[#13ec13]' : 'bg-white/50 hover:bg-white/75'
+                                        index === currentSlideIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
                                     }`}
                                 />
                             ))}

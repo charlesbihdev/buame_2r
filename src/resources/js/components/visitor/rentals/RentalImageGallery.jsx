@@ -155,7 +155,7 @@ export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental'
                                     key={index}
                                     onClick={() => setCurrentSlideIndex(index)}
                                     className={`h-2 w-2 rounded-full transition-all ${
-                                        index === currentSlideIndex ? 'w-8 bg-[#13ec13]' : 'bg-white/50 hover:bg-white/75'
+                                        index === currentSlideIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
                                     }`}
                                 />
                             ))}

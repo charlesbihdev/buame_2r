@@ -7,7 +7,7 @@ import { Head } from '@inertiajs/react';
 export default function Contact() {
     return (
         <VisitorLayout>
-            <Head title="Contact Us - BUAME 2R" />
+            <Head title="Contact Us - 2RBUAME" />
             <ContactHero />
             <main className="w-full flex-grow px-4 py-12 sm:px-6 md:py-16 lg:px-8">
                 <div className="mx-auto max-w-7xl">

@@ -81,14 +81,14 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
 
     return (
         <VisitorLayout>
-            <Head title="Skilled Artisans | BUAME 2R" />
+            <Head title="Skilled Artisans | 2RBUAME" />
 
             {/* Hero with Search */}
-            <div className="w-full bg-gradient-to-br from-[#13ec13]/10 via-white to-[#13ec13]/5 dark:from-[#13ec13]/5 dark:via-[#0d1b0d] dark:to-[#13ec13]/5">
+            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 lg:px-12">
                     <div className="mb-8 text-center">
-                        <h1 className="mb-3 text-4xl font-black text-[#0d1b0d] dark:text-white md:text-5xl">Find Expert Artisans</h1>
-                        <p className="text-lg text-gray-600 dark:text-gray-300">Connect with verified skilled workers in Sefwi Bekwai</p>
+                        <h1 className="mb-3 text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">Find Expert Artisans</h1>
+                        <p className="text-lg text-gray-600 dark:text-gray-300">Connect with verified skilled workers across Western North and beyond. We welcome customers from all backgrounds.</p>
                     </div>
 
                     {/* Search Bar Component */}
@@ -117,7 +117,7 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
                     ) : (
                         <div className="col-span-full py-12 text-center">
                             <p className="text-lg text-gray-500 dark:text-gray-400">No artisans found. Be the first to join!</p>
-                            <Link href="/join-as-provider" className="mt-4 inline-block text-[#13ec13] hover:underline">
+                            <Link href="/join-as-provider" className="mt-4 inline-block text-[var(--primary)] hover:underline">
                                 Join as Provider →
                             </Link>
                         </div>

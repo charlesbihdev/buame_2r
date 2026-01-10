@@ -28,7 +28,7 @@ export function ContactForm() {
 
     return (
         <div className="lg:col-span-7 xl:col-span-8">
-            <div className="rounded-2xl border border-[#e7f3e7] bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5 md:p-8">
+            <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5 md:p-8">
                 <div className="mb-8">
                     <h2 className="mb-2 text-2xl font-bold">Send us a Message</h2>
                     <p className="text-[#4c9a4c] dark:text-gray-400">
@@ -48,7 +48,7 @@ export function ContactForm() {
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
                                 placeholder="e.g. Kwame Mensah"
-                                className="h-12 rounded-lg border border-[#e7f3e7] bg-background-light px-4 transition-all focus:border-[#13ec13] focus:ring-1 focus:ring-[#13ec13] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
                             />
                             {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
                         </div>
@@ -63,7 +63,7 @@ export function ContactForm() {
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}
                                 placeholder="e.g. kwame@example.com"
-                                className="h-12 rounded-lg border border-[#e7f3e7] bg-background-light px-4 transition-all focus:border-[#13ec13] focus:ring-1 focus:ring-[#13ec13] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
                             />
                             {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                         </div>
@@ -80,7 +80,7 @@ export function ContactForm() {
                                 value={data.phone}
                                 onChange={(e) => setData('phone', e.target.value)}
                                 placeholder="e.g. 024 123 4567"
-                                className="h-12 rounded-lg border border-[#e7f3e7] bg-background-light px-4 transition-all focus:border-[#13ec13] focus:ring-1 focus:ring-[#13ec13] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
                             />
                             {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
                         </div>
@@ -92,7 +92,7 @@ export function ContactForm() {
                             <Select value={data.inquiryType} onValueChange={(value) => setData('inquiryType', value)}>
                                 <SelectTrigger
                                     id="inquiryType"
-                                    className="h-12 rounded-lg border border-[#e7f3e7] bg-background-light transition-all focus:border-[#13ec13] focus:ring-1 focus:ring-[#13ec13] dark:border-white/10 dark:bg-background-dark"
+                                    className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark"
                                 >
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
@@ -118,7 +118,7 @@ export function ContactForm() {
                             onChange={(e) => setData('message', e.target.value)}
                             placeholder="How can we help you today?"
                             rows={5}
-                            className="resize-none rounded-lg border border-[#e7f3e7] bg-background-light p-4 transition-all focus:border-[#13ec13] focus:ring-1 focus:ring-[#13ec13] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                            className="resize-none rounded-lg border border-[var(--buame-border-light)] bg-background-light p-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
                         />
                         {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
                     </div>
@@ -127,7 +127,7 @@ export function ContactForm() {
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[#13ec13] px-8 font-bold text-[#0d1b0d] shadow-lg shadow-[#13ec13]/20 transition-all hover:bg-[#0eb50e] md:w-auto"
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-8 font-bold text-white shadow-lg shadow-[var(--primary)]/20 transition-all hover:bg-[#0eb50e] md:w-auto"
                         >
                             <span>Send Message</span>
                             <Send className="h-5 w-5" />

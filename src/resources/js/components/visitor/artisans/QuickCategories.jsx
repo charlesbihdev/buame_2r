@@ -31,7 +31,7 @@ export function QuickCategories({ categoryCounts, activeSkillType, onCategoryCli
                     >
                         <cat.icon className="h-5 w-5 text-[var(--primary)]" />
                         <span className="text-sm dark:text-white">{cat.label}</span>
-                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-[var(--foreground)] dark:text-[var(--primary)]">
+                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
                             {count}
                         </span>
                     </button>

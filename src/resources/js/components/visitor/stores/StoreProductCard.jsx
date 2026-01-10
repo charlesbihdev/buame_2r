@@ -112,7 +112,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                                 )}
                             </div>
                         </div>
-                        <span className="rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--foreground)] transition-colors group-hover:bg-[var(--primary)] dark:text-white">
+                        <span className="rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-white transition-colors group-hover:bg-[var(--primary)] dark:text-white">
                             View Details
                         </span>
                     </div>

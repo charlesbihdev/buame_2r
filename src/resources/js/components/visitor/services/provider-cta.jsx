@@ -16,7 +16,7 @@ export function ProviderCTA() {
                 <div className="relative z-10 flex max-w-xl flex-col gap-3 text-center md:text-left">
                     <h2 className="text-3xl font-bold tracking-tight text-white">Are you a service provider?</h2>
                     <p className="text-lg text-gray-300">
-                        Join BUAME 2R today to reach more customers in Sefwi Bekwai and grow your business digitally.
+                        Join 2RBUAME today to reach more customers across Western North and beyond. Grow your business digitally and serve customers from all backgrounds.
                     </p>
                 </div>
                 <div className="relative z-10">

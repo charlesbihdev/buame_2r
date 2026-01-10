@@ -91,19 +91,19 @@ export default function Rentals({ rentals, filters, typeCounts }) {
 
     return (
         <VisitorLayout>
-            <Head title="Rentals - House & Equipment | BUAME 2R" />
+            <Head title="Rentals - House & Equipment | 2RBUAME" />
 
             {/* Hero Section */}
-            <div className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[#0d1b0d]">
+            <div className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[var(--foreground)]">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
-                    <h1 className="mb-8 text-center text-4xl font-black text-[#0d1b0d] dark:text-white md:text-5xl">
-                        Rent Anything in Sefwi Bekwai
+                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">
+                        Rent Anything Across Western North and Beyond
                     </h1>
 
                     {/* Search Bar */}
                     <div className="mx-auto max-w-4xl">
-                        <form onSubmit={handleSearch} className="mb-4 flex flex-col gap-3 rounded-xl bg-gray-50 p-4 dark:bg-[#162816] md:flex-row">
-                            <div className="flex flex-1 items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[#0d1b0d]">
+                        <form onSubmit={handleSearch} className="mb-4 flex flex-col gap-3 rounded-xl bg-gray-50 p-4 dark:bg-[var(--card)] md:flex-row">
+                            <div className="flex flex-1 items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[var(--foreground)]">
                                 <Search className="h-5 w-5 text-gray-400" />
                                 <input
                                     type="text"
@@ -113,7 +113,7 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                     className="w-full border-none bg-transparent p-0 text-sm focus:outline-none focus:ring-0 dark:text-white"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[#0d1b0d] md:w-48">
+                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[var(--foreground)] md:w-48">
                                 <MapPin className="h-5 w-5 text-gray-400" />
                                 <input
                                     type="text"
@@ -125,7 +125,7 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                             </div>
                             <button
                                 type="submit"
-                                className="rounded-lg bg-[#13ec13] px-8 py-3 font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
+                                className="rounded-lg bg-[var(--primary)] px-8 py-3 font-bold text-white transition-colors hover:bg-[var(--primary)]"
                             >
                                 Search
                             </button>
@@ -141,13 +141,13 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                         onClick={() => handleTypeFilter(isActive ? null : cat.type)}
                                         className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
                                             isActive
-                                                ? 'border-[#13ec13] bg-[#13ec13]/10'
-                                                : 'border-[#13ec13]/30 bg-white hover:border-[#13ec13] hover:bg-[#13ec13]/10 dark:bg-[#162816]'
+                                                ? 'border-[var(--primary)] bg-[var(--primary)]/10'
+                                                : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:bg-[var(--card)]'
                                         }`}
                                 >
-                                    <cat.icon className="h-5 w-5 text-[#13ec13]" />
+                                    <cat.icon className="h-5 w-5 text-[var(--primary)]" />
                                     <span className="text-sm dark:text-white">{cat.label}</span>
-                                    <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
+                                    <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
                                         {cat.count}
                                     </span>
                                 </button>
@@ -179,8 +179,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                 onClick={() => handleTypeFilter(filterType)}
                                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
                                     isActive
-                                        ? 'bg-[#13ec13] text-[#0d1b0d]'
-                                        : 'border border-gray-300 bg-white hover:border-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white'
+                                        ? 'bg-[var(--primary)] text-white'
+                                        : 'border border-gray-300 bg-white hover:border-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white'
                                 }`}
                             >
                                 {filter}
@@ -202,7 +202,7 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                         <RentalPagination rentals={rentals} filters={filters} />
                     </>
                 ) : (
-                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[#162816]">
+                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">No rentals found. Try adjusting your filters.</p>
                 </div>
                 )}

@@ -9,7 +9,7 @@ import { Head } from '@inertiajs/react';
 export default function Home() {
     return (
         <VisitorLayout>
-            <Head title="Home - BUAME 2R" />
+            <Head title="Home - 2RBUAME" />
             <HeroSection />
             <CategoriesSection />
             <HowItWorksSection />

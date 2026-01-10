@@ -14,7 +14,7 @@ export function ArtisansHero() {
                     >
                         <div className="z-10 flex max-w-2xl flex-col gap-3 text-center">
                             <h1 className="text-3xl font-black leading-tight tracking-[-0.033em] text-white md:text-5xl">
-                                Find Skilled Artisans in Sefwi Bekwai
+                                Find Skilled Artisans Across Western North and Beyond
                             </h1>
                             <p className="text-sm font-normal text-white/80 md:text-base">
                                 Connect with verified carpenters, masons, electricians, plumbers, and more.
@@ -25,10 +25,11 @@ export function ArtisansHero() {
                                 <div className="flex w-full items-center border-b border-border bg-card px-4 py-3 sm:w-1/3 sm:border-b-0 sm:border-r sm:py-0">
                                     <MapPin className="mr-2 h-5 w-5 text-muted-foreground" />
                                     <select className="w-full cursor-pointer border-none bg-transparent p-0 text-sm font-medium text-foreground focus:ring-0">
-                                        <option>Sefwi Bekwai</option>
+                                        <option>Western North</option>
                                         <option>Bibiani</option>
                                         <option>Wiawso</option>
                                         <option>Juaboso</option>
+                                        <option>Other Locations</option>
                                     </select>
                                 </div>
                                 <div className="relative flex-1 bg-card">
