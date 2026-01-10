@@ -6,7 +6,7 @@ import { useState } from 'react';
 const categoryConfig = {
     artisans: { label: 'Artisans', icon: Hammer, color: 'blue' },
     hotels: { label: 'Hotel', icon: Hotel, color: 'green' },
-    transport: { label: 'Okada', icon: Bike, color: 'orange' },
+    transport: { label: 'Okada/Car', icon: Bike, color: 'orange' },
     rentals: { label: 'Rentals', icon: Home, color: 'purple' },
     marketplace: { label: 'Marketplace', icon: ShoppingBag, color: 'pink' },
     jobs: { label: 'Jobs', icon: Briefcase, color: 'gray' },
