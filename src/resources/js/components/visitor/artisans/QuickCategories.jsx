@@ -25,13 +25,13 @@ export function QuickCategories({ categoryCounts, activeSkillType, onCategoryCli
                         onClick={() => onCategoryClick(cat.key)}
                         className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
                             isActive
-                                ? 'border-[#13ec13] bg-[#13ec13]/10'
-                                : 'border-[#13ec13]/30 bg-white hover:border-[#13ec13] hover:bg-[#13ec13]/10'
-                        } dark:bg-[#162816]`}
+                                ? 'border-[var(--primary)] bg-[var(--primary)]/10'
+                                : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10'
+                        } dark:bg-[var(--card)]`}
                     >
-                        <cat.icon className="h-5 w-5 text-[#13ec13]" />
+                        <cat.icon className="h-5 w-5 text-[var(--primary)]" />
                         <span className="text-sm dark:text-white">{cat.label}</span>
-                        <span className="rounded-full bg-[#13ec13]/20 px-2 py-0.5 text-xs font-bold text-[#0d1b0d] dark:text-[#13ec13]">
+                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
                             {count}
                         </span>
                     </button>

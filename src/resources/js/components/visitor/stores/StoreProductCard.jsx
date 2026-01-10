@@ -49,7 +49,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
         return (
             <Link
                 href={route('marketplace.view', product.id)}
-                className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-[#13ec13]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[#162816] dark:hover:border-[#13ec13]/50"
+                className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)] dark:hover:border-[var(--primary)]/50"
             >
                 {/* Image */}
                 <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-900">
@@ -83,7 +83,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                 <div className="flex flex-1 flex-col justify-between">
                     <div>
                         <div className="mb-1 flex items-start justify-between gap-2">
-                            <h3 className="font-bold text-[#0d1b0d] transition-colors group-hover:text-[#13ec13] dark:text-white">
+                            <h3 className="font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                                 {product.title}
                             </h3>
                         </div>
@@ -94,7 +94,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                     <div className="flex items-end justify-between">
                         <div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-xl font-black text-[#13ec13]">GH₵ {formatPrice(product.price)}</span>
+                                <span className="text-xl font-black text-[var(--primary)]">GH₵ {formatPrice(product.price)}</span>
                                 {product.price_type && (
                                     <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
                                 )}
@@ -105,14 +105,14 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                                     {product.location}
                                 </span>
                                 {product.delivery_available && (
-                                    <span className="flex items-center gap-1 text-[#13ec13]">
+                                    <span className="flex items-center gap-1 text-[var(--primary)]">
                                         <Truck className="h-3 w-3" />
                                         Delivery
                                     </span>
                                 )}
                             </div>
                         </div>
-                        <span className="rounded-lg bg-[#13ec13]/10 px-3 py-1.5 text-sm font-semibold text-[#0d1b0d] transition-colors group-hover:bg-[#13ec13] dark:text-white">
+                        <span className="rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-white transition-colors group-hover:bg-[var(--primary)] dark:text-white">
                             View Details
                         </span>
                     </div>
@@ -125,7 +125,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
     return (
         <Link
             href={route('marketplace.view', product.id)}
-            className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-[#13ec13]/50 hover:shadow-xl dark:border-gray-800 dark:bg-[#162816] dark:hover:border-[#13ec13]/50"
+            className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-xl dark:border-gray-800 dark:bg-[var(--card)] dark:hover:border-[var(--primary)]/50"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
@@ -162,7 +162,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                         </span>
                     )}
                     {product.delivery_available && (
-                        <span className="flex items-center gap-1 rounded-full bg-[#13ec13] px-2.5 py-1 text-xs font-semibold text-[#0d1b0d] shadow-sm">
+                        <span className="flex items-center gap-1 rounded-full bg-[var(--primary)] px-2.5 py-1 text-xs font-semibold text-[var(--primary-foreground)] shadow-sm">
                             <Truck className="h-3 w-3" />
                             Delivery
                         </span>
@@ -171,7 +171,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
 
                 {/* Quick View Button */}
                 <div className={`absolute bottom-3 left-3 right-3 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-                    <span className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-2.5 font-semibold text-[#0d1b0d] shadow-lg transition-colors hover:bg-[#13ec13]">
+                    <span className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-2.5 font-semibold text-[var(--foreground)] shadow-lg transition-colors hover:bg-[var(--primary)]">
                         <Eye className="h-4 w-4" />
                         Quick View
                     </span>
@@ -181,17 +181,17 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
             {/* Content */}
             <div className="flex flex-1 flex-col p-4">
                 <div className="mb-2">
-                    <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#13ec13]">
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
                         {getCategoryLabel(product.category)}
                     </p>
-                    <h3 className="line-clamp-2 font-bold text-[#0d1b0d] transition-colors group-hover:text-[#13ec13] dark:text-white">
+                    <h3 className="line-clamp-2 font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                         {product.title}
                     </h3>
                 </div>
 
                 <div className="mt-auto">
                     <div className="mb-2 flex items-baseline gap-1">
-                        <span className="text-2xl font-black text-[#0d1b0d] dark:text-white">GH₵ {formatPrice(product.price)}</span>
+                        <span className="text-2xl font-black text-[var(--foreground)] dark:text-white">GH₵ {formatPrice(product.price)}</span>
                         {product.price_type && (
                             <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
                         )}

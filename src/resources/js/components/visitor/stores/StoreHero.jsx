@@ -1,4 +1,4 @@
-import { Store, Package, Clock } from 'lucide-react';
+import { Package } from 'lucide-react';
 import { useState } from 'react';
 
 export function StoreHero({ store, productCount }) {
@@ -8,7 +8,7 @@ export function StoreHero({ store, productCount }) {
     const getInitials = (name) => {
         return name
             .split(' ')
-            .map(word => word[0])
+            .map((word) => word[0])
             .join('')
             .substring(0, 2)
             .toUpperCase();
@@ -31,12 +31,15 @@ export function StoreHero({ store, productCount }) {
     const hasThumbnail = store.thumbnail && !imageError;
 
     return (
-        <div className="relative border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[#0d1b0d]">
+        <div className="dark:bg-background-dark relative border-b border-gray-200 bg-white dark:border-gray-800">
             {/* Subtle background pattern */}
             <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
-                <div className="h-full w-full" style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }} />
+                <div
+                    className="h-full w-full"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                    }}
+                />
             </div>
 
             <div className="relative mx-auto max-w-7xl px-4 py-10 md:py-14">
@@ -44,7 +47,7 @@ export function StoreHero({ store, productCount }) {
                     {/* Store Thumbnail/Avatar */}
                     <div className="shrink-0">
                         {hasThumbnail ? (
-                            <div className="h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg dark:border-gray-800 md:h-36 md:w-36">
+                            <div className="h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36 dark:border-gray-800">
                                 <img
                                     src={store.thumbnail}
                                     alt={store.name}
@@ -53,10 +56,10 @@ export function StoreHero({ store, productCount }) {
                                 />
                             </div>
                         ) : (
-                            <div className={`flex h-28 w-28 items-center justify-center rounded-2xl border-4 border-white shadow-lg dark:border-gray-800 md:h-36 md:w-36 ${storeColor.bg}`}>
-                                <span className="text-4xl font-black text-white md:text-5xl">
-                                    {getInitials(store.name)}
-                                </span>
+                            <div
+                                className={`flex h-28 w-28 items-center justify-center rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36 dark:border-gray-800 ${storeColor.bg}`}
+                            >
+                                <span className="text-4xl font-black text-white md:text-5xl">{getInitials(store.name)}</span>
                             </div>
                         )}
                     </div>
@@ -70,27 +73,23 @@ export function StoreHero({ store, productCount }) {
                             </span>
                         </div>
 
-                        <h1 className="mb-2 text-2xl font-black text-[#0d1b0d] md:text-3xl lg:text-4xl dark:text-white">
-                            {store.name}
-                        </h1>
+                        <h1 className="text-foreground mb-2 text-2xl font-black md:text-3xl lg:text-4xl dark:text-white">{store.name}</h1>
 
-                        {store.description && (
-                            <p className="mb-4 max-w-xl text-gray-600 dark:text-gray-400">
-                                {store.description}
-                            </p>
-                        )}
+                        {store.description && <p className="mb-4 max-w-xl text-gray-600 dark:text-gray-400">{store.description}</p>}
 
                         {/* Store Meta */}
                         <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
                             <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
                                 <Package className="h-4 w-4" />
-                                <span className="font-medium">{productCount} {productCount === 1 ? 'product' : 'products'}</span>
+                                <span className="font-medium">
+                                    {productCount} {productCount === 1 ? 'product' : 'products'}
+                                </span>
                             </div>
                             {store.user?.name && (
                                 <>
                                     <span className="text-gray-300 dark:text-gray-700">•</span>
                                     <span className="text-sm text-gray-600 dark:text-gray-400">
-                                        Sold by <span className="font-medium text-[#0d1b0d] dark:text-white">{store.user.name}</span>
+                                        Sold by <span className="text-foreground font-medium dark:text-white">{store.user.name}</span>
                                     </span>
                                 </>
                             )}

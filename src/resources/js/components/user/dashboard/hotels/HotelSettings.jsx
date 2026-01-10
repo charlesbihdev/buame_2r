@@ -102,14 +102,14 @@ export function HotelSettings({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">Hotel Settings</h2>
+                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Hotel Settings</h2>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage amenities and features for your property</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Amenities Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Amenities</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Amenities</h3>
                     <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                         Select amenities available at your property. These help guests find your property.
                     </p>
@@ -124,7 +124,7 @@ export function HotelSettings({ profile }) {
                                     type="button"
                                     onClick={() => handleAddAmenity(amenity)}
                                     disabled={amenities.includes(amenity)}
-                                    className="rounded-md border border-[#e7f3e7] bg-white px-3 py-1 text-xs font-medium text-[#0d1b0d] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                    className="rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-1 text-xs font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
                                 >
                                     {amenities.includes(amenity) ? '✓ ' : '+ '}
                                     {amenity}
@@ -153,7 +153,7 @@ export function HotelSettings({ profile }) {
                                     setNewAmenity('');
                                 }}
                                 disabled={!newAmenity.trim() || amenities.includes(newAmenity.trim())}
-                                className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]"
+                                className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
                             >
                                 <Plus className="h-4 w-4" />
                             </Button>
@@ -168,7 +168,7 @@ export function HotelSettings({ profile }) {
                                 {amenities.map((amenity) => (
                                     <div
                                         key={amenity}
-                                        className="flex items-center gap-1 rounded-md bg-[#13ec13]/10 px-3 py-1 text-sm text-[#0d1b0d] dark:text-white"
+                                        className="flex items-center gap-1 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm text-white dark:text-white"
                                     >
                                         <span>{amenity}</span>
                                         <button
@@ -189,8 +189,8 @@ export function HotelSettings({ profile }) {
                 </div>
 
                 {/* Features Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Features & Services</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Features & Services</h3>
                     <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                         Add special features or services your property offers (e.g., "24/7 Reception", "Room Service").
                     </p>
@@ -218,7 +218,7 @@ export function HotelSettings({ profile }) {
                                 type="button"
                                 onClick={handleAddFeature}
                                 disabled={!newFeature.trim()}
-                                className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]"
+                                className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
                             >
                                 <Plus className="h-4 w-4" />
                             </Button>
@@ -233,9 +233,9 @@ export function HotelSettings({ profile }) {
                                 {features.map((feature, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center justify-between rounded-md border border-[#e7f3e7] bg-white px-3 py-2 dark:border-[#2a4d2a] dark:bg-[#1a331a]"
+                                        className="flex items-center justify-between rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-2 dark:border-[#2a4d2a] dark:bg-[#1a331a]"
                                     >
-                                        <span className="text-sm text-[#0d1b0d] dark:text-white">{feature}</span>
+                                        <span className="text-sm text-[var(--foreground)] dark:text-white">{feature}</span>
                                         <button
                                             type="button"
                                             onClick={() => handleRemoveFeature(index)}
@@ -264,7 +264,7 @@ export function HotelSettings({ profile }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[#13ec13] px-4 py-2 text-sm font-medium whitespace-nowrap text-[#0d1b0d] transition-[color,box-shadow] hover:cursor-pointer hover:bg-[#0eb50e] disabled:pointer-events-none disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[var(--primary)]/90 disabled:pointer-events-none disabled:opacity-50"
                     >
                         <Save className="h-4 w-4" />
                         {processing ? 'Saving...' : 'Save Settings'}

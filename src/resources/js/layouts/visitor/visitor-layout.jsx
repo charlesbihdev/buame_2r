@@ -4,7 +4,7 @@ import { WhatsAppButton } from '@/components/visitor/whatsapp-button';
 
 export default function VisitorLayout({ children }) {
     return (
-        <div className="min-h-screen bg-[#f6f8f6] dark:bg-[#102210]">
+        <div className="min-h-screen bg-background">
             <BuameNavbar />
             <main>{children}</main>
             <Footer />

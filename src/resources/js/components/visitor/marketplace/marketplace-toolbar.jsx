@@ -53,8 +53,8 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                             onClick={() => handleCategoryClick(filter.category)}
                             className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full px-4 text-sm font-bold shadow-sm transition-shadow ${
                                 isActive
-                                    ? 'bg-[#13ec13] text-[#0d1b0d] hover:shadow-md'
-                                    : 'border border-[#e7f3e7] bg-white hover:border-[#13ec13]/50 dark:border-white/20 dark:bg-white/5 dark:text-white'
+                                    ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:shadow-md'
+                                    : 'border border-[var(--buame-border-light)] bg-white hover:border-[var(--primary)]/50 dark:border-white/20 dark:bg-white/5 dark:text-white'
                             }`}
                         >
                             <Icon className="h-5 w-5" />
@@ -69,9 +69,9 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                 <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
                     {pagination.total ? (
                         <>
-                            Showing <span className="font-bold text-[#0d1b0d] dark:text-white">{pagination.from || 0}</span> -{' '}
-                            <span className="font-bold text-[#0d1b0d] dark:text-white">{pagination.to || 0}</span> of{' '}
-                            <span className="font-bold text-[#0d1b0d] dark:text-white">{pagination.total}</span> results
+                            Showing <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.from || 0}</span> -{' '}
+                            <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.to || 0}</span> of{' '}
+                            <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.total}</span> results
                         </>
                     ) : (
                         'No results found'
@@ -83,13 +83,13 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                         variant="outline"
                         size="icon"
                         onClick={onFilterToggle}
-                        className="flex size-10 items-center justify-center rounded-lg border border-[#e7f3e7] bg-white lg:hidden dark:border-white/10 dark:bg-white/5"
+                        className="flex size-10 items-center justify-center rounded-lg border border-[var(--buame-border-light)] bg-white lg:hidden dark:border-white/10 dark:bg-white/5"
                     >
                         <Filter className="h-5 w-5" />
                     </Button>
                     {/* Sort Select */}
                     <Select value={filters.sort || 'recommended'} onValueChange={handleSortChange}>
-                        <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[#e7f3e7] bg-white pr-8 pl-3 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-white/10 dark:bg-white/5 dark:text-white">
+                        <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[var(--buame-border-light)] bg-white pr-8 pl-3 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-white/10 dark:bg-white/5 dark:text-white">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -101,11 +101,11 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                         </SelectContent>
                     </Select>
                     {/* View Toggle */}
-                    <div className="flex rounded-lg border border-[#e7f3e7] bg-white p-1 dark:border-white/10 dark:bg-white/5">
+                    <div className="flex rounded-lg border border-[var(--buame-border-light)] bg-white p-1 dark:border-white/10 dark:bg-white/5">
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="flex size-8 items-center justify-center rounded bg-[#13ec13]/20 text-[#13ec13]"
+                            className="flex size-8 items-center justify-center rounded bg-[var(--primary)]/20 text-[var(--primary)]"
                         >
                             <Grid3x3 className="h-5 w-5" />
                         </Button>

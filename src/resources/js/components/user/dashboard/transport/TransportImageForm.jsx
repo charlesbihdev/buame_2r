@@ -62,9 +62,9 @@ export function TransportImageForm({ image, onClose, profile }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+            <div className="w-full max-w-md rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                 <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-[#0d1b0d] dark:text-white">{isEdit ? 'Edit Image' : 'Add Image'}</h3>
+                    <h3 className="text-xl font-bold text-[var(--foreground)] dark:text-white">{isEdit ? 'Edit Image' : 'Add Image'}</h3>
                     <button
                         onClick={onClose}
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -82,7 +82,7 @@ export function TransportImageForm({ image, onClose, profile }) {
                                     <img
                                         src={preview}
                                         alt="Preview"
-                                        className="h-48 w-full rounded-lg border border-[#e7f3e7] object-cover dark:border-[#2a4d2a]"
+                                        className="h-48 w-full rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
                                     />
                                     <button
                                         type="button"
@@ -118,7 +118,7 @@ export function TransportImageForm({ image, onClose, profile }) {
                                 id="is_primary"
                                 checked={data.is_primary}
                                 onChange={(e) => setData('is_primary', e.target.checked)}
-                                className="h-4 w-4 rounded border-gray-300 text-[#13ec13] focus:ring-[#13ec13]"
+                                className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
                             <Label htmlFor="is_primary" className="text-sm">
                                 Set as primary image
@@ -130,7 +130,7 @@ export function TransportImageForm({ image, onClose, profile }) {
                         <Button type="button" variant="outline" onClick={onClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                             {processing ? 'Saving...' : isEdit ? 'Update' : 'Add Image'}
                         </Button>
                     </div>

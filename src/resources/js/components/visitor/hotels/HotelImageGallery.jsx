@@ -8,8 +8,8 @@ export function HotelImageGallery({ images }) {
 
     if (!images || images.length === 0) {
         return (
-            <div className="rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center dark:border-gray-700 dark:bg-gray-900">
-                <p className="text-gray-500 dark:text-gray-400">No images available yet</p>
+            <div className="rounded-xl border-2 border-dashed border-border bg-muted p-12 text-center">
+                <p className="text-muted-foreground">No images available yet</p>
             </div>
         );
     }
@@ -44,7 +44,7 @@ export function HotelImageGallery({ images }) {
     return (
         <>
             {/* Main Image Display */}
-            <div className="mb-4 h-96 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800">
+            <div className="mb-4 h-96 overflow-hidden rounded-xl bg-muted">
                 {primaryImage ? (
                     <button
                         onClick={() => openLightbox(0)}
@@ -61,7 +61,7 @@ export function HotelImageGallery({ images }) {
                     </button>
                 ) : (
                     <div className="flex h-full w-full items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">No image available</span>
+                        <span className="text-muted-foreground">No image available</span>
                     </div>
                 )}
             </div>
@@ -73,7 +73,7 @@ export function HotelImageGallery({ images }) {
                         <button
                             key={image.id}
                             onClick={() => openLightbox(index + 1)}
-                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
+                            className="group relative aspect-square overflow-hidden rounded-lg bg-muted"
                         >
                             <img
                                 src={image.image_path}
@@ -88,7 +88,7 @@ export function HotelImageGallery({ images }) {
                     {otherImages.length > 4 && (
                         <button
                             onClick={() => openLightbox(5)}
-                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
+                            className="group relative aspect-square overflow-hidden rounded-lg bg-muted"
                         >
                             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                                 <span className="text-sm font-semibold text-white">+{otherImages.length - 4}</span>
@@ -166,7 +166,7 @@ export function HotelImageGallery({ images }) {
                                     key={image.id}
                                     onClick={() => setCurrentSlideIndex(index)}
                                     className={`h-2 w-2 rounded-full transition-all ${
-                                        index === currentSlideIndex ? 'w-8 bg-[#13ec13]' : 'bg-white/50 hover:bg-white/75'
+                                        index === currentSlideIndex ? 'w-8 bg-primary' : 'bg-white/50 hover:bg-white/75'
                                     }`}
                                 />
                             ))}

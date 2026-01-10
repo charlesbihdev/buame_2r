@@ -61,9 +61,9 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 dark:bg-[#162816]">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 dark:bg-[var(--card)]">
                 <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">
+                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
                         {image ? 'Edit Image' : 'Add New Image'}
                     </h3>
                     <button
@@ -79,7 +79,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                     <div>
                         <Label>Image</Label>
                         <div
-                            className="mt-2 flex h-48 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                            className="mt-2 flex h-48 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
                             onClick={() => fileInputRef.current?.click()}
                         >
                             {imagePreview ? (
@@ -114,7 +114,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                         <Button
                             type="submit"
                             disabled={processing || (!image && !data.image)}
-                            className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
+                            className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
                         >
                             {processing ? (
                                 <>

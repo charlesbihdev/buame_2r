@@ -8,7 +8,7 @@ export function TestimonialsSection() {
             role: 'Shop Owner, Bekwai',
         },
         {
-            quote: '"As a taxi driver, BUAME 2R helps me get bookings even when I am parked. It has increased my income."',
+            quote: '"As a taxi driver, 2RBUAME helps me get bookings even when I am parked. It has increased my income."',
             author: 'Samuel O.',
             role: 'Driver, Bibiani',
         },
@@ -20,25 +20,33 @@ export function TestimonialsSection() {
     ];
 
     return (
-        <section className="border-b border-[#e7f3e7] bg-background-light py-16 px-4 dark:border-gray-800 dark:bg-background-dark md:px-8 lg:px-40">
+        <section className="border-b border-border bg-background py-16 px-4 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px] text-center">
-                <h2 className="mb-12 text-2xl font-bold text-[#0d1b0d] dark:text-white md:text-3xl">
-                    Trusted by Locals in Sefwi Bekwai
+                <h2 className="mb-12 text-2xl font-bold text-foreground md:text-3xl">
+                    Trusted Across Western North and Beyond
                 </h2>
                 <div className="grid gap-6 md:grid-cols-3">
-                    {testimonials.map((testimonial, index) => (
-                        <div
-                            key={index}
-                            className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                        >
-                            <div className="mb-4 flex justify-center text-[#13ec13]">
-                                <Quote className="h-6 w-6" />
+                    {testimonials.map((testimonial, index) => {
+                        // Use blue (accent) for trust elements - testimonials build trust
+                        const isTrustCard = index === 1; // Middle card gets blue accent
+                        return (
+                            <div
+                                key={index}
+                                className={`rounded-xl border bg-card p-6 shadow-sm transition-all hover:shadow-md ${
+                                    isTrustCard
+                                        ? 'border-[var(--accent)]/30 bg-[var(--accent)]/5'
+                                        : 'border-border'
+                                }`}
+                            >
+                                <div className={`mb-4 flex justify-center ${isTrustCard ? 'text-[var(--accent)]' : 'text-[var(--primary)]'}`}>
+                                    <Quote className="h-6 w-6" />
+                                </div>
+                                <p className="mb-6 italic text-muted-foreground">{testimonial.quote}</p>
+                                <div className="font-bold text-foreground">{testimonial.author}</div>
+                                <div className="text-xs text-muted-foreground">{testimonial.role}</div>
                             </div>
-                            <p className="mb-6 italic text-gray-600 dark:text-gray-300">{testimonial.quote}</p>
-                            <div className="font-bold text-[#0d1b0d] dark:text-white">{testimonial.author}</div>
-                            <div className="text-xs text-gray-400">{testimonial.role}</div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>

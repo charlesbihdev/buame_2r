@@ -34,7 +34,7 @@ export function TeamSection() {
                             />
                             <div>
                                 <h3 className="text-lg font-bold dark:text-white">{member.name}</h3>
-                                <p className="text-sm font-medium text-[#13ec13]">{member.role}</p>
+                                <p className="text-sm font-medium text-[var(--primary)]">{member.role}</p>
                             </div>
                         </div>
                     ))}

@@ -76,7 +76,7 @@ export function MarketplaceFilters({ filters = {} }) {
     }, [location]);
 
     return (
-        <aside className="hidden min-h-[calc(100vh-80px)] w-80 shrink-0 flex-col gap-8 border-r border-[#e7f3e7] bg-white p-6 lg:flex dark:border-white/10 dark:bg-white/5">
+        <aside className="hidden min-h-[calc(100vh-80px)] w-80 shrink-0 flex-col gap-8 border-r border-[var(--buame-border-light)] bg-white p-6 lg:flex dark:border-white/10 dark:bg-white/5">
             {/* Active Filters Summary */}
             {(filters.category && filters.category !== 'all') ||
             filters.location ||
@@ -87,25 +87,25 @@ export function MarketplaceFilters({ filters = {} }) {
                 <div>
                     <div className="mb-2 flex items-center justify-between">
                         <h3 className="text-sm font-bold tracking-wider text-gray-500 uppercase dark:text-gray-400">Active Filters</h3>
-                        <button onClick={() => router.get('/marketplace')} className="text-xs text-[#13ec13] hover:underline">
+                        <button onClick={() => router.get('/marketplace')} className="text-xs text-[var(--primary)] hover:underline">
                             Clear All
                         </button>
                     </div>
-                    <div className="bg-background-light dark:bg-background-dark grid grid-cols-1 overflow-hidden rounded-lg border border-[#e7f3e7] dark:border-white/10">
+                    <div className="bg-background-light dark:bg-background-dark grid grid-cols-1 overflow-hidden rounded-lg border border-[var(--buame-border-light)] dark:border-white/10">
                         {filters.category && filters.category !== 'all' && (
-                            <div className="flex items-center justify-between border-b border-[#e7f3e7] p-3 dark:border-white/10">
+                            <div className="flex items-center justify-between border-b border-[var(--buame-border-light)] p-3 dark:border-white/10">
                                 <span className="text-sm text-gray-500 dark:text-gray-400">Category</span>
                                 <span className="text-sm font-medium capitalize dark:text-white">{filters.category}</span>
                             </div>
                         )}
                         {filters.location && (
-                            <div className="flex items-center justify-between border-b border-[#e7f3e7] p-3 dark:border-white/10">
+                            <div className="flex items-center justify-between border-b border-[var(--buame-border-light)] p-3 dark:border-white/10">
                                 <span className="text-sm text-gray-500 dark:text-gray-400">Location</span>
                                 <span className="text-sm font-medium dark:text-white">{filters.location}</span>
                             </div>
                         )}
                         {(filters.price_min || filters.price_max) && (
-                            <div className="flex items-center justify-between border-b border-[#e7f3e7] p-3 dark:border-white/10">
+                            <div className="flex items-center justify-between border-b border-[var(--buame-border-light)] p-3 dark:border-white/10">
                                 <span className="text-sm text-gray-500 dark:text-gray-400">Price</span>
                                 <span className="text-sm font-medium dark:text-white">
                                     ₵{filters.price_min || 0} - ₵{filters.price_max || '∞'}
@@ -113,7 +113,7 @@ export function MarketplaceFilters({ filters = {} }) {
                             </div>
                         )}
                         {filters.condition && filters.condition !== 'all' && (
-                            <div className="flex items-center justify-between border-b border-[#e7f3e7] p-3 dark:border-white/10">
+                            <div className="flex items-center justify-between border-b border-[var(--buame-border-light)] p-3 dark:border-white/10">
                                 <span className="text-sm text-gray-500 dark:text-gray-400">Condition</span>
                                 <span className="text-sm font-medium capitalize dark:text-white">{filters.condition.replace('_', ' ')}</span>
                             </div>
@@ -141,9 +141,9 @@ export function MarketplaceFilters({ filters = {} }) {
                                         updateFilter('category', category.id);
                                     }
                                 }}
-                                className="rounded border-gray-300 bg-transparent text-[#13ec13] focus:ring-[#13ec13]"
+                                className="rounded border-gray-300 bg-transparent text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <span className="text-sm font-medium transition-colors group-hover:text-[#13ec13] dark:text-gray-200">
+                            <span className="text-sm font-medium transition-colors group-hover:text-[var(--primary)] dark:text-gray-200">
                                 {category.label}
                             </span>
                         </Label>
@@ -200,7 +200,7 @@ export function MarketplaceFilters({ filters = {} }) {
                 <h3 className="mb-4 text-base font-bold dark:text-white">Location</h3>
                 <Input
                     type="text"
-                    placeholder="e.g., Sefwi Bekwai, Bibiani"
+                    placeholder="e.g., Western North, Bibiani"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     onBlur={handleLocationFilter}
@@ -216,9 +216,9 @@ export function MarketplaceFilters({ filters = {} }) {
                     <Checkbox
                         checked={filters.delivery_available === '1'}
                         onCheckedChange={(checked) => updateFilter('delivery_available', checked ? '1' : '')}
-                        className="rounded border-gray-300 bg-transparent text-[#13ec13] focus:ring-[#13ec13]"
+                        className="rounded border-gray-300 bg-transparent text-[var(--primary)] focus:ring-[var(--primary)]"
                     />
-                    <span className="text-sm font-medium transition-colors group-hover:text-[#13ec13] dark:text-gray-200">Delivery Available</span>
+                    <span className="text-sm font-medium transition-colors group-hover:text-[var(--primary)] dark:text-gray-200">Delivery Available</span>
                 </Label>
             </div>
         </aside>

@@ -14,7 +14,7 @@ export function RentalProfile({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[#162816]">
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                 <p className="text-gray-600 dark:text-gray-400">Loading rental profile...</p>
             </div>
         );
@@ -76,11 +76,11 @@ export function RentalProfile({ profile }) {
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Primary Image Upload */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Primary Image</h3>
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Primary Image</h3>
                 <div className="flex items-start gap-6">
                     <div
-                        className="relative h-40 w-40 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                        className="relative h-40 w-40 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
                         onClick={() => fileInputRef.current?.click()}
                     >
                         {imagePreview || primaryImage?.image_path ? (
@@ -114,8 +114,8 @@ export function RentalProfile({ profile }) {
             </div>
 
             {/* Basic Information */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Basic Information</h3>
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <Label htmlFor="name">Rental Name</Label>
@@ -135,7 +135,7 @@ export function RentalProfile({ profile }) {
                             id="type"
                             value={data.type}
                             onChange={(e) => setData('type', e.target.value)}
-                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#0d1b0d] dark:text-white"
+                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
                         >
                             {rentalTypes.map((type) => (
                                 <option key={type.value} value={type.value}>
@@ -162,8 +162,8 @@ export function RentalProfile({ profile }) {
             </div>
 
             {/* Pricing Section */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Pricing</h3>
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <Label htmlFor="price">Price (GH₵)</Label>
@@ -186,7 +186,7 @@ export function RentalProfile({ profile }) {
                             id="period"
                             value={data.period}
                             onChange={(e) => setData('period', e.target.value)}
-                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#0d1b0d] dark:text-white"
+                            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
                         >
                             {periods.map((period) => (
                                 <option key={period.value} value={period.value}>
@@ -200,8 +200,8 @@ export function RentalProfile({ profile }) {
             </div>
 
             {/* Location & Contact Section */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Location & Contact</h3>
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
                         <Label htmlFor="location">Location</Label>
@@ -210,7 +210,7 @@ export function RentalProfile({ profile }) {
                             value={data.location}
                             onChange={(e) => setData('location', e.target.value)}
                             className="mt-1"
-                            placeholder="Sefwi Bekwai"
+                            placeholder="Western North"
                         />
                         <FormError error={errors.location || pageErrors?.location} className="mt-1" />
                     </div>
@@ -255,8 +255,8 @@ export function RentalProfile({ profile }) {
             </div>
 
             {/* Rental Terms Section */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Rental Terms</h3>
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Terms</h3>
                 <div>
                     <Label htmlFor="rental_terms">Terms & Conditions (optional)</Label>
                     <Textarea
@@ -272,7 +272,7 @@ export function RentalProfile({ profile }) {
             </div>
 
             {/* Status & Save */}
-            <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                         <input
@@ -280,7 +280,7 @@ export function RentalProfile({ profile }) {
                             id="is_active"
                             checked={data.is_active}
                             onChange={(e) => setData('is_active', e.target.checked)}
-                            className="h-5 w-5 rounded border-gray-300 text-[#13ec13] focus:ring-[#13ec13]"
+                            className="h-5 w-5 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                         />
                         <Label htmlFor="is_active" className="cursor-pointer">
                             {data.is_active ? 'Listing is Active' : 'Listing is Inactive'}
@@ -294,7 +294,7 @@ export function RentalProfile({ profile }) {
                                 Saved successfully
                             </span>
                         )}
-                        <Button type="submit" disabled={processing} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
+                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                             {processing ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -61,7 +61,7 @@ export default function TransportView({ ride }) {
     if (!ride) {
         return (
             <VisitorLayout>
-                <Head title="Transport Not Found | BUAME 2R" />
+                <Head title="Transport Not Found | 2RBUAME" />
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     <p className="text-center text-gray-600 dark:text-gray-400">Transport service not found</p>
                 </div>
@@ -74,29 +74,29 @@ export default function TransportView({ ride }) {
 
     return (
         <VisitorLayout>
-            <Head title={`${ride?.company_name} | BUAME 2R`} />
+            <Head title={`${ride?.company_name} | 2RBUAME`} />
 
             {/* Hero Section */}
-            <div className="w-full bg-gradient-to-br from-[#13ec13]/10 via-white to-[#13ec13]/5 dark:from-[#13ec13]/5 dark:via-[#0d1b0d] dark:to-[#13ec13]/5">
+            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
                     <Link
                         href="/transport"
-                        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[#13ec13] dark:text-gray-400"
+                        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to Transport
                     </Link>
 
                     {/* Profile Header */}
-                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#162816] md:p-8">
+                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[var(--card)] md:p-8">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
                             {/* Transport Info */}
                             <div className="flex-1">
                                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                                    <h1 className="text-3xl font-black text-[#0d1b0d] dark:text-white md:text-4xl">{ride?.company_name}</h1>
-                                    {ride?.is_verified && <BadgeCheck className="h-6 w-6 fill-[#13ec13] text-white" />}
-                                    <span className="flex items-center gap-1 rounded-full bg-[#13ec13] px-3 py-1 text-sm font-bold text-[#0d1b0d]">
+                                    <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl">{ride?.company_name}</h1>
+                                    {ride?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
+                                    <span className="flex items-center gap-1 rounded-full bg-[var(--primary)] px-3 py-1 text-sm font-bold text-white">
                                         <TypeIcon className="h-4 w-4" />
                                         {formatTransportType(ride?.type)}
                                     </span>
@@ -138,9 +138,9 @@ export default function TransportView({ ride }) {
                             </div>
 
                             {/* Pricing Card - Desktop */}
-                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[#13ec13]/5 to-[#13ec13]/10 p-4 dark:border-gray-700 dark:from-[#13ec13]/10 dark:to-[#13ec13]/5 md:block">
+                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
                                 <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-3xl font-black text-[#0d1b0d] dark:text-[#13ec13]">GH₵{ride?.price_per_seat}</p>
+                                <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
                             </div>
                         </div>
@@ -154,14 +154,14 @@ export default function TransportView({ ride }) {
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-2">
                         {/* Image Gallery */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                            <h2 className="mb-4 text-2xl font-bold text-[#0d1b0d] dark:text-white">Vehicle Images</h2>
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Vehicle Images</h2>
                             <TransportImageGallery images={ride?.images || []} />
                         </div>
 
                         {/* About Section */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                            <h2 className="mb-4 text-2xl font-bold text-[#0d1b0d] dark:text-white">About {ride?.company_name}</h2>
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">About {ride?.company_name}</h2>
                             <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
                                 {ride?.description || 'No description available.'}
                             </p>
@@ -169,8 +169,8 @@ export default function TransportView({ ride }) {
                             {/* Operating Hours */}
                             {ride?.operating_hours && (
                                 <div className="mb-4">
-                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[#0d1b0d] dark:text-white">
-                                        <Clock className="h-5 w-5 text-[#13ec13]" />
+                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                        <Clock className="h-5 w-5 text-[var(--primary)]" />
                                         Operating Hours
                                     </h3>
                                     <p className="text-gray-700 dark:text-gray-300">{ride.operating_hours}</p>
@@ -180,8 +180,8 @@ export default function TransportView({ ride }) {
                             {/* Operating Locations */}
                             {ride?.operating_locations && (
                                 <div>
-                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[#0d1b0d] dark:text-white">
-                                        <MapPin className="h-5 w-5 text-[#13ec13]" />
+                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                        <MapPin className="h-5 w-5 text-[var(--primary)]" />
                                         Service Areas
                                     </h3>
                                     <p className="text-gray-700 dark:text-gray-300">{ride.operating_locations}</p>
@@ -191,8 +191,8 @@ export default function TransportView({ ride }) {
 
                         {/* Payment Methods */}
                         {ride?.payment_methods && ride.payment_methods.length > 0 && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                <h2 className="mb-4 text-2xl font-bold text-[#0d1b0d] dark:text-white">Payment Methods</h2>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Payment Methods</h2>
                                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                                     {ride.payment_methods.map((method, idx) => {
                                         const Icon = paymentIcons[method.toLowerCase().replace(' ', '_')] || Wallet;
@@ -201,7 +201,7 @@ export default function TransportView({ ride }) {
                                                 key={idx}
                                                 className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-800"
                                             >
-                                                <Icon className="h-5 w-5 text-[#13ec13]" />
+                                                <Icon className="h-5 w-5 text-[var(--primary)]" />
                                                 <span className="text-sm font-medium capitalize text-gray-700 dark:text-gray-300">{method}</span>
                                             </div>
                                         );
@@ -215,18 +215,18 @@ export default function TransportView({ ride }) {
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
-                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[#13ec13]/5 to-[#13ec13]/10 p-6 dark:border-gray-700 dark:from-[#13ec13]/10 dark:to-[#13ec13]/5 md:hidden">
+                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
                                 <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-4xl font-black text-[#0d1b0d] dark:text-[#13ec13]">GH₵{ride?.price_per_seat}</p>
+                                <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
                             </div>
 
                             {/* Contact Actions */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Book a Ride</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Book a Ride</h3>
                                 <div className="space-y-3">
                                     {whatsappUrl && (
-                                        <Button asChild className="w-full bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]">
+                                        <Button asChild className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                                             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                                 <MessageCircle className="mr-2 h-5 w-5" />
                                                 Book via WhatsApp
@@ -234,7 +234,7 @@ export default function TransportView({ ride }) {
                                         </Button>
                                     )}
                                     {ride?.phone && (
-                                        <Button asChild variant="outline" className="w-full border-[#13ec13] text-[#13ec13] hover:bg-[#13ec13] hover:text-[#0d1b0d]">
+                                        <Button asChild variant="outline" className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white">
                                             <a href={`tel:${ride.phone}`}>
                                                 <Phone className="mr-2 h-5 w-5" />
                                                 Call to Book
@@ -253,18 +253,18 @@ export default function TransportView({ ride }) {
                             </div>
 
                             {/* Contact Info */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Contact Information</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Information</h3>
                                 <div className="space-y-3 text-sm">
                                     {ride?.phone && (
                                         <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-                                            <Phone className="h-4 w-4 text-[#13ec13]" />
+                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
                                             <span className="font-medium text-gray-700 dark:text-gray-300">{ride.phone}</span>
                                         </div>
                                     )}
                                     {ride?.email && (
                                         <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-                                            <Mail className="h-4 w-4 text-[#13ec13]" />
+                                            <Mail className="h-4 w-4 text-[var(--primary)]" />
                                             <span className="break-all font-medium text-gray-700 dark:text-gray-300">{ride.email}</span>
                                         </div>
                                     )}
@@ -272,15 +272,15 @@ export default function TransportView({ ride }) {
                             </div>
 
                             {/* Trust Indicators */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Why Choose Us?</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Why Choose Us?</h3>
                                 <div className="space-y-3 text-sm">
                                     {ride?.is_verified && (
                                         <div className="flex items-start gap-3">
-                                            <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 fill-[#13ec13] text-white" />
+                                            <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 fill-[var(--primary)] text-white" />
                                             <div>
-                                                <p className="font-semibold text-[#0d1b0d] dark:text-white">Verified Service</p>
-                                                <p className="text-gray-600 dark:text-gray-400">Verified by BUAME 2R</p>
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Verified Service</p>
+                                                <p className="text-gray-600 dark:text-gray-400">Verified by 2RBUAME</p>
                                             </div>
                                         </div>
                                     )}
@@ -288,7 +288,7 @@ export default function TransportView({ ride }) {
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
-                                                <p className="font-semibold text-[#0d1b0d] dark:text-white">Highly Rated</p>
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Highly Rated</p>
                                                 <p className="text-gray-600 dark:text-gray-400">
                                                     {ride.rating}/5.0 from {ride.reviews_count} reviews
                                                 </p>
@@ -297,9 +297,9 @@ export default function TransportView({ ride }) {
                                     )}
                                     {ride?.seats_available && (
                                         <div className="flex items-start gap-3">
-                                            <Users className="mt-0.5 h-5 w-5 shrink-0 text-[#13ec13]" />
+                                            <Users className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
                                             <div>
-                                                <p className="font-semibold text-[#0d1b0d] dark:text-white">Available Capacity</p>
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Available Capacity</p>
                                                 <p className="text-gray-600 dark:text-gray-400">{ride.seats_available} seats available</p>
                                             </div>
                                         </div>

@@ -84,17 +84,33 @@ class CategoryProfileService
      */
     protected function getOrCreateTransport(User $user): TransportRide
     {
-        return $user->transportRides()->with(['images'])->firstOrCreate(
-            ['user_id' => $user->id],
-            [
+        // First, try to get existing profile
+        $profile = $user->transportRides()->with(['images'])->first();
+
+        // If no profile exists, create one
+        if (! $profile) {
+            $profile = $user->transportRides()->create([
                 'company_name' => '',
-                'type' => 'okada_car',
+                'type' => 'okada',
                 'price_per_seat' => 0,
                 'seats_available' => 1,
                 'location' => '',
-                'phone' => $user->phone,
-            ]
-        );
+                'phone' => $user->phone ?? '0000000000', // Ensure phone is not empty
+            ]);
+            $profile->load(['images']);
+        } else {
+            // Ensure relationships are loaded
+            if (! $profile->relationLoaded('images')) {
+                $profile->load('images');
+            }
+
+            // Fix invalid type if it exists (from previous bug with 'okada_car')
+            if ($profile->type === 'okada_car' || ! in_array($profile->type, ['okada', 'car', 'taxi', 'bus', 'cargo', 'other'])) {
+                $profile->update(['type' => 'okada']);
+            }
+        }
+
+        return $profile;
     }
 
     /**

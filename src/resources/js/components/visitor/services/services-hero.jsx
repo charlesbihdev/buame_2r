@@ -12,23 +12,23 @@ export function ServicesHero() {
             >
                 <div className="z-10 flex max-w-2xl flex-col gap-4">
                     <h1 className="text-4xl leading-tight font-black tracking-[-0.033em] text-white md:text-5xl lg:text-6xl">
-                        Connecting Sefwi Bekwai to You
+                        Connecting Western North and Beyond to You
                     </h1>
                     <h2 className="text-base leading-relaxed font-normal text-gray-200 md:text-lg">
-                        The centralized digital hub for local artisans, marketplaces, transport, and jobs in the Western North Region.
+                        The centralized digital hub for local artisans, marketplaces, transport, and jobs across Western North and beyond. We welcome customers from all backgrounds.
                     </h2>
                 </div>
                 <div className="z-10 mt-2 flex flex-wrap gap-4">
                     <Button
                         asChild
-                        className="flex h-12 items-center justify-center rounded-lg bg-[#13ec13] px-6 text-base font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fd60f]"
+                        className="flex h-12 items-center justify-center rounded-lg bg-[var(--primary)] px-6 text-base font-bold text-white transition-colors hover:bg-[var(--primary)]/90"
                     >
                         <Link href="/join-as-provider">Get Started</Link>
                     </Button>
                     <Button
                         asChild
                         variant="outline"
-                        className="flex h-12 items-center justify-center rounded-lg border border-white/20 bg-white/10 px-6 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                        className="flex h-12 items-center justify-center rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-6 text-base font-bold text-white backdrop-blur-sm transition-colors hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50"
                     >
                         <Link href="/about">Learn More</Link>
                     </Button>

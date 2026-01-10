@@ -53,10 +53,10 @@ const TabsTrigger = React.forwardRef(({ className, value, onValueChange, activeV
             ref={ref}
             type="button"
             className={cn(
-                'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#13ec13] disabled:pointer-events-none disabled:opacity-50',
+                'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] disabled:pointer-events-none disabled:opacity-50',
                 isActive
-                    ? 'bg-white dark:bg-[#102210] text-[#0d1b0d] dark:text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-[#0d1b0d] dark:hover:text-white',
+                    ? 'bg-white dark:bg-[var(--buame-background-dark)] text-[var(--foreground)] dark:text-white shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-[var(--foreground)] dark:hover:text-white',
                 className
             )}
             onClick={() => onValueChange?.(value)}

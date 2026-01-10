@@ -23,7 +23,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'hotels':
                 return <HotelsSection activeTab={activeSection} data={categoryData} />;
             case 'transport':
-                return <TransportSection activeTab={activeSection} data={categoryData} />;
+                return <TransportSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'rentals':
                 return <RentalsSection activeTab={activeSection} data={categoryData} />;
             case 'jobs':
@@ -35,7 +35,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
 
     return (
         <DashboardLayout user={user} activeCategory={activeCategory} activeSection={activeSection} categoryData={categoryData}>
-            <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : 'BUAME 2R'}`} />
+            <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : '2RBUAME'}`} />
             <div className="mx-auto w-full max-w-[1400px] p-4 md:p-6 lg:p-8">
                 <CategorySwitcher paidCategories={paidCategories} activeCategory={activeCategory} unpaidCategories={unpaidCategories} />
                 {renderCategorySection()}

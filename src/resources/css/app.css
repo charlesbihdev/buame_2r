@@ -17,17 +17,35 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
-    /* BUAME 2R Custom Colors */
-    --color-buame-primary: #13ec13;
-    --color-buame-primary-dark: #0eb50e;
-    --color-buame-background-light: #f6f8f6;
-    --color-buame-background-dark: #102210;
-    --color-buame-text-main: #0d1b0d;
-    --color-buame-text-sub: #4c9a4c;
+    /* BUAME 2R Brand Colors */
+    /* Primary: Deep Green - Growth, trust, local economy */
+    --color-brand-green: #0F6B3F;
+    --color-brand-green-light: #128A4F;
+    --color-brand-green-dark: #0A5230;
+
+    /* Secondary: Golden Yellow - Opportunity, prosperity */
+    --color-brand-gold: #F4B400;
+    --color-brand-gold-light: #FFCA28;
+    --color-brand-gold-dark: #C99400;
+
+    /* Tertiary: Dark Blue - Technology & reliability */
+    --color-brand-blue: #1F3A5F;
+    --color-brand-blue-light: #2E4A73;
+    --color-brand-blue-dark: #152A47;
+
+    /* Legacy BUAME colors (keeping for backwards compatibility) */
+    --color-buame-primary: #0F6B3F;
+    --color-buame-primary-dark: #0A5230;
+    --color-buame-secondary: #F4B400;
+    --color-buame-accent: #1F3A5F;
+    --color-buame-background-light: #F8FAF9;
+    --color-buame-background-dark: #0A1F14;
+    --color-buame-text-main: #1A2E23;
+    --color-buame-text-sub: #4A6B5A;
     --color-buame-surface-light: #ffffff;
-    --color-buame-surface-dark: #1a331a;
-    --color-buame-border-light: #e7f3e7;
-    --color-buame-border-dark: #2a4d2a;
+    --color-buame-surface-dark: #132920;
+    --color-buame-border-light: #D4E5DC;
+    --color-buame-border-dark: #1F3D2E;
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
@@ -92,96 +110,127 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: #13ec13;
-    --primary-foreground: #0d1b0d;
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --radius: 0.25rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
+    --background: #F8FAF9;
+    --foreground: #1A2E23;
+    --card: #ffffff;
+    --card-foreground: #1A2E23;
+    --popover: #ffffff;
+    --popover-foreground: #1A2E23;
 
-    /* BUAME 2R Custom Variables */
-    --buame-primary: #13ec13;
-    --buame-primary-dark: #0eb50e;
-    --buame-background-light: #f6f8f6;
-    --buame-background-dark: #102210;
-    --buame-text-main: #0d1b0d;
-    --buame-text-sub: #4c9a4c;
+    /* Primary: Deep Green */
+    --primary: #0F6B3F;
+    --primary-foreground: #ffffff;
+
+    /* Secondary: Golden Yellow */
+    --secondary: #F4B400;
+    --secondary-foreground: #1A2E23;
+
+    --muted: #E8F0EC;
+    --muted-foreground: #4A6B5A;
+
+    /* Accent: Dark Blue */
+    --accent: #1F3A5F;
+    --accent-foreground: #ffffff;
+
+    --destructive: #DC2626;
+    --destructive-foreground: #ffffff;
+
+    --border: #D4E5DC;
+    --input: #D4E5DC;
+    --ring: #0F6B3F;
+
+    /* Charts using brand colors */
+    --chart-1: #0F6B3F;
+    --chart-2: #F4B400;
+    --chart-3: #1F3A5F;
+    --chart-4: #128A4F;
+    --chart-5: #FFCA28;
+
+    --radius: 0.5rem;
+
+    --sidebar: #ffffff;
+    --sidebar-foreground: #1A2E23;
+    --sidebar-primary: #0F6B3F;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #E8F0EC;
+    --sidebar-accent-foreground: #1A2E23;
+    --sidebar-border: #D4E5DC;
+    --sidebar-ring: #0F6B3F;
+
+    /* BUAME 2R Brand Variables */
+    --buame-primary: #0F6B3F;
+    --buame-primary-dark: #0A5230;
+    --buame-secondary: #F4B400;
+    --buame-accent: #1F3A5F;
+    --buame-background-light: #F8FAF9;
+    --buame-background-dark: #0A1F14;
+    --buame-text-main: #1A2E23;
+    --buame-text-sub: #4A6B5A;
     --buame-surface-light: #ffffff;
-    --buame-surface-dark: #1a331a;
-    --buame-border-light: #e7f3e7;
-    --buame-border-dark: #2a4d2a;
+    --buame-surface-dark: #132920;
+    --buame-border-light: #D4E5DC;
+    --buame-border-dark: #1F3D2E;
 }
 
 .dark {
-    --background: #102210;
-    --foreground: oklch(0.985 0 0);
-    --card: #1a331a;
-    --card-foreground: oklch(0.985 0 0);
-    --popover: #1a331a;
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: #13ec13;
-    --primary-foreground: #0d1b0d;
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: #2a4d2a;
-    --input: #2a4d2a;
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --background: #0A1F14;
+    --foreground: #E8F0EC;
+    --card: #132920;
+    --card-foreground: #E8F0EC;
+    --popover: #132920;
+    --popover-foreground: #E8F0EC;
+
+    /* Primary: Deep Green (lighter for dark mode) */
+    --primary: #128A4F;
+    --primary-foreground: #ffffff;
+
+    /* Secondary: Golden Yellow */
+    --secondary: #F4B400;
+    --secondary-foreground: #1A2E23;
+
+    --muted: #1F3D2E;
+    --muted-foreground: #8BA89A;
+
+    /* Accent: Dark Blue (lighter for dark mode) */
+    --accent: #2E4A73;
+    --accent-foreground: #ffffff;
+
+    --destructive: #EF4444;
+    --destructive-foreground: #ffffff;
+
+    --border: #1F3D2E;
+    --input: #1F3D2E;
+    --ring: #128A4F;
+
+    /* Charts using brand colors */
+    --chart-1: #128A4F;
+    --chart-2: #FFCA28;
+    --chart-3: #2E4A73;
+    --chart-4: #0F6B3F;
+    --chart-5: #F4B400;
+
+    --sidebar: #132920;
+    --sidebar-foreground: #E8F0EC;
+    --sidebar-primary: #128A4F;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #1F3D2E;
+    --sidebar-accent-foreground: #E8F0EC;
+    --sidebar-border: #1F3D2E;
+    --sidebar-ring: #128A4F;
 
     /* BUAME 2R Dark Mode Variables */
-    --buame-background-light: #102210;
-    --buame-background-dark: #0a160a;
-    --buame-text-main: #e7f3e7;
-    --buame-text-sub: #8fcc8f;
-    --buame-surface-light: #1a331a;
-    --buame-surface-dark: #0d1b0d;
-    --buame-border-light: #2a4d2a;
-    --buame-border-dark: #1a331a;
+    --buame-primary: #128A4F;
+    --buame-primary-dark: #0F6B3F;
+    --buame-secondary: #FFCA28;
+    --buame-accent: #2E4A73;
+    --buame-background-light: #132920;
+    --buame-background-dark: #0A1F14;
+    --buame-text-main: #E8F0EC;
+    --buame-text-sub: #8BA89A;
+    --buame-surface-light: #1F3D2E;
+    --buame-surface-dark: #132920;
+    --buame-border-light: #2A5040;
+    --buame-border-dark: #1F3D2E;
 }
 
 @layer base {
@@ -202,55 +251,57 @@
 
 /* BUAME 2R Utility Classes */
 @layer utilities {
-    .bg-primary {
+    /* Brand color utilities - use these for consistent branding */
+    .bg-brand-green {
         background-color: var(--buame-primary);
     }
 
-    .bg-primary-dark {
+    .bg-brand-green-dark {
         background-color: var(--buame-primary-dark);
     }
 
-    .bg-background-light {
-        background-color: var(--buame-background-light);
+    .bg-brand-gold {
+        background-color: var(--buame-secondary);
     }
 
-    .bg-background-dark {
-        background-color: var(--buame-background-dark);
+    .bg-brand-blue {
+        background-color: var(--buame-accent);
     }
 
-    .text-text-main {
-        color: var(--buame-text-main);
-    }
-
-    .text-text-sub {
-        color: var(--buame-text-sub);
-    }
-
-    .bg-surface-light {
-        background-color: var(--buame-surface-light);
-    }
-
-    .bg-surface-dark {
-        background-color: var(--buame-surface-dark);
-    }
-
-    .border-border-light {
-        border-color: var(--buame-border-light);
-    }
-
-    .border-border-dark {
-        border-color: var(--buame-border-dark);
-    }
-
-    .text-primary {
+    .text-brand-green {
         color: var(--buame-primary);
     }
 
-    .hover\:bg-primary-dark:hover {
+    .text-brand-gold {
+        color: var(--buame-secondary);
+    }
+
+    .text-brand-blue {
+        color: var(--buame-accent);
+    }
+
+    .border-brand-green {
+        border-color: var(--buame-primary);
+    }
+
+    .border-brand-gold {
+        border-color: var(--buame-secondary);
+    }
+
+    .border-brand-blue {
+        border-color: var(--buame-accent);
+    }
+
+    /* Hover states */
+    .hover\:bg-brand-green-dark:hover {
         background-color: var(--buame-primary-dark);
     }
 
-    .hover\:text-primary:hover {
+    .hover\:text-brand-green:hover {
         color: var(--buame-primary);
+    }
+
+    .hover\:text-brand-gold:hover {
+        color: var(--buame-secondary);
     }
 }

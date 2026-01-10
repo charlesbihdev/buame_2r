@@ -64,8 +64,8 @@ export default function StoreShow({ store, products, filters, categoryCounts }) 
     const hasProducts = products?.data && products.data.length > 0;
 
     return (
-        <div className="min-h-screen bg-[#f6f8f6] dark:bg-[#102210]">
-            <Head title={`${store.name} | BUAME 2R`} />
+        <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
+            <Head title={`${store.name} | 2RBUAME`} />
 
             {/* Sticky Header with Store Branding & Share */}
             <StoreHeader store={store} />
@@ -92,7 +92,7 @@ export default function StoreShow({ store, products, filters, categoryCounts }) 
             <main className="mx-auto max-w-7xl px-4 py-8">
                 {/* Results Header */}
                 <div className="mb-6 flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-[#0d1b0d] dark:text-white">
+                    <h2 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
                         {hasActiveFilters ? 'Search Results' : 'All Products'}
                         <span className="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
                             ({productCount} {productCount === 1 ? 'item' : 'items'})

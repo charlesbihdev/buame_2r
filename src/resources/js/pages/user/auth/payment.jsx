@@ -57,14 +57,14 @@ export default function Payment({ category, amount, categories, user, tiers, sel
         <>
             <Head title="Payment" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[#102210]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
                 <div className="w-full max-w-2xl">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[#0d1b0d] dark:text-white">Complete Payment</h1>
+                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Complete Payment</h1>
                         <p className="mt-2 text-gray-600 dark:text-gray-400">You're almost there! Complete payment to activate your account.</p>
                     </div>
 
-                    <div className="rounded-2xl border border-[#e7f3e7] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
                         {/* Category Switcher */}
                         {categories && categories.length > 1 && (
                             <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
@@ -76,7 +76,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                             href={route('user.register', { category: cat.value })}
                                             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                                                 cat.value === category
-                                                    ? 'bg-[#13ec13] text-[#0d1b0d]'
+                                                    ? 'bg-[var(--primary)] text-white'
                                                     : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600'
                                             }`}
                                         >
@@ -90,7 +90,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                         {/* Tier Selection for Marketplace */}
                         {category === 'marketplace' && tiers && (
                             <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                                <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Select Your Store Plan</h3>
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Select Your Store Plan</h3>
                                 <div className="space-y-3">
                                     {Object.entries(tiers).map(([tierKey, tier]) => (
                                         <button
@@ -99,21 +99,21 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                             onClick={() => handleTierChange(tierKey)}
                                             className={`w-full rounded-lg border-2 p-4 text-left transition-all ${
                                                 selectedTierState === tierKey
-                                                    ? 'border-[#13ec13] bg-[#13ec13]/10'
-                                                    : 'border-gray-200 bg-white hover:border-[#13ec13]/50 dark:border-gray-700 dark:bg-[#162816]'
+                                                    ? 'border-[var(--primary)] bg-[var(--primary)]/10'
+                                                    : 'border-gray-200 bg-white hover:border-[var(--primary)]/50 dark:border-gray-700 dark:bg-[var(--card)]'
                                             }`}
                                         >
                                             <div className="flex items-start justify-between">
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2">
-                                                        <h4 className="font-bold text-[#0d1b0d] dark:text-white">{tier.name}</h4>
-                                                        {selectedTierState === tierKey && <CheckCircle className="h-5 w-5 text-[#13ec13]" />}
+                                                        <h4 className="font-bold text-[var(--foreground)] dark:text-white">{tier.name}</h4>
+                                                        {selectedTierState === tierKey && <CheckCircle className="h-5 w-5 text-[var(--primary)]" />}
                                                     </div>
                                                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{tier.description}</p>
                                                     <p className="mt-2 text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                                 </div>
                                                 <div className="text-right">
-                                                    <p className="text-xl font-bold text-[#13ec13]">GH₵ {tier.price}</p>
+                                                    <p className="text-xl font-bold text-[var(--primary)]">GH₵ {tier.price}</p>
                                                 </div>
                                             </div>
                                         </button>
@@ -124,26 +124,26 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
                         {/* Order Summary */}
                         <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                            <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Order Summary</h3>
+                            <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Order Summary</h3>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-600 dark:text-gray-400">Category</span>
-                                    <span className="font-semibold text-[#0d1b0d] dark:text-white">{categoryLabels[category]}</span>
+                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">{categoryLabels[category]}</span>
                                 </div>
                                 {category === 'marketplace' && tiers && tiers[selectedTierState] && (
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-600 dark:text-gray-400">Plan</span>
-                                        <span className="font-semibold text-[#0d1b0d] dark:text-white">{tiers[selectedTierState].name}</span>
+                                        <span className="font-semibold text-[var(--foreground)] dark:text-white">{tiers[selectedTierState].name}</span>
                                     </div>
                                 )}
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-600 dark:text-gray-400">Registration Fee</span>
-                                    <span className="font-semibold text-[#0d1b0d] dark:text-white">GH₵ {displayAmount}</span>
+                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">GH₵ {displayAmount}</span>
                                 </div>
                                 <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
                                     <div className="flex justify-between">
-                                        <span className="font-bold text-[#0d1b0d] dark:text-white">Total</span>
-                                        <span className="text-2xl font-bold text-[#13ec13]">GH₵ {displayAmount}</span>
+                                        <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
+                                        <span className="text-2xl font-bold text-[var(--primary)]">GH₵ {displayAmount}</span>
                                     </div>
                                 </div>
                             </div>
@@ -152,19 +152,19 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                         <form onSubmit={submit} className="space-y-6">
                             {/* Paystack Payment Option */}
                             <div>
-                                <label className="mb-3 block text-sm font-semibold text-[#0d1b0d] dark:text-white">Payment Method</label>
-                                <div className="rounded-lg border-2 border-[#13ec13] bg-[#13ec13]/10 p-4">
+                                <label className="mb-3 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Payment Method</label>
+                                <div className="rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 p-4">
                                     <div className="flex items-center gap-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#13ec13] text-white">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--primary)] text-white">
                                             <CreditCard className="h-6 w-6" />
                                         </div>
                                         <div className="flex-1">
-                                            <p className="font-semibold text-[#0d1b0d] dark:text-white">Paystack</p>
+                                            <p className="font-semibold text-[var(--foreground)] dark:text-white">Paystack</p>
                                             <p className="text-xs text-gray-600 dark:text-gray-400">
                                                 Secure payment via card, bank transfer, or mobile money
                                             </p>
                                         </div>
-                                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#13ec13]">
+                                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--primary)]">
                                             <Check className="h-3 w-3 text-white" />
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                             <Button
                                 type="submit"
                                 disabled={processing}
-                                className="h-12 w-full bg-[#13ec13] text-base font-bold text-[#0d1b0d] hover:bg-[#0eb50e] disabled:opacity-50"
+                                className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e] disabled:opacity-50"
                             >
                                 {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${displayAmount} with Paystack`}
                             </Button>

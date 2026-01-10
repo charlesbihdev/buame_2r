@@ -41,7 +41,7 @@ export function HotelPagination({ hotels, filters }) {
                         // Show ellipsis
                         if (page === hotels.current_page - 2 || page === hotels.current_page + 2) {
                             return (
-                                <span key={page} className="px-3 py-1 text-sm text-gray-500">
+                                <span key={page} className="px-3 py-1 text-sm text-muted-foreground">
                                     ...
                                 </span>
                             );
@@ -56,7 +56,7 @@ export function HotelPagination({ hotels, filters }) {
                             asChild={!isActive}
                             variant={isActive ? 'default' : 'outline'}
                             size="sm"
-                            className={isActive ? 'bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]' : ''}
+                            className={isActive ? 'bg-primary text-primary-foreground hover:bg-primary/90' : ''}
                         >
                             {isActive ? (
                                 <span>{page}</span>

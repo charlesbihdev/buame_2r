@@ -2,8 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu, Network } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { AppLogo } from './app-logo';
 
 export function BuameNavbar() {
     const page = usePage();
@@ -20,15 +21,10 @@ export function BuameNavbar() {
     ];
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-[#e7f3e7] bg-[#f8fcf8]/95 backdrop-blur-sm dark:border-gray-800 dark:bg-[#102210]/95">
+        <header className="border-border bg-background/95 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
             <div className="flex items-center justify-between px-4 py-3 md:px-8 lg:px-40">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-4 text-[#0d1b0d] dark:text-white">
-                    <div className="flex size-8 items-center justify-center text-[#13ec13]">
-                        <Network className="h-8 w-8" />
-                    </div>
-                    <h2 className="text-xl font-bold tracking-tight text-[#0d1b0d] dark:text-white">BUAME 2R</h2>
-                </Link>
+                <AppLogo />
 
                 {/* Desktop Navigation */}
                 <nav className="hidden items-center gap-8 lg:flex">
@@ -38,7 +34,7 @@ export function BuameNavbar() {
                             href={item.url}
                             className={cn(
                                 'text-sm font-semibold transition-colors',
-                                item.active ? 'text-[#13ec13]' : 'text-[#0d1b0d] hover:text-[#13ec13] dark:text-gray-300',
+                                item.active ? 'text-primary' : 'text-foreground hover:text-primary',
                             )}
                         >
                             {item.title}
@@ -52,29 +48,29 @@ export function BuameNavbar() {
                         <>
                             <Button
                                 asChild
-                                className="hidden h-10 items-center justify-center rounded-lg bg-[#13ec13] px-4 text-sm font-bold text-[#0d1b0d] shadow-sm shadow-green-200/50 transition-colors hover:bg-[#0eb50e] sm:flex"
+                                className="bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 hidden h-10 items-center justify-center rounded-lg px-4 text-sm font-bold shadow-sm transition-colors sm:flex"
                             >
                                 <Link href={route('user.dashboard.index')}>Dashboard</Link>
                             </Button>
-                            <div className="flex h-10 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 dark:border-gray-700 dark:bg-gray-800">
-                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#13ec13]/20">
-                                    <span className="text-xs font-bold text-[#13ec13]">{user?.name?.charAt(0).toUpperCase() || 'U'}</span>
+                            <div className="border-border bg-card flex h-10 items-center gap-2 rounded-lg border px-3">
+                                <div className="bg-primary/20 flex h-6 w-6 items-center justify-center rounded-full">
+                                    <span className="text-primary text-xs font-bold">{user?.name?.charAt(0).toUpperCase() || 'U'}</span>
                                 </div>
-                                <span className="hidden text-sm font-semibold text-[#0d1b0d] sm:inline dark:text-white">{user?.name}</span>
+                                <span className="text-foreground hidden text-sm font-semibold sm:inline">{user?.name}</span>
                             </div>
                         </>
                     ) : (
                         <>
                             <Button
                                 asChild
-                                className="hidden h-10 items-center justify-center rounded-lg bg-[#13ec13] px-4 text-sm font-bold text-[#0d1b0d] shadow-sm shadow-green-200/50 transition-colors hover:bg-[#0eb50e] sm:flex"
+                                className="bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90 hidden h-10 items-center justify-center rounded-lg px-4 text-sm font-bold shadow-sm transition-colors sm:flex"
                             >
                                 <Link href="/choose-path">Join as Provider</Link>
                             </Button>
                             <Button
                                 asChild
                                 variant="outline"
-                                className="flex h-10 items-center justify-center rounded-lg border border-gray-200 bg-white px-4 text-sm font-bold text-[#0d1b0d] transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                                className="border-border bg-card text-foreground hover:bg-muted flex h-10 items-center justify-center rounded-lg border px-4 text-sm font-bold transition-colors"
                             >
                                 <Link href={route('user.login')}>Log In</Link>
                             </Button>
@@ -87,19 +83,16 @@ export function BuameNavbar() {
                             <Button
                                 variant="outline"
                                 size="icon"
-                                className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white lg:hidden dark:border-gray-700 dark:bg-gray-800"
+                                className="border-border bg-card flex h-10 w-10 items-center justify-center rounded-lg border lg:hidden"
                             >
-                                <Menu className="h-5 w-5 text-gray-600 dark:text-white" />
+                                <Menu className="text-muted-foreground h-5 w-5" />
                                 <span className="sr-only">Toggle menu</span>
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                             <SheetHeader>
-                                <SheetTitle className="flex items-center gap-4 text-[#0d1b0d] dark:text-white">
-                                    <div className="flex size-8 items-center justify-center text-[#13ec13]">
-                                        <Network className="h-8 w-8" />
-                                    </div>
-                                    <h2 className="text-xl font-bold">BUAME 2R</h2>
+                                <SheetTitle className="flex items-center gap-2">
+                                    <AppLogo size="sm" className="pointer-events-none" />
                                 </SheetTitle>
                             </SheetHeader>
                             <nav className="mt-8 flex flex-col gap-4">
@@ -110,37 +103,35 @@ export function BuameNavbar() {
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={cn(
                                             'rounded-lg px-4 py-2 text-base font-semibold transition-colors',
-                                            item.active
-                                                ? 'bg-[#13ec13]/10 text-[#13ec13]'
-                                                : 'text-[#0d1b0d] hover:bg-gray-50 hover:text-[#13ec13] dark:text-gray-300 dark:hover:bg-gray-800',
+                                            item.active ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted hover:text-primary',
                                         )}
                                     >
                                         {item.title}
                                     </Link>
                                 ))}
-                                <div className="flex flex-col gap-3 border-t border-gray-200 pt-4 dark:border-gray-700">
+                                <div className="border-border flex flex-col gap-3 border-t pt-4">
                                     {user ? (
                                         <>
-                                            <Button asChild className="h-10 w-full bg-[#13ec13] font-bold text-[#0d1b0d] hover:bg-[#0eb50e]">
+                                            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full font-bold">
                                                 <Link href={route('user.dashboard.index')} onClick={() => setMobileMenuOpen(false)}>
                                                     Dashboard
                                                 </Link>
                                             </Button>
-                                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
-                                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#13ec13]/20">
-                                                    <span className="text-xs font-bold text-[#13ec13]">
+                                            <div className="border-border bg-card flex items-center gap-3 rounded-lg border px-4 py-3">
+                                                <div className="bg-primary/20 flex h-8 w-8 items-center justify-center rounded-full">
+                                                    <span className="text-primary text-xs font-bold">
                                                         {user?.name?.charAt(0).toUpperCase() || 'U'}
                                                     </span>
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="truncate text-sm font-semibold text-[#0d1b0d] dark:text-white">{user?.name}</p>
-                                                    <p className="truncate text-xs text-gray-500 dark:text-gray-400">{user?.phone}</p>
+                                                    <p className="text-foreground truncate text-sm font-semibold">{user?.name}</p>
+                                                    <p className="text-muted-foreground truncate text-xs">{user?.phone}</p>
                                                 </div>
                                             </div>
                                         </>
                                     ) : (
                                         <>
-                                            <Button asChild className="h-10 w-full bg-[#13ec13] font-bold text-[#0d1b0d] hover:bg-[#0eb50e]">
+                                            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full font-bold">
                                                 <Link href="/choose-path" onClick={() => setMobileMenuOpen(false)}>
                                                     Join as Provider
                                                 </Link>

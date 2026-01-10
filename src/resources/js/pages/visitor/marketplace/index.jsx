@@ -13,7 +13,7 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
 
     return (
         <VisitorLayout>
-            <Head title="Marketplace - BUAME 2R" />
+            <Head title="Marketplace - 2RBUAME" />
             <MarketplaceHero />
             <div className="flex grow flex-col lg:flex-row">
                 {/* Desktop Filters */}
@@ -36,7 +36,7 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
                                 asChild
                                 variant="outline"
                                 disabled={pagination.current_page === 1}
-                                className="h-10 rounded-lg border border-[#e7f3e7] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
+                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
                             >
                                 <Link
                                     href={pagination.links?.find((link) => link.label === '&laquo; Previous')?.url || '#'}
@@ -60,8 +60,8 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
                                             variant={isActive ? 'default' : 'outline'}
                                             className={`h-10 min-w-10 rounded-lg px-4 ${
                                                 isActive
-                                                    ? 'bg-[#13ec13] text-[#0d1b0d]'
-                                                    : 'border border-[#e7f3e7] bg-white dark:border-white/10 dark:bg-white/5'
+                                                    ? 'bg-[var(--primary)] text-white'
+                                                    : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
                                             }`}
                                         >
                                             <Link href={link.url || '#'} preserveState preserveScroll>
@@ -75,7 +75,7 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
                                 asChild
                                 variant="outline"
                                 disabled={pagination.current_page === pagination.last_page}
-                                className="h-10 rounded-lg border border-[#e7f3e7] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
+                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
                             >
                                 <Link
                                     href={pagination.links?.find((link) => link.label === 'Next &raquo;')?.url || '#'}

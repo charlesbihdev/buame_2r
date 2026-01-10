@@ -24,7 +24,7 @@ export function MarketplaceHero() {
     };
 
     return (
-        <div className="w-full border-b border-[#e7f3e7] bg-white dark:border-white/10 dark:bg-white/5">
+        <div className="w-full border-b border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5">
             <div className="mx-auto max-w-[1440px]">
                 <div className="p-4 @[480px]:p-6">
                     <div
@@ -48,7 +48,7 @@ export function MarketplaceHero() {
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                                        placeholder="Location (e.g., Sefwi Bekwai)"
+                                        placeholder="Location (e.g., Western North)"
                                         className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14 dark:text-white"
                                     />
                                 </div>
@@ -67,7 +67,7 @@ export function MarketplaceHero() {
                                 </div>
                                 <Button
                                     onClick={handleSearch}
-                                    className="flex h-12 w-full items-center justify-center gap-2 bg-[#13ec13] px-8 font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f] sm:h-14 sm:w-auto"
+                                    className="flex h-12 w-full items-center justify-center gap-2 bg-[var(--primary)] px-8 font-bold text-[var(--primary-foreground)] transition-colors hover:bg-[var(--buame-primary-dark)] sm:h-14 sm:w-auto"
                                 >
                                     Search
                                 </Button>

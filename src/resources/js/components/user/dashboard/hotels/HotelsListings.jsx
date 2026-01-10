@@ -14,8 +14,8 @@ export function HotelsListings({ listings }) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">My Hotels</h3>
-                <Button onClick={handleCreate} className="bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Hotels</h3>
+                <Button onClick={handleCreate} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Hotel
                 </Button>
@@ -28,7 +28,7 @@ export function HotelsListings({ listings }) {
                         return (
                             <div
                                 key={listing.id}
-                                className="rounded-xl border border-[#e7f3e7] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                                className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
                             >
                                 <div className="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                                     {primaryImage ? (
@@ -44,7 +44,7 @@ export function HotelsListings({ listings }) {
                                     )}
                                 </div>
                                 <div className="p-4">
-                                    <h4 className="font-bold text-[#0d1b0d] dark:text-white">{listing.name}</h4>
+                                    <h4 className="font-bold text-[var(--foreground)] dark:text-white">{listing.name}</h4>
                                     <p className="mt-1 text-sm text-[#4c9a4c] dark:text-[#8fcc8f]">
                                         {listing.type ? listing.type.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase()) : 'Hotel'}
                                     </p>
@@ -53,7 +53,7 @@ export function HotelsListings({ listings }) {
                                         <span>{listing.location}</span>
                                     </div>
                                     {listing.price_per_night && (
-                                        <p className="mt-2 text-sm font-semibold text-[#0d1b0d] dark:text-white">
+                                        <p className="mt-2 text-sm font-semibold text-[var(--foreground)] dark:text-white">
                                             GH₵ {parseFloat(listing.price_per_night).toFixed(2)}/night
                                         </p>
                                     )}
@@ -77,7 +77,7 @@ export function HotelsListings({ listings }) {
                 <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
                     <Hotel className="mx-auto h-12 w-12 text-gray-400" />
                     <p className="mt-4 text-gray-600 dark:text-gray-400">No hotels listed yet</p>
-                    <Button onClick={handleCreate} className="mt-4 bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0eb50e]">
+                    <Button onClick={handleCreate} className="mt-4 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Hotel
                     </Button>

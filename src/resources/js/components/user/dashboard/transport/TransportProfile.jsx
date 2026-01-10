@@ -16,7 +16,7 @@ export function TransportProfile({ profile }) {
     if (!profile || !profile.id) {
         return (
             <div className="space-y-6">
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <p className="text-gray-600 dark:text-gray-400">Loading profile...</p>
                 </div>
             </div>
@@ -81,21 +81,21 @@ export function TransportProfile({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[#0d1b0d] dark:text-white">Transport Profile</h2>
+                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Transport Profile</h2>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your transport service information</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Vehicle Image</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Vehicle Image</h3>
                     <div className="flex items-start gap-6">
                         {profileImagePreview ? (
                             <div className="relative">
                                 <img
                                     src={profileImagePreview}
                                     alt="Vehicle"
-                                    className="h-32 w-32 rounded-lg border border-[#e7f3e7] object-cover dark:border-[#2a4d2a]"
+                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
                                 />
                                 <button
                                     type="button"
@@ -117,7 +117,7 @@ export function TransportProfile({ profile }) {
                             </p>
                             <label
                                 htmlFor="primary_image"
-                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[#e7f3e7] bg-white px-4 py-2 text-sm font-medium text-[#0d1b0d] transition-colors hover:bg-[#f6f8f6] dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
                             >
                                 <Upload className="h-4 w-4" />
                                 {profileImagePreview ? 'Change Image' : 'Upload Image'}
@@ -129,8 +129,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Basic Information Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Basic Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="company_name">Company/Service Name</Label>
@@ -191,8 +191,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Description Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">About Your Service</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About Your Service</h3>
                     <div>
                         <Label htmlFor="description">Description</Label>
                         <Textarea
@@ -208,8 +208,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Location & Contact</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="location">Working Location</Label>
@@ -218,7 +218,7 @@ export function TransportProfile({ profile }) {
                                 value={data.location}
                                 onChange={(e) => setData('location', e.target.value)}
                                 className="mt-1"
-                                placeholder="Sefwi Bekwai"
+                                placeholder="Western North"
                             />
                             <FormError error={errors.location || pageErrors?.location} className="mt-1" />
                         </div>
@@ -263,8 +263,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Operating Hours Section */}
-                <div className="rounded-xl border border-[#e7f3e7] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Operating Hours</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Operating Hours</h3>
                     <div>
                         <Label htmlFor="operating_hours">Operating Hours</Label>
                         <Input
@@ -274,9 +274,7 @@ export function TransportProfile({ profile }) {
                             className="mt-1"
                             placeholder="Daily: 5:00 AM - 8:00 PM"
                         />
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                            When are you available for rides?
-                        </p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When are you available for rides?</p>
                         <FormError error={errors.operating_hours || pageErrors?.operating_hours} className="mt-1" />
                     </div>
                 </div>
@@ -292,7 +290,7 @@ export function TransportProfile({ profile }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[#13ec13] px-4 py-2 text-sm font-medium whitespace-nowrap text-[#0d1b0d] transition-[color,box-shadow] hover:cursor-pointer hover:bg-[#0eb50e] disabled:pointer-events-none disabled:opacity-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[var(--primary)]/90 disabled:pointer-events-none disabled:opacity-50"
                     >
                         <Save className="h-4 w-4" />
                         {processing ? 'Saving...' : 'Save Profile'}

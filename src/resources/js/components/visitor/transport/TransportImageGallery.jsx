@@ -78,7 +78,7 @@ export function TransportImageGallery({ images }) {
                             key={image.id}
                             className={`h-16 w-24 shrink-0 overflow-hidden rounded-lg border-2 transition-all ${
                                 index === selectedIndex
-                                    ? 'border-[#13ec13] ring-2 ring-[#13ec13]/50'
+                                    ? 'border-[var(--primary)] ring-2 ring-[var(--primary)]/50'
                                     : 'border-transparent opacity-70 hover:opacity-100'
                             }`}
                             onClick={() => setSelectedIndex(index)}

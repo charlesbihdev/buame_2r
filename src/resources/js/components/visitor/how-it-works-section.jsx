@@ -20,29 +20,36 @@ export function HowItWorksSection() {
     ];
 
     return (
-        <section className="bg-white py-16 px-4 dark:bg-gray-900/50 md:px-8 lg:px-40">
+        <section className="bg-card py-16 px-4 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px]">
                 <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-[#0d1b0d] dark:text-white">How BUAME 2R Works</h2>
-                    <p className="mx-auto max-w-2xl text-gray-500 dark:text-gray-400">
-                        We've made it simple to connect with trusted local providers and find opportunities right here in Sefwi Bekwai.
+                    <h2 className="mb-4 text-3xl font-bold text-foreground">How 2RBUAME Works</h2>
+                    <p className="mx-auto max-w-2xl text-muted-foreground">
+                        We've made it simple to connect with trusted local providers and find opportunities across Western North and beyond. We welcome customers from all backgrounds.
                     </p>
                 </div>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                     {steps.map((step, index) => {
                         const Icon = step.icon;
+                        // Strategic color variation: Green (primary), Gold (secondary), Blue (accent)
+                        const colorVariants = [
+                            { border: 'border-[var(--primary)]/40', bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]' }, // Step 1: Green
+                            { border: 'border-[var(--secondary)]/40', bg: 'bg-[var(--secondary)]/10', text: 'text-[var(--secondary)]' }, // Step 2: Gold
+                            { border: 'border-[var(--accent)]/40', bg: 'bg-[var(--accent)]/10', text: 'text-[var(--accent)]' }, // Step 3: Blue
+                        ];
+                        const colors = colorVariants[index % colorVariants.length];
                         return (
                             <div
                                 key={step.title}
-                                className="relative flex flex-col items-center rounded-2xl border border-dashed border-[#13ec13]/40 bg-background-light p-6 text-center dark:bg-gray-800"
+                                className={`relative flex flex-col items-center rounded-2xl border border-dashed ${colors.border} bg-background p-6 text-center`}
                             >
-                                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#13ec13]/10 text-[#13ec13]">
+                                <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-full ${colors.bg} ${colors.text}`}>
                                     <Icon className="h-8 w-8" />
                                 </div>
-                                <h3 className="mb-2 text-xl font-bold text-[#0d1b0d] dark:text-white">{step.title}</h3>
-                                <p className="text-gray-500 dark:text-gray-400">{step.description}</p>
+                                <h3 className="mb-2 text-xl font-bold text-foreground">{step.title}</h3>
+                                <p className="text-muted-foreground">{step.description}</p>
                                 {index < steps.length - 1 && (
-                                    <div className="absolute top-1/2 -right-4 z-10 hidden -translate-y-1/2 transform text-gray-300 dark:text-gray-600 md:block">
+                                    <div className="absolute top-1/2 -right-4 z-10 hidden -translate-y-1/2 transform text-border md:block">
                                         <ArrowRight className="h-6 w-6" />
                                     </div>
                                 )}

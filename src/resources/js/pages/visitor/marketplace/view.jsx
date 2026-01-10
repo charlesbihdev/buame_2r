@@ -8,13 +8,13 @@ export default function MarketplaceView({ product }) {
     if (!product) {
         return (
             <VisitorLayout>
-                <Head title="Product Not Found | BUAME 2R Marketplace" />
+                <Head title="Product Not Found | 2RBUAME Marketplace" />
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[#162816]">
+                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">Product not found.</p>
                         <Link
                             href="/marketplace"
-                            className="mt-4 inline-block rounded-lg bg-[#13ec13] px-6 py-2 font-bold text-[#0d1b0d] transition-colors hover:bg-[#0fdc0f]"
+                            className="mt-4 inline-block rounded-lg bg-[var(--primary)] px-6 py-2 font-bold text-white transition-colors hover:bg-[var(--primary)]"
                         >
                             Back to Marketplace
                         </Link>
@@ -40,11 +40,11 @@ export default function MarketplaceView({ product }) {
 
     return (
         <VisitorLayout>
-            <Head title={`${product.title} | BUAME 2R Marketplace`} />
+            <Head title={`${product.title} | 2RBUAME Marketplace`} />
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <Link
                     href="/marketplace"
-                    className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[#13ec13] dark:text-gray-400"
+                    className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back to Marketplace
@@ -90,10 +90,10 @@ export default function MarketplaceView({ product }) {
                         </div>
 
                         {/* Header */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                             <div className="mb-4">
                                 <div className="mb-2 flex items-center gap-2">
-                                    <span className="rounded-full bg-[#13ec13]/20 px-3 py-1 text-sm font-semibold text-[#0d1b0d] dark:text-[#13ec13]">
+                                    <span className="rounded-full bg-[var(--primary)]/20 px-3 py-1 text-sm font-semibold text-white dark:text-[var(--primary)]">
                                         {product.category}
                                     </span>
                                     {product.condition && (
@@ -102,7 +102,7 @@ export default function MarketplaceView({ product }) {
                                         </span>
                                     )}
                                 </div>
-                                <h1 className="mb-3 text-3xl font-bold text-[#0d1b0d] dark:text-white">{product.title}</h1>
+                                <h1 className="mb-3 text-3xl font-bold text-[var(--foreground)] dark:text-white">{product.title}</h1>
                                 <div className="flex flex-wrap items-center gap-4">
                                     {(product.rating > 0 || product.reviews > 0) && (
                                         <div className="flex items-center gap-1">
@@ -118,7 +118,7 @@ export default function MarketplaceView({ product }) {
                                     {product.store && product.store.is_active && (
                                         <Link
                                             href={`/store/${product.store.slug}`}
-                                            className="group flex items-center gap-1.5 rounded-full bg-[#13ec13]/10 px-3 py-1.5 text-sm font-semibold text-[#13ec13] transition-colors hover:bg-[#13ec13]/20 dark:bg-[#13ec13]/20"
+                                            className="group flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)]/20 dark:bg-[var(--primary)]/20"
                                         >
                                             <Store className="h-4 w-4" />
                                             <span>{product.store.name}</span>
@@ -130,8 +130,8 @@ export default function MarketplaceView({ product }) {
                         </div>
 
                         {/* Description */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                            <h2 className="mb-3 text-xl font-bold text-[#0d1b0d] dark:text-white">Description</h2>
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                            <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Description</h2>
                             <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">{product.description || 'No description available.'}</p>
                             
                             {product.specifications && product.specifications.length > 0 && (
@@ -148,24 +148,24 @@ export default function MarketplaceView({ product }) {
 
                         {/* Delivery & Warranty */}
                         {(product.delivery_available || product.warranty) && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                <h2 className="mb-4 text-xl font-bold text-[#0d1b0d] dark:text-white">Additional Information</h2>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Additional Information</h2>
                                 <div className="space-y-3">
                                     {product.delivery_available && (
                                         <div className="flex items-center gap-3">
-                                            <Truck className="h-5 w-5 text-[#13ec13]" />
+                                            <Truck className="h-5 w-5 text-[var(--primary)]" />
                                             <div>
                                                 <div className="text-sm text-gray-600 dark:text-gray-400">Delivery</div>
-                                                <div className="font-semibold text-[#0d1b0d] dark:text-white">Available</div>
+                                                <div className="font-semibold text-[var(--foreground)] dark:text-white">Available</div>
                                             </div>
                                         </div>
                                     )}
                                     {product.warranty && (
                                         <div className="flex items-center gap-3">
-                                            <Package className="h-5 w-5 text-[#13ec13]" />
+                                            <Package className="h-5 w-5 text-[var(--primary)]" />
                                             <div>
                                                 <div className="text-sm text-gray-600 dark:text-gray-400">Warranty</div>
-                                                <div className="font-semibold text-[#0d1b0d] dark:text-white">{product.warranty}</div>
+                                                <div className="font-semibold text-[var(--foreground)] dark:text-white">{product.warranty}</div>
                                             </div>
                                         </div>
                                     )}
@@ -179,16 +179,16 @@ export default function MarketplaceView({ product }) {
                         <div className="sticky top-8 space-y-6">
                             {/* Store Card */}
                             {product.store && product.store.is_active && (
-                                <div className="rounded-xl border border-[#13ec13]/20 bg-[#13ec13]/5 p-5 dark:border-[#13ec13]/30 dark:bg-[#13ec13]/10">
+                                <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 p-5 dark:border-[var(--primary)]/30 dark:bg-[var(--primary)]/10">
                                     <div className="mb-2 flex items-center gap-2">
-                                        <Store className="h-5 w-5 text-[#13ec13]" />
+                                        <Store className="h-5 w-5 text-[var(--primary)]" />
                                         <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">Sold by</span>
                                     </div>
                                     <Link
                                         href={`/store/${product.store.slug}`}
                                         className="group mb-2 block"
                                     >
-                                        <h3 className="text-lg font-bold text-[#0d1b0d] transition-colors group-hover:text-[#13ec13] dark:text-white">
+                                        <h3 className="text-lg font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                                             {product.store.name}
                                             <ExternalLink className="ml-1.5 inline h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                                         </h3>
@@ -200,7 +200,7 @@ export default function MarketplaceView({ product }) {
                                     )}
                                     <Link
                                         href={`/store/${product.store.slug}`}
-                                        className="mt-3 inline-block text-sm font-semibold text-[#13ec13] transition-colors hover:text-[#0fdc0f] hover:underline"
+                                        className="mt-3 inline-block text-sm font-semibold text-[var(--primary)] transition-colors hover:text-[var(--primary)] hover:underline"
                                     >
                                         View Store →
                                     </Link>
@@ -208,23 +208,23 @@ export default function MarketplaceView({ product }) {
                             )}
 
                             {/* Pricing */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Price</div>
-                                <div className="mb-4 text-3xl font-black text-[#0d1b0d] dark:text-[#13ec13]">{product.price}</div>
+                                <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{product.price}</div>
                             </div>
 
                             {/* Contact */}
                             {(product.phone || product.email || whatsappUrl) && (
-                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[#162816]">
-                                    <h3 className="mb-4 text-lg font-bold text-[#0d1b0d] dark:text-white">Contact Seller</h3>
+                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Seller</h3>
                                     <div className="space-y-3">
                                         {product.phone && (
                                             <a
                                                 href={`tel:${product.phone}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
                                             >
-                                                <Phone className="h-5 w-5 text-[#13ec13]" />
-                                                <span className="font-semibold text-[#0d1b0d] dark:text-white">{product.phone}</span>
+                                                <Phone className="h-5 w-5 text-[var(--primary)]" />
+                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.phone}</span>
                                             </a>
                                         )}
                                         {whatsappUrl && (
@@ -232,19 +232,19 @@ export default function MarketplaceView({ product }) {
                                                 href={whatsappUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
                                             >
-                                                <MessageCircle className="h-5 w-5 text-[#13ec13]" />
-                                                <span className="font-semibold text-[#0d1b0d] dark:text-white">WhatsApp</span>
+                                                <MessageCircle className="h-5 w-5 text-[var(--primary)]" />
+                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">WhatsApp</span>
                                             </a>
                                         )}
                                         {product.email && (
                                             <a
                                                 href={`mailto:${product.email}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[#13ec13]/10 hover:border-[#13ec13] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
                                             >
-                                                <Mail className="h-5 w-5 text-[#13ec13]" />
-                                                <span className="font-semibold text-[#0d1b0d] dark:text-white">{product.email}</span>
+                                                <Mail className="h-5 w-5 text-[var(--primary)]" />
+                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.email}</span>
                                             </a>
                                         )}
                                     </div>
@@ -256,7 +256,7 @@ export default function MarketplaceView({ product }) {
                                 {whatsappUrl && (
                                     <Button
                                         asChild
-                                        className="w-full bg-[#13ec13] text-[#0d1b0d] hover:bg-[#0fdc0f]"
+                                        className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
                                     >
                                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                             <MessageCircle className="mr-2 h-5 w-5" />
@@ -268,7 +268,7 @@ export default function MarketplaceView({ product }) {
                                     <Button
                                         asChild
                                         variant="outline"
-                                        className="w-full border-[#13ec13] text-[#13ec13] hover:bg-[#13ec13] hover:text-[#0d1b0d]"
+                                        className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
                                     >
                                         <a href={`tel:${product.phone}`}>
                                             <Phone className="mr-2 h-5 w-5" />
