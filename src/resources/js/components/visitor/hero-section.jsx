@@ -61,7 +61,7 @@ export function HeroSection() {
                 <div className="w-full max-w-3xl rounded-2xl bg-white p-2 shadow-xl md:p-3 dark:bg-gray-900">
                     <div className="flex flex-col gap-2 md:flex-row md:items-center">
                         {/* Search Input */}
-                        <div className="focus-within:ring-primary/50 flex flex-1 items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 transition-all focus-within:ring-2 dark:border-gray-700 dark:bg-gray-800">
+                        <div className="flex flex-1 items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 transition-all focus-within:ring-2 focus-within:ring-primary/50 dark:border-gray-700 dark:bg-gray-800">
                             <Search className="mr-3 h-5 w-5 text-gray-400" />
                             <input
                                 type="text"
@@ -69,7 +69,7 @@ export function HeroSection() {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder="What are you looking for? (e.g., Plumber, Taxi)"
-                                className="w-full border-none bg-transparent text-base text-[#0d1b0d] outline-none placeholder:text-gray-400 focus:ring-0 dark:text-white"
+                                className="w-full border-none bg-transparent text-base text-foreground outline-none placeholder:text-gray-400 focus:ring-0"
                             />
                         </div>
 
@@ -82,7 +82,7 @@ export function HeroSection() {
                                 onChange={(e) => setLocation(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                 placeholder="Location"
-                                className="w-full border-none bg-transparent pr-4 pl-12 text-base text-[#0d1b0d] outline-none placeholder:text-gray-400 focus:ring-0 dark:text-white"
+                                className="w-full border-none bg-transparent pr-4 pl-12 text-base text-foreground outline-none placeholder:text-gray-400 focus:ring-0"
                             />
                         </div>
 
@@ -90,7 +90,7 @@ export function HeroSection() {
                         <Button
                             type="button"
                             onClick={handleSearch}
-                            className="h-[52px] w-full cursor-pointer rounded-xl bg-[#13ec13] px-8 text-base font-bold text-[#0d1b0d] shadow-lg shadow-green-200/50 transition-colors hover:bg-[#0eb50e] md:w-auto md:flex-shrink-0"
+                            className="h-[52px] w-full cursor-pointer rounded-xl bg-primary px-8 text-base font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 md:w-auto md:flex-shrink-0"
                         >
                             {searchQuery.trim() || location.trim() ? 'Search' : 'Browse'}
                         </Button>
@@ -105,8 +105,8 @@ export function HeroSection() {
                                 onClick={() => setSelectedCategory(category.id)}
                                 className={`rounded-full px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors ${
                                     selectedCategory === category.id
-                                        ? 'bg-[#13ec13]/20 text-[#0d1b0d] hover:bg-[#13ec13]/30 dark:text-white'
-                                        : 'text-gray-500 hover:text-[#13ec13] dark:text-gray-400'
+                                        ? 'bg-primary/20 text-foreground hover:bg-primary/30'
+                                        : 'text-gray-500 hover:text-primary dark:text-gray-400'
                                 }`}
                             >
                                 {category.name}

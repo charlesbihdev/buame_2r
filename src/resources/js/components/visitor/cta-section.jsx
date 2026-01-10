@@ -21,7 +21,7 @@ export function CTASection() {
                         </p>
                         <Button
                             asChild
-                            className="flex items-center gap-2 rounded-lg bg-[#13ec13] px-6 py-3 font-bold text-[#0d1b0d] transition-colors hover:bg-[#0eb50e]"
+                            className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-bold text-primary-foreground transition-colors hover:bg-primary/90"
                         >
                             <Link href="/services">
                                 Find a Service <ArrowRight className="h-4 w-4" />
@@ -31,15 +31,15 @@ export function CTASection() {
                 </div>
 
                 {/* CTA 2: For Providers */}
-                <div className="relative overflow-hidden rounded-2xl border border-[#13ec13]/20 bg-[#13ec13]/10 p-8 dark:bg-[#13ec13]/5 md:p-12">
+                <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/10 p-8 dark:bg-primary/5 md:p-12">
                     <div className="relative z-10 flex h-full flex-col items-start justify-center">
-                        <h3 className="mb-4 text-3xl font-bold text-[#0d1b0d] dark:text-white">Are you a Provider?</h3>
-                        <p className="mb-8 max-w-md text-gray-600 dark:text-gray-300">
+                        <h3 className="mb-4 text-3xl font-bold text-foreground">Are you a Provider?</h3>
+                        <p className="mb-8 max-w-md text-muted-foreground">
                             Grow your business, find new customers, and build your reputation online. It's free to join.
                         </p>
                         <Button
                             asChild
-                            className="flex items-center gap-2 rounded-lg bg-[#0d1b0d] px-6 py-3 font-bold text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-[#0d1b0d] dark:hover:bg-gray-200"
+                            className="flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-bold text-accent-foreground transition-colors hover:bg-accent/90"
                         >
                             <Link href="/join-as-provider">
                                 Join as Provider <Building2 className="h-4 w-4" />

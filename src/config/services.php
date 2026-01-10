@@ -40,4 +40,10 @@ return [
         'secret_key' => env('PAYSTACK_SECRET_KEY'),
     ],
 
+    'mnotify' => [
+        'key' => env('MNOTIFY_API_KEY'),
+        'sender_id' => env('MNOTIFY_SENDER_ID', '2RBUAME'),
+        'url' => env('MNOTIFY_BASE_URL', 'https://api.mnotify.com/api/sms/quick'),
+    ],
+
 ];

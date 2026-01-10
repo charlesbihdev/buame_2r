@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\VerificationCode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class PhoneVerificationService
@@ -86,7 +87,7 @@ class PhoneVerificationService
     public function canRequestOtp(string $phone): array
     {
         $twoMinutesAgo = Carbon::now()->subMinutes(2);
-        
+
         // Check for recent unverified codes (codes that haven't been verified yet)
         // This prevents abuse regardless of whether phone was previously verified
         $recentCode = VerificationCode::where('phone', $phone)
@@ -98,14 +99,14 @@ class PhoneVerificationService
         if ($recentCode) {
             // Calculate seconds since code was created
             $secondsSinceCreation = (int) Carbon::now()->diffInSeconds($recentCode->created_at);
-            
+
             // Safety check: if code is older than 2 minutes, allow request
             if ($secondsSinceCreation >= 120) {
                 return [
                     'can_request' => true,
                 ];
             }
-            
+
             // Calculate remaining wait time (rounded to whole seconds)
             $waitTime = (int) max(0, 120 - $secondsSinceCreation);
 
@@ -132,20 +133,80 @@ class PhoneVerificationService
     }
 
     /**
-     * Send SMS (placeholder for actual SMS integration)
+     * Send SMS via mNotify API
      */
-    protected function sendSms(string $phone, string $code): void
+    protected function sendSms(string $phone, string $code): bool
     {
-        // For development: Log to console
-        Log::info("OTP Code for {$phone}: {$code}");
+        $apiKey = config('services.mnotify.key');
+        $senderId = config('services.mnotify.sender_id');
+        $apiUrl = config('services.mnotify.url');
 
-        // TODO: Integrate with SMS provider (Twilio, etc.)
-        // Example:
-        // $twilio = new \Twilio\Rest\Client($sid, $token);
-        // $twilio->messages->create($phone, [
-        //     'from' => config('services.twilio.phone'),
-        //     'body' => "Your BUAME 2R verification code is: {$code}"
-        // ]);
+        // Format phone number (remove leading 0 and add country code if needed)
+        $formattedPhone = $this->formatPhoneNumber($phone);
+
+        $message = "Your BUAME 2R verification code is: {$code}. This code expires in 15 minutes.";
+
+        // Log in development
+        if (app()->environment('local')) {
+            Log::info("OTP Code for {$phone}: {$code}");
+        }
+
+        // Skip actual SMS in local/testing environment if no API key
+        if (empty($apiKey) || app()->environment('testing')) {
+            Log::info("mNotify SMS skipped (no API key or testing): {$formattedPhone}");
+            return true;
+        }
+
+        try {
+            $response = Http::timeout(30)->post($apiUrl, [
+                'key' => $apiKey,
+                'recipient' => [$formattedPhone],
+                'sender' => $senderId,
+                'message' => $message,
+                'is_schedule' => false,
+                'sms_type' => 'otp',
+            ]);
+
+            $result = $response->json();
+
+            if ($response->successful() && isset($result['status']) && $result['status'] === 'success') {
+                Log::info("mNotify OTP sent successfully to {$formattedPhone}", [
+                    'message_id' => $result['message_id'] ?? null,
+                ]);
+                return true;
+            }
+
+            Log::error("mNotify OTP failed for {$formattedPhone}", [
+                'response' => $result,
+                'status_code' => $response->status(),
+            ]);
+            return false;
+        } catch (\Exception $e) {
+            Log::error("mNotify API error for {$formattedPhone}: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Format phone number for mNotify (Ghana format)
+     * Converts 0241234567 to 233241234567
+     */
+    protected function formatPhoneNumber(string $phone): string
+    {
+        // Remove any spaces, dashes, or special characters
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+
+        // If starts with 0, replace with 233 (Ghana country code)
+        if (str_starts_with($phone, '0')) {
+            $phone = '233' . substr($phone, 1);
+        }
+
+        // If doesn't start with country code, add it
+        if (!str_starts_with($phone, '233')) {
+            $phone = '233' . $phone;
+        }
+
+        return $phone;
     }
 
     /**

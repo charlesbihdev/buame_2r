@@ -6,13 +6,13 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
 
     return (
         <div className="mb-8 flex flex-wrap items-center gap-3">
-            <span className="font-semibold text-gray-700 dark:text-gray-300">Filter by:</span>
+            <span className="font-semibold text-foreground">Filter by:</span>
 
             {/* Hotel Type Filter */}
             <select
                 value={filters?.type || 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground focus:border-primary focus:ring-primary"
             >
                 <option value="all">All Types</option>
                 <option value="hotel">Hotel</option>
@@ -25,7 +25,7 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
             <select
                 value={filters?.sort || 'rating'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[#13ec13] focus:ring-[#13ec13] dark:border-gray-700 dark:bg-[#162816] dark:text-white"
+                className="rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground focus:border-primary focus:ring-primary"
             >
                 <option value="rating">Sort: Top Rated</option>
                 <option value="price_low">Price: Low to High</option>
@@ -42,8 +42,8 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
             )}
 
             {/* Results Count */}
-            <div className="ml-auto text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-bold text-[#0d1b0d] dark:text-white">{totalCount}</span> hotels found
+            <div className="ml-auto text-sm text-muted-foreground">
+                <span className="font-bold text-foreground">{totalCount}</span> hotels found
             </div>
         </div>
     );

@@ -54,25 +54,25 @@ export function FeaturedProvidersSection() {
     };
 
     return (
-        <section className="bg-background-light dark:bg-background-dark px-4 py-16 md:px-8 lg:px-40">
+        <section className="bg-background px-4 py-16 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px]">
                 <div className="mb-10 flex items-end justify-between">
-                    <h2 className="text-3xl font-bold text-[#0d1b0d] dark:text-white">Featured Local Providers</h2>
+                    <h2 className="text-3xl font-bold text-foreground">Featured Local Providers</h2>
                     <div className="flex gap-2">
                         <Button
                             variant="outline"
                             size="icon"
                             onClick={scrollLeft}
                             disabled={currentIndex === 0}
-                            className="h-10 w-10 rounded-full border border-gray-200 hover:bg-white dark:border-gray-700 dark:hover:bg-gray-800"
+                            className="h-10 w-10 rounded-full border border-border hover:bg-muted"
                         >
-                            <ChevronLeft className="h-5 w-5 text-gray-500" />
+                            <ChevronLeft className="h-5 w-5 text-muted-foreground" />
                         </Button>
                         <Button
                             size="icon"
                             onClick={scrollRight}
                             disabled={currentIndex >= providers.length - 3}
-                            className="h-10 w-10 rounded-full bg-[#13ec13] text-[#0d1b0d] shadow-lg shadow-green-200/50 hover:bg-[#0eb50e]"
+                            className="h-10 w-10 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
                         >
                             <ChevronRight className="h-5 w-5" />
                         </Button>
@@ -82,28 +82,28 @@ export function FeaturedProvidersSection() {
                     {providers.map((provider) => (
                         <div
                             key={provider.id}
-                            className="min-w-[280px] snap-center rounded-xl border border-gray-100 bg-white p-4 shadow-sm md:min-w-[300px] dark:border-gray-700 dark:bg-gray-800"
+                            className="min-w-[280px] snap-center rounded-xl border border-border bg-card p-4 shadow-sm md:min-w-[300px]"
                         >
                             <div
-                                className="mb-4 aspect-[4/3] w-full rounded-lg bg-gray-100 bg-cover bg-center dark:bg-gray-700"
+                                className="mb-4 aspect-[4/3] w-full rounded-lg bg-muted bg-cover bg-center"
                                 style={{
                                     backgroundImage: `url(${provider.image})`,
                                 }}
                             />
                             <div className="mb-2 flex items-start justify-between">
                                 <div>
-                                    <h4 className="text-lg font-bold text-[#0d1b0d] dark:text-white">{provider.name}</h4>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">{provider.title}</p>
+                                    <h4 className="text-lg font-bold text-foreground">{provider.name}</h4>
+                                    <p className="text-sm text-muted-foreground">{provider.title}</p>
                                 </div>
-                                <div className="flex items-center gap-1 rounded bg-green-50 px-2 py-1 text-xs font-bold text-green-700 dark:bg-green-900/20 dark:text-green-400">
+                                <div className="flex items-center gap-1 rounded bg-primary/10 px-2 py-1 text-xs font-bold text-primary">
                                     <Star className="h-[14px] w-[14px]" />
                                     {provider.rating}
                                 </div>
                             </div>
-                            <p className="mb-4 line-clamp-2 text-sm text-gray-400">{provider.description}</p>
+                            <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">{provider.description}</p>
                             <Link
                                 href={provider.profileUrl}
-                                className="block w-full rounded-lg border border-[#13ec13] py-2 text-center text-sm font-bold text-[#13ec13] transition-colors hover:bg-[#13ec13] hover:text-[#0d1b0d]"
+                                className="block w-full rounded-lg border border-primary py-2 text-center text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
                             >
                                 View Profile
                             </Link>

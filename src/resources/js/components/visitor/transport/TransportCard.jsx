@@ -35,7 +35,7 @@ export function TransportCard({ ride }) {
     return (
         <Link
             href={`/transport/${ride.id}`}
-            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[#13ec13]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[#162816]"
+            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)]"
         >
             {/* Transport Image */}
             <div className="relative mb-4 h-40 w-full overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
@@ -47,16 +47,16 @@ export function TransportCard({ ride }) {
                         }}
                     />
                 ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#13ec13]/10 to-[#13ec13]/5">
-                        <TypeIcon className="h-16 w-16 text-[#13ec13]" />
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
+                        <TypeIcon className="h-16 w-16 text-[var(--primary)]" />
                     </div>
                 )}
                 {ride.is_verified && (
                     <div className="absolute right-2 top-2">
-                        <BadgeCheck className="h-5 w-5 fill-[#13ec13] text-white" />
+                        <BadgeCheck className="h-5 w-5 fill-[var(--primary)] text-white" />
                     </div>
                 )}
-                <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-[#13ec13] px-3 py-1 text-xs font-bold text-[#0d1b0d]">
+                <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-[var(--primary)] px-3 py-1 text-xs font-bold text-[var(--primary-foreground)]">
                     <TypeIcon className="h-3 w-3" />
                     {formatTransportType(ride.type)}
                 </div>
@@ -65,7 +65,7 @@ export function TransportCard({ ride }) {
             {/* Details */}
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
-                    <h3 className="text-lg font-bold text-[#0d1b0d] dark:text-white">{ride.company_name}</h3>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.company_name}</h3>
                 </div>
 
                 <div className="mb-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
@@ -92,11 +92,11 @@ export function TransportCard({ ride }) {
                 <div className="mt-auto space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
                     <div className="flex items-center justify-between">
                         <div>
-                            <div className="text-xl font-black text-[#0d1b0d] dark:text-[#13ec13]">GH₵{ride.price_per_seat}</div>
+                            <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
                             <div className="text-xs text-gray-500">/seat</div>
                         </div>
                     </div>
-                    <Button asChild variant="outline" className="w-full border-[#13ec13] text-xs text-[#13ec13] hover:bg-[#13ec13] hover:text-[#0d1b0d]">
+                    <Button asChild variant="outline" className="w-full border-[var(--primary)] text-xs text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]">
                         <span>View Details</span>
                     </Button>
                 </div>

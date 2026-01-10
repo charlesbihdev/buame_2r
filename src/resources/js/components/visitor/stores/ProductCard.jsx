@@ -29,7 +29,7 @@ export function ProductCard({ product }) {
     return (
         <Link
             href={route('marketplace.view', product.id)}
-            className="group rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-800 dark:bg-[#162816]"
+            className="group dark:bg-card rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-800"
         >
             <div className="aspect-video w-full overflow-hidden rounded-t-xl bg-gray-100 dark:bg-gray-900">
                 {product.image ? (
@@ -42,7 +42,7 @@ export function ProductCard({ product }) {
             </div>
             <div className="p-4">
                 <div className="mb-2 flex items-start justify-between gap-2">
-                    <h3 className="line-clamp-2 flex-1 font-bold text-[#0d1b0d] group-hover:text-[#13ec13] dark:text-white">{product.title}</h3>
+                    <h3 className="text-foreground group-hover:text-primary line-clamp-2 flex-1 font-bold dark:text-white">{product.title}</h3>
                     {product.condition && (
                         <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
                             {getConditionLabel(product.condition)}
@@ -51,7 +51,7 @@ export function ProductCard({ product }) {
                 </div>
                 <p className="mb-2 text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">{getCategoryLabel(product.category)}</p>
                 <div className="mb-2 flex items-center gap-1">
-                    <span className="text-lg font-bold text-[#13ec13]">GH₵ {product.price}</span>
+                    <span className="text-primary text-lg font-bold">GH₵ {product.price}</span>
                     {product.price_type && <span className="text-sm text-gray-600 dark:text-gray-400">{product.price_type}</span>}
                 </div>
                 <div className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400">
@@ -60,7 +60,7 @@ export function ProductCard({ product }) {
                         <span>{product.location}</span>
                     </div>
                     {product.delivery_available && (
-                        <div className="flex items-center gap-1 text-[#13ec13]">
+                        <div className="text-primary flex items-center gap-1">
                             <Truck className="h-3 w-3" />
                             <span>Delivery</span>
                         </div>

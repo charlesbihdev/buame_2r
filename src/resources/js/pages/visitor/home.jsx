@@ -1,6 +1,5 @@
 import { CategoriesSection } from '@/components/visitor/categories-section';
 import { CTASection } from '@/components/visitor/cta-section';
-import { FeaturedProvidersSection } from '@/components/visitor/featured-providers-section';
 import { HeroSection } from '@/components/visitor/hero-section';
 import { HowItWorksSection } from '@/components/visitor/how-it-works-section';
 import { TestimonialsSection } from '@/components/visitor/testimonials-section';
@@ -14,7 +13,7 @@ export default function Home() {
             <HeroSection />
             <CategoriesSection />
             <HowItWorksSection />
-            <FeaturedProvidersSection />
+            {/* <FeaturedProvidersSection /> */}
             <CTASection />
             <TestimonialsSection />
         </VisitorLayout>

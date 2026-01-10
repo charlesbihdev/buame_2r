@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button';
 
 export function AboutCTA() {
     return (
-        <div className="relative overflow-hidden bg-[#102210] py-20 px-6 text-white lg:px-20">
+        <div className="relative overflow-hidden bg-[var(--buame-background-dark)] py-20 px-6 text-white lg:px-20">
             {/* Decorative circle */}
-            <div className="absolute -right-20 -top-20 size-96 rounded-full bg-[#13ec13]/10 blur-3xl" />
+            <div className="absolute -right-20 -top-20 size-96 rounded-full bg-[var(--primary)]/10 blur-3xl" />
             <div className="relative z-10 mx-auto max-w-[960px] text-center">
                 <h2 className="mb-6 text-3xl font-black tracking-tight dark:text-white md:text-4xl">
                     Ready to be part of the Sefwi Bekwai digital revolution?
@@ -16,7 +16,7 @@ export function AboutCTA() {
                 <div className="flex flex-col justify-center gap-4 sm:flex-row">
                     <Button
                         asChild
-                        className="rounded-lg bg-[#13ec13] px-8 py-3 text-lg font-bold text-[#0d1b0d] transition-colors hover:bg-[#13ec13]/90"
+                        className="rounded-lg bg-[var(--primary)] px-8 py-3 text-lg font-bold text-[var(--primary-foreground)] transition-colors hover:bg-[var(--buame-primary-dark)]"
                     >
                         <Link href="/register">Create Free Account</Link>
                     </Button>
