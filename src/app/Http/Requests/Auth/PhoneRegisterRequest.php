@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
 
 class PhoneRegisterRequest extends FormRequest
 {
@@ -21,8 +22,9 @@ class PhoneRegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'regex:/^[0-9]{10,20}$/', 'unique:users,phone'],
+            'phone' => ['required', 'string', 'regex:/^0[0-9]{9}$/', 'unique:users,phone'],
             'email' => ['nullable', 'string', 'email', 'max:255'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'category' => ['required', 'string', 'in:artisans,hotels,transport,rentals,marketplace,jobs'],
         ];
     }
@@ -33,11 +35,14 @@ class PhoneRegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Name is required',
-            'phone.required' => 'Phone number is required',
-            'phone.regex' => 'Please enter a valid phone number',
-            'phone.unique' => 'This phone number is already registered',
-            'email.email' => 'Please enter a valid email address',
+            'name.required' => 'Name is required.',
+            'phone.required' => 'Phone number is required.',
+            'phone.regex' => 'Please enter a valid 10-digit phone number starting with 0 (e.g., 0244123456).',
+            'phone.unique' => 'This phone number is already registered.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Password is required.',
+            'password.confirmed' => 'Passwords do not match.',
+            'category.required' => 'Please select a category.',
         ];
     }
 }

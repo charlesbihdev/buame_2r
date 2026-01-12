@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'phone',
         'email',
+        'password',
         'profile_image',
         'is_active',
         'phone_verified_at',
@@ -33,7 +34,8 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        // No hidden fields needed
+        'password',
+        'remember_token',
     ];
 
     protected function casts(): array
@@ -42,6 +44,7 @@ class User extends Authenticatable
             'phone_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
             'is_active' => 'boolean',
+            'password' => 'hashed',
         ];
     }
 

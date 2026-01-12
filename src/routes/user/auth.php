@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\User\Auth\PhoneNewPasswordController;
+use App\Http\Controllers\User\Auth\PhonePasswordResetLinkController;
 use App\Http\Controllers\User\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,22 +12,23 @@ use Illuminate\Support\Facades\Route;
 | User (Category Users) Authentication Routes
 |--------------------------------------------------------------------------
 |
-| These routes handle phone-based authentication for category users
+| These routes handle phone+password authentication for category users
 | (artisans, hotel owners, marketplace vendors, etc.)
 |
 */
 
 Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
-    // Registration routes (guest only - before OTP verification)
+    // Registration routes
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('register/verify-otp', [RegisteredUserController::class, 'showVerify'])
+    // Registration phone verification routes
+    Route::get('register/verify', [RegisteredUserController::class, 'showVerify'])
         ->name('register.verify');
 
-    Route::post('register/verify-otp', [RegisteredUserController::class, 'verifyOtp']);
+    Route::post('register/verify', [RegisteredUserController::class, 'verifyOtp']);
 
     Route::post('register/resend-otp', [RegisteredUserController::class, 'resendOtp'])
         ->name('register.resend-otp');
@@ -36,16 +39,24 @@ Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('login/verify-otp', [AuthenticatedSessionController::class, 'showVerify'])
-        ->name('login.verify');
+    // Password Reset routes
+    Route::get('forgot-password', [PhonePasswordResetLinkController::class, 'create'])
+        ->name('password.request');
 
-    Route::post('login/verify-otp', [AuthenticatedSessionController::class, 'verifyOtp']);
+    Route::post('forgot-password', [PhonePasswordResetLinkController::class, 'store'])
+        ->name('password.phone');
 
-    Route::post('login/resend-otp', [AuthenticatedSessionController::class, 'resendOtp'])
-        ->name('login.resend-otp');
+    Route::get('reset-password', [PhoneNewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [PhoneNewPasswordController::class, 'store'])
+        ->name('password.update');
+
+    Route::post('reset-password/resend', [PhoneNewPasswordController::class, 'resendCode'])
+        ->name('password.resend');
 });
 
-// Registration payment routes - accessible after OTP verification (user is logged in)
+// Registration payment routes - accessible after registration (user is logged in)
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('register/category', [RegisteredUserController::class, 'showCategorySelection'])
         ->name('register.category');

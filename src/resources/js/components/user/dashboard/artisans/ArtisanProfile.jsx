@@ -279,7 +279,7 @@ export function ArtisanProfile({ profile }) {
                             {specialties.map((spec, index) => (
                                 <span
                                     key={index}
-                                    className="flex items-center gap-2 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-white dark:text-[var(--primary)]"
+                                    className="flex items-center gap-2 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--primary)] dark:text-[var(--primary)]"
                                 >
                                     {spec}
                                     <button type="button" onClick={() => handleRemoveSpecialty(index)} className="text-red-600 hover:text-red-800">

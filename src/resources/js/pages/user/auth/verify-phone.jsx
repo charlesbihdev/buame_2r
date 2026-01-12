@@ -1,17 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { Shield } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-export default function VerifyOtp({ phone, type, status }) {
+export default function VerifyPhone({ phone, status }) {
+    const [countdown, setCountdown] = useState(120);
+    const [canResend, setCanResend] = useState(false);
+
     const { data, setData, post, processing, errors } = useForm({
         phone: phone,
         code: '',
     });
-
-    const [countdown, setCountdown] = useState(120); // 2 minutes
-    const [canResend, setCanResend] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -30,15 +30,12 @@ export default function VerifyOtp({ phone, type, status }) {
 
     const submit = (e) => {
         e.preventDefault();
-        const routeName = type === 'register' ? 'user.register.verify' : 'user.login.verify';
-        post(route(routeName));
+        post(route('user.register.verify'));
     };
 
     const handleResend = () => {
         if (!canResend) return;
-        
-        const routeName = type === 'register' ? 'user.register.resend-otp' : 'user.login.resend-otp';
-        post(route(routeName), {
+        router.post(route('user.register.resend-otp'), {}, {
             preserveScroll: true,
             onSuccess: () => {
                 setCountdown(120);
@@ -60,7 +57,7 @@ export default function VerifyOtp({ phone, type, status }) {
 
     return (
         <>
-            <Head title="Verify OTP" />
+            <Head title="Verify Phone" />
 
             <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 dark:bg-[var(--buame-background-dark)]">
                 <div className="w-full max-w-md">
@@ -70,7 +67,7 @@ export default function VerifyOtp({ phone, type, status }) {
                         </div>
                         <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Verify Your Phone</h1>
                         <p className="mt-2 text-gray-600 dark:text-gray-400">
-                            We sent a 6-digit code to <span className="font-semibold text-[var(--foreground)] dark:text-white">{phone}</span>
+                            We sent a verification code to <span className="font-semibold">{phone}</span>
                         </p>
                     </div>
 
@@ -105,7 +102,7 @@ export default function VerifyOtp({ phone, type, status }) {
                                 disabled={processing || data.code.length !== 6}
                                 className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e]"
                             >
-                                {processing ? 'Verifying...' : 'Verify & Continue'}
+                                {processing ? 'Verifying...' : 'Verify Phone'}
                             </Button>
                         </form>
 
@@ -120,14 +117,14 @@ export default function VerifyOtp({ phone, type, status }) {
                                 </button>
                             ) : (
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    Resend code in <span className="font-semibold text-[var(--foreground)] dark:text-white">{formatTime(countdown)}</span>
+                                    Resend code in <span className="font-semibold">{formatTime(countdown)}</span>
                                 </p>
                             )}
                         </div>
 
-                        <div className="mt-6 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                            <p className="text-xs text-gray-600 dark:text-gray-400">
-                                💡 <strong>Tip:</strong> Check your phone messages for the verification code. It may take a few seconds to arrive.
+                        <div className="mt-4 text-center">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                Didn't receive the code? Check your SMS inbox or request a new code.
                             </p>
                         </div>
                     </div>
@@ -136,4 +133,3 @@ export default function VerifyOtp({ phone, type, status }) {
         </>
     );
 }
-

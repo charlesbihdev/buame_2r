@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Mail, Phone, User } from 'lucide-react';
-import { useEffect } from 'react';
+import { Eye, EyeOff, Lock, Mail, Phone, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const categoryLabels = {
     artisans: 'Artisan',
@@ -14,10 +14,15 @@ const categoryLabels = {
 };
 
 export default function PhoneRegister({ category }) {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const { data, setData, post, processing, errors } = useForm({
         name: '',
         phone: '',
         email: '',
+        password: '',
+        password_confirmation: '',
         category: category || '',
     });
 
@@ -56,7 +61,7 @@ export default function PhoneRegister({ category }) {
                     </div>
 
                     <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                        <form onSubmit={submit} className="space-y-6">
+                        <form onSubmit={submit} className="space-y-5">
                             <div>
                                 <label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
                                     Full Name
@@ -87,10 +92,11 @@ export default function PhoneRegister({ category }) {
                                         type="tel"
                                         value={data.phone}
                                         onChange={(e) => setData('phone', e.target.value)}
-                                        placeholder="e.g., 0244123456"
+                                        placeholder="0244123456"
                                         className="h-12 pl-11 text-base"
                                     />
                                 </div>
+                                <p className="mt-1 text-xs text-gray-500">10 digits starting with 0</p>
                                 {errors.phone && <p className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                             </div>
 
@@ -112,12 +118,62 @@ export default function PhoneRegister({ category }) {
                                 {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
                             </div>
 
+                            <div>
+                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                    <Input
+                                        id="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                        placeholder="Create a password"
+                                        className="h-12 pl-11 pr-11 text-base"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    >
+                                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
+                                {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password}</p>}
+                            </div>
+
+                            <div>
+                                <label htmlFor="password_confirmation" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                    Confirm Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                    <Input
+                                        id="password_confirmation"
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        value={data.password_confirmation}
+                                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                                        placeholder="Confirm your password"
+                                        className="h-12 pl-11 pr-11 text-base"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                    >
+                                        {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
+                                {errors.password_confirmation && <p className="mt-2 text-sm text-red-600">{errors.password_confirmation}</p>}
+                            </div>
+
                             <Button
                                 type="submit"
                                 disabled={processing}
                                 className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e]"
                             >
-                                {processing ? 'Sending OTP...' : 'Continue'}
+                                {processing ? 'Creating Account...' : 'Create Account'}
                             </Button>
                         </form>
 
@@ -132,7 +188,7 @@ export default function PhoneRegister({ category }) {
 
                         <div className="mt-6 text-center">
                             <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[var(--primary)] dark:text-gray-400">
-                                ← Back to Home
+                                Back to Home
                             </Link>
                         </div>
                     </div>
