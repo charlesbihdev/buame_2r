@@ -24,6 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        // Redirect unauthenticated users to user.login instead of default 'login'
+        $middleware->redirectGuestsTo('/user/login');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
