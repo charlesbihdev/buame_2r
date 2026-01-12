@@ -5,12 +5,12 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\PhoneRegisterRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
-use App\Models\Payment;
 use App\Models\User;
 use App\Services\PhoneVerificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -39,60 +39,33 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Create user and send OTP for verification.
+     * Handle an incoming registration request - create user and send OTP.
      */
     public function store(PhoneRegisterRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
-        // Check if user already exists
-        $user = User::where('phone', $validated['phone'])->first();
+        // Create new user with password (phone not verified yet)
+        $user = User::create([
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'email' => $validated['email'] ?? null,
+            'password' => Hash::make($validated['password']),
+            'phone_verified_at' => null, // Will be set after OTP verification
+            'is_active' => false, // Will be set to true after payment
+        ]);
 
-        if ($user) {
-            // User exists - check status
-            if ($user->phone_verified_at) {
-                // Phone already verified - check if they need to pay
-                $hasPaidCategory = $user->categories()
-                    ->whereHas('payment', function ($query) {
-                        $query->where('status', 'completed');
-                    })
-                    ->exists();
+        // Store user_id and category in session
+        $request->session()->put('registration_user_id', $user->id);
+        $request->session()->put('selected_category', $validated['category']);
 
-                if ($hasPaidCategory) {
-                    return redirect()->route('user.login')->with('status', 'Account already exists. Please log in.');
-                } else {
-                    // Phone verified but no payment - redirect to payment
-                    $request->session()->put('registration_user_id', $user->id);
-                    $request->session()->put('selected_category', $validated['category']);
-
-                    return redirect()->route('user.register.payment');
-                }
-            } else {
-                // User exists but phone not verified - send OTP
-                $request->session()->put('registration_user_id', $user->id);
-            }
-        } else {
-            // Create new user immediately
-            $user = User::create([
-                'name' => $validated['name'],
-                'phone' => $validated['phone'],
-                'email' => $validated['email'] ?? null,
-                'phone_verified_at' => null, // Will be set after OTP verification
-                'is_active' => false, // Will be set to true after payment
-            ]);
-
-            // Store user_id and category in session
-            $request->session()->put('registration_user_id', $user->id);
-            $request->session()->put('selected_category', $validated['category']);
-        }
-
-        // Check rate limiting (applies to all OTP requests)
+        // Check rate limiting
         $rateLimitCheck = $this->phoneVerificationService->canRequestOtp($validated['phone']);
         if (! $rateLimitCheck['can_request']) {
             return back()->withErrors(['phone' => $rateLimitCheck['message']]);
         }
 
-        // Send OTP
+        // Send OTP for phone verification
         $result = $this->phoneVerificationService->sendOtp($validated['phone']);
 
         return redirect()->route('user.register.verify')->with('status', $result['message']);
@@ -103,21 +76,38 @@ class RegisteredUserController extends Controller
      */
     public function showVerify(Request $request): Response|RedirectResponse
     {
-        $userId = $request->session()->get('registration_user_id');
+        // Check if user is authenticated but not verified (from login flow)
+        $user = Auth::user();
 
-        if (! $userId) {
-            return redirect()->route('user.register');
+        if ($user instanceof User && ! $user->hasVerifiedPhone()) {
+            // User is logged in but not verified - store in session for verification flow
+            $request->session()->put('registration_user_id', $user->id);
+        } else {
+            // Get user from session (registration flow)
+            $userId = $request->session()->get('registration_user_id');
+
+            if (! $userId) {
+                return redirect()->route('user.register');
+            }
+
+            $user = User::find($userId);
+
+            if (! $user instanceof User) {
+                return redirect()->route('user.register');
+            }
         }
 
-        $user = User::find($userId);
-
-        if (! $user) {
-            return redirect()->route('user.register');
+        // If user is already verified, redirect appropriately
+        if ($user->hasVerifiedPhone()) {
+            if (Auth::check()) {
+                return redirect()->route('user.dashboard.index');
+            }
+            return redirect()->route('user.register.payment');
         }
 
-        return Inertia::render('user/auth/verify-otp', [
+        return Inertia::render('user/auth/verify-phone', [
             'phone' => $user->phone,
-            'type' => 'register',
+            'status' => $request->session()->get('status'),
         ]);
     }
 
@@ -127,16 +117,28 @@ class RegisteredUserController extends Controller
     public function verifyOtp(VerifyOtpRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        $userId = $request->session()->get('registration_user_id');
 
-        if (! $userId) {
-            return redirect()->route('user.register')->withErrors(['phone' => 'Session expired. Please try again.']);
+        // Check if user is already authenticated (from login flow)
+        $user = Auth::user();
+
+        if (! $user) {
+            // Get user from session (registration flow)
+            $userId = $request->session()->get('registration_user_id');
+
+            if (! $userId) {
+                return redirect()->route('user.register')->withErrors(['phone' => 'Session expired. Please try again.']);
+            }
+
+            $user = User::find($userId);
+
+            if (! $user) {
+                return redirect()->route('user.register')->withErrors(['phone' => 'Session expired. Please try again.']);
+            }
         }
 
-        $user = User::find($userId);
-
-        if (! $user || $user->phone !== $validated['phone']) {
-            return redirect()->route('user.register')->withErrors(['phone' => 'Session expired. Please try again.']);
+        // Verify phone number matches
+        if ($user->phone !== $validated['phone']) {
+            return redirect()->route('user.register')->withErrors(['phone' => 'Phone number mismatch. Please try again.']);
         }
 
         // Verify OTP
@@ -151,20 +153,56 @@ class RegisteredUserController extends Controller
             'phone_verified_at' => now(),
         ]);
 
-        // Login user immediately after successful OTP verification
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        // Check if category is selected
-        $selectedCategory = $request->session()->get('selected_category');
-
-        if (! $selectedCategory) {
-            // If no category was selected, redirect to category selection page
-            return redirect()->route('user.register.category');
+        // Login user if not already logged in
+        if (! Auth::check()) {
+            Auth::login($user);
+            $request->session()->regenerate();
         }
 
-        // Redirect to payment (user is now logged in)
+        // Check if user has paid categories
+        $hasPaidCategory = $user->categories()
+            ->whereHas('payment', function ($query) {
+                $query->where('status', 'completed');
+            })
+            ->exists();
+
+        if ($hasPaidCategory) {
+            // User already has paid categories - redirect to dashboard
+            return redirect()->route('user.dashboard.index')
+                ->with('success', 'Phone verified successfully!');
+        }
+
+        // Redirect to payment for new registration
         return redirect()->route('user.register.payment');
+    }
+
+    /**
+     * Resend OTP code for registration.
+     */
+    public function resendOtp(Request $request): RedirectResponse
+    {
+        $userId = $request->session()->get('registration_user_id');
+
+        if (! $userId) {
+            return redirect()->route('user.register');
+        }
+
+        $user = User::find($userId);
+
+        if (! $user) {
+            return redirect()->route('user.register');
+        }
+
+        // Check rate limiting
+        $rateLimitCheck = $this->phoneVerificationService->canRequestOtp($user->phone);
+        if (! $rateLimitCheck['can_request']) {
+            return back()->withErrors(['code' => $rateLimitCheck['message']]);
+        }
+
+        // Send OTP
+        $result = $this->phoneVerificationService->sendOtp($user->phone);
+
+        return back()->with('status', $result['message']);
     }
 
     /**
@@ -172,7 +210,7 @@ class RegisteredUserController extends Controller
      */
     public function showCategorySelection(Request $request): Response|RedirectResponse
     {
-        // Check if user is authenticated (logged in after OTP verification)
+        // Check if user is authenticated
         $user = Auth::user();
 
         // Fallback to session user_id if not authenticated
@@ -217,7 +255,7 @@ class RegisteredUserController extends Controller
             'category' => ['required', 'string', 'in:artisans,hotels,transport,rentals,marketplace,jobs'],
         ]);
 
-        // Check if user is authenticated (logged in after OTP verification)
+        // Check if user is authenticated
         $user = Auth::user();
 
         // Fallback to session user_id if not authenticated
@@ -245,7 +283,7 @@ class RegisteredUserController extends Controller
      */
     public function showPayment(Request $request): Response|RedirectResponse
     {
-        // Check if user is authenticated (logged in after OTP verification)
+        // Check if user is authenticated
         $user = Auth::user();
 
         // Fallback to session user_id if not authenticated
@@ -335,28 +373,5 @@ class RegisteredUserController extends Controller
         $request->session()->put('selected_tier', $request->tier);
 
         return redirect()->route('user.register.payment');
-    }
-
-    /**
-     * Resend OTP code for registration.
-     */
-    public function resendOtp(Request $request): RedirectResponse
-    {
-        $registrationData = $request->session()->get('registration_data');
-
-        if (! $registrationData) {
-            return redirect()->route('user.register');
-        }
-
-        // Check rate limiting (applies to all OTP requests)
-        $rateLimitCheck = $this->phoneVerificationService->canRequestOtp($registrationData['phone']);
-        if (! $rateLimitCheck['can_request']) {
-            return back()->withErrors(['code' => $rateLimitCheck['message']]);
-        }
-
-        // Send OTP
-        $result = $this->phoneVerificationService->sendOtp($registrationData['phone']);
-
-        return back()->with('status', $result['message']);
     }
 }
