@@ -190,7 +190,7 @@ class PaymentController extends Controller
                     ->withErrors(['payment' => 'Payment record not found.']);
             }
 
-            // Check if payment was successful
+            // Check if payment was successful according to Paystack
             if ($paymentData['status'] !== 'success') {
                 $payment->update(['status' => 'failed']);
 
@@ -210,20 +210,26 @@ class PaymentController extends Controller
                 $tier = $originalMetadata['tier'] ?? 'starter';
             }
 
-            // Merge Paystack metadata with our original metadata (preserve tier)
-            $paystackMetadata = $paymentData['metadata'] ?? [];
-            $mergedMetadata = array_merge($originalMetadata, $paystackMetadata);
-            if ($tier) {
-                $mergedMetadata['tier'] = $tier; // Ensure tier is preserved
-            }
+            // Check if payment was already processed (by webhook)
+            // If already completed, we still need to ensure user_categories exists and user is activated
+            $alreadyProcessed = $payment->status === 'completed';
 
-            // Update payment record (preserve tier in metadata)
-            $payment->update([
-                'status' => 'completed',
-                'transaction_id' => $paymentData['id'],
-                'paid_at' => now(),
-                'metadata' => json_encode($mergedMetadata),
-            ]);
+            if (!$alreadyProcessed) {
+                // Merge Paystack metadata with our original metadata (preserve tier)
+                $paystackMetadata = $paymentData['metadata'] ?? [];
+                $mergedMetadata = array_merge($originalMetadata, $paystackMetadata);
+                if ($tier) {
+                    $mergedMetadata['tier'] = $tier; // Ensure tier is preserved
+                }
+
+                // Update payment record (preserve tier in metadata)
+                $payment->update([
+                    'status' => 'completed',
+                    'transaction_id' => $paymentData['id'],
+                    'paid_at' => now(),
+                    'metadata' => json_encode($mergedMetadata),
+                ]);
+            }
 
             $user = User::find($payment->user_id);
 
@@ -231,12 +237,23 @@ class PaymentController extends Controller
                 throw new \Exception('User not found');
             }
 
-            // Create user category access
-            UserCategory::create([
+            // Create user category access (use firstOrCreate to handle potential race conditions)
+            $userCategory = UserCategory::firstOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'category' => $selectedCategory,
+                ],
+                [
+                    'payment_id' => $payment->id,
+                    'is_active' => true,
+                ]
+            );
+
+            Log::info('User category created/found', [
                 'user_id' => $user->id,
                 'category' => $selectedCategory,
-                'payment_id' => $payment->id,
-                'is_active' => true,
+                'user_category_id' => $userCategory->id,
+                'was_recently_created' => $userCategory->wasRecentlyCreated,
             ]);
 
             // Handle marketplace store creation/upgrade
@@ -270,15 +287,29 @@ class PaymentController extends Controller
             }
 
             // Check if this is a new registration or existing user
-            $isNewRegistration = $paymentData['metadata']['is_new_registration'] ?? false;
+            // IMPORTANT: Paystack may return boolean as string "true"/"false", so we need to handle both
+            $isNewRegistrationRaw = $paymentData['metadata']['is_new_registration'] ?? false;
+            $isNewRegistration = filter_var($isNewRegistrationRaw, FILTER_VALIDATE_BOOLEAN);
+
+            Log::info('Payment callback - checking user activation', [
+                'user_id' => $user->id,
+                'is_active_before' => $user->is_active,
+                'is_new_registration_raw' => $isNewRegistrationRaw,
+                'is_new_registration_parsed' => $isNewRegistration,
+                'paystack_metadata' => $paymentData['metadata'] ?? null,
+            ]);
+
+            // ALWAYS activate the user after successful payment
+            // This ensures the user can access the dashboard regardless of the is_new_registration flag
+            if (!$user->is_active) {
+                $user->update(['is_active' => true]);
+                Log::info('User activated after payment', ['user_id' => $user->id]);
+            }
+
+            DB::commit();
 
             if ($isNewRegistration) {
-                // New user registration - activate account
-                $user->update(['is_active' => true]);
-
-                DB::commit();
-
-                // Fire registered event
+                // Fire registered event for new users
                 event(new Registered($user));
 
                 // Clear registration session data
@@ -289,8 +320,6 @@ class PaymentController extends Controller
                     ->with('success', 'Registration successful! Welcome to BUAME 2R.');
             } else {
                 // Existing user adding category
-                DB::commit();
-
                 // Redirect to dashboard
                 return redirect()->route('user.dashboard.index')
                     ->with('success', "Successfully added {$selectedCategory} category! You can now start managing your profile.");
