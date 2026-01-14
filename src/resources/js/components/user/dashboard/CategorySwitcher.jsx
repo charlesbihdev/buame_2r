@@ -1,4 +1,5 @@
 import PaymentModal from '@/components/user/dashboard/PaymentModal';
+import SubscriptionStatusBadge from '@/components/user/SubscriptionStatusBadge';
 import { switchCategory } from '@/services/dashboardNavigation';
 import { Bike, Briefcase, Hammer, Home, Hotel, Lock, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
@@ -36,7 +37,8 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {Object.entries(categoryConfig).map(([value, config]) => {
                     const Icon = config.icon;
-                    const isPaid = paidCategories?.some((cat) => cat.category === value);
+                    const subscription = paidCategories?.find((cat) => cat.category === value);
+                    const isPaid = !!subscription;
                     const isActive = activeCategory === value;
 
                     if (isPaid) {
@@ -64,6 +66,14 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
                                 >
                                     {config.label}
                                 </span>
+                                {subscription && (
+                                    <SubscriptionStatusBadge
+                                        status={subscription.subscription_status}
+                                        expiresAt={subscription.expires_at}
+                                        showExpiry={false}
+                                        size="small"
+                                    />
+                                )}
                             </button>
                         );
                     }

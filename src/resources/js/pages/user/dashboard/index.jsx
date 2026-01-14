@@ -5,11 +5,14 @@ import { JobsSection } from '@/components/user/dashboard/jobs/JobsSection';
 import { MarketplaceSection } from '@/components/user/dashboard/marketplace/MarketplaceSection';
 import { Overview } from '@/components/user/dashboard/Overview';
 import { RentalsSection } from '@/components/user/dashboard/rentals/RentalsSection';
+import SubscriptionRenewalWarning from '@/components/user/dashboard/SubscriptionRenewalWarning';
 import { TransportSection } from '@/components/user/dashboard/transport/TransportSection';
 import DashboardLayout from '@/layouts/user/dashboard-layout';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard({ user, paidCategories, unpaidCategories, activeCategory, categoryData, payments, activeSection = 'profile' }) {
+    const activeSubscription = paidCategories?.find((cat) => cat.category === activeCategory);
+
     const renderCategorySection = () => {
         if (!activeCategory) {
             return <Overview categoryData={categoryData} />;
@@ -21,7 +24,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'marketplace':
                 return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} />;
             case 'hotels':
-                return <HotelsSection activeTab={activeSection} data={categoryData} />;
+                return <HotelsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'transport':
                 return <TransportSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'rentals':
@@ -38,6 +41,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : '2RBUAME'}`} />
             <div className="mx-auto w-full max-w-[1400px] p-4 md:p-6 lg:p-8">
                 <CategorySwitcher paidCategories={paidCategories} activeCategory={activeCategory} unpaidCategories={unpaidCategories} />
+                <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} />
                 {renderCategorySection()}
             </div>
         </DashboardLayout>

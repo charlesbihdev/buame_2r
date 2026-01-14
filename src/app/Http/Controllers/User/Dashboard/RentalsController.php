@@ -17,7 +17,7 @@ class RentalsController extends Controller
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
-        return redirect()->route('user.dashboard.index');
+        return redirect()->route('user.dashboard.index', ['category' => 'rentals']);
     }
 
     public function create(): Response
@@ -40,7 +40,7 @@ class RentalsController extends Controller
         $user = Auth::user();
         $user->rentals()->create($validated);
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'rentals'])
             ->with('success', 'Rental listing created successfully.');
     }
 
@@ -91,7 +91,7 @@ class RentalsController extends Controller
             }
 
             // Upload new primary image
-            $path = $request->file('primary_image')->store('rentals/'.$rental->id, 'public');
+            $path = $request->file('primary_image')->store('rentals/' . $rental->id, 'public');
 
             $rental->images()->create([
                 'image_path' => Storage::url($path),
@@ -125,7 +125,7 @@ class RentalsController extends Controller
 
         $rental->delete();
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'rentals'])
             ->with('success', 'Rental listing deleted successfully.');
     }
 
@@ -142,7 +142,7 @@ class RentalsController extends Controller
             'display_order' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $path = $request->file('image')->store('rentals/'.$rental->id, 'public');
+        $path = $request->file('image')->store('rentals/' . $rental->id, 'public');
 
         // If this is the first image, make it primary
         $isPrimary = $rental->images()->count() === 0;
@@ -176,7 +176,7 @@ class RentalsController extends Controller
             }
 
             // Upload new image
-            $path = $request->file('image')->store('rentals/'.$rental->id, 'public');
+            $path = $request->file('image')->store('rentals/' . $rental->id, 'public');
             $image->image_path = Storage::url($path);
         }
 

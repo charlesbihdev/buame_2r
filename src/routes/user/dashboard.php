@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\Dashboard\ArtisansController;
 use App\Http\Controllers\User\Dashboard\DashboardController;
 use App\Http\Controllers\User\Dashboard\HotelsController;
@@ -11,42 +12,109 @@ use App\Http\Controllers\User\Dashboard\TransportController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->group(function () {
+    // Dashboard index - always accessible
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
-    // Payment route for adding new categories from dashboard
-    Route::post('/payment/initialize', [\App\Http\Controllers\PaymentController::class, 'processPayment'])->name('payment.initialize');
+    // Payment route - always accessible (for renewals)
+    Route::post('/payment/initialize', [PaymentController::class, 'processPayment'])->name('payment.initialize');
 
-    // Artisans routes
-    Route::resource('artisans', ArtisansController::class)->except(['show']);
+    // ========== ARTISANS ==========
+    // Read routes (no subscription check)
+    Route::get('artisans', [ArtisansController::class, 'index'])->name('artisans.index');
+    Route::get('artisans/create', [ArtisansController::class, 'create'])->name('artisans.create');
+    Route::get('artisans/{artisan}/edit', [ArtisansController::class, 'edit'])->name('artisans.edit');
 
-    // Portfolio routes
-    Route::post('artisans/portfolio', [ArtisansController::class, 'storePortfolio'])->name('artisans.portfolio.store');
-    Route::put('artisans/portfolio/{portfolio}', [ArtisansController::class, 'updatePortfolio'])->name('artisans.portfolio.update');
-    Route::delete('artisans/portfolio/{portfolio}', [ArtisansController::class, 'destroyPortfolio'])->name('artisans.portfolio.destroy');
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:artisans'])->group(function () {
+        Route::post('artisans', [ArtisansController::class, 'store'])->name('artisans.store');
+        Route::put('artisans/{artisan}', [ArtisansController::class, 'update'])->name('artisans.update');
+        Route::patch('artisans/{artisan}', [ArtisansController::class, 'update']);
+        Route::delete('artisans/{artisan}', [ArtisansController::class, 'destroy'])->name('artisans.destroy');
+        Route::post('artisans/portfolio', [ArtisansController::class, 'storePortfolio'])->name('artisans.portfolio.store');
+        Route::put('artisans/portfolio/{portfolio}', [ArtisansController::class, 'updatePortfolio'])->name('artisans.portfolio.update');
+        Route::delete('artisans/portfolio/{portfolio}', [ArtisansController::class, 'destroyPortfolio'])->name('artisans.portfolio.destroy');
+    });
 
-    // Store routes (must be before marketplace resource route to avoid route conflicts)
-    Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
-    Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
-    Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
+    // ========== MARKETPLACE ==========
+    // Read routes (no subscription check)
+    Route::get('marketplace', [MarketplaceController::class, 'index'])->name('marketplace.index');
+    Route::get('marketplace/create', [MarketplaceController::class, 'create'])->name('marketplace.create');
+    Route::get('marketplace/{marketplace}/edit', [MarketplaceController::class, 'edit'])->name('marketplace.edit');
 
-    // Marketplace routes
-    Route::resource('marketplace', MarketplaceController::class)->except(['show']);
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:marketplace'])->group(function () {
+        Route::post('marketplace', [MarketplaceController::class, 'store'])->name('marketplace.store');
 
-    // Hotels routes
-    Route::resource('hotels', HotelsController::class)->except(['show']);
+        // Store routes MUST come before parameterized routes to avoid route conflicts
+        Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
+        Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
+        Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
 
-    // Transport routes
-    Route::resource('transport', TransportController::class)->except(['show']);
+        // Parameterized routes come after specific routes
+        Route::put('marketplace/{marketplace}', [MarketplaceController::class, 'update'])->name('marketplace.update');
+        Route::patch('marketplace/{marketplace}', [MarketplaceController::class, 'update']);
+        Route::delete('marketplace/{marketplace}', [MarketplaceController::class, 'destroy'])->name('marketplace.destroy');
+    });
 
-    // Rentals routes
-    Route::resource('rentals', RentalsController::class)->except(['show']);
-    Route::post('rentals/{rental}/images', [RentalsController::class, 'storeImage'])->name('rentals.images.store');
-    Route::post('rentals/{rental}/images/{image}', [RentalsController::class, 'updateImage'])->name('rentals.images.update');
-    Route::delete('rentals/{rental}/images/{image}', [RentalsController::class, 'destroyImage'])->name('rentals.images.destroy');
-    Route::put('rentals/{rental}/images/{image}/primary', [RentalsController::class, 'setPrimaryImage'])->name('rentals.images.primary');
-    Route::post('rentals/{rental}/features', [RentalsController::class, 'storeFeature'])->name('rentals.features.store');
-    Route::delete('rentals/{rental}/features/{feature}', [RentalsController::class, 'destroyFeature'])->name('rentals.features.destroy');
+    // ========== HOTELS ==========
+    // Read routes (no subscription check)
+    Route::get('hotels', [HotelsController::class, 'index'])->name('hotels.index');
+    Route::get('hotels/create', [HotelsController::class, 'create'])->name('hotels.create');
+    Route::get('hotels/{hotel}/edit', [HotelsController::class, 'edit'])->name('hotels.edit');
 
-    // Jobs routes
-    Route::resource('jobs', JobsController::class)->except(['show']);
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:hotels'])->group(function () {
+        Route::post('hotels', [HotelsController::class, 'store'])->name('hotels.store');
+        Route::put('hotels/{hotel}', [HotelsController::class, 'update'])->name('hotels.update');
+        Route::patch('hotels/{hotel}', [HotelsController::class, 'update']);
+        Route::delete('hotels/{hotel}', [HotelsController::class, 'destroy'])->name('hotels.destroy');
+    });
+
+    // ========== TRANSPORT ==========
+    // Read routes (no subscription check)
+    Route::get('transport', [TransportController::class, 'index'])->name('transport.index');
+    Route::get('transport/create', [TransportController::class, 'create'])->name('transport.create');
+    Route::get('transport/{transport}/edit', [TransportController::class, 'edit'])->name('transport.edit');
+
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:transport'])->group(function () {
+        Route::post('transport', [TransportController::class, 'store'])->name('transport.store');
+        Route::put('transport/{transport}', [TransportController::class, 'update'])->name('transport.update');
+        Route::patch('transport/{transport}', [TransportController::class, 'update']);
+        Route::delete('transport/{transport}', [TransportController::class, 'destroy'])->name('transport.destroy');
+    });
+
+    // ========== RENTALS ==========
+    // Read routes (no subscription check)
+    Route::get('rentals', [RentalsController::class, 'index'])->name('rentals.index');
+    Route::get('rentals/create', [RentalsController::class, 'create'])->name('rentals.create');
+    Route::get('rentals/{rental}/edit', [RentalsController::class, 'edit'])->name('rentals.edit');
+
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:rentals'])->group(function () {
+        Route::post('rentals', [RentalsController::class, 'store'])->name('rentals.store');
+        Route::put('rentals/{rental}', [RentalsController::class, 'update'])->name('rentals.update');
+        Route::patch('rentals/{rental}', [RentalsController::class, 'update']);
+        Route::delete('rentals/{rental}', [RentalsController::class, 'destroy'])->name('rentals.destroy');
+        Route::post('rentals/{rental}/images', [RentalsController::class, 'storeImage'])->name('rentals.images.store');
+        Route::post('rentals/{rental}/images/{image}', [RentalsController::class, 'updateImage'])->name('rentals.images.update');
+        Route::delete('rentals/{rental}/images/{image}', [RentalsController::class, 'destroyImage'])->name('rentals.images.destroy');
+        Route::put('rentals/{rental}/images/{image}/primary', [RentalsController::class, 'setPrimaryImage'])->name('rentals.images.primary');
+        Route::post('rentals/{rental}/features', [RentalsController::class, 'storeFeature'])->name('rentals.features.store');
+        Route::delete('rentals/{rental}/features/{feature}', [RentalsController::class, 'destroyFeature'])->name('rentals.features.destroy');
+    });
+
+    // ========== JOBS ==========
+    // Read routes (no subscription check)
+    Route::get('jobs', [JobsController::class, 'index'])->name('jobs.index');
+    Route::get('jobs/create', [JobsController::class, 'create'])->name('jobs.create');
+    Route::get('jobs/{job}/edit', [JobsController::class, 'edit'])->name('jobs.edit');
+
+    // Write routes (require active subscription)
+    Route::middleware(['subscription.active:jobs'])->group(function () {
+        Route::post('jobs', [JobsController::class, 'store'])->name('jobs.store');
+        Route::put('jobs/{job}', [JobsController::class, 'update'])->name('jobs.update');
+        Route::patch('jobs/{job}', [JobsController::class, 'update']);
+        Route::delete('jobs/{job}', [JobsController::class, 'destroy'])->name('jobs.destroy');
+    });
 });

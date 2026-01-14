@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -75,5 +77,20 @@ class Hotel extends Model
     public function primaryImage()
     {
         return $this->hasOne(HotelImage::class)->where('is_primary', true);
+    }
+
+    /**
+     * Scope to filter hotels whose owners have active subscriptions.
+     */
+    public function scopeWithActiveSubscription(Builder $query): Builder
+    {
+        return $query->whereHas('user.categories', function (Builder $q) {
+            $q->where('category', 'hotels')
+                ->where('is_active', true)
+                ->whereIn('subscription_status', [
+                    SubscriptionStatus::Active->value,
+                    SubscriptionStatus::GracePeriod->value,
+                ]);
+        });
     }
 }

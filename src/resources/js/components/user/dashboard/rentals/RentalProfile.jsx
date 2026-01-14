@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
-import { CheckCircle2, Loader2, Upload } from 'lucide-react';
+import { CheckCircle, Loader2, Save, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 export function RentalProfile({ profile }) {
@@ -287,21 +287,24 @@ export function RentalProfile({ profile }) {
                         </Label>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                         {recentlySuccessful && (
-                            <span className="flex items-center gap-1 text-sm text-green-600">
-                                <CheckCircle2 className="h-4 w-4" />
-                                Saved successfully
-                            </span>
+                            <div className="flex items-center gap-2 text-sm text-green-600">
+                                <CheckCircle className="h-4 w-4" />
+                                <span>Profile saved successfully</span>
+                            </div>
                         )}
-                        <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
+                        <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                             {processing ? (
                                 <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    <Loader2 className="h-4 w-4 animate-spin" />
                                     Saving...
                                 </>
                             ) : (
-                                'Save Changes'
+                                <>
+                                    <Save className="h-4 w-4" />
+                                    Save Profile
+                                </>
                             )}
                         </Button>
                     </div>

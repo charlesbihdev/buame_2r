@@ -114,7 +114,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                         <Button
                             type="submit"
                             disabled={processing || (!image && !data.image)}
-                            className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
+                            className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
                         >
                             {processing ? (
                                 <>

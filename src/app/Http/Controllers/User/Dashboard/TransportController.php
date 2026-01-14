@@ -17,7 +17,7 @@ class TransportController extends Controller
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
-        return redirect()->route('user.dashboard.index');
+        return redirect()->route('user.dashboard.index', ['category' => 'transport']);
     }
 
     public function create(): Response
@@ -40,7 +40,7 @@ class TransportController extends Controller
         $user = Auth::user();
         $user->transportRides()->create($validated);
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'transport'])
             ->with('success', 'Transport service created successfully.');
     }
 
@@ -116,7 +116,7 @@ class TransportController extends Controller
             'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'profile'])
+        return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'profile'])
             ->with('success', 'Transport profile updated successfully.');
     }
 
@@ -137,7 +137,7 @@ class TransportController extends Controller
 
         $transport->delete();
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'transport'])
             ->with('success', 'Transport service deleted successfully.');
     }
 
@@ -151,7 +151,7 @@ class TransportController extends Controller
         $transport = $user->transportRides()->first();
 
         if (! $transport) {
-            return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
+            return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'gallery'])
                 ->withErrors(['error' => 'Transport profile not found.']);
         }
 
@@ -177,7 +177,7 @@ class TransportController extends Controller
             'display_order' => $maxOrder + 1,
         ]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'gallery'])
             ->with('success', 'Image added successfully.');
     }
 
@@ -213,7 +213,7 @@ class TransportController extends Controller
 
         $image->update(['image_path' => $imagePath]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'gallery'])
             ->with('success', 'Image updated successfully.');
     }
 
@@ -236,7 +236,7 @@ class TransportController extends Controller
         // Set this as primary
         $image->update(['is_primary' => true]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'gallery'])
             ->with('success', 'Primary image updated successfully.');
     }
 
@@ -261,7 +261,7 @@ class TransportController extends Controller
 
         $image->delete();
 
-        return redirect()->route('user.dashboard.index', ['section' => 'gallery'])
+        return redirect()->route('user.dashboard.index', ['category' => 'transport', 'section' => 'gallery'])
             ->with('success', 'Image deleted successfully.');
     }
 }

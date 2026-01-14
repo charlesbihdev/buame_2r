@@ -3,7 +3,7 @@ import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm, usePage } from '@inertiajs/react';
-import { CheckCircle, Plus, Save, Trash2, X } from 'lucide-react';
+import { CheckCircle, Loader2, Plus, Save, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function HotelSettings({ profile }) {
@@ -153,7 +153,7 @@ export function HotelSettings({ profile }) {
                                     setNewAmenity('');
                                 }}
                                 disabled={!newAmenity.trim() || amenities.includes(newAmenity.trim())}
-                                className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
+                                className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
                             >
                                 <Plus className="h-4 w-4" />
                             </Button>
@@ -218,7 +218,7 @@ export function HotelSettings({ profile }) {
                                 type="button"
                                 onClick={handleAddFeature}
                                 disabled={!newFeature.trim()}
-                                className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
+                                className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
                             >
                                 <Plus className="h-4 w-4" />
                             </Button>
@@ -261,14 +261,19 @@ export function HotelSettings({ profile }) {
                             <span>Settings saved successfully</span>
                         </div>
                     )}
-                    <button
-                        type="submit"
-                        disabled={processing}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[var(--primary)]/90 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        <Save className="h-4 w-4" />
-                        {processing ? 'Saving...' : 'Save Settings'}
-                    </button>
+                    <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                        {processing ? (
+                            <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Saving...
+                            </>
+                        ) : (
+                            <>
+                                <Save className="h-4 w-4" />
+                                Save Settings
+                            </>
+                        )}
+                    </Button>
                 </div>
             </form>
         </div>

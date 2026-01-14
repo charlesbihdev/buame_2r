@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -72,5 +74,20 @@ class Artisan extends Model
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
+    }
+
+    /**
+     * Scope to filter artisans whose owners have active subscriptions.
+     */
+    public function scopeWithActiveSubscription(Builder $query): Builder
+    {
+        return $query->whereHas('user.categories', function (Builder $q) {
+            $q->where('category', 'artisans')
+                ->where('is_active', true)
+                ->whereIn('subscription_status', [
+                    SubscriptionStatus::Active->value,
+                    SubscriptionStatus::GracePeriod->value,
+                ]);
+        });
     }
 }

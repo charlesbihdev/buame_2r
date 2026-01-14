@@ -89,15 +89,15 @@ export function Footer() {
                         <ul className="text-muted-foreground flex flex-col gap-3 text-sm">
                             <li className="flex items-center gap-2">
                                 <Phone className="text-primary h-5 w-5" />
-                                <span>+233 20 000 0000</span>
+                                <span>+233 54 092 9012</span>
                             </li>
                             <li className="flex items-center gap-2">
                                 <Mail className="text-primary h-5 w-5" />
-                                <span>support@2RBUAME.com</span>
+                                <span>support@2rbuame.com</span>
                             </li>
                             <li className="flex items-center gap-2">
                                 <MapPin className="text-primary h-5 w-5" />
-                                <span>Western North and beyond</span>
+                                <span>Western North</span>
                             </li>
                         </ul>
                     </div>

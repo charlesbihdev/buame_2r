@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('category', ['artisans', 'hotels', 'transport', 'rentals', 'marketplace', 'jobs'])->index();
+            $table->enum('billing_cycle', ['monthly', 'biannually', 'annual'])->default('monthly');
+            $table->enum('payment_type', ['initial', 'renewal'])->default('initial');
+            $table->foreignId('previous_payment_id')->nullable()->constrained('payments')->onDelete('set null');
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('GHS');
             $table->enum('payment_method', ['paystack'])->default('paystack');

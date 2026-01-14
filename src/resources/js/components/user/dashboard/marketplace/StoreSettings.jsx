@@ -86,16 +86,20 @@ export function StoreSettings({ store, tiers }) {
             </div>
 
             {/* Store Visibility Toggle - Prominent at the top */}
-                <div className={`rounded-xl border-2 p-6 ${store?.is_active ? 'border-[var(--primary)] bg-[var(--buame-border-light)] dark:bg-[#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5'}`}>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <div className={`flex h-12 w-12 items-center justify-center rounded-full ${store?.is_active ? 'bg-[var(--primary)]/20' : 'bg-[var(--accent)]/20 dark:bg-[var(--accent)]/10'}`}>
-                                {store?.is_active ? (
-                                    <Eye className="h-6 w-6 text-[var(--primary)]" />
-                                ) : (
-                                    <EyeOff className="h-6 w-6 text-[var(--accent)] dark:text-[var(--accent)]" />
-                                )}
-                            </div>
+            <div
+                className={`rounded-xl border-2 p-6 ${store?.is_active ? 'border-[var(--primary)] bg-[var(--buame-border-light)] dark:bg-[#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5'}`}
+            >
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <div
+                            className={`flex h-12 w-12 items-center justify-center rounded-full ${store?.is_active ? 'bg-[var(--primary)]/20' : 'bg-[var(--accent)]/20 dark:bg-[var(--accent)]/10'}`}
+                        >
+                            {store?.is_active ? (
+                                <Eye className="h-6 w-6 text-[var(--primary)]" />
+                            ) : (
+                                <EyeOff className="h-6 w-6 text-[var(--accent)] dark:text-[var(--accent)]" />
+                            )}
+                        </div>
                         <div>
                             <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
                                 Store is {store?.is_active ? 'Visible' : 'Hidden'}
@@ -127,7 +131,7 @@ export function StoreSettings({ store, tiers }) {
                                 Store URL Slug
                             </Label>
                             <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-500 whitespace-nowrap">/store/</span>
+                                <span className="text-sm whitespace-nowrap text-gray-500">/store/</span>
                                 <Input
                                     id="slug"
                                     value={data.slug}
@@ -179,7 +183,11 @@ export function StoreSettings({ store, tiers }) {
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
-                    <Button type="submit" disabled={processing} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                    <Button
+                        type="submit"
+                        disabled={processing}
+                        className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
+                    >
                         {processing ? 'Saving...' : 'Save Changes'}
                     </Button>
                 </div>
@@ -211,14 +219,21 @@ export function StoreSettings({ store, tiers }) {
                         <h4 className="mb-3 font-semibold text-[var(--foreground)] dark:text-white">Upgrade Your Store</h4>
                         <div className="space-y-3">
                             {availableTiers.map(([key, tier]) => (
-                                <div key={key} className="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-gray-700">
+                                <div
+                                    key={key}
+                                    className="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-gray-700"
+                                >
                                     <div>
                                         <p className="font-semibold text-[var(--foreground)] dark:text-white">{tier.name}</p>
                                         <p className="text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                     </div>
                                     <div className="flex items-center gap-2">
                                         <p className="font-bold text-[var(--secondary)]">GH₵ {tier.price}</p>
-                                        <Button onClick={() => handleUpgrade(key)} size="sm" className="bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90">
+                                        <Button
+                                            onClick={() => handleUpgrade(key)}
+                                            size="sm"
+                                            className="bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90"
+                                        >
                                             <ArrowUpRight className="h-4 w-4" />
                                         </Button>
                                     </div>

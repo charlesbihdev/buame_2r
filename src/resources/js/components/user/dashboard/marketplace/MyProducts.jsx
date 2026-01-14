@@ -62,7 +62,7 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                 <Button
                     onClick={handleCreate}
                     disabled={!canAddProducts}
-                    className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add Product

@@ -56,7 +56,7 @@ export function RentalGallery({ profile }) {
                         Manage images for your rental listing ({images.length} images)
                     </p>
                 </div>
-                <Button onClick={handleAddImage} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
+                <Button onClick={handleAddImage} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                     <ImagePlus className="mr-2 h-4 w-4" />
                     Add Image
                 </Button>
@@ -124,7 +124,7 @@ export function RentalGallery({ profile }) {
                     <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
                         Add images to showcase your rental listing
                     </p>
-                    <Button onClick={handleAddImage} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
+                    <Button onClick={handleAddImage} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                         <ImagePlus className="mr-2 h-4 w-4" />
                         Add First Image
                     </Button>

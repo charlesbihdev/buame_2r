@@ -1,8 +1,11 @@
 import AppLogoIcon from '@/components/app-logo-icon';
+import ToastProvider from '@/components/ui/toast-provider';
 import { Link } from '@inertiajs/react';
 
 export default function AuthSimpleLayout({ children, title, description }) {
-    return (<div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+    return (
+        <ToastProvider>
+            <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
             <div className="w-full max-w-sm">
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col items-center gap-4">
@@ -21,6 +24,8 @@ export default function AuthSimpleLayout({ children, title, description }) {
                     {children}
                 </div>
             </div>
-        </div>);
+        </div>
+        </ToastProvider>
+    );
 }
 
