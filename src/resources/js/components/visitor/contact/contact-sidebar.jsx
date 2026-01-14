@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
 
 export function ContactSidebar() {
-    const whatsappNumber = '233241234567';
+    const whatsappNumber = '233540929012';
     const message = encodeURIComponent('Hello, I need help with 2RBUAME');
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
@@ -19,10 +19,10 @@ export function ContactSidebar() {
                     <div>
                         <p className="text-sm font-medium text-[#4c9a4c] dark:text-gray-400">Call Us Directly</p>
                         <a
-                            href="tel:+233241234567"
+                            href="tel:+233540929012"
                             className="text-lg font-bold text-[var(--foreground)] transition-colors hover:text-[var(--primary)] dark:text-white"
                         >
-                            +233 24 123 4567
+                            +233 54 092 9012
                         </a>
                         <p className="mt-1 text-xs text-[#4c9a4c]">Available Mon-Fri, 8am-5pm</p>
                     </div>
@@ -49,7 +49,7 @@ export function ContactSidebar() {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-[#4c9a4c] dark:text-gray-400">Office Location</p>
-                        <p className="mt-0.5 font-semibold text-[var(--foreground)] dark:text-white">Western North and beyond</p>
+                        <p className="mt-0.5 font-semibold text-[var(--foreground)] dark:text-white">Sefwi Bekwai, Western North</p>
                         <p className="text-sm text-[#4c9a4c]">Ghana</p>
                     </div>
                 </div>
