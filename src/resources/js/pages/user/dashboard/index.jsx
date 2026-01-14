@@ -24,7 +24,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'marketplace':
                 return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} />;
             case 'hotels':
-                return <HotelsSection activeTab={activeSection} data={categoryData} />;
+                return <HotelsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'transport':
                 return <TransportSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'rentals':

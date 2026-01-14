@@ -11,7 +11,7 @@ export function PaymentSection({ payments, paidCategories }) {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Payment Management</h2>
-                <Button onClick={handleAddCategory} className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                <Button onClick={handleAddCategory} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Category
                 </Button>

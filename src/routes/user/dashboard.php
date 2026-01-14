@@ -44,12 +44,16 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:marketplace'])->group(function () {
         Route::post('marketplace', [MarketplaceController::class, 'store'])->name('marketplace.store');
-        Route::put('marketplace/{marketplace}', [MarketplaceController::class, 'update'])->name('marketplace.update');
-        Route::patch('marketplace/{marketplace}', [MarketplaceController::class, 'update']);
-        Route::delete('marketplace/{marketplace}', [MarketplaceController::class, 'destroy'])->name('marketplace.destroy');
+
+        // Store routes MUST come before parameterized routes to avoid route conflicts
         Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
         Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
         Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
+
+        // Parameterized routes come after specific routes
+        Route::put('marketplace/{marketplace}', [MarketplaceController::class, 'update'])->name('marketplace.update');
+        Route::patch('marketplace/{marketplace}', [MarketplaceController::class, 'update']);
+        Route::delete('marketplace/{marketplace}', [MarketplaceController::class, 'destroy'])->name('marketplace.destroy');
     });
 
     // ========== HOTELS ==========

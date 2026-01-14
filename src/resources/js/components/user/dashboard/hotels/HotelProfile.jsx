@@ -1,10 +1,11 @@
+import { Button } from '@/components/ui/button';
 import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
-import { CheckCircle, Image as ImageIcon, Save, Upload, X } from 'lucide-react';
+import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function HotelProfile({ profile }) {
@@ -321,14 +322,19 @@ export function HotelProfile({ profile }) {
                             <span>Profile saved successfully</span>
                         </div>
                     )}
-                    <button
-                        type="submit"
-                        disabled={processing}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium whitespace-nowrap text-white transition-[color,box-shadow] hover:cursor-pointer hover:bg-[var(--primary)]/90 disabled:pointer-events-none disabled:opacity-50"
-                    >
-                        <Save className="h-4 w-4" />
-                        {processing ? 'Saving...' : 'Save Profile'}
-                    </button>
+                    <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                        {processing ? (
+                            <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Saving...
+                            </>
+                        ) : (
+                            <>
+                                <Save className="h-4 w-4" />
+                                Save Profile
+                            </>
+                        )}
+                    </Button>
                 </div>
             </form>
         </div>

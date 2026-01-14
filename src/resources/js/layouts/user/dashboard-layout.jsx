@@ -1,5 +1,6 @@
 import { AppLogo } from '@/components/visitor/app-logo';
 import { navigateToSection } from '@/services/dashboardNavigation';
+import ToastProvider from '@/components/ui/toast-provider';
 import { Link } from '@inertiajs/react';
 import { Bell, Building2, Car, Home, Image as ImageIcon, ListChecks, LogOut, Menu, Package, Store, User, X } from 'lucide-react';
 import { useState } from 'react';
@@ -49,7 +50,8 @@ export default function DashboardLayout({ user, children, activeCategory, active
     };
 
     return (
-        <div className="bg-background flex h-screen w-full overflow-hidden">
+        <ToastProvider>
+            <div className="bg-background flex h-screen w-full overflow-hidden">
             {/* Sidebar */}
             <aside
                 className={`bg-card border-border fixed inset-y-0 left-0 z-30 w-72 transform border-r transition-transform duration-300 md:relative md:translate-x-0 ${
@@ -150,5 +152,6 @@ export default function DashboardLayout({ user, children, activeCategory, active
             {/* Mobile Sidebar Overlay */}
             {sidebarOpen && <div className="fixed inset-0 z-20 bg-black/50 md:hidden" onClick={() => setSidebarOpen(false)} />}
         </div>
+        </ToastProvider>
     );
 }

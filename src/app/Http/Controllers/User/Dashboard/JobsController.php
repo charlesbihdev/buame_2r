@@ -15,7 +15,7 @@ class JobsController extends Controller
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
-        return redirect()->route('user.dashboard.index');
+        return redirect()->route('user.dashboard.index', ['category' => 'jobs']);
     }
 
     public function create(): Response
@@ -35,7 +35,7 @@ class JobsController extends Controller
         $user = Auth::user();
         $user->jobs()->create($validated);
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
             ->with('success', 'Job posting created successfully.');
     }
 
@@ -67,7 +67,7 @@ class JobsController extends Controller
 
         $job->update($validated);
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
             ->with('success', 'Job posting updated successfully.');
     }
 
@@ -80,7 +80,7 @@ class JobsController extends Controller
 
         $job->delete();
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
             ->with('success', 'Job posting deleted successfully.');
     }
 }

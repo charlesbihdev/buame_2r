@@ -62,7 +62,7 @@ export function RentalFeatures({ profile }) {
                     <Button
                         type="submit"
                         disabled={!newFeature.trim()}
-                        className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
+                        className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
                     >
                         <Plus className="h-5 w-5" />
                     </Button>

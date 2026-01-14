@@ -67,7 +67,7 @@ class CategoryProfileService
      */
     protected function getOrCreateHotel(User $user): Hotel
     {
-        return $user->hotels()->with(['amenities', 'features', 'images'])->firstOrCreate(
+        return $user->hotels()->with(['features', 'images'])->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => '',

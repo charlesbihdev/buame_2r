@@ -21,7 +21,7 @@ class ArtisansController extends Controller
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
-        return redirect()->route('user.dashboard.index');
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans']);
     }
 
     /**
@@ -48,7 +48,7 @@ class ArtisansController extends Controller
         $user = Auth::user();
         $user->artisans()->create($validated);
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans'])
             ->with('success', 'Artisan listing created successfully.');
     }
 
@@ -122,7 +122,7 @@ class ArtisansController extends Controller
             }
         }
 
-        return redirect()->route('user.dashboard.index', ['section' => 'profile'])
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans', 'section' => 'profile'])
             ->with('success', 'Profile updated successfully.');
     }
 
@@ -138,7 +138,7 @@ class ArtisansController extends Controller
 
         $artisan->delete();
 
-        return redirect()->route('user.dashboard.index')
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans'])
             ->with('success', 'Artisan listing deleted successfully.');
     }
 
@@ -152,7 +152,7 @@ class ArtisansController extends Controller
         $artisan = $user->artisans()->first();
 
         if (! $artisan) {
-            return redirect()->route('user.dashboard.index', ['section' => 'portfolio'])
+            return redirect()->route('user.dashboard.index', ['category' => 'artisans', 'section' => 'portfolio'])
                 ->withErrors(['error' => 'Artisan profile not found.']);
         }
 
@@ -172,7 +172,7 @@ class ArtisansController extends Controller
             'image_path' => $imagePath,
         ]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'portfolio'])
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans', 'section' => 'portfolio'])
             ->with('success', 'Portfolio item added successfully.');
     }
 
@@ -212,7 +212,7 @@ class ArtisansController extends Controller
             'image_path' => $imagePath,
         ]);
 
-        return redirect()->route('user.dashboard.index', ['section' => 'portfolio'])
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans', 'section' => 'portfolio'])
             ->with('success', 'Portfolio item updated successfully.');
     }
 
@@ -237,7 +237,7 @@ class ArtisansController extends Controller
 
         $portfolio->delete();
 
-        return redirect()->route('user.dashboard.index', ['section' => 'portfolio'])
+        return redirect()->route('user.dashboard.index', ['category' => 'artisans', 'section' => 'portfolio'])
             ->with('success', 'Portfolio item deleted successfully.');
     }
 }
