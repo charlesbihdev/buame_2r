@@ -18,6 +18,7 @@ class MarketplaceController extends Controller
         $query = MarketplaceProduct::query()
             ->where('is_active', true)
             ->where('is_approved', true)
+            ->withActiveSubscription()
             ->with(['images' => function ($query) {
                 $query->orderBy('is_primary', 'desc')
                     ->orderBy('display_order');
@@ -35,14 +36,14 @@ class MarketplaceController extends Controller
         // Apply search filter
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
-                    ->orWhere('description', 'like', '%' . $request->search . '%');
+                $q->where('title', 'like', '%'.$request->search.'%')
+                    ->orWhere('description', 'like', '%'.$request->search.'%');
             });
         }
 
         // Apply location filter
         if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
+            $query->where('location', 'like', '%'.$request->location.'%');
         }
 
         // Apply price range filters
@@ -84,13 +85,13 @@ class MarketplaceController extends Controller
                 ?? $product->images->first();
 
             $imageUrl = $primaryImage
-                ? asset('storage/' . $primaryImage->image_path)
+                ? asset('storage/'.$primaryImage->image_path)
                 : '/assets/visitors/marketplace.jpg';
 
             // Format price
-            $priceDisplay = '₵' . number_format($product->price, 2);
+            $priceDisplay = '₵'.number_format($product->price, 2);
             if ($product->price_type) {
-                $priceDisplay .= ' / ' . $product->price_type;
+                $priceDisplay .= ' / '.$product->price_type;
             }
 
             return [
@@ -125,7 +126,7 @@ class MarketplaceController extends Controller
         // Previous link
         if ($currentPage > 1) {
             $paginationLinks[] = [
-                'url' => $currentPage > 1 ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])) : null,
+                'url' => $currentPage > 1 ? $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])) : null,
                 'label' => '&laquo; Previous',
                 'active' => false,
             ];
@@ -135,7 +136,7 @@ class MarketplaceController extends Controller
         for ($i = 1; $i <= $lastPage; $i++) {
             if ($i == 1 || $i == $lastPage || ($i >= $currentPage - 2 && $i <= $currentPage + 2)) {
                 $paginationLinks[] = [
-                    'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $i])),
+                    'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $i])),
                     'label' => (string) $i,
                     'active' => $i == $currentPage,
                 ];
@@ -151,7 +152,7 @@ class MarketplaceController extends Controller
         // Next link
         if ($currentPage < $lastPage) {
             $paginationLinks[] = [
-                'url' => $currentPage < $lastPage ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])) : null,
+                'url' => $currentPage < $lastPage ? $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])) : null,
                 'label' => 'Next &raquo;',
                 'active' => false,
             ];
@@ -190,6 +191,7 @@ class MarketplaceController extends Controller
             ->where('id', $id)
             ->where('is_active', true)
             ->where('is_approved', true)
+            ->withActiveSubscription()
             ->with(['images' => function ($query) {
                 $query->orderBy('is_primary', 'desc')
                     ->orderBy('display_order');
@@ -203,7 +205,7 @@ class MarketplaceController extends Controller
             }])
             ->first();
 
-        if (!$product) {
+        if (! $product) {
             abort(404, 'Product not found');
         }
 
@@ -212,20 +214,20 @@ class MarketplaceController extends Controller
 
         // Format product images
         $images = $product->images->map(function ($image) {
-            return asset('storage/' . $image->image_path);
+            return asset('storage/'.$image->image_path);
         })->toArray();
 
         // Get primary image or first image
         $primaryImage = $product->images->firstWhere('is_primary', true)
             ?? $product->images->first();
         $primaryImageUrl = $primaryImage
-            ? asset('storage/' . $primaryImage->image_path)
+            ? asset('storage/'.$primaryImage->image_path)
             : '/assets/visitors/marketplace.jpg';
 
         // Format price
-        $priceDisplay = '₵' . number_format($product->price, 2);
+        $priceDisplay = '₵'.number_format($product->price, 2);
         if ($product->price_type) {
-            $priceDisplay .= ' / ' . $product->price_type;
+            $priceDisplay .= ' / '.$product->price_type;
         }
 
         // Format condition

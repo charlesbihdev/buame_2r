@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\BillingCycle;
+use App\Enums\SubscriptionStatus;
 use App\Models\Payment;
 use App\Models\Store;
 use App\Models\User;
 use App\Models\UserCategory;
 use App\Services\PaystackService;
-use Illuminate\Support\Str;
+use App\Services\SubscriptionService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,16 +17,18 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
     public function __construct(
-        protected PaystackService $paystackService
+        protected PaystackService $paystackService,
+        protected SubscriptionService $subscriptionService
     ) {}
 
     /**
-     * Initialize Paystack payment for category purchase.
+     * Initialize Paystack payment for category subscription.
      * Works for both registration and existing users adding categories.
      */
     public function processPayment(Request $request): RedirectResponse|Response
@@ -35,83 +39,80 @@ class PaymentController extends Controller
             return redirect()->route('user.register');
         }
 
-        // Log incoming request for debugging
         Log::info('Payment request received', [
             'user_id' => $user->id,
             'request_data' => $request->all(),
-            'category' => $request->input('category'),
-            'tier' => $request->input('tier'),
         ]);
 
-        // Validate request data - category is required, tier is optional (only for marketplace)
         try {
             $validated = $request->validate([
-                'category' => ['required', 'string', 'in:' . implode(',', config('categories.valid'))],
-                'tier' => ['nullable', 'string', 'in:starter,professional,enterprise'], // Only for marketplace
+                'category' => ['required', 'string', 'in:'.implode(',', config('categories.valid'))],
+                'tier' => ['nullable', 'string', 'in:starter,professional,enterprise'],
+                'billing_cycle' => ['required', 'string', 'in:monthly,biannually,annual'],
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Payment validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
+
             return back()->withErrors($e->errors());
         }
 
         $selectedCategory = $validated['category'];
+        $billingCycle = BillingCycle::from($validated['billing_cycle']);
 
         // Initialize tier - only used for marketplace
         $tier = null;
         if ($selectedCategory === 'marketplace') {
-            // Get tier from POST request, default to starter if not provided
             $tier = $validated['tier'] ?? 'starter';
         }
-        // For non-marketplace categories, $tier stays null (ignore any tier in request)
 
-        // Check if user already has this category (for dashboard flow)
-        $hasCategory = UserCategory::where('user_id', $user->id)
+        // Check if user already has active subscription for this category
+        $existingSubscription = UserCategory::where('user_id', $user->id)
             ->where('category', $selectedCategory)
-            ->exists();
+            ->first();
 
-        if ($hasCategory) {
-            return back()->withErrors(['payment' => 'You already have access to this category.']);
+        // Determine if this is a new subscription or renewal
+        $isRenewal = false;
+        $previousPaymentId = null;
+
+        if ($existingSubscription) {
+            // Check if subscription is still active (not expired beyond grace period)
+            if ($existingSubscription->subscription_status === SubscriptionStatus::Active) {
+                return back()->withErrors(['payment' => 'You already have an active subscription for this category.']);
+            }
+
+            // If in grace period or expired, allow renewal
+            $isRenewal = true;
+            $previousPaymentId = $existingSubscription->payment_id;
         }
 
-        // Determine if this is a new registration or existing user adding category
-        // Check if user has any paid categories
+        // Determine if this is a new registration
         $hasPaidCategories = UserCategory::where('user_id', $user->id)
-            ->whereHas('payment', function ($query) {
-                $query->where('status', 'completed');
-            })
+            ->whereHas('payment', fn ($query) => $query->where('status', 'completed'))
             ->exists();
 
         $isRegistrationPayment = ! $hasPaidCategories;
 
         try {
-            // Generate Paystack transaction reference
             $reference = $this->paystackService->genTranxRef();
 
-            // SECURITY: Always calculate price from backend config, never trust frontend price
-            // $tier is already set above based on the flow (registration or dashboard)
+            // Calculate price using SubscriptionService
+            $amount = $this->subscriptionService->getCategoryPrice($selectedCategory, $billingCycle, $tier);
 
-            if ($selectedCategory === 'marketplace') {
-                // For marketplace, use tier (already set above, defaults to 'starter' if not provided)
-                $amount = $this->getCategoryPrice($selectedCategory, $tier);
-            } else {
-                // For all other categories, ignore tier completely
-                $amount = $this->getCategoryPrice($selectedCategory);
-            }
+            // Calculate expiry date
+            $expiresAt = $this->subscriptionService->calculateExpiryDate($billingCycle);
 
-            // Log for debugging (remove in production if needed)
             Log::info('Payment amount calculated', [
                 'category' => $selectedCategory,
                 'tier' => $tier,
+                'billing_cycle' => $billingCycle->value,
                 'amount' => $amount,
-                'user_id' => $user->id,
-                'request_tier' => $request->input('tier'),
-                'request_category' => $request->input('category'),
+                'expires_at' => $expiresAt,
             ]);
 
-            // Create payment record with pending status
+            // Create payment record
             $payment = Payment::create([
                 'user_id' => $user->id,
                 'amount' => $amount,
@@ -119,21 +120,26 @@ class PaymentController extends Controller
                 'payment_method' => 'paystack',
                 'payment_reference' => $reference,
                 'category' => $selectedCategory,
+                'billing_cycle' => $billingCycle,
+                'payment_type' => $isRenewal ? 'renewal' : 'initial',
+                'previous_payment_id' => $previousPaymentId,
                 'status' => 'pending',
-                'metadata' => $tier ? json_encode(['tier' => $tier]) : null,
+                'expires_at' => $expiresAt,
+                'metadata' => $tier ? ['tier' => $tier] : null,
             ]);
 
-            // Calculate amount in pesewas (multiply by 100)
+            // Calculate amount in pesewas
             $amountInPesewas = (int) ceil($amount * 100);
 
-            // Build Paystack authorization data
+            // Build Paystack metadata
             $paystackMetadata = [
                 'user_id' => $user->id,
                 'category' => $selectedCategory,
+                'billing_cycle' => $billingCycle->value,
                 'is_new_registration' => $isRegistrationPayment,
+                'is_renewal' => $isRenewal,
             ];
 
-            // Include tier in Paystack metadata for marketplace (so it comes back in callback)
             if ($selectedCategory === 'marketplace' && $tier) {
                 $paystackMetadata['tier'] = $tier;
             }
@@ -141,16 +147,14 @@ class PaymentController extends Controller
             $paystackData = [
                 'amount' => $amountInPesewas,
                 'currency' => 'GHS',
-                'email' => $user->email ?? $user->phone . '@buame2r.com',
+                'email' => $user->email ?? $user->phone.'@buame2r.com',
                 'reference' => $reference,
                 'callback_url' => route('payment.callback'),
                 'metadata' => $paystackMetadata,
             ];
 
-            // Initialize Paystack payment
             $authorizationUrl = $this->paystackService->getAuthorizationUrl($paystackData);
 
-            // Redirect to Paystack checkout (external URL)
             return Inertia::location($authorizationUrl->url);
         } catch (\Exception $e) {
             Log::error('Paystack payment initialization failed', [
@@ -165,7 +169,6 @@ class PaymentController extends Controller
 
     /**
      * Handle Paystack payment callback.
-     * Handles both registration and dashboard category purchases.
      */
     public function handleCallback(Request $request): RedirectResponse
     {
@@ -177,10 +180,7 @@ class PaymentController extends Controller
         }
 
         try {
-            // Verify payment with Paystack
             $paymentData = $this->paystackService->getPaymentData($reference);
-
-            // Find payment record
             $payment = Payment::where('payment_reference', $reference)->first();
 
             if (! $payment) {
@@ -190,7 +190,6 @@ class PaymentController extends Controller
                     ->withErrors(['payment' => 'Payment record not found.']);
             }
 
-            // Check if payment was successful according to Paystack
             if ($paymentData['status'] !== 'success') {
                 $payment->update(['status' => 'failed']);
 
@@ -198,36 +197,30 @@ class PaymentController extends Controller
                     ->withErrors(['payment' => 'Payment was not successful. Please try again.']);
             }
 
-            // Payment successful - process category purchase
             DB::beginTransaction();
 
-            // IMPORTANT: Read tier from payment metadata BEFORE updating it
             $selectedCategory = $payment->category;
-            $originalMetadata = is_string($payment->metadata) ? json_decode($payment->metadata, true) : ($payment->metadata ?? []);
+            $originalMetadata = is_array($payment->metadata) ? $payment->metadata : (is_string($payment->metadata) ? json_decode($payment->metadata, true) : []);
 
             $tier = null;
             if ($selectedCategory === 'marketplace') {
                 $tier = $originalMetadata['tier'] ?? 'starter';
             }
 
-            // Check if payment was already processed (by webhook)
-            // If already completed, we still need to ensure user_categories exists and user is activated
             $alreadyProcessed = $payment->status === 'completed';
 
-            if (!$alreadyProcessed) {
-                // Merge Paystack metadata with our original metadata (preserve tier)
+            if (! $alreadyProcessed) {
                 $paystackMetadata = $paymentData['metadata'] ?? [];
-                $mergedMetadata = array_merge($originalMetadata, $paystackMetadata);
+                $mergedMetadata = array_merge($originalMetadata ?? [], $paystackMetadata);
                 if ($tier) {
-                    $mergedMetadata['tier'] = $tier; // Ensure tier is preserved
+                    $mergedMetadata['tier'] = $tier;
                 }
 
-                // Update payment record (preserve tier in metadata)
                 $payment->update([
                     'status' => 'completed',
                     'transaction_id' => $paymentData['id'],
                     'paid_at' => now(),
-                    'metadata' => json_encode($mergedMetadata),
+                    'metadata' => $mergedMetadata,
                 ]);
             }
 
@@ -237,92 +230,80 @@ class PaymentController extends Controller
                 throw new \Exception('User not found');
             }
 
-            // Create user category access (use firstOrCreate to handle potential race conditions)
-            $userCategory = UserCategory::firstOrCreate(
-                [
+            // Check if this is a renewal
+            $existingSubscription = UserCategory::where('user_id', $user->id)
+                ->where('category', $selectedCategory)
+                ->first();
+
+            if ($existingSubscription) {
+                // Process renewal
+                $this->subscriptionService->processRenewal($existingSubscription, $payment);
+                Log::info('Subscription renewed', [
                     'user_id' => $user->id,
                     'category' => $selectedCategory,
-                ],
-                [
-                    'payment_id' => $payment->id,
-                    'is_active' => true,
-                ]
-            );
+                    'billing_cycle' => $payment->billing_cycle->value,
+                ]);
+            } else {
+                // Create new subscription
+                $this->subscriptionService->createSubscription($payment);
+                Log::info('New subscription created', [
+                    'user_id' => $user->id,
+                    'category' => $selectedCategory,
+                    'billing_cycle' => $payment->billing_cycle->value,
+                ]);
+            }
 
-            Log::info('User category created/found', [
-                'user_id' => $user->id,
-                'category' => $selectedCategory,
-                'user_category_id' => $userCategory->id,
-                'was_recently_created' => $userCategory->wasRecentlyCreated,
-            ]);
-
-            // Handle marketplace store creation/upgrade
+            // Handle marketplace store
             if ($selectedCategory === 'marketplace') {
-                // Use the tier we extracted earlier
                 $tier = $tier ?? 'starter';
-
-                // Get existing store or create new one
                 $existingStore = $user->store;
-                if (!$existingStore) {
-                    // Create new store
+
+                if (! $existingStore) {
                     $baseSlug = Str::slug($user->name);
                     $slug = $baseSlug;
                     $counter = 1;
                     while (Store::where('slug', $slug)->exists()) {
-                        $slug = $baseSlug . '-' . $counter;
+                        $slug = $baseSlug.'-'.$counter;
                         $counter++;
                     }
 
                     Store::create([
                         'user_id' => $user->id,
-                        'name' => $user->name . "'s Store",
+                        'name' => $user->name."'s Store",
                         'slug' => $slug,
                         'tier' => $tier,
                         'is_active' => false,
                     ]);
                 } else {
-                    // Update existing store tier
                     $existingStore->update(['tier' => $tier]);
                 }
             }
 
-            // Check if this is a new registration or existing user
-            // IMPORTANT: Paystack may return boolean as string "true"/"false", so we need to handle both
             $isNewRegistrationRaw = $paymentData['metadata']['is_new_registration'] ?? false;
             $isNewRegistration = filter_var($isNewRegistrationRaw, FILTER_VALIDATE_BOOLEAN);
 
-            Log::info('Payment callback - checking user activation', [
-                'user_id' => $user->id,
-                'is_active_before' => $user->is_active,
-                'is_new_registration_raw' => $isNewRegistrationRaw,
-                'is_new_registration_parsed' => $isNewRegistration,
-                'paystack_metadata' => $paymentData['metadata'] ?? null,
-            ]);
-
-            // ALWAYS activate the user after successful payment
-            // This ensures the user can access the dashboard regardless of the is_new_registration flag
-            if (!$user->is_active) {
+            if (! $user->is_active) {
                 $user->update(['is_active' => true]);
-                Log::info('User activated after payment', ['user_id' => $user->id]);
             }
 
             DB::commit();
 
-            if ($isNewRegistration) {
-                // Fire registered event for new users
-                event(new Registered($user));
+            $billingCycleLabel = $payment->billing_cycle->label();
 
-                // Clear registration session data
+            if ($isNewRegistration) {
+                event(new Registered($user));
                 $request->session()->forget(['registration_user_id', 'selected_category', 'selected_tier']);
 
-                // Redirect to dashboard
                 return redirect()->route('user.dashboard.index')
-                    ->with('success', 'Registration successful! Welcome to BUAME 2R.');
+                    ->with('success', "Registration successful! Your {$billingCycleLabel} subscription is now active.");
             } else {
-                // Existing user adding category
-                // Redirect to dashboard
+                $isRenewal = $payment->payment_type === 'renewal';
+                $message = $isRenewal
+                    ? "Successfully renewed your {$selectedCategory} subscription ({$billingCycleLabel})!"
+                    : "Successfully subscribed to {$selectedCategory} ({$billingCycleLabel})!";
+
                 return redirect()->route('user.dashboard.index')
-                    ->with('success', "Successfully added {$selectedCategory} category! You can now start managing your profile.");
+                    ->with('success', $message);
             }
         } catch (\Exception $e) {
             DB::rollBack();
@@ -331,7 +312,6 @@ class PaymentController extends Controller
                 'error' => $e->getMessage(),
             ]);
 
-            // Determine where to redirect on error
             if (Auth::check()) {
                 return redirect()->route('user.dashboard.index')
                     ->withErrors(['payment' => 'Payment verification failed. Please contact support.']);
@@ -347,7 +327,6 @@ class PaymentController extends Controller
      */
     public function handleWebhook(Request $request)
     {
-        // Validate webhook signature
         $signature = $request->header('x-paystack-signature');
 
         if (! $signature) {
@@ -382,11 +361,9 @@ class PaymentController extends Controller
                     return response()->json(['error' => 'Payment not found'], 404);
                 }
 
-                // Only process if payment is still pending
                 if ($payment->status === 'pending') {
                     DB::beginTransaction();
 
-                    // Update payment record
                     $payment->update([
                         'status' => 'completed',
                         'transaction_id' => $data['id'] ?? null,
@@ -398,19 +375,17 @@ class PaymentController extends Controller
                     $selectedCategory = $payment->category;
 
                     if ($user) {
-                        // Create user category access if not exists
-                        UserCategory::firstOrCreate(
-                            [
-                                'user_id' => $user->id,
-                                'category' => $selectedCategory,
-                            ],
-                            [
-                                'payment_id' => $payment->id,
-                                'is_active' => true,
-                            ]
-                        );
+                        // Check if existing subscription exists
+                        $existingSubscription = UserCategory::where('user_id', $user->id)
+                            ->where('category', $selectedCategory)
+                            ->first();
 
-                        // Activate user account
+                        if ($existingSubscription) {
+                            $this->subscriptionService->processRenewal($existingSubscription, $payment);
+                        } else {
+                            $this->subscriptionService->createSubscription($payment);
+                        }
+
                         $user->update(['is_active' => true]);
                     }
 
@@ -430,36 +405,5 @@ class PaymentController extends Controller
         }
 
         return response()->json(['status' => 'ignored'], 200);
-    }
-
-    /**
-     * Get category price from config.
-     * SECURITY: This method ALWAYS reads from backend config to prevent price manipulation.
-     * Never trust prices from frontend requests.
-     *
-     * @param  string  $category
-     * @param  string|null  $tier
-     * @return float
-     */
-    protected function getCategoryPrice(string $category, ?string $tier = null): float
-    {
-        // Only use tier for marketplace category - ignore tier for all other categories
-        if ($category === 'marketplace' && $tier) {
-            // Validate tier exists in config before using
-            $tierPrice = config("categories.list.marketplace.tiers.{$tier}.price");
-            if ($tierPrice !== null) {
-                return (float) $tierPrice;
-            }
-            // If tier price not found, fall through to base marketplace price
-        }
-
-        // For all categories (including marketplace without valid tier), use base category price
-        $basePrice = config("categories.list.{$category}.price");
-        if ($basePrice !== null) {
-            return (float) $basePrice;
-        }
-
-        // Final fallback to default price
-        return (float) config('categories.default_price');
     }
 }

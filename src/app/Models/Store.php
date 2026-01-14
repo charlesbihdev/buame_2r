@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -46,6 +48,22 @@ class Store extends Model
     public function getRemainingProductSlotsAttribute()
     {
         $used = $this->products()->count();
+
         return max(0, $this->product_limit - $used);
+    }
+
+    /**
+     * Scope to filter stores whose owners have active subscriptions.
+     */
+    public function scopeWithActiveSubscription(Builder $query): Builder
+    {
+        return $query->whereHas('user.categories', function (Builder $q) {
+            $q->where('category', 'marketplace')
+                ->where('is_active', true)
+                ->whereIn('subscription_status', [
+                    SubscriptionStatus::Active->value,
+                    SubscriptionStatus::GracePeriod->value,
+                ]);
+        });
     }
 }

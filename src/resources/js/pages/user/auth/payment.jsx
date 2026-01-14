@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import BillingCycleSelector from '@/components/user/BillingCycleSelector';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { Check, CheckCircle, CreditCard } from 'lucide-react';
 import { useState } from 'react';
@@ -12,11 +13,14 @@ const categoryLabels = {
     jobs: 'Jobs',
 };
 
-export default function Payment({ category, amount, categories, user, tiers, selectedTier }) {
+export default function Payment({ category, amount, categories, user, tiers, selectedTier, categoryConfig }) {
     const [selectedTierState, setSelectedTierState] = useState(selectedTier || 'starter');
+    const [billingCycle, setBillingCycle] = useState('monthly');
+
     const { data, setData, post, processing, errors } = useForm({
         category: category,
         tier: category === 'marketplace' ? selectedTier || 'starter' : undefined,
+        billing_cycle: 'monthly',
     });
 
     const handleTierChange = (tierKey) => {
@@ -24,34 +28,59 @@ export default function Payment({ category, amount, categories, user, tiers, sel
         setData('tier', tierKey);
     };
 
+    const handleBillingCycleChange = (cycle) => {
+        setBillingCycle(cycle);
+        setData('billing_cycle', cycle);
+    };
+
     const submit = (e) => {
         e.preventDefault();
 
-        // Prepare form data
         const formData = {
             category: category,
+            billing_cycle: billingCycle,
         };
 
-        // Only include tier for marketplace
         if (category === 'marketplace') {
             formData.tier = selectedTierState || 'starter';
         }
 
-        console.log('Submitting payment with data:', formData);
-
-        // Use router.post directly to ensure data is sent correctly
         router.post(route('user.register.payment'), formData, {
             onError: (errors) => {
                 console.error('Payment submission errors:', errors);
             },
-            onSuccess: () => {
-                console.log('Payment submitted successfully');
-            },
         });
     };
 
-    // Calculate amount based on selected tier
-    const displayAmount = category === 'marketplace' && tiers && tiers[selectedTierState] ? tiers[selectedTierState].price : amount;
+    // Get pricing based on category and tier
+    const getPricing = () => {
+        if (category === 'marketplace' && tiers && tiers[selectedTierState]?.pricing) {
+            return tiers[selectedTierState].pricing;
+        }
+        if (categoryConfig?.pricing) {
+            return categoryConfig.pricing;
+        }
+        // Fallback pricing calculation
+        return {
+            monthly: amount,
+            biannually: amount * 5.4,
+            annual: amount * 9.6,
+        };
+    };
+
+    const pricing = getPricing();
+    const displayAmount = pricing[billingCycle] || amount;
+
+    const getBillingCycleLabel = () => {
+        switch (billingCycle) {
+            case 'biannually':
+                return '6 months';
+            case 'annual':
+                return '12 months';
+            default:
+                return '1 month';
+        }
+    };
 
     return (
         <>
@@ -80,7 +109,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                                     : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600'
                                             }`}
                                         >
-                                            {cat.label} (GH₵ {cat.price})
+                                            {cat.label}
                                         </Link>
                                     ))}
                                 </div>
@@ -112,15 +141,17 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{tier.description}</p>
                                                     <p className="mt-2 text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                                 </div>
-                                                <div className="text-right">
-                                                    <p className="text-xl font-bold text-[var(--primary)]">GH₵ {tier.price}</p>
-                                                </div>
                                             </div>
                                         </button>
                                     ))}
                                 </div>
                             </div>
                         )}
+
+                        {/* Billing Cycle Selector */}
+                        <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+                            <BillingCycleSelector selected={billingCycle} onChange={handleBillingCycleChange} pricing={pricing} />
+                        </div>
 
                         {/* Order Summary */}
                         <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
@@ -137,13 +168,22 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                     </div>
                                 )}
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-600 dark:text-gray-400">Registration Fee</span>
-                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">GH₵ {displayAmount}</span>
+                                    <span className="text-gray-600 dark:text-gray-400">Billing Cycle</span>
+                                    <span className="font-semibold text-[var(--foreground)] dark:text-white capitalize">{billingCycle}</span>
+                                </div>
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-gray-600 dark:text-gray-400">Subscription Fee</span>
+                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">
+                                        GH₵ {displayAmount?.toFixed(2) || amount}
+                                    </span>
                                 </div>
                                 <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
                                     <div className="flex justify-between">
                                         <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
-                                        <span className="text-2xl font-bold text-[var(--primary)]">GH₵ {displayAmount}</span>
+                                        <div className="text-right">
+                                            <span className="text-2xl font-bold text-[var(--primary)]">GH₵ {displayAmount?.toFixed(2) || amount}</span>
+                                            <p className="text-xs text-gray-500">/ {getBillingCycleLabel()}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -170,6 +210,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                     </div>
                                 </div>
                                 {errors.payment && <p className="mt-2 text-sm text-red-600">{errors.payment}</p>}
+                                {errors.billing_cycle && <p className="mt-2 text-sm text-red-600">{errors.billing_cycle}</p>}
                             </div>
 
                             <Button
@@ -177,14 +218,14 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                 disabled={processing}
                                 className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e] disabled:opacity-50"
                             >
-                                {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${displayAmount} with Paystack`}
+                                {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${displayAmount?.toFixed(2) || amount} with Paystack`}
                             </Button>
                         </form>
 
                         <div className="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
                             <p className="text-sm text-blue-800 dark:text-blue-300">
-                                🔒 <strong>Secure Payment:</strong> You'll be redirected to Paystack's secure payment page to complete your
-                                transaction.
+                                Your subscription will be active for <strong>{getBillingCycleLabel()}</strong>. We'll send you reminders before it
+                                expires so you can renew on time.
                             </p>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import BillingCycleSelector from '@/components/user/BillingCycleSelector';
 import { router, usePage } from '@inertiajs/react';
 import { AlertCircle, Bike, Briefcase, CheckCircle, CreditCard, Hammer, Home, Hotel, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
@@ -13,9 +14,11 @@ const categoryIcons = {
     jobs: Briefcase,
 };
 
-export default function PaymentModal({ isOpen, onClose, category }) {
+export default function PaymentModal({ isOpen, onClose, category, subscription }) {
     const [isProcessing, setIsProcessing] = useState(false);
     const [selectedTier, setSelectedTier] = useState('starter');
+    const isRenewal = subscription && (subscription.subscription_status === 'expired' || subscription.subscription_status === 'grace_period' || subscription.is_expiring_soon);
+    const [billingCycle, setBillingCycle] = useState(subscription?.billing_cycle || 'monthly');
     const { categories } = usePage().props;
 
     const categoryData = categories?.[category];
@@ -25,19 +28,42 @@ export default function PaymentModal({ isOpen, onClose, category }) {
     const tiers = categoryData.tiers;
     const isMarketplace = category === 'marketplace';
 
-    // Calculate display amount based on tier for marketplace
-    const displayAmount = isMarketplace && tiers && tiers[selectedTier] ? tiers[selectedTier].price : categoryData.price;
+    // Get pricing based on category and tier
+    const getPricing = () => {
+        if (isMarketplace && tiers && tiers[selectedTier]?.pricing) {
+            return tiers[selectedTier].pricing;
+        }
+        return categoryData.pricing || {
+            monthly: categoryData.price,
+            biannually: categoryData.price * 5.4,
+            annual: categoryData.price * 9.6,
+        };
+    };
+
+    const pricing = getPricing();
+    const displayAmount = pricing[billingCycle] || categoryData.price;
+
+    const getBillingCycleLabel = () => {
+        switch (billingCycle) {
+            case 'biannually':
+                return '6 months';
+            case 'annual':
+                return '12 months';
+            default:
+                return '1 month';
+        }
+    };
 
     const handlePayment = () => {
         setIsProcessing(true);
-        const data = { category };
+        const data = {
+            category,
+            billing_cycle: billingCycle,
+        };
 
-        // console.log(data);
-        // Only include tier for marketplace
         if (isMarketplace) {
             data.tier = selectedTier;
         }
-        console.log(data);
 
         router.post(route('user.dashboard.payment.initialize'), data, {
             onFinish: () => setIsProcessing(false),
@@ -53,9 +79,13 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]/10">
                             <Icon className="h-5 w-5 text-[var(--primary)]" />
                         </div>
-                        Add {categoryData.label} Category
+                        {isRenewal ? `Renew ${categoryData.label} Subscription` : `Add ${categoryData.label} Category`}
                     </DialogTitle>
-                    <DialogDescription>Subscribe to the {categoryData.label} category to start using its features</DialogDescription>
+                    <DialogDescription>
+                        {isRenewal
+                            ? `Renew your ${categoryData.label} subscription to continue using its features`
+                            : `Subscribe to the ${categoryData.label} category to start using its features`}
+                    </DialogDescription>
                 </DialogHeader>
 
                 <div className="flex-1 space-y-4 overflow-y-auto py-4">
@@ -84,9 +114,6 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                                                 <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">{tier.description}</p>
                                                 <p className="mt-1 text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                             </div>
-                                            <div className="text-right">
-                                                <p className="text-lg font-bold text-[var(--primary)]">GH₵ {tier.price}</p>
-                                            </div>
                                         </div>
                                     </button>
                                 ))}
@@ -94,12 +121,17 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         </div>
                     )}
 
+                    {/* Billing Cycle Selector */}
+                    <BillingCycleSelector selected={billingCycle} onChange={setBillingCycle} pricing={pricing} />
+
                     {/* Price Card */}
                     <div className="rounded-lg border-2 border-[var(--primary)]/20 bg-[var(--primary)]/5 p-4">
                         <div className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Subscription Fee</div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-black text-[var(--foreground)] dark:text-white">GH₵ {displayAmount.toFixed(2)}</span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">one-time</span>
+                            <span className="text-4xl font-black text-[var(--foreground)] dark:text-white">
+                                GH₵ {displayAmount?.toFixed(2) || '0.00'}
+                            </span>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">/ {getBillingCycleLabel()}</span>
                         </div>
                     </div>
 
@@ -126,12 +158,12 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         </ul>
                     </div>
 
-                    {/* Payment Info - Blue for trust/information */}
+                    {/* Payment Info */}
                     <div className="flex items-start gap-2 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-3 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5">
                         <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)] dark:text-[var(--accent)]" />
                         <p className="text-xs text-[var(--accent)] dark:text-[var(--accent)]/80">
-                            You'll be redirected to Paystack for secure payment processing. After successful payment, you'll be automatically
-                            redirected back to your dashboard.
+                            You'll be redirected to Paystack for secure payment. Your subscription will be active for {getBillingCycleLabel()}.
+                            We'll send you reminders before it expires.
                         </p>
                     </div>
                 </div>
@@ -154,7 +186,7 @@ export default function PaymentModal({ isOpen, onClose, category }) {
                         ) : (
                             <>
                                 <CreditCard className="h-4 w-4" />
-                                Pay GH₵ {displayAmount.toFixed(2)}
+                                {isRenewal ? 'Renew' : 'Pay'} GH₵ {displayAmount?.toFixed(2) || '0.00'}
                             </>
                         )}
                     </Button>

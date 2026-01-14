@@ -108,7 +108,15 @@ class DashboardController extends Controller
                 return [
                     'category' => $category->category,
                     'payment_id' => $category->payment_id,
-                    'expires_at' => $category->expires_at,
+                    'expires_at' => $category->expires_at?->toISOString(),
+                    'subscription_status' => $category->subscription_status->value,
+                    'is_active' => $category->is_active,
+                    'grace_period_ends_at' => $category->grace_period_ends_at?->toISOString(),
+                    'billing_cycle' => $category->billing_cycle->value,
+                    'days_until_expiry' => $category->daysUntilExpiry(),
+                    'is_expiring_soon' => $category->isExpiringSoon(),
+                    'is_in_grace_period' => $category->isInGracePeriod(),
+                    'can_edit' => $category->canAccessCategory(),
                 ];
             }),
             'unpaidCategories' => $unpaidCategories,

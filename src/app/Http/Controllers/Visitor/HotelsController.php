@@ -17,7 +17,8 @@ class HotelsController extends Controller
     {
         $query = Hotel::query()
             ->with(['images', 'features'])
-            ->where('is_active', true);
+            ->where('is_active', true)
+            ->withActiveSubscription();
 
         // Filter by type
         if ($request->filled('type')) {
@@ -26,14 +27,14 @@ class HotelsController extends Controller
 
         // Filter by location
         if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
+            $query->where('location', 'like', '%'.$request->location.'%');
         }
 
         // Search by name or description
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('description', 'like', '%' . $request->search . '%');
+                $q->where('name', 'like', '%'.$request->search.'%')
+                    ->orWhere('description', 'like', '%'.$request->search.'%');
             });
         }
 
@@ -73,11 +74,11 @@ class HotelsController extends Controller
         $lastPage = $hotels->lastPage();
 
         $prevPageUrl = $currentPage > 1
-            ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage - 1]))
+            ? $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage - 1]))
             : null;
 
         $nextPageUrl = $currentPage < $lastPage
-            ? $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage + 1]))
+            ? $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage + 1]))
             : null;
 
         return Inertia::render('visitor/hotels/index', [
@@ -102,6 +103,7 @@ class HotelsController extends Controller
     public function show(string $id): Response
     {
         $hotel = Hotel::with(['images', 'features', 'user'])
+            ->withActiveSubscription()
             ->findOrFail($id);
 
         // Increment view count

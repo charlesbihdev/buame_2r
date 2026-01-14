@@ -18,7 +18,8 @@ class ArtisansController extends Controller
         $query = Artisan::query()
             ->with(['specialties', 'user'])
             ->where('is_active', true)
-            ->where('is_available', true);
+            ->where('is_available', true)
+            ->withActiveSubscription();
 
         // Filter by skill type
         if ($request->filled('skill_type')) {
@@ -74,16 +75,16 @@ class ArtisansController extends Controller
             ];
         });
 
-        // Get counts for quick categories
+        // Get counts for quick categories (only from users with active subscriptions)
         $categoryCounts = [
-            'carpenter' => Artisan::where('skill_type', 'carpenter')->where('is_active', true)->count(),
-            'mason' => Artisan::where('skill_type', 'mason')->where('is_active', true)->count(),
-            'electrician' => Artisan::where('skill_type', 'electrician')->where('is_active', true)->count(),
-            'plumber' => Artisan::where('skill_type', 'plumber')->where('is_active', true)->count(),
-            'tiler' => Artisan::where('skill_type', 'tiler')->where('is_active', true)->count(),
-            'tailor' => Artisan::where('skill_type', 'tailor')->where('is_active', true)->count(),
-            'welder' => Artisan::where('skill_type', 'welder')->where('is_active', true)->count(),
-            'painter' => Artisan::where('skill_type', 'painter')->where('is_active', true)->count(),
+            'carpenter' => Artisan::where('skill_type', 'carpenter')->where('is_active', true)->withActiveSubscription()->count(),
+            'mason' => Artisan::where('skill_type', 'mason')->where('is_active', true)->withActiveSubscription()->count(),
+            'electrician' => Artisan::where('skill_type', 'electrician')->where('is_active', true)->withActiveSubscription()->count(),
+            'plumber' => Artisan::where('skill_type', 'plumber')->where('is_active', true)->withActiveSubscription()->count(),
+            'tiler' => Artisan::where('skill_type', 'tiler')->where('is_active', true)->withActiveSubscription()->count(),
+            'tailor' => Artisan::where('skill_type', 'tailor')->where('is_active', true)->withActiveSubscription()->count(),
+            'welder' => Artisan::where('skill_type', 'welder')->where('is_active', true)->withActiveSubscription()->count(),
+            'painter' => Artisan::where('skill_type', 'painter')->where('is_active', true)->withActiveSubscription()->count(),
         ];
 
         return Inertia::render('visitor/artisans/index', [
@@ -99,6 +100,7 @@ class ArtisansController extends Controller
     public function show(string $id): Response
     {
         $artisan = Artisan::with(['specialties', 'portfolio', 'reviews', 'user'])
+            ->withActiveSubscription()
             ->findOrFail($id);
 
         // Increment view count

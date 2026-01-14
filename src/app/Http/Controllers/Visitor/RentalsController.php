@@ -16,7 +16,8 @@ class RentalsController extends Controller
     public function index(Request $request): Response
     {
         $query = Rental::with(['images', 'features', 'user'])
-            ->where('is_active', true);
+            ->where('is_active', true)
+            ->withActiveSubscription();
 
         // Search by name or location
         if ($request->has('search') && $request->search) {
@@ -47,8 +48,9 @@ class RentalsController extends Controller
             default => $query->latest(),
         };
 
-        // Get counts by type for quick filters
+        // Get counts by type for quick filters (only from users with active subscriptions)
         $typeCounts = Rental::where('is_active', true)
+            ->withActiveSubscription()
             ->selectRaw('type, COUNT(*) as count')
             ->groupBy('type')
             ->pluck('count', 'type')
@@ -85,6 +87,7 @@ class RentalsController extends Controller
     {
         $rental = Rental::with(['images', 'features', 'user', 'reviews'])
             ->where('is_active', true)
+            ->withActiveSubscription()
             ->findOrFail($id);
 
         // Increment views

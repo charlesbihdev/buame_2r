@@ -2,10 +2,8 @@
     "mcpServers": {
         "laravel-boost": {
             "command": "php",
-            "args": [
-                "artisan",
-                "boost:mcp"
-            ]
+            "args": ["artisan", "boost:mcp"],
+            "cwd": "C:\\Users\\DELL PC\\Desktop\\charles-bih\\personal\\buame_2r\\src"
         }
     }
 }

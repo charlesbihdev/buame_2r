@@ -22,6 +22,7 @@ class StoreController extends Controller
         }])
             ->where('slug', $slug)
             ->where('is_active', true)
+            ->withActiveSubscription()
             ->firstOrFail();
 
         // Search products
@@ -77,7 +78,7 @@ class StoreController extends Controller
                 'price_type' => $product->price_type,
                 'condition' => $product->condition,
                 'location' => $product->location,
-                'image' => $primaryImage ? '/storage/' . $primaryImage->image_path : null,
+                'image' => $primaryImage ? '/storage/'.$primaryImage->image_path : null,
                 'delivery_available' => $product->delivery_available,
             ];
         });
@@ -88,7 +89,7 @@ class StoreController extends Controller
                 'name' => $store->name,
                 'slug' => $store->slug,
                 'description' => $store->description,
-                'thumbnail' => $store->thumbnail ? '/storage/' . $store->thumbnail : null,
+                'thumbnail' => $store->thumbnail ? '/storage/'.$store->thumbnail : null,
                 'user' => [
                     'name' => $store->user->name,
                     'phone' => $store->user->phone,

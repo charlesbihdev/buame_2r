@@ -102,6 +102,7 @@ class RegisteredUserController extends Controller
             if (Auth::check()) {
                 return redirect()->route('user.dashboard.index');
             }
+
             return redirect()->route('user.register.payment');
         }
 
@@ -349,6 +350,7 @@ class RegisteredUserController extends Controller
             'tiers' => $tiers,
             'selectedTier' => $selectedTier,
             'categories' => $allCategories,
+            'categoryConfig' => $categoryConfig,
             'user' => [
                 'name' => $user->name,
                 'phone' => $user->phone,
