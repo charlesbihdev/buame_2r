@@ -32,7 +32,11 @@ const formatRentalType = (type) => {
 
 // Format period label
 const getPeriodLabel = (period) => {
-    return period === 'day' ? '/day' : period === 'week' ? '/week' : '/month';
+    if (period === 'day') return '/day';
+    if (period === 'week') return '/week';
+    if (period === 'month') return '/month';
+    if (period === 'year') return '/year';
+    return '/month';
 };
 
 export function RentalCard({ rental }) {

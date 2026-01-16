@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { JobsListings } from './JobsListings';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 
 export function JobsSection({ activeTab, onTabChange, data }) {
     return (
@@ -8,6 +9,15 @@ export function JobsSection({ activeTab, onTabChange, data }) {
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Jobs Dashboard</h2>
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your job postings and applications</p>
             </div>
+
+            {/* Visibility Banner */}
+            {data?.profile && (
+                <ListingVisibilityBanner
+                    listing={data.profile}
+                    routeName="user.dashboard.jobs.toggle-active"
+                    label="Profile"
+                />
+            )}
 
             <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
                 <TabsList className="grid w-full grid-cols-2">

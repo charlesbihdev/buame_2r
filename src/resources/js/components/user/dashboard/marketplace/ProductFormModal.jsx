@@ -66,6 +66,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         e.preventDefault();
         post(route('user.dashboard.marketplace.store'), {
             preserveScroll: true,
+            forceFormData: true,
             onSuccess: () => {
                 handleClose();
             },

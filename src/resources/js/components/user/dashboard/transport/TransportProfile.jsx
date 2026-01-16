@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 
 export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -36,7 +37,6 @@ export function TransportProfile({ profile }) {
         price_per_seat: profile?.price_per_seat || '',
         seats_available: profile?.seats_available || '',
         operating_hours: profile?.operating_hours || '',
-        is_active: profile?.is_active ?? true,
         primary_image: null,
     });
 
@@ -85,6 +85,15 @@ export function TransportProfile({ profile }) {
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Transport Profile</h2>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your transport service information</p>
             </div>
+
+            {/* Visibility Banner */}
+            {profile && (
+                <ListingVisibilityBanner
+                    listing={profile}
+                    routeName="user.dashboard.transport.toggle-active"
+                    label="Service"
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}

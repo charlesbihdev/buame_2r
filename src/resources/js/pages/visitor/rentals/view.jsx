@@ -38,7 +38,11 @@ export default function RentalView({ rental }) {
     };
 
     const getPeriodLabel = (period) => {
-        return period === 'day' ? '/day' : period === 'week' ? '/week' : '/month';
+        if (period === 'day') return '/day';
+        if (period === 'week') return '/week';
+        if (period === 'month') return '/month';
+        if (period === 'year') return '/year';
+        return '/month';
     };
 
     const whatsappNumber = rental.whatsapp || rental.phone;

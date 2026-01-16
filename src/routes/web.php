@@ -61,7 +61,7 @@ Route::get('/hotels/{id}', [\App\Http\Controllers\Visitor\HotelsController::clas
 
 Route::get('/transport/{id}', [\App\Http\Controllers\Visitor\TransportController::class, 'show'])->name('transport.view');
 
-Route::get('/marketplace/{id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
+Route::get('/marketplace/{marketplaceProduct:id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
 
 Route::get('/jobs/{id}', function ($id) {
     return Inertia::render('visitor/jobs/view', ['job' => null]);

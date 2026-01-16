@@ -19,7 +19,7 @@ export function StoreVisibilityToggle({ store }) {
             {
                 preserveScroll: true,
                 preserveState: true,
-                only: ['categoryData'],
+                only: ['categoryData', 'flash'],
                 onFinish: () => setProcessing(false),
                 onError: () => setIsActive(isActive), // Revert on error
             },

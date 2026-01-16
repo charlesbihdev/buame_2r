@@ -294,7 +294,7 @@ class PaymentController extends Controller
                 event(new Registered($user));
                 $request->session()->forget(['registration_user_id', 'selected_category', 'selected_tier']);
 
-                return redirect()->route('user.dashboard.index')
+                return redirect()->route('user.dashboard.index', ['category' => $selectedCategory])
                     ->with('success', "Registration successful! Your {$billingCycleLabel} subscription is now active.");
             } else {
                 $isRenewal = $payment->payment_type === 'renewal';
@@ -302,7 +302,7 @@ class PaymentController extends Controller
                     ? "Successfully renewed your {$selectedCategory} subscription ({$billingCycleLabel})!"
                     : "Successfully subscribed to {$selectedCategory} ({$billingCycleLabel})!";
 
-                return redirect()->route('user.dashboard.index')
+                return redirect()->route('user.dashboard.index', ['category' => $selectedCategory])
                     ->with('success', $message);
             }
         } catch (\Exception $e) {

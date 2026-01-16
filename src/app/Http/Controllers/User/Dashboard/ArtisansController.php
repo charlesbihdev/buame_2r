@@ -130,6 +130,75 @@ class ArtisansController extends Controller
     }
 
     /**
+     * Toggle artisan active status.
+     */
+    public function toggleActive(Request $request): RedirectResponse
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $artisan = $user->artisans()->first();
+
+        if (!$artisan) {
+            return back()->with('error', 'Artisan profile not found.');
+        }
+
+        // If trying to activate, validate required fields
+        if (!$artisan->is_active) {
+            $errors = [];
+
+            if (empty($artisan->name)) {
+                $errors['name'] = 'Name is required before making your profile visible.';
+            }
+
+            if (empty($artisan->skill_type) || $artisan->skill_type === 'other') {
+                $errors['skill_type'] = 'Skill type is required before making your profile visible.';
+            }
+
+            if (empty($artisan->location)) {
+                $errors['location'] = 'Location is required before making your profile visible.';
+            }
+
+            if (empty($artisan->phone)) {
+                $errors['phone'] = 'Phone number is required before making your profile visible.';
+            }
+
+            if (empty($artisan->description)) {
+                $errors['description'] = 'Description is required before making your profile visible.';
+            }
+
+            if (empty($artisan->profile_image)) {
+                $errors['profile_image'] = 'Please upload a profile image before making your profile visible.';
+            }
+
+            if (!empty($errors)) {
+                // Map field names to user-friendly labels
+                $fieldLabels = [
+                    'name' => 'name',
+                    'skill_type' => 'skill type',
+                    'location' => 'location',
+                    'phone' => 'phone number',
+                    'description' => 'description',
+                    'profile_image' => 'profile picture',
+                ];
+
+                $missingFields = [];
+                foreach (array_keys($errors) as $field) {
+                    $missingFields[] = $fieldLabels[$field] ?? $field;
+                }
+
+                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+
+                return back()->withErrors($errors)->with('error', $errorMessage);
+            }
+        }
+
+        $artisan->is_active = !$artisan->is_active;
+        $artisan->save();
+
+        return back()->with('success', $artisan->is_active ? 'Profile is now visible.' : 'Profile is now hidden.');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Artisan $artisan): RedirectResponse

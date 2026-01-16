@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 
 export function ArtisanProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -115,6 +116,15 @@ export function ArtisanProfile({ profile }) {
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Artisan Profile</h2>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your artisan profile information</p>
             </div>
+
+            {/* Visibility Banner */}
+            {profile && (
+                <ListingVisibilityBanner
+                    listing={profile}
+                    routeName="user.dashboard.artisans.toggle-active"
+                    label="Profile"
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">

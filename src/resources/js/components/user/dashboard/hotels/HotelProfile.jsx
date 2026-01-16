@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 
 export function HotelProfile({ profile }) {
     console.log('HotelProfile - profile:', profile);
@@ -39,7 +40,6 @@ export function HotelProfile({ profile }) {
         rooms_count: profile?.rooms_count || '',
         check_in_time: profile?.check_in_time || '08:00',
         check_out_time: profile?.check_out_time || '20:00',
-        is_active: profile?.is_active ?? true,
         primary_image: null,
     });
 
@@ -89,6 +89,15 @@ export function HotelProfile({ profile }) {
                 <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Hotel Profile</h2>
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your hotel profile information</p>
             </div>
+
+            {/* Visibility Banner */}
+            {profile && (
+                <ListingVisibilityBanner
+                    listing={profile}
+                    routeName="user.dashboard.hotels.toggle-active"
+                    label="Hotel"
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}
