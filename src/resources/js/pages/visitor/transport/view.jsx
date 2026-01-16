@@ -1,5 +1,5 @@
-import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import { Button } from '@/components/ui/button';
+import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
@@ -69,12 +69,12 @@ export default function TransportView({ ride }) {
         );
     }
 
-    const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.company_name}.`);
+    const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.driver_name}.`);
     const TypeIcon = getTypeIcon(ride?.type);
 
     return (
         <VisitorLayout>
-            <Head title={`${ride?.company_name} | 2RBUAME`} />
+            <Head title={`${ride?.driver_name} | 2RBUAME`} />
 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
@@ -89,12 +89,12 @@ export default function TransportView({ ride }) {
                     </Link>
 
                     {/* Profile Header */}
-                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[var(--card)] md:p-8">
+                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
                             {/* Transport Info */}
                             <div className="flex-1">
                                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                                    <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl">{ride?.company_name}</h1>
+                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl dark:text-white">{ride?.driver_name}</h1>
                                     {ride?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                     <span className="flex items-center gap-1 rounded-full bg-[var(--primary)] px-3 py-1 text-sm font-bold text-white">
                                         <TypeIcon className="h-4 w-4" />
@@ -138,7 +138,7 @@ export default function TransportView({ ride }) {
                             </div>
 
                             {/* Pricing Card - Desktop */}
-                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
+                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                 <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
                                 <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
@@ -161,7 +161,7 @@ export default function TransportView({ ride }) {
 
                         {/* About Section */}
                         <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">About {ride?.company_name}</h2>
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">About {ride?.driver_name}</h2>
                             <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
                                 {ride?.description || 'No description available.'}
                             </p>
@@ -197,12 +197,9 @@ export default function TransportView({ ride }) {
                                     {ride.payment_methods.map((method, idx) => {
                                         const Icon = paymentIcons[method.toLowerCase().replace(' ', '_')] || Wallet;
                                         return (
-                                            <div
-                                                key={idx}
-                                                className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-800"
-                                            >
+                                            <div key={idx} className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
                                                 <Icon className="h-5 w-5 text-[var(--primary)]" />
-                                                <span className="text-sm font-medium capitalize text-gray-700 dark:text-gray-300">{method}</span>
+                                                <span className="text-sm font-medium text-gray-700 capitalize dark:text-gray-300">{method}</span>
                                             </div>
                                         );
                                     })}
@@ -215,7 +212,7 @@ export default function TransportView({ ride }) {
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
-                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
+                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                 <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
                                 <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
@@ -234,7 +231,11 @@ export default function TransportView({ ride }) {
                                         </Button>
                                     )}
                                     {ride?.phone && (
-                                        <Button asChild variant="outline" className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white">
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
+                                        >
                                             <a href={`tel:${ride.phone}`}>
                                                 <Phone className="mr-2 h-5 w-5" />
                                                 Call to Book
@@ -265,7 +266,7 @@ export default function TransportView({ ride }) {
                                     {ride?.email && (
                                         <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
                                             <Mail className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="break-all font-medium text-gray-700 dark:text-gray-300">{ride.email}</span>
+                                            <span className="font-medium break-all text-gray-700 dark:text-gray-300">{ride.email}</span>
                                         </div>
                                     )}
                                 </div>

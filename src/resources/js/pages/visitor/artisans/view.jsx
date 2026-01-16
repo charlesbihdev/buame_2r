@@ -6,11 +6,11 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Award, BadgeCheck, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
 
 export default function ArtisanView({ artisan }) {
-    const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.skill} services.`);
+    const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
 
     return (
         <VisitorLayout>
-            <Head title={`${artisan?.name} - ${artisan?.skill} | 2RBUAME`} />
+            <Head title={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
@@ -49,7 +49,7 @@ export default function ArtisanView({ artisan }) {
                                     <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl">{artisan?.name}</h1>
                                     {artisan?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                 </div>
-                                <p className="mb-4 text-xl font-semibold text-[var(--primary)]">{artisan?.skill}</p>
+                                {artisan?.company_name && <p className="mb-4 text-xl font-semibold text-[var(--primary)]">{artisan.company_name}</p>}
 
                                 {/* Quick Stats */}
                                 <div className="mb-4 flex flex-wrap gap-4 text-sm">
@@ -93,11 +93,13 @@ export default function ArtisanView({ artisan }) {
                             </div>
 
                             {/* Pricing Card - Desktop */}
-                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan?.price_per_day}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
-                            </div>
+                            {artisan?.show_price && artisan?.price_per_day && (
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan.price_per_day}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -162,11 +164,13 @@ export default function ArtisanView({ artisan }) {
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
-                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan?.price_per_day}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
-                            </div>
+                            {artisan?.show_price && artisan?.price_per_day && (
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan.price_per_day}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
+                                </div>
+                            )}
 
                             {/* Contact Actions */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

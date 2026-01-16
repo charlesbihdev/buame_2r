@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('transport_rides', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('company_name');
+            $table->string('driver_name');
             $table->enum('type', ['okada', 'car', 'taxi', 'bus', 'cargo', 'other'])->index();
             $table->decimal('price_per_seat', 10, 2);
             $table->integer('seats_available');

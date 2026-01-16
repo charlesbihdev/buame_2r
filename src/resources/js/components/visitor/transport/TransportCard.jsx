@@ -65,7 +65,7 @@ export function TransportCard({ ride }) {
             {/* Details */}
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.company_name}</h3>
+                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.driver_name}</h3>
                 </div>
 
                 <div className="mb-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">

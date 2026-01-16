@@ -12,11 +12,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('skill');
-            $table->enum('skill_type', ['carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter', 'other'])->index();
+            $table->string('company_name')->nullable();
+            $table->enum('skill_type', [
+                'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
+                'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
+                'bead_making', 'shoe_making', 'event_mc', 'event_planners', 'other'
+            ])->index();
             $table->integer('experience_years')->nullable();
-            $table->enum('experience_level', ['beginner', 'intermediate', 'expert'])->nullable();
-            $table->decimal('price_per_day', 10, 2);
+            $table->enum('experience_level', ['beginner', 'intermediate', 'expert'])->default('expert');
+            $table->decimal('price_per_day', 10, 2)->nullable();
+            $table->boolean('show_price')->default(false);
             $table->decimal('rating', 3, 2)->default(0.00)->index();
             $table->integer('reviews_count')->default(0);
             $table->string('location')->index();

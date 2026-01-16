@@ -39,7 +39,7 @@ class ArtisansController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'skill' => ['required', 'string', 'max:255'],
+            'company_name' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
         ]);
@@ -79,12 +79,12 @@ class ArtisansController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'skill' => ['required', 'string', 'max:255'],
-            'skill_type' => ['required', 'string', 'in:carpenter,mason,electrician,plumber,tiler,tailor,welder,painter,other'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'skill_type' => ['required', 'string', 'in:carpenter,mason,electrician,plumber,tiler,tailor,welder,painter,hairdressing,mechanic,bakery,decoration,makeup_artistry,bead_making,shoe_making,event_mc,event_planners,other'],
             'description' => ['nullable', 'string'],
             'experience_years' => ['nullable', 'integer', 'min:0'],
-            'experience_level' => ['nullable', 'string', 'in:beginner,intermediate,expert'],
-            'price_per_day' => ['required', 'numeric', 'min:0'],
+            'price_per_day' => ['nullable', 'numeric', 'min:0'],
+            'show_price' => ['boolean'],
             'location' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'phone' => ['required', 'string', 'max:20'],
@@ -96,6 +96,9 @@ class ArtisansController extends Controller
             'specialties.*' => ['string', 'max:255'],
             'profile_image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'], // 5MB max
         ]);
+
+        // Default experience_level to expert
+        $validated['experience_level'] = 'expert';
 
         // Handle profile image upload
         if ($request->hasFile('profile_image')) {

@@ -36,11 +36,11 @@ class ArtisansController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Search by name or skill
+        // Search by name or company_name
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('skill', 'like', '%'.$request->search.'%')
+                    ->orWhere('company_name', 'like', '%'.$request->search.'%')
                     ->orWhere('description', 'like', '%'.$request->search.'%');
             });
         }
@@ -59,13 +59,13 @@ class ArtisansController extends Controller
             return [
                 'id' => $artisan->id,
                 'name' => $artisan->name,
-                'skill' => $artisan->skill,
+                'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
                 'rating' => $artisan->rating ?? 4.5, // Default rating for new artisans
                 'reviews_count' => $artisan->reviews_count,
                 'experience_years' => $artisan->experience_years,
-                'experience_level' => $artisan->experience_level,
-                'price_per_day' => number_format($artisan->price_per_day, 2),
+                'price_per_day' => $artisan->show_price && $artisan->price_per_day ? number_format($artisan->price_per_day, 2) : null,
+                'show_price' => $artisan->show_price,
                 'location' => $artisan->location,
                 'profile_image' => $artisan->profile_image,
                 'is_verified' => $artisan->is_verified,
@@ -76,16 +76,15 @@ class ArtisansController extends Controller
         });
 
         // Get counts for quick categories (only from users with active subscriptions)
-        $categoryCounts = [
-            'carpenter' => Artisan::where('skill_type', 'carpenter')->where('is_active', true)->withActiveSubscription()->count(),
-            'mason' => Artisan::where('skill_type', 'mason')->where('is_active', true)->withActiveSubscription()->count(),
-            'electrician' => Artisan::where('skill_type', 'electrician')->where('is_active', true)->withActiveSubscription()->count(),
-            'plumber' => Artisan::where('skill_type', 'plumber')->where('is_active', true)->withActiveSubscription()->count(),
-            'tiler' => Artisan::where('skill_type', 'tiler')->where('is_active', true)->withActiveSubscription()->count(),
-            'tailor' => Artisan::where('skill_type', 'tailor')->where('is_active', true)->withActiveSubscription()->count(),
-            'welder' => Artisan::where('skill_type', 'welder')->where('is_active', true)->withActiveSubscription()->count(),
-            'painter' => Artisan::where('skill_type', 'painter')->where('is_active', true)->withActiveSubscription()->count(),
+        $skillTypes = [
+            'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
+            'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
+            'bead_making', 'shoe_making', 'event_mc', 'event_planners',
         ];
+        $categoryCounts = [];
+        foreach ($skillTypes as $type) {
+            $categoryCounts[$type] = Artisan::where('skill_type', $type)->where('is_active', true)->withActiveSubscription()->count();
+        }
 
         return Inertia::render('visitor/artisans/index', [
             'artisans' => $artisans,
@@ -110,14 +109,14 @@ class ArtisansController extends Controller
             'artisan' => [
                 'id' => $artisan->id,
                 'name' => $artisan->name,
-                'skill' => $artisan->skill,
+                'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
                 'description' => $artisan->description,
                 'rating' => $artisan->rating ?? 4.5, // Default rating
                 'reviews_count' => $artisan->reviews_count,
                 'experience_years' => $artisan->experience_years,
-                'experience_level' => $artisan->experience_level,
-                'price_per_day' => number_format($artisan->price_per_day, 2),
+                'price_per_day' => $artisan->show_price && $artisan->price_per_day ? number_format($artisan->price_per_day, 2) : null,
+                'show_price' => $artisan->show_price,
                 'location' => $artisan->location,
                 'address' => $artisan->address,
                 'profile_image' => $artisan->profile_image,

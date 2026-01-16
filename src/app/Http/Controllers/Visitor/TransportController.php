@@ -29,10 +29,10 @@ class TransportController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Search by company name or description
+        // Search by driver name or description
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
-                $q->where('company_name', 'like', '%'.$request->search.'%')
+                $q->where('driver_name', 'like', '%'.$request->search.'%')
                     ->orWhere('description', 'like', '%'.$request->search.'%');
             });
         }
@@ -51,7 +51,7 @@ class TransportController extends Controller
 
             return [
                 'id' => $ride->id,
-                'company_name' => $ride->company_name,
+                'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
                 'rating' => $ride->rating ?? 4.5,
                 'reviews_count' => $ride->reviews_count,
@@ -94,7 +94,7 @@ class TransportController extends Controller
         return Inertia::render('visitor/transport/view', [
             'ride' => [
                 'id' => $ride->id,
-                'company_name' => $ride->company_name,
+                'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
                 'description' => $ride->description,
                 'rating' => $ride->rating ?? 4.5,

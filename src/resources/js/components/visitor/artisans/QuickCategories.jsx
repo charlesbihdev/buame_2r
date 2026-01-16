@@ -1,4 +1,4 @@
-import { Hammer, Home, Paintbrush, Scissors, Wrench, Zap } from 'lucide-react';
+import { Hammer, Home, Paintbrush, Scissors, Wrench, Zap, Car, Cake, Sparkles, Gem, Footprints, Mic, Calendar } from 'lucide-react';
 import { Droplets, Flame } from 'lucide-react';
 
 const SKILL_TYPES = [
@@ -10,6 +10,15 @@ const SKILL_TYPES = [
     { icon: Scissors, label: 'Tailor', key: 'tailor' },
     { icon: Flame, label: 'Welder', key: 'welder' },
     { icon: Paintbrush, label: 'Painter', key: 'painter' },
+    { icon: Scissors, label: 'Hairdressing', key: 'hairdressing' },
+    { icon: Car, label: 'Mechanic', key: 'mechanic' },
+    { icon: Cake, label: 'Bakery', key: 'bakery' },
+    { icon: Sparkles, label: 'Decoration', key: 'decoration' },
+    { icon: Sparkles, label: 'Makeup Artistry', key: 'makeup_artistry' },
+    { icon: Gem, label: 'Bead Making', key: 'bead_making' },
+    { icon: Footprints, label: 'Shoe Making', key: 'shoe_making' },
+    { icon: Mic, label: 'Event MC', key: 'event_mc' },
+    { icon: Calendar, label: 'Event Planners', key: 'event_planners' },
 ];
 
 export function QuickCategories({ categoryCounts, activeSkillType, onCategoryClick }) {
