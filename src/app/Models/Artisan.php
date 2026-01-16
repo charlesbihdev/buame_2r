@@ -15,11 +15,12 @@ class Artisan extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'skill',
+        'company_name',
         'skill_type',
         'experience_years',
         'experience_level',
         'price_per_day',
+        'show_price',
         'rating',
         'reviews_count',
         'location',
@@ -42,6 +43,7 @@ class Artisan extends Model
     {
         return [
             'price_per_day' => 'decimal:2',
+            'show_price' => 'boolean',
             'rating' => 'decimal:2',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',

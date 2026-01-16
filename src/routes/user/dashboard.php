@@ -68,6 +68,11 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::put('hotels/{hotel}', [HotelsController::class, 'update'])->name('hotels.update');
         Route::patch('hotels/{hotel}', [HotelsController::class, 'update']);
         Route::delete('hotels/{hotel}', [HotelsController::class, 'destroy'])->name('hotels.destroy');
+        // Hotel image management routes
+        Route::post('hotels/images', [HotelsController::class, 'storeImage'])->name('hotels.images.store');
+        Route::post('hotels/images/{image}', [HotelsController::class, 'updateImage'])->name('hotels.images.update');
+        Route::put('hotels/images/{image}/primary', [HotelsController::class, 'setPrimaryImage'])->name('hotels.images.primary');
+        Route::delete('hotels/images/{image}', [HotelsController::class, 'destroyImage'])->name('hotels.images.destroy');
     });
 
     // ========== TRANSPORT ==========

@@ -193,7 +193,7 @@ export default function Transport({ rides, typeCounts, filters }) {
 
                                 {/* Content */}
                                 <div className="p-4">
-                                    <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.company_name}</h3>
+                                    <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.driver_name}</h3>
 
                                     <div className="mb-3 flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                                         <MapPin className="h-4 w-4" />

@@ -17,12 +17,13 @@ export function ArtisanProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
-        skill: profile?.skill || '',
+        company_name: profile?.company_name || '',
         skill_type: profile?.skill_type || 'other',
         description: profile?.description || '',
         experience_years: profile?.experience_years || '',
-        experience_level: profile?.experience_level || '',
+        experience_level: profile?.experience_level || 'expert', // Hidden field, defaults to expert
         price_per_day: profile?.price_per_day || '',
+        show_price: profile?.show_price ?? false,
         location: profile?.location || '',
         address: profile?.address || '',
         phone: profile?.phone || '',
@@ -43,13 +44,16 @@ export function ArtisanProfile({ profile }) {
         { value: 'tailor', label: 'Tailor' },
         { value: 'welder', label: 'Welder' },
         { value: 'painter', label: 'Painter' },
+        { value: 'hairdressing', label: 'Hairdressing' },
+        { value: 'mechanic', label: 'Mechanic' },
+        { value: 'bakery', label: 'Bakery' },
+        { value: 'decoration', label: 'Decoration' },
+        { value: 'makeup_artistry', label: 'Makeup Artistry' },
+        { value: 'bead_making', label: 'Bead Making' },
+        { value: 'shoe_making', label: 'Shoe Making' },
+        { value: 'event_mc', label: 'Event MC' },
+        { value: 'event_planners', label: 'Event Planners' },
         { value: 'other', label: 'Other' },
-    ];
-
-    const experienceLevels = [
-        { value: 'beginner', label: 'Beginner' },
-        { value: 'intermediate', label: 'Intermediate' },
-        { value: 'expert', label: 'Expert' },
     ];
 
     const handleAddSpecialty = () => {
@@ -187,15 +191,15 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="skill">Skill/Title</Label>
+                            <Label htmlFor="company_name">Company/Business Name</Label>
                             <Input
-                                id="skill"
-                                value={data.skill}
-                                onChange={(e) => setData('skill', e.target.value)}
+                                id="company_name"
+                                value={data.company_name}
+                                onChange={(e) => setData('company_name', e.target.value)}
                                 className="mt-1"
-                                placeholder="Master Carpenter"
+                                placeholder="Mensah's Carpentry Works"
                             />
-                            <FormError error={errors.skill || pageErrors?.skill} className="mt-1" />
+                            <FormError error={errors.company_name || pageErrors?.company_name} className="mt-1" />
                         </div>
 
                         <div>
@@ -211,35 +215,32 @@ export function ArtisanProfile({ profile }) {
                             <FormError error={errors.experience_years || pageErrors?.experience_years} className="mt-1" />
                         </div>
 
-                        <div>
-                            <Label htmlFor="experience_level">Experience Level</Label>
-                            <Select value={data.experience_level} onValueChange={(value) => setData('experience_level', value)}>
-                                <SelectTrigger className="mt-1">
-                                    <SelectValue placeholder="Select experience level" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {experienceLevels.map((level) => (
-                                        <SelectItem key={level.value} value={level.value}>
-                                            {level.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            <FormError error={errors.experience_level || pageErrors?.experience_level} className="mt-1" />
-                        </div>
-
-                        <div>
-                            <Label htmlFor="price_per_day">Average Price per Day (GH₵)</Label>
-                            <Input
-                                id="price_per_day"
-                                type="number"
-                                step="0.01"
-                                value={data.price_per_day}
-                                onChange={(e) => setData('price_per_day', e.target.value)}
-                                className="mt-1"
-                                placeholder="80.00"
-                            />
-                            <FormError error={errors.price_per_day || pageErrors?.price_per_day} className="mt-1" />
+                        <div className="md:col-span-2">
+                            <div className="flex items-center gap-2 mb-2">
+                                <input
+                                    type="checkbox"
+                                    id="show_price"
+                                    checked={data.show_price}
+                                    onChange={(e) => setData('show_price', e.target.checked)}
+                                    className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
+                                />
+                                <Label htmlFor="show_price" className="cursor-pointer">Show average price per day to visitors</Label>
+                            </div>
+                            {data.show_price && (
+                                <div>
+                                    <Label htmlFor="price_per_day">Average Price per Day (GH₵)</Label>
+                                    <Input
+                                        id="price_per_day"
+                                        type="number"
+                                        step="0.01"
+                                        value={data.price_per_day}
+                                        onChange={(e) => setData('price_per_day', e.target.value)}
+                                        className="mt-1"
+                                        placeholder="80.00"
+                                    />
+                                    <FormError error={errors.price_per_day || pageErrors?.price_per_day} className="mt-1" />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

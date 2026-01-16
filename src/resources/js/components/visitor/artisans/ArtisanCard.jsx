@@ -36,7 +36,7 @@ export function ArtisanCard({ artisan }) {
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
                     <h3 className="text-lg font-bold text-foreground">{artisan.name}</h3>
-                    <p className="text-sm font-medium text-primary">{artisan.skill}</p>
+                    {artisan.company_name && <p className="text-sm font-medium text-primary">{artisan.company_name}</p>}
                 </div>
 
                 <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
@@ -64,10 +64,14 @@ export function ArtisanCard({ artisan }) {
 
                 <div className="mt-auto space-y-2 border-t border-border pt-3">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <div className="text-xl font-black text-primary">GH₵{artisan.price_per_day}</div>
-                            <div className="text-xs text-muted-foreground">/day</div>
-                        </div>
+                        {artisan.show_price && artisan.price_per_day ? (
+                            <div>
+                                <div className="text-xl font-black text-primary">GH₵{artisan.price_per_day}</div>
+                                <div className="text-xs text-muted-foreground">/day</div>
+                            </div>
+                        ) : (
+                            <div className="text-sm text-muted-foreground">Contact for pricing</div>
+                        )}
                         {artisan.experience_years && <div className="text-xs text-muted-foreground">{artisan.experience_years} years</div>}
                     </div>
                     <div className="flex gap-2">

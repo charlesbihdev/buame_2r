@@ -23,6 +23,15 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
                 <option value="tailor">Tailor</option>
                 <option value="welder">Welder</option>
                 <option value="painter">Painter</option>
+                <option value="hairdressing">Hairdressing</option>
+                <option value="mechanic">Mechanic</option>
+                <option value="bakery">Bakery</option>
+                <option value="decoration">Decoration</option>
+                <option value="makeup_artistry">Makeup Artistry</option>
+                <option value="bead_making">Bead Making</option>
+                <option value="shoe_making">Shoe Making</option>
+                <option value="event_mc">Event MC</option>
+                <option value="event_planners">Event Planners</option>
                 <option value="other">Other</option>
             </select>
 

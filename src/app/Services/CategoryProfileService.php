@@ -90,7 +90,7 @@ class CategoryProfileService
         // If no profile exists, create one
         if (! $profile) {
             $profile = $user->transportRides()->create([
-                'company_name' => '',
+                'driver_name' => '',
                 'type' => 'okada',
                 'price_per_seat' => 0,
                 'seats_available' => 1,

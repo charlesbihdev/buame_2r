@@ -26,7 +26,7 @@ export function TransportProfile({ profile }) {
 
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         _method: 'PUT',
-        company_name: profile?.company_name || '',
+        driver_name: profile?.driver_name || '',
         type: profile?.type || 'okada',
         description: profile?.description || '',
         location: profile?.location || '',
@@ -134,15 +134,15 @@ export function TransportProfile({ profile }) {
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="company_name">Company/Service Name</Label>
+                            <Label htmlFor="driver_name">Driver/Rider Name</Label>
                             <Input
-                                id="company_name"
-                                value={data.company_name}
-                                onChange={(e) => setData('company_name', e.target.value)}
+                                id="driver_name"
+                                value={data.driver_name}
+                                onChange={(e) => setData('driver_name', e.target.value)}
                                 className="mt-1"
-                                placeholder="Fast Okada & Car Riders"
+                                placeholder="Kwame Asante"
                             />
-                            <FormError error={errors.company_name || pageErrors?.company_name} className="mt-1" />
+                            <FormError error={errors.driver_name || pageErrors?.driver_name} className="mt-1" />
                         </div>
 
                         <div>

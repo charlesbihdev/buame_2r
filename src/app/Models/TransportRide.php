@@ -12,7 +12,7 @@ class TransportRide extends Model
 
     protected $fillable = [
         'user_id',
-        'company_name',
+        'driver_name',
         'type',
         'price_per_seat',
         'seats_available',

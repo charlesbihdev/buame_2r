@@ -28,7 +28,7 @@ class TransportController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'company_name' => ['required', 'string', 'max:255'],
+            'driver_name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:okada,car,taxi,bus,cargo,other'],
             'location' => ['required', 'string', 'max:255'],
             'price_per_seat' => ['required', 'numeric', 'min:0'],
@@ -65,7 +65,7 @@ class TransportController extends Controller
 
         // Profile update - validate all fields
         $validated = $request->validate([
-            'company_name' => ['required', 'string', 'max:255'],
+            'driver_name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:okada,car,taxi,bus,cargo,other'],
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
@@ -102,7 +102,7 @@ class TransportController extends Controller
 
         // Update transport data
         $transport->update([
-            'company_name' => $validated['company_name'],
+            'driver_name' => $validated['driver_name'],
             'type' => $validated['type'],
             'location' => $validated['location'],
             'address' => $validated['address'] ?? null,
