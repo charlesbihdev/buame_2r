@@ -26,6 +26,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:artisans'])->group(function () {
+        Route::post('artisans/toggle-active', [ArtisansController::class, 'toggleActive'])->name('artisans.toggle-active');
         Route::post('artisans', [ArtisansController::class, 'store'])->name('artisans.store');
         Route::put('artisans/{artisan}', [ArtisansController::class, 'update'])->name('artisans.update');
         Route::patch('artisans/{artisan}', [ArtisansController::class, 'update']);
@@ -64,6 +65,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:hotels'])->group(function () {
+        Route::post('hotels/toggle-active', [HotelsController::class, 'toggleActive'])->name('hotels.toggle-active');
         Route::post('hotels', [HotelsController::class, 'store'])->name('hotels.store');
         Route::put('hotels/{hotel}', [HotelsController::class, 'update'])->name('hotels.update');
         Route::patch('hotels/{hotel}', [HotelsController::class, 'update']);
@@ -83,10 +85,16 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:transport'])->group(function () {
+        Route::post('transport/toggle-active', [TransportController::class, 'toggleActive'])->name('transport.toggle-active');
         Route::post('transport', [TransportController::class, 'store'])->name('transport.store');
         Route::put('transport/{transport}', [TransportController::class, 'update'])->name('transport.update');
         Route::patch('transport/{transport}', [TransportController::class, 'update']);
         Route::delete('transport/{transport}', [TransportController::class, 'destroy'])->name('transport.destroy');
+        // Transport image management routes
+        Route::post('transport/images', [TransportController::class, 'storeImage'])->name('transport.images.store');
+        Route::post('transport/images/{image}', [TransportController::class, 'updateImage'])->name('transport.images.update');
+        Route::put('transport/images/{image}/primary', [TransportController::class, 'setPrimaryImage'])->name('transport.images.primary');
+        Route::delete('transport/images/{image}', [TransportController::class, 'destroyImage'])->name('transport.images.destroy');
     });
 
     // ========== RENTALS ==========
@@ -97,6 +105,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:rentals'])->group(function () {
+        Route::post('rentals/toggle-active', [RentalsController::class, 'toggleActive'])->name('rentals.toggle-active');
         Route::post('rentals', [RentalsController::class, 'store'])->name('rentals.store');
         Route::put('rentals/{rental}', [RentalsController::class, 'update'])->name('rentals.update');
         Route::patch('rentals/{rental}', [RentalsController::class, 'update']);
@@ -117,6 +126,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:jobs'])->group(function () {
+        Route::post('jobs/toggle-active', [JobsController::class, 'toggleActive'])->name('jobs.toggle-active');
         Route::post('jobs', [JobsController::class, 'store'])->name('jobs.store');
         Route::put('jobs/{job}', [JobsController::class, 'update'])->name('jobs.update');
         Route::patch('jobs/{job}', [JobsController::class, 'update']);

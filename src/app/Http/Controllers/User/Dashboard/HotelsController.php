@@ -167,6 +167,76 @@ class HotelsController extends Controller
             ->with('success', 'Hotel profile updated successfully.');
     }
 
+    /**
+     * Toggle hotel active status.
+     */
+    public function toggleActive(Request $request): RedirectResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $hotel = $user->hotels()->first();
+
+        if (!$hotel) {
+            return back()->with('error', 'Hotel profile not found.');
+        }
+
+        // If trying to activate, validate required fields
+        if (!$hotel->is_active) {
+            $errors = [];
+
+            if (empty($hotel->name)) {
+                $errors['name'] = 'Hotel name is required before making it visible.';
+            }
+
+            if (empty($hotel->type)) {
+                $errors['type'] = 'Property type is required before making it visible.';
+            }
+
+            if (empty($hotel->location)) {
+                $errors['location'] = 'Location is required before making it visible.';
+            }
+
+            if (empty($hotel->phone)) {
+                $errors['phone'] = 'Phone number is required before making it visible.';
+            }
+
+            if (empty($hotel->description)) {
+                $errors['description'] = 'Description is required before making it visible.';
+            }
+
+            // Check if at least one image exists
+            if ($hotel->images()->count() === 0) {
+                $errors['images'] = 'Please upload at least one image before making your hotel visible.';
+            }
+
+            if (!empty($errors)) {
+                // Map field names to user-friendly labels
+                $fieldLabels = [
+                    'name' => 'hotel name',
+                    'type' => 'property type',
+                    'location' => 'location',
+                    'phone' => 'phone number',
+                    'description' => 'description',
+                    'images' => 'at least one image',
+                ];
+
+                $missingFields = [];
+                foreach (array_keys($errors) as $field) {
+                    $missingFields[] = $fieldLabels[$field] ?? $field;
+                }
+
+                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+
+                return back()->withErrors($errors)->with('error', $errorMessage);
+            }
+        }
+
+        $hotel->is_active = !$hotel->is_active;
+        $hotel->save();
+
+        return back()->with('success', $hotel->is_active ? 'Hotel is now visible.' : 'Hotel is now hidden.');
+    }
+
     public function destroy(Hotel $hotel): RedirectResponse
     {
         $user = Auth::user();

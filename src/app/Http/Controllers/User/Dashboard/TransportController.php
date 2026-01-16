@@ -120,6 +120,76 @@ class TransportController extends Controller
             ->with('success', 'Transport profile updated successfully.');
     }
 
+    /**
+     * Toggle transport active status.
+     */
+    public function toggleActive(Request $request): RedirectResponse
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $transport = $user->transportRides()->first();
+
+        if (!$transport) {
+            return back()->with('error', 'Transport profile not found.');
+        }
+
+        // If trying to activate, validate required fields
+        if (!$transport->is_active) {
+            $errors = [];
+
+            if (empty($transport->driver_name)) {
+                $errors['driver_name'] = 'Driver/Rider name is required before making it visible.';
+            }
+
+            if (empty($transport->type)) {
+                $errors['type'] = 'Service type is required before making it visible.';
+            }
+
+            if (empty($transport->location)) {
+                $errors['location'] = 'Location is required before making it visible.';
+            }
+
+            if (empty($transport->phone)) {
+                $errors['phone'] = 'Phone number is required before making it visible.';
+            }
+
+            if (empty($transport->description)) {
+                $errors['description'] = 'Description is required before making it visible.';
+            }
+
+            // Check if at least one image exists
+            if ($transport->images()->count() === 0) {
+                $errors['images'] = 'Please upload at least one image before making your service visible.';
+            }
+
+            if (!empty($errors)) {
+                // Map field names to user-friendly labels
+                $fieldLabels = [
+                    'driver_name' => 'driver/rider name',
+                    'type' => 'service type',
+                    'location' => 'location',
+                    'phone' => 'phone number',
+                    'description' => 'description',
+                    'images' => 'at least one image',
+                ];
+
+                $missingFields = [];
+                foreach (array_keys($errors) as $field) {
+                    $missingFields[] = $fieldLabels[$field] ?? $field;
+                }
+
+                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+
+                return back()->withErrors($errors)->with('error', $errorMessage);
+            }
+        }
+
+        $transport->is_active = !$transport->is_active;
+        $transport->save();
+
+        return back()->with('success', $transport->is_active ? 'Transport service is now visible.' : 'Transport service is now hidden.');
+    }
+
     public function destroy(TransportRide $transport): RedirectResponse
     {
         $user = Auth::user();

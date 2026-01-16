@@ -185,10 +185,10 @@ class MarketplaceController extends Controller
     /**
      * Display the specified marketplace product.
      */
-    public function show($id): Response
+    public function show(MarketplaceProduct $marketplaceProduct): Response
     {
         $product = MarketplaceProduct::query()
-            ->where('id', $id)
+            ->where('id', $marketplaceProduct->id)
             ->where('is_active', true)
             ->where('is_approved', true)
             ->withActiveSubscription()
@@ -206,7 +206,7 @@ class MarketplaceController extends Controller
             ->first();
 
         if (! $product) {
-            abort(404, 'Product not found');
+            abort(404, 'Product not found or not available');
         }
 
         // Increment views count

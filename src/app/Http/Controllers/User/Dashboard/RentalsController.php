@@ -33,7 +33,7 @@ class RentalsController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
             'price' => ['required', 'numeric', 'min:0'],
-            'period' => ['required', 'string', 'in:day,week,month'],
+            'period' => ['required', 'string', 'in:day,week,month,year'],
             'description' => ['nullable', 'string'],
         ]);
 
@@ -71,7 +71,7 @@ class RentalsController extends Controller
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
-            'period' => ['required', 'string', 'in:day,week,month'],
+            'period' => ['required', 'string', 'in:day,week,month,year'],
             'description' => ['nullable', 'string'],
             'rental_terms' => ['nullable', 'string'],
             'is_active' => ['boolean'],
@@ -106,6 +106,80 @@ class RentalsController extends Controller
         $rental->update($validated);
 
         return back()->with('success', 'Rental updated successfully.');
+    }
+
+    /**
+     * Toggle rental active status.
+     */
+    public function toggleActive(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+        $rental = $user->rentals()->first();
+
+        if (!$rental) {
+            return back()->with('error', 'Rental profile not found.');
+        }
+
+        // If trying to activate, validate required fields
+        if (!$rental->is_active) {
+            $errors = [];
+
+            if (empty($rental->name)) {
+                $errors['name'] = 'Rental name is required before making it visible.';
+            }
+
+            if (empty($rental->type)) {
+                $errors['type'] = 'Rental type is required before making it visible.';
+            }
+
+            if (empty($rental->location)) {
+                $errors['location'] = 'Location is required before making it visible.';
+            }
+
+            if (empty($rental->phone)) {
+                $errors['phone'] = 'Phone number is required before making it visible.';
+            }
+
+            if (empty($rental->period)) {
+                $errors['period'] = 'Rental period is required before making it visible.';
+            }
+
+            if (empty($rental->description)) {
+                $errors['description'] = 'Description is required before making it visible.';
+            }
+
+            // Check if at least one image exists
+            if ($rental->images()->count() === 0) {
+                $errors['images'] = 'Please upload at least one image before making your rental visible.';
+            }
+
+            if (!empty($errors)) {
+                // Map field names to user-friendly labels
+                $fieldLabels = [
+                    'name' => 'rental name',
+                    'type' => 'rental type',
+                    'location' => 'location',
+                    'phone' => 'phone number',
+                    'period' => 'rental period',
+                    'description' => 'description',
+                    'images' => 'at least one image',
+                ];
+
+                $missingFields = [];
+                foreach (array_keys($errors) as $field) {
+                    $missingFields[] = $fieldLabels[$field] ?? $field;
+                }
+
+                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+
+                return back()->withErrors($errors)->with('error', $errorMessage);
+            }
+        }
+
+        $rental->is_active = !$rental->is_active;
+        $rental->save();
+
+        return back()->with('success', $rental->is_active ? 'Rental is now visible.' : 'Rental is now hidden.');
     }
 
     public function destroy(Rental $rental): RedirectResponse

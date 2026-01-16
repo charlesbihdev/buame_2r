@@ -4,24 +4,26 @@ import { router } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
-export function StoreVisibilityToggle({ store }) {
-    const [isActive, setIsActive] = useState(store?.is_active ?? false);
+export function ListingVisibilityToggle({ listing, routeName, label = 'Listing' }) {
+    const [isActive, setIsActive] = useState(listing?.is_active ?? false);
     const [processing, setProcessing] = useState(false);
 
     const handleToggle = () => {
         setIsActive(!isActive);
         setProcessing(true);
-        console.log('something happend');
 
         router.post(
-            route('user.dashboard.marketplace.store.toggle-active'),
+            route(routeName),
             {},
             {
                 preserveScroll: true,
                 preserveState: true,
                 only: ['categoryData', 'flash'],
                 onFinish: () => setProcessing(false),
-                onError: () => setIsActive(isActive), // Revert on error
+                onError: (errors) => {
+                    setIsActive(isActive); // Revert on error
+                    setProcessing(false);
+                },
             },
         );
     };
@@ -31,7 +33,7 @@ export function StoreVisibilityToggle({ store }) {
             {isActive ? <Eye className="h-4 w-4 text-[var(--primary)]" /> : <EyeOff className="h-4 w-4 text-gray-400" />}
             <div className="hidden flex-col md:flex">
                 <Label className="cursor-pointer text-xs font-semibold text-[var(--foreground)] dark:text-white">{isActive ? 'Visible' : 'Hidden'}</Label>
-                <span className="text-xs text-gray-500 dark:text-gray-400">Store</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">{label}</span>
             </div>
             <Switch checked={isActive} onCheckedChange={handleToggle} disabled={processing} className="ml-1 md:ml-2" />
         </div>

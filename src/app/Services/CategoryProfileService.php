@@ -43,6 +43,7 @@ class CategoryProfileService
                 'price_per_day' => 0,
                 'location' => '',
                 'phone' => $user->phone ?? '',
+                'is_active' => false,
             ]
         );
 
@@ -75,6 +76,7 @@ class CategoryProfileService
                 'price_per_night' => 0,
                 'location' => '',
                 'phone' => $user->phone,
+                'is_active' => false,
             ]
         );
     }
@@ -96,6 +98,7 @@ class CategoryProfileService
                 'seats_available' => 1,
                 'location' => '',
                 'phone' => $user->phone ?? '0000000000', // Ensure phone is not empty
+                'is_active' => false,
             ]);
             $profile->load(['images']);
         } else {
@@ -127,6 +130,7 @@ class CategoryProfileService
                 'period' => 'month',
                 'location' => '',
                 'phone' => $user->phone ?? '',
+                'is_active' => false,
             ]
         );
     }
@@ -146,6 +150,7 @@ class CategoryProfileService
                 'location' => '',
                 'phone' => $user->phone,
                 'description' => '',
+                'is_active' => false,
             ]
         );
     }

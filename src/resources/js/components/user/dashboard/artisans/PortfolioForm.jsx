@@ -39,6 +39,7 @@ export function PortfolioForm({ portfolio, onClose }) {
         if (isEdit) {
             put(route('user.dashboard.artisans.portfolio.update', portfolio.id), {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => {
                     reset();
                     onClose();
@@ -47,6 +48,7 @@ export function PortfolioForm({ portfolio, onClose }) {
         } else {
             post(route('user.dashboard.artisans.portfolio.store'), {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => {
                     reset();
                     setPreview(null);

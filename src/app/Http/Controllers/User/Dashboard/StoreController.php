@@ -20,7 +20,42 @@ class StoreController extends Controller
         $store = $user->store;
 
         if (!$store) {
-            return back()->withErrors(['store' => 'Store not found.']);
+            return back()->with('error', 'Store not found.');
+        }
+
+        // If trying to activate, validate required fields
+        if (!$store->is_active) {
+            $errors = [];
+
+            if (empty($store->name)) {
+                $errors['name'] = 'Store name is required before making it visible.';
+            }
+
+            if (empty($store->slug)) {
+                $errors['slug'] = 'Store URL slug is required before making it visible.';
+            }
+
+            if (empty($store->description)) {
+                $errors['description'] = 'Store description is required before making it visible.';
+            }
+
+            if (!empty($errors)) {
+                // Map field names to user-friendly labels
+                $fieldLabels = [
+                    'name' => 'store name',
+                    'slug' => 'store URL slug',
+                    'description' => 'description',
+                ];
+
+                $missingFields = [];
+                foreach (array_keys($errors) as $field) {
+                    $missingFields[] = $fieldLabels[$field] ?? $field;
+                }
+
+                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+
+                return back()->withErrors($errors)->with('error', $errorMessage);
+            }
         }
 
         $store->is_active = !$store->is_active;
