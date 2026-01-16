@@ -48,6 +48,19 @@ class MarketplaceController extends Controller
                 'limit' => 'You have reached your product limit (' . $store->product_limit . '). Please upgrade your tier to add more products.',
             ]);
         }
+
+        // Check image sizes before validation (5MB = 5 * 1024 * 1024 bytes)
+        $images = $request->file('images', []);
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                if ($image && $image->getSize() > 5 * 1024 * 1024) {
+                    return back()->withErrors([
+                        'images' => 'One or more images exceed 5MB. Please compress or resize your images before uploading.',
+                    ])->withInput();
+                }
+            }
+        }
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:electronics,furniture,food,agriculture,clothes,others'],
@@ -73,7 +86,6 @@ class MarketplaceController extends Controller
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
 
         // Remove images and specifications from validated data before creating product
-        $images = $request->file('images', []);
         $specifications = $request->input('specifications', []);
         unset($validated['images'], $validated['specifications']);
 
