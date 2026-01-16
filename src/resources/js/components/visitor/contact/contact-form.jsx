@@ -1,14 +1,23 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Toast } from '@/components/ui/toast';
+import emailjs from '@emailjs/browser';
 import { Send } from 'lucide-react';
-import { useForm } from '@inertiajs/react';
+import { useRef, useState } from 'react';
 
 export function ContactForm() {
-    const { data, setData, post, processing, errors } = useForm({
+    const formRef = useRef(null);
+    const [processing, setProcessing] = useState(false);
+    const [alert, setAlert] = useState({
+        show: false,
+        type: '',
+        message: '',
+    });
+
+    const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
@@ -18,24 +27,67 @@ export function ContactForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/contact', {
-            preserveScroll: true,
-            onSuccess: () => {
-                // Handle success
-            },
-        });
+
+        // Basic validation
+        if (!formData.name || !formData.email || !formData.message) {
+            setAlert({
+                show: true,
+                type: 'error',
+                message: 'Please fill in all required fields (Name, Email, and Message).',
+            });
+            return;
+        }
+
+        setProcessing(true);
+
+        emailjs
+            .sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_ID, formRef.current, {
+                publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+            })
+            .then(
+                () => {
+                    setAlert({
+                        show: true,
+                        type: 'success',
+                        message: 'Message sent successfully! We will get back to you soon.',
+                    });
+
+                    formRef.current.reset();
+                    setFormData({
+                        name: '',
+                        email: '',
+                        phone: '',
+                        inquiryType: '',
+                        message: '',
+                    });
+                    setProcessing(false);
+                },
+                (error) => {
+                    console.error('EmailJS Error:', error);
+                    setAlert({
+                        show: true,
+                        type: 'error',
+                        message: 'Failed to send message. Please try again later.',
+                    });
+                    setProcessing(false);
+                },
+            );
     };
 
     return (
         <div className="lg:col-span-7 xl:col-span-8">
-            <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5 md:p-8">
+            {alert.show && <Toast type={alert.type} message={alert.message} onHide={() => setAlert({ show: false, type: '', message: '' })} />}
+            <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-6 shadow-sm md:p-8 dark:border-white/10 dark:bg-white/5">
                 <div className="mb-8">
                     <h2 className="mb-2 text-2xl font-bold">Send us a Message</h2>
                     <p className="text-[#4c9a4c] dark:text-gray-400">
                         Fill out the form below and our support team will get back to you within 24 hours.
                     </p>
                 </div>
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
+                    {/* Hidden field for recipient email */}
+                    <input type="hidden" name="to_email" value={import.meta.env.VITE_CONTACT_EMAIL || ''} />
+
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         {/* Name */}
                         <div className="block">
@@ -44,13 +96,14 @@ export function ContactForm() {
                             </Label>
                             <Input
                                 id="name"
+                                name="from_name"
                                 type="text"
-                                value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 placeholder="e.g. Kwame Mensah"
-                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                required
                             />
-                            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
                         </div>
                         {/* Email */}
                         <div className="block">
@@ -59,13 +112,14 @@ export function ContactForm() {
                             </Label>
                             <Input
                                 id="email"
+                                name="from_email"
                                 type="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
-                                placeholder="e.g. kwame@example.com"
-                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                placeholder="e.g. user@example.com"
+                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                required
                             />
-                            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -76,23 +130,24 @@ export function ContactForm() {
                             </Label>
                             <Input
                                 id="phone"
+                                name="phone"
                                 type="tel"
-                                value={data.phone}
-                                onChange={(e) => setData('phone', e.target.value)}
+                                value={formData.phone}
+                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="e.g. 024 123 4567"
-                                className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light px-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
                             />
-                            {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
                         </div>
                         {/* Inquiry Type */}
                         <div className="block">
                             <Label htmlFor="inquiryType" className="mb-2 block text-sm font-semibold">
                                 Inquiry Type
                             </Label>
-                            <Select value={data.inquiryType} onValueChange={(value) => setData('inquiryType', value)}>
+                            <Select value={formData.inquiryType} onValueChange={(value) => setFormData({ ...formData, inquiryType: value })}>
                                 <SelectTrigger
                                     id="inquiryType"
-                                    className="h-12 rounded-lg border border-[var(--buame-border-light)] bg-background-light transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark"
+                                    name="inquiry_type"
+                                    className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
                                 >
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
@@ -104,7 +159,8 @@ export function ContactForm() {
                                     <SelectItem value="other">General Inquiry</SelectItem>
                                 </SelectContent>
                             </Select>
-                            {errors.inquiryType && <p className="mt-1 text-sm text-red-600">{errors.inquiryType}</p>}
+                            {/* Hidden input for EmailJS to capture the select value */}
+                            <input type="hidden" name="inquiry_type" value={formData.inquiryType} />
                         </div>
                     </div>
                     {/* Message */}
@@ -114,22 +170,23 @@ export function ContactForm() {
                         </Label>
                         <Textarea
                             id="message"
-                            value={data.message}
-                            onChange={(e) => setData('message', e.target.value)}
+                            name="message"
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             placeholder="How can we help you today?"
                             rows={5}
-                            className="resize-none rounded-lg border border-[var(--buame-border-light)] bg-background-light p-4 transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10 dark:bg-background-dark placeholder:text-[#4c9a4c]/50"
+                            className="bg-background-light dark:bg-background-dark resize-none rounded-lg border border-[var(--buame-border-light)] p-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                            required
                         />
-                        {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
                     </div>
                     {/* Submit Button */}
                     <div className="pt-2">
                         <Button
                             type="submit"
                             disabled={processing}
-                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-8 font-bold text-white shadow-lg shadow-[var(--primary)]/20 transition-all hover:bg-[#0eb50e] md:w-auto"
+                            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary)] px-8 font-bold text-white shadow-[var(--primary)]/20 shadow-lg transition-all hover:bg-[#0eb50e] md:w-auto"
                         >
-                            <span>Send Message</span>
+                            <span>{processing ? 'Sending...' : 'Send Message'}</span>
                             <Send className="h-5 w-5" />
                         </Button>
                     </div>
@@ -138,4 +195,3 @@ export function ContactForm() {
         </div>
     );
 }
-
