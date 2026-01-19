@@ -133,11 +133,22 @@ export function EditProductModal({ isOpen, onClose, product }) {
     };
 
     const categories = [
-        { value: 'electronics', label: 'Electronics' },
-        { value: 'furniture', label: 'Furniture' },
-        { value: 'food', label: 'Food' },
-        { value: 'agriculture', label: 'Agriculture' },
-        { value: 'clothes', label: 'Clothes' },
+        { value: 'mobile_phones', label: 'Mobile Phones & Accessories' },
+        { value: 'electronics', label: 'Electronics & Appliances' },
+        { value: 'computers', label: 'Computers & Laptops' },
+        { value: 'fashion', label: 'Fashion & Apparel' },
+        { value: 'footwear', label: 'Footwear' },
+        { value: 'health_beauty', label: 'Health & Beauty' },
+        { value: 'groceries', label: 'Groceries & Food Items' },
+        { value: 'home_living', label: 'Home & Living' },
+        { value: 'baby_kids', label: 'Baby & Kids' },
+        { value: 'sports_outdoor', label: 'Sports & Outdoor' },
+        { value: 'automotive', label: 'Automotive' },
+        { value: 'books_stationery', label: 'Books & Stationery' },
+        { value: 'building_hardware', label: 'Building & Hardware' },
+        { value: 'agriculture', label: 'Agriculture & Farm Supplies' },
+        { value: 'pet_supplies', label: 'Pet Supplies' },
+        { value: 'gifts', label: 'Gifts & Occasion Items' },
         { value: 'others', label: 'Others' },
     ];
 

@@ -8,11 +8,22 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
 
     const getCategoryLabel = (category) => {
         const labels = {
-            electronics: 'Electronics',
-            furniture: 'Furniture',
-            food: 'Food',
-            agriculture: 'Agriculture',
-            clothes: 'Clothes',
+            mobile_phones: 'Mobile Phones & Accessories',
+            electronics: 'Electronics & Appliances',
+            computers: 'Computers & Laptops',
+            fashion: 'Fashion & Apparel',
+            footwear: 'Footwear',
+            health_beauty: 'Health & Beauty',
+            groceries: 'Groceries & Food Items',
+            home_living: 'Home & Living',
+            baby_kids: 'Baby & Kids',
+            sports_outdoor: 'Sports & Outdoor',
+            automotive: 'Automotive',
+            books_stationery: 'Books & Stationery',
+            building_hardware: 'Building & Hardware',
+            agriculture: 'Agriculture & Farm Supplies',
+            pet_supplies: 'Pet Supplies',
+            gifts: 'Gifts & Occasion Items',
             others: 'Others',
         };
         return labels[category] || category;
