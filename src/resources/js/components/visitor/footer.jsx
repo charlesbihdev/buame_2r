@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Globe, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { AppLogo } from './app-logo';
 
 export function Footer() {
@@ -13,7 +13,7 @@ export function Footer() {
                         <p className="text-muted-foreground text-sm leading-relaxed">
                             Connecting Western North and beyond digitally. Empowering communities through service and opportunity.
                         </p>
-                        <div className="mt-2 flex gap-4">
+                        {/* <div className="mt-2 flex gap-4">
                             <a
                                 href="#"
                                 className="bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full transition-colors"
@@ -26,7 +26,7 @@ export function Footer() {
                             >
                                 <MessageCircle className="h-4 w-4" />
                             </a>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Platform Column */}
@@ -39,18 +39,38 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/services" className="hover:text-primary transition-colors">
-                                    Browse Services
+                                <Link href="/marketplace" className="hover:text-primary transition-colors">
+                                    Marketplace
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/jobs" className="hover:text-primary transition-colors">
-                                    Find Jobs
+                                    Jobs
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/transport" className="hover:text-primary transition-colors">
                                     Transport
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/hotels" className="hover:text-primary transition-colors">
+                                    Hotels
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/artisans" className="hover:text-primary transition-colors">
+                                    Artisans
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/rentals" className="hover:text-primary transition-colors">
+                                    Rentals
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/restaurants" className="hover:text-primary transition-colors">
+                                    Restaurants
                                 </Link>
                             </li>
                         </ul>

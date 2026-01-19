@@ -13,7 +13,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
     const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
         title: '',
         category: '',
-        has_price: true,
+        has_price: false,
         price: '',
         price_type: '',
         condition: 'new',
@@ -45,7 +45,10 @@ export function ProductFormModal({ isOpen, onClose, store }) {
 
     const removeImage = (index) => {
         URL.revokeObjectURL(imagePreviews[index]);
-        setData('images', data.images.filter((_, i) => i !== index));
+        setData(
+            'images',
+            data.images.filter((_, i) => i !== index),
+        );
         setImagePreviews((prev) => prev.filter((_, i) => i !== index));
     };
 
@@ -60,7 +63,10 @@ export function ProductFormModal({ isOpen, onClose, store }) {
     };
 
     const removeSpecification = (index) => {
-        setData('specifications', data.specifications.filter((_, i) => i !== index));
+        setData(
+            'specifications',
+            data.specifications.filter((_, i) => i !== index),
+        );
     };
 
     const handleSubmit = (e) => {
@@ -283,13 +289,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                     <div>
                         <div className="mb-2 flex items-center justify-between">
                             <Label>Specifications</Label>
-                            <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                onClick={addSpecification}
-                                className="h-8 gap-1 text-xs"
-                            >
+                            <Button type="button" variant="outline" size="sm" onClick={addSpecification} className="h-8 gap-1 text-xs">
                                 <Plus className="h-3 w-3" />
                                 Add Specification
                             </Button>
@@ -326,7 +326,11 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                         <Button type="button" variant="outline" onClick={handleClose} disabled={processing}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                        <Button
+                            type="submit"
+                            disabled={processing}
+                            className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
+                        >
                             {processing ? 'Adding...' : 'Add Product'}
                         </Button>
                     </DialogFooter>

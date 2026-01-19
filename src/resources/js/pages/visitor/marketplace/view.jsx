@@ -1,6 +1,6 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, ChevronLeft, ChevronRight, Store, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, ChevronLeft, ChevronRight, Store, ExternalLink, X, ZoomIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -25,6 +25,7 @@ export default function MarketplaceView({ product }) {
     }
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
     const images = product.images && product.images.length > 0 ? product.images : [product.primary_image];
     const currentImage = images[currentImageIndex] || product.primary_image;
 
@@ -34,6 +35,15 @@ export default function MarketplaceView({ product }) {
 
     const prevImage = () => {
         setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    };
+
+    const openLightbox = (index) => {
+        setCurrentImageIndex(index);
+        setLightboxOpen(true);
+    };
+
+    const closeLightbox = () => {
+        setLightboxOpen(false);
     };
 
     const whatsappUrl = product.whatsapp_url || (product.whatsapp ? `https://wa.me/${product.whatsapp.replace(/\D/g, '')}?text=Hello, I'm interested in buying ${product.title}.` : null);
@@ -53,39 +63,46 @@ export default function MarketplaceView({ product }) {
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         {/* Image Gallery */}
-                        <div className="relative mb-6 h-96 overflow-hidden rounded-xl bg-gray-200">
-                            <div
-                                className="h-full w-full bg-cover bg-center transition-transform duration-300"
-                                style={{
-                                    backgroundImage: `url(${currentImage})`,
-                                }}
-                            />
+                        <div className="mb-6">
+                            {/* Primary Image */}
+                            <button
+                                onClick={() => openLightbox(currentImageIndex)}
+                                className="group relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800"
+                            >
+                                <img
+                                    src={currentImage}
+                                    alt={product.title}
+                                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/30">
+                                    <ZoomIn className="h-10 w-10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                                </div>
+                            </button>
+
+                            {/* Thumbnail Grid */}
                             {images.length > 1 && (
-                                <>
-                                    <button
-                                        onClick={prevImage}
-                                        className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
-                                    >
-                                        <ChevronLeft className="h-6 w-6" />
-                                    </button>
-                                    <button
-                                        onClick={nextImage}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
-                                    >
-                                        <ChevronRight className="h-6 w-6" />
-                                    </button>
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                                        {images.map((_, index) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => setCurrentImageIndex(index)}
-                                                className={`h-2 rounded-full transition-all ${
-                                                    index === currentImageIndex ? 'w-8 bg-white' : 'w-2 bg-white/50'
-                                                }`}
+                                <div className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6">
+                                    {images.map((image, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setCurrentImageIndex(index)}
+                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${
+                                                index === currentImageIndex
+                                                    ? 'ring-2 ring-[var(--primary)] ring-offset-2'
+                                                    : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
+                                            }`}
+                                        >
+                                            <img
+                                                src={image}
+                                                alt={`${product.title} - Image ${index + 1}`}
+                                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                                             />
-                                        ))}
-                                    </div>
-                                </>
+                                            {index !== currentImageIndex && (
+                                                <div className="absolute inset-0 bg-black/0 transition-all group-hover:bg-black/20" />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
                             )}
                         </div>
 
@@ -283,8 +300,71 @@ export default function MarketplaceView({ product }) {
                     </div>
                 </div>
             </div>
+
+            {/* Lightbox/Zoom Modal */}
+            {lightboxOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4">
+                    {/* Close Button */}
+                    <button
+                        onClick={closeLightbox}
+                        className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                    >
+                        <X className="h-6 w-6" />
+                    </button>
+
+                    {/* Previous Button */}
+                    {images.length > 1 && (
+                        <button
+                            onClick={prevImage}
+                            className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                        >
+                            <ChevronLeft className="h-6 w-6" />
+                        </button>
+                    )}
+
+                    {/* Main Image */}
+                    <div className="relative max-h-[85vh] max-w-5xl">
+                        <img
+                            src={currentImage}
+                            alt={product.title}
+                            className="max-h-[85vh] w-full rounded-lg object-contain"
+                        />
+
+                        {/* Image Counter */}
+                        <div className="mt-4 text-center">
+                            <p className="text-lg font-semibold text-white">{product.title}</p>
+                            <p className="mt-1 text-sm text-gray-400">
+                                {currentImageIndex + 1} / {images.length}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Next Button */}
+                    {images.length > 1 && (
+                        <button
+                            onClick={nextImage}
+                            className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                        >
+                            <ChevronRight className="h-6 w-6" />
+                        </button>
+                    )}
+
+                    {/* Thumbnail Navigation */}
+                    {images.length > 1 && (
+                        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/50 p-2 backdrop-blur-sm">
+                            {images.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentImageIndex(index)}
+                                    className={`h-2 w-2 rounded-full transition-all ${
+                                        index === currentImageIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
         </VisitorLayout>
     );
 }
-
-
