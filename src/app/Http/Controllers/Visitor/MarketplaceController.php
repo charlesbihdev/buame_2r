@@ -190,7 +190,7 @@ class MarketplaceController extends Controller
         $product = MarketplaceProduct::query()
             ->where('id', $marketplaceProduct->id)
             ->where('is_active', true)
-            ->where('is_approved', true)
+            // ->where('is_approved', true)
             ->withActiveSubscription()
             ->with(['images' => function ($query) {
                 $query->orderBy('is_primary', 'desc')
