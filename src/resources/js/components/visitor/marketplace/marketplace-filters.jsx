@@ -8,11 +8,22 @@ import { useCallback, useState } from 'react';
 export function MarketplaceFilters({ filters = {} }) {
     const categories = [
         { id: 'all', label: 'All Categories' },
-        { id: 'electronics', label: 'Electronics' },
-        { id: 'furniture', label: 'Furniture' },
-        { id: 'food', label: 'Food' },
-        { id: 'agriculture', label: 'Agriculture' },
-        { id: 'clothes', label: 'Clothes' },
+        { id: 'mobile_phones', label: 'Mobile Phones & Accessories' },
+        { id: 'electronics', label: 'Electronics & Appliances' },
+        { id: 'computers', label: 'Computers & Laptops' },
+        { id: 'fashion', label: 'Fashion & Apparel' },
+        { id: 'footwear', label: 'Footwear' },
+        { id: 'health_beauty', label: 'Health & Beauty' },
+        { id: 'groceries', label: 'Groceries & Food Items' },
+        { id: 'home_living', label: 'Home & Living' },
+        { id: 'baby_kids', label: 'Baby & Kids' },
+        { id: 'sports_outdoor', label: 'Sports & Outdoor' },
+        { id: 'automotive', label: 'Automotive' },
+        { id: 'books_stationery', label: 'Books & Stationery' },
+        { id: 'building_hardware', label: 'Building & Hardware' },
+        { id: 'agriculture', label: 'Agriculture & Farm Supplies' },
+        { id: 'pet_supplies', label: 'Pet Supplies' },
+        { id: 'gifts', label: 'Gifts & Occasion Items' },
         { id: 'others', label: 'Others' },
     ];
 

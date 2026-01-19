@@ -6,11 +6,13 @@ import { Filter, Grid3x3, List } from 'lucide-react';
 export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterToggle }) {
     const quickFilters = [
         { name: 'All', category: 'all', icon: Grid3x3 },
+        { name: 'Phones', category: 'mobile_phones', icon: Grid3x3 },
+        { name: 'Computers', category: 'computers', icon: Grid3x3 },
         { name: 'Electronics', category: 'electronics', icon: Grid3x3 },
-        { name: 'Furniture', category: 'furniture', icon: Grid3x3 },
-        { name: 'Food', category: 'food', icon: Grid3x3 },
-        { name: 'Agriculture', category: 'agriculture', icon: Grid3x3 },
-        { name: 'Clothes', category: 'clothes', icon: Grid3x3 },
+        { name: 'Furniture', category: 'home_living', icon: Grid3x3 },
+        { name: 'Fashion', category: 'fashion', icon: Grid3x3 },
+        { name: 'Automotive', category: 'automotive', icon: Grid3x3 },
+        { name: 'Others', category: 'others', icon: Grid3x3 },
     ];
 
     const handleCategoryClick = (category) => {

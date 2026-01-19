@@ -68,11 +68,11 @@ export function Footer() {
                                     Rentals
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link href="/restaurants" className="hover:text-primary transition-colors">
                                     Restaurants
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
 
