@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade')->after('user_id');
             $table->string('title');
             $table->enum('category', ['electronics', 'furniture', 'food', 'agriculture', 'clothes', 'others'])->index();
-            $table->decimal('price', 10, 2)->index();
+            $table->decimal('price', 10, 2)->nullable()->index();
             $table->string('price_type', 50)->nullable();
             $table->enum('condition', ['new', 'like_new', 'used', 'refurbished'])->nullable();
             $table->string('location')->index();

@@ -210,7 +210,9 @@ export default function MarketplaceView({ product }) {
                             {/* Pricing */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Price</div>
-                                <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{product.price}</div>
+                                <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                    {product.price || 'Contact for price'}
+                                </div>
                             </div>
 
                             {/* Contact */}

@@ -64,7 +64,8 @@ class MarketplaceController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:electronics,furniture,food,agriculture,clothes,others'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'has_price' => ['nullable', 'boolean'],
+            'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],
             'condition' => ['nullable', 'string', 'in:new,like_new,used,refurbished'],
             'location' => ['required', 'string', 'max:255'],
@@ -79,11 +80,17 @@ class MarketplaceController extends Controller
             'specifications.*' => ['string', 'max:255'],
         ]);
 
-
-
         $validated['user_id'] = $user->id;
         $validated['store_id'] = $store->id;
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
+
+        // Handle optional price - set to null if has_price is not checked
+        $hasPrice = in_array($request->input('has_price'), ['true', '1', 'yes', true, 1], true);
+        if (!$hasPrice) {
+            $validated['price'] = null;
+            $validated['price_type'] = null;
+        }
+        unset($validated['has_price']);
 
         // Remove images and specifications from validated data before creating product
         $specifications = $request->input('specifications', []);
@@ -140,7 +147,8 @@ class MarketplaceController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'in:electronics,furniture,food,agriculture,clothes,others'],
-            'price' => ['required', 'numeric', 'min:0'],
+            'has_price' => ['nullable', 'boolean'],
+            'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],
             'condition' => ['nullable', 'string', 'in:new,like_new,used,refurbished'],
             'location' => ['required', 'string', 'max:255'],
@@ -160,6 +168,14 @@ class MarketplaceController extends Controller
         ]);
 
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
+
+        // Handle optional price - set to null if has_price is not checked
+        $hasPrice = in_array($request->input('has_price'), ['true', '1', 'yes', true, 1], true);
+        if (!$hasPrice) {
+            $validated['price'] = null;
+            $validated['price_type'] = null;
+        }
+        unset($validated['has_price']);
 
         // Remove images, specifications and their removal arrays from validated data
         $newImages = $request->file('images', []);
@@ -242,7 +258,9 @@ class MarketplaceController extends Controller
 
         $marketplace->delete();
 
-        return redirect()->route('user.dashboard.index')
-            ->with('success', 'Product deleted successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'marketplace',
+            'section' => 'products',
+        ])->with('success', 'Product deleted successfully.');
     }
 }

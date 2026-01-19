@@ -89,9 +89,12 @@ class MarketplaceController extends Controller
                 : '/assets/visitors/marketplace.jpg';
 
             // Format price
-            $priceDisplay = '₵' . number_format($product->price, 2);
-            if ($product->price_type) {
-                $priceDisplay .= ' / ' . $product->price_type;
+            $priceDisplay = null;
+            if ($product->price !== null) {
+                $priceDisplay = '₵' . number_format($product->price, 2);
+                if ($product->price_type) {
+                    $priceDisplay .= ' / ' . $product->price_type;
+                }
             }
 
             return [
@@ -190,7 +193,7 @@ class MarketplaceController extends Controller
         $product = MarketplaceProduct::query()
             ->where('id', $marketplaceProduct->id)
             ->where('is_active', true)
-            ->where('is_approved', true)
+            // ->where('is_approved', true)
             ->withActiveSubscription()
             ->with(['images' => function ($query) {
                 $query->orderBy('is_primary', 'desc')
@@ -225,9 +228,12 @@ class MarketplaceController extends Controller
             : '/assets/visitors/marketplace.jpg';
 
         // Format price
-        $priceDisplay = '₵' . number_format($product->price, 2);
-        if ($product->price_type) {
-            $priceDisplay .= ' / ' . $product->price_type;
+        $priceDisplay = null;
+        if ($product->price !== null) {
+            $priceDisplay = '₵' . number_format($product->price, 2);
+            if ($product->price_type) {
+                $priceDisplay .= ' / ' . $product->price_type;
+            }
         }
 
         // Format condition
