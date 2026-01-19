@@ -76,7 +76,9 @@ export function MarketplaceProducts({ products = [] }) {
                             <span className="truncate">{product.location}</span>
                         </div>
                         <div className="mt-auto flex items-center justify-between border-t border-[var(--buame-border-light)] pt-4 dark:border-white/10">
-                            <span className="text-lg font-black text-[var(--foreground)] dark:text-[var(--primary)]">{product.price}</span>
+                            <span className="text-lg font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                {product.price || 'Contact for price'}
+                            </span>
                             <Button asChild variant="ghost" className="text-sm font-bold text-[var(--primary)] hover:text-[var(--primary)] hover:underline">
                                 <Link href={`/marketplace/${product.id}`}>View Details</Link>
                             </Button>

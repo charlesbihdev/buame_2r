@@ -14,6 +14,7 @@ export function EditProductModal({ isOpen, onClose, product }) {
         _method: 'put',
         title: product?.title || '',
         category: product?.category || '',
+        has_price: product?.price !== null && product?.price !== undefined,
         price: product?.price || '',
         price_type: product?.price_type || '',
         condition: product?.condition || 'new',
@@ -259,32 +260,47 @@ export function EditProductModal({ isOpen, onClose, product }) {
                         <FormError error={errors.category} />
                     </div>
 
-                    {/* Price */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <Label htmlFor="edit-price">Price (GH₵) *</Label>
-                            <Input
-                                id="edit-price"
-                                type="number"
-                                step="0.01"
-                                min="0"
-                                value={data.price}
-                                onChange={(e) => setData('price', e.target.value)}
-                                placeholder="0.00"
-                                required
-                            />
-                            <FormError error={errors.price} />
-                        </div>
-                        <div>
-                            <Label htmlFor="edit-price_type">Price Type</Label>
-                            <Input
-                                id="edit-price_type"
-                                value={data.price_type}
-                                onChange={(e) => setData('price_type', e.target.value)}
-                                placeholder="e.g., /kg, /bunch"
-                            />
-                        </div>
+                    {/* Price Toggle */}
+                    <div className="flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            id="edit-has_price"
+                            checked={data.has_price}
+                            onChange={(e) => setData('has_price', e.target.checked)}
+                            className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <Label htmlFor="edit-has_price" className="cursor-pointer">
+                            Add Price
+                        </Label>
                     </div>
+
+                    {/* Price */}
+                    {data.has_price && (
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <Label htmlFor="edit-price">Price (GH₵)</Label>
+                                <Input
+                                    id="edit-price"
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    value={data.price}
+                                    onChange={(e) => setData('price', e.target.value)}
+                                    placeholder="0.00"
+                                />
+                                <FormError error={errors.price} />
+                            </div>
+                            <div>
+                                <Label htmlFor="edit-price_type">Price Type</Label>
+                                <Input
+                                    id="edit-price_type"
+                                    value={data.price_type}
+                                    onChange={(e) => setData('price_type', e.target.value)}
+                                    placeholder="e.g., /kg, /bunch"
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     {/* Condition */}
                     <div>

@@ -89,9 +89,12 @@ class MarketplaceController extends Controller
                 : '/assets/visitors/marketplace.jpg';
 
             // Format price
-            $priceDisplay = '₵' . number_format($product->price, 2);
-            if ($product->price_type) {
-                $priceDisplay .= ' / ' . $product->price_type;
+            $priceDisplay = null;
+            if ($product->price !== null) {
+                $priceDisplay = '₵' . number_format($product->price, 2);
+                if ($product->price_type) {
+                    $priceDisplay .= ' / ' . $product->price_type;
+                }
             }
 
             return [
@@ -225,9 +228,12 @@ class MarketplaceController extends Controller
             : '/assets/visitors/marketplace.jpg';
 
         // Format price
-        $priceDisplay = '₵' . number_format($product->price, 2);
-        if ($product->price_type) {
-            $priceDisplay .= ' / ' . $product->price_type;
+        $priceDisplay = null;
+        if ($product->price !== null) {
+            $priceDisplay = '₵' . number_format($product->price, 2);
+            if ($product->price_type) {
+                $priceDisplay .= ' / ' . $product->price_type;
+            }
         }
 
         // Format condition

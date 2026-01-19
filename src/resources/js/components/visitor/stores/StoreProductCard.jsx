@@ -94,8 +94,10 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                     <div className="flex items-end justify-between">
                         <div>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-xl font-black text-[var(--primary)]">GH₵ {formatPrice(product.price)}</span>
-                                {product.price_type && (
+                                <span className="text-xl font-black text-[var(--primary)]">
+                                    {product.price !== null ? `GH₵ ${formatPrice(product.price)}` : 'Contact for price'}
+                                </span>
+                                {product.price !== null && product.price_type && (
                                     <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
                                 )}
                             </div>
@@ -191,8 +193,10 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
 
                 <div className="mt-auto">
                     <div className="mb-2 flex items-baseline gap-1">
-                        <span className="text-2xl font-black text-[var(--foreground)] dark:text-white">GH₵ {formatPrice(product.price)}</span>
-                        {product.price_type && (
+                        <span className="text-2xl font-black text-[var(--foreground)] dark:text-white">
+                            {product.price !== null ? `GH₵ ${formatPrice(product.price)}` : 'Contact for price'}
+                        </span>
+                        {product.price !== null && product.price_type && (
                             <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
                         )}
                     </div>
