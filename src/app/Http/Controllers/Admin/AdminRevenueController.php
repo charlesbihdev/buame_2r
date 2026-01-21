@@ -73,13 +73,20 @@ class AdminRevenueController extends Controller
             ->get();
 
         // Monthly trend (last 12 months)
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            // SQLite doesn't support YEAR()/MONTH()
+            $yearExpr = "CAST(strftime('%Y', paid_at) AS INTEGER)";
+            $monthExpr = "CAST(strftime('%m', paid_at) AS INTEGER)";
+        } else {
+            $yearExpr = 'YEAR(paid_at)';
+            $monthExpr = 'MONTH(paid_at)';
+        }
+
         $monthlyTrend = Payment::where('status', 'completed')
             ->where('paid_at', '>=', now()->subMonths(12))
-            ->select(
-                DB::raw('YEAR(paid_at) as year'),
-                DB::raw('MONTH(paid_at) as month'),
-                DB::raw('sum(amount) as total')
-            )
+            ->selectRaw("$yearExpr as year, $monthExpr as month, sum(amount) as total")
             ->groupBy('year', 'month')
             ->orderBy('year')
             ->orderBy('month')

@@ -33,8 +33,17 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.super' => \App\Http\Middleware\EnsureSuperAdmin::class,
         ]);
 
-        // Redirect unauthenticated users to user.login instead of default 'login'
-        $middleware->redirectGuestsTo('/user/login');
+        // Redirect unauthenticated users based on route context
+        // Admin routes redirect to admin login, user routes redirect to user login
+        $middleware->redirectGuestsTo(function ($request) {
+            // Check if the request is for an admin route
+            if ($request->is('admin*') || $request->routeIs('admin.*')) {
+                return route('admin.login');
+            }
+
+            // Default to user login for all other routes
+            return '/user/login';
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
