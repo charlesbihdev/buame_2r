@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Admin;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -38,6 +40,13 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        // Format admin for shared props if authenticated via admin guard
+        $admin = null;
+        if (Auth::guard('admin')->check()) {
+            $adminModel = Auth::guard('admin')->user();
+            $admin = $this->formatAdmin($adminModel);
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -45,6 +54,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'admin' => $admin,
             'categories' => config('categories.list'),
             'flash' => [
                 'error' => $request->session()->get('error'),
@@ -53,6 +63,24 @@ class HandleInertiaRequests extends Middleware
                 'status' => $request->session()->get('status'),
                 'warning' => $request->session()->get('warning'),
             ],
+        ];
+    }
+
+    /**
+     * Format admin model for Inertia shared props.
+     * Matches the structure expected by AdminLayout component.
+     */
+    private function formatAdmin(Admin $admin): array
+    {
+        return [
+            'id' => $admin->id,
+            'name' => $admin->name,
+            'email' => $admin->email,
+            'role' => $admin->role->value,
+            'role_label' => $admin->role->label(),
+            'is_super_admin' => $admin->isSuperAdmin(),
+            'can_access_revenue' => $admin->canAccessRevenue(),
+            'can_manage_admins' => $admin->canManageAdmins(),
         ];
     }
 }
