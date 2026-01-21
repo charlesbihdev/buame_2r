@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/user/auth.php'));
             Route::middleware('web')
                 ->group(base_path('routes/user/dashboard.php'));
+            Route::middleware('web')
+                ->group(base_path('routes/admin.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -27,6 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'subscription.active' => \App\Http\Middleware\EnsureActiveSubscription::class,
+            'admin.auth' => \App\Http\Middleware\AdminAuthenticate::class,
+            'admin.super' => \App\Http\Middleware\EnsureSuperAdmin::class,
         ]);
 
         // Redirect unauthenticated users to user.login instead of default 'login'
