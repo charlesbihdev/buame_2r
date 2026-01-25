@@ -10,20 +10,42 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('reviewable_type'); // Polymorphic: App\Models\Artisan, App\Models\Hotel, etc.
-            $table->unsignedBigInteger('reviewable_id');
+
+            // Reviewer info (visitors, no account required)
+            $table->string('reviewer_name');
+            $table->string('reviewer_phone', 20);
+
+            // Review content
             $table->integer('rating')->index(); // 1-5
             $table->text('comment')->nullable();
-            $table->boolean('is_verified')->default(false);
+
+            // Moderation - admin must approve before visible
+            $table->boolean('is_approved')->default(false)->index();
+
+            // Optional foreign keys for each category (only one will be set)
+            $table->foreignId('artisan_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('hotel_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('transport_ride_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('marketplace_product_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('rental_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('job_id')->nullable()->constrained('job_listings')->onDelete('cascade');
+            $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade');
+
             $table->timestamps();
-            
-            $table->index(['reviewable_type', 'reviewable_id']);
+        });
+
+        // Review images table
+        Schema::create('review_images', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('review_id')->constrained()->onDelete('cascade');
+            $table->string('image_path');
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('review_images');
         Schema::dropIfExists('reviews');
     }
 };

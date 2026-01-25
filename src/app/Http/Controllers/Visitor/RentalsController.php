@@ -85,7 +85,13 @@ class RentalsController extends Controller
      */
     public function show(string $id): Response
     {
-        $rental = Rental::with(['images', 'features', 'user', 'reviews'])
+        $rental = Rental::with(['images', 'features', 'user'])
+            ->with(['reviews' => function ($query) {
+                $query->approved()
+                    ->with('images')
+                    ->latest()
+                    ->limit(50);
+            }])
             ->where('is_active', true)
             ->withActiveSubscription()
             ->findOrFail($id);
@@ -101,6 +107,28 @@ class RentalsController extends Controller
             ->get()
             ->pluck('image_path')
             ->toArray();
+
+        // Calculate rating breakdown from approved reviews
+        $ratingBreakdown = [
+            5 => $rental->reviews->where('rating', 5)->count(),
+            4 => $rental->reviews->where('rating', 4)->count(),
+            3 => $rental->reviews->where('rating', 3)->count(),
+            2 => $rental->reviews->where('rating', 2)->count(),
+            1 => $rental->reviews->where('rating', 1)->count(),
+        ];
+
+        // Format reviews for frontend
+        $formattedReviews = $rental->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'reviewer_name' => $review->reviewer_name,
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'created_at' => $review->created_at->toISOString(),
+                'initials' => collect(explode(' ', $review->reviewer_name))->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join(''),
+                'images' => $review->images->map(fn ($img) => ['url' => asset('storage/'.$img->image_path)]),
+            ];
+        });
 
         return Inertia::render('visitor/rentals/view', [
             'rental' => [
@@ -123,6 +151,10 @@ class RentalsController extends Controller
                     'phone' => $rental->user->phone,
                 ],
             ],
+            'reviews' => $formattedReviews,
+            'average_rating' => $rental->average_rating,
+            'reviews_count' => $rental->reviews_count,
+            'rating_breakdown' => $ratingBreakdown,
         ]);
     }
 }

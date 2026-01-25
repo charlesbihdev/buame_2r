@@ -30,7 +30,7 @@ return new class extends Migration
                 'agriculture',
                 'pet_supplies',
                 'gifts',
-                'others'
+                'others',
             ])->index();
             $table->decimal('price', 10, 2)->nullable()->index();
             $table->string('price_type', 50)->nullable();
@@ -41,8 +41,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('delivery_available')->default(false);
             $table->string('warranty')->nullable();
-            $table->decimal('rating', 3, 2)->default(0.00)->index();
-            $table->integer('reviews_count')->default(0);
             $table->boolean('is_approved')->default(false)->index();
             $table->boolean('is_active')->default(true)->index();
             $table->integer('views_count')->default(0);

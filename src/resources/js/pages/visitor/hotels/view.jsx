@@ -1,5 +1,6 @@
 import { HotelImageGallery } from '@/components/visitor/hotels/HotelImageGallery';
 import { Button } from '@/components/ui/button';
+import { ReviewSection } from '@/components/ui/review-section';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
@@ -53,7 +54,7 @@ const getAmenityIcon = (amenity) => {
     return amenityIcons[amenity] || Users;
 };
 
-export default function HotelView({ hotel }) {
+export default function HotelView({ hotel, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!hotel) {
         return (
             <VisitorLayout>
@@ -340,6 +341,16 @@ export default function HotelView({ hotel }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="hotel"
+                    reviewableId={hotel?.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </div>
         </VisitorLayout>
     );

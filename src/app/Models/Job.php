@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class Job extends Model
 {
@@ -73,9 +75,19 @@ class Job extends Model
         return $this->hasMany(JobBenefit::class);
     }
 
-    public function reviews(): MorphMany
+    public function reviews(): HasMany
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return Cache::remember("job.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        return Cache::remember("job.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
     }
 
     public function favorites(): MorphMany

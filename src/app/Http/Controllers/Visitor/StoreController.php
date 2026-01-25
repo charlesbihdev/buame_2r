@@ -20,6 +20,12 @@ class StoreController extends Controller
                 ->where('is_active', true)
                 ->latest();
         }])
+            ->with(['reviews' => function ($query) {
+                $query->approved()
+                    ->with('images')
+                    ->latest()
+                    ->limit(50);
+            }])
             ->where('slug', $slug)
             ->where('is_active', true)
             ->withActiveSubscription()
@@ -83,6 +89,28 @@ class StoreController extends Controller
             ];
         });
 
+        // Calculate rating breakdown from approved reviews
+        $ratingBreakdown = [
+            5 => $store->reviews->where('rating', 5)->count(),
+            4 => $store->reviews->where('rating', 4)->count(),
+            3 => $store->reviews->where('rating', 3)->count(),
+            2 => $store->reviews->where('rating', 2)->count(),
+            1 => $store->reviews->where('rating', 1)->count(),
+        ];
+
+        // Format reviews for frontend
+        $formattedReviews = $store->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'reviewer_name' => $review->reviewer_name,
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'created_at' => $review->created_at->toISOString(),
+                'initials' => collect(explode(' ', $review->reviewer_name))->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join(''),
+                'images' => $review->images->map(fn ($img) => ['url' => asset('storage/'.$img->image_path)]),
+            ];
+        });
+
         return Inertia::render('visitor/stores/show', [
             'store' => [
                 'id' => $store->id,
@@ -98,6 +126,10 @@ class StoreController extends Controller
             'products' => $products,
             'filters' => $request->only(['search', 'location', 'category', 'sort']),
             'categoryCounts' => $categoryCounts,
+            'reviews' => $formattedReviews,
+            'average_rating' => $store->average_rating,
+            'reviews_count' => $store->reviews_count,
+            'rating_breakdown' => $ratingBreakdown,
         ]);
     }
 }

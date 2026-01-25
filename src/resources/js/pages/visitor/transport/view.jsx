@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { ReviewSection } from '@/components/ui/review-section';
 import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
@@ -57,7 +58,7 @@ const paymentIcons = {
     card: CreditCard,
 };
 
-export default function TransportView({ ride }) {
+export default function TransportView({ ride, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!ride) {
         return (
             <VisitorLayout>
@@ -310,6 +311,16 @@ export default function TransportView({ ride }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="transport"
+                    reviewableId={ride?.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </div>
         </VisitorLayout>
     );

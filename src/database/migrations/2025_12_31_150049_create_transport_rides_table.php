@@ -20,8 +20,6 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->text('operating_locations')->nullable(); // Replaces routes table per discussion
-            $table->decimal('rating', 3, 2)->default(0.00)->index();
-            $table->integer('reviews_count')->default(0);
             $table->string('phone', 20);
             $table->string('whatsapp', 20)->nullable();
             $table->string('email')->nullable();
@@ -32,7 +30,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true)->index();
             $table->integer('views_count')->default(0);
             $table->timestamps();
-            
+
             $table->index(['latitude', 'longitude']);
         });
     }

@@ -6,7 +6,9 @@ use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class Artisan extends Model
 {
@@ -21,8 +23,6 @@ class Artisan extends Model
         'experience_level',
         'price_per_day',
         'show_price',
-        'rating',
-        'reviews_count',
         'location',
         'address',
         'latitude',
@@ -44,7 +44,6 @@ class Artisan extends Model
         return [
             'price_per_day' => 'decimal:2',
             'show_price' => 'boolean',
-            'rating' => 'decimal:2',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
             'is_verified' => 'boolean',
@@ -68,9 +67,19 @@ class Artisan extends Model
         return $this->hasMany(ArtisanPortfolio::class);
     }
 
-    public function reviews(): MorphMany
+    public function reviews(): HasMany
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return Cache::remember("artisan.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        return Cache::remember("artisan.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
     }
 
     public function favorites(): MorphMany
