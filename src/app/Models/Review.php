@@ -17,7 +17,7 @@ class Review extends Model
         'reviewer_phone',
         'rating',
         'comment',
-        'is_approved',
+        'status',
         'artisan_id',
         'hotel_id',
         'transport_ride_id',
@@ -30,7 +30,6 @@ class Review extends Model
     protected function casts(): array
     {
         return [
-            'is_approved' => 'boolean',
             'rating' => 'integer',
         ];
     }
@@ -40,7 +39,67 @@ class Review extends Model
      */
     public function scopeApproved(Builder $query): Builder
     {
-        return $query->where('is_approved', true);
+        return $query->where('status', 'approved');
+    }
+
+    /**
+     * Scope for pending reviews only.
+     */
+    public function scopePending(Builder $query): Builder
+    {
+        return $query->where('status', 'pending');
+    }
+
+    /**
+     * Scope for disapproved reviews only.
+     */
+    public function scopeDisapproved(Builder $query): Builder
+    {
+        return $query->where('status', 'disapproved');
+    }
+
+    /**
+     * Get the reviewable entity (artisan, hotel, etc.)
+     */
+    public function getReviewableAttribute(): ?Model
+    {
+        return $this->artisan
+            ?? $this->hotel
+            ?? $this->transportRide
+            ?? $this->marketplaceProduct
+            ?? $this->rental
+            ?? $this->job
+            ?? $this->store;
+    }
+
+    /**
+     * Get the type of entity being reviewed.
+     */
+    public function getReviewableTypeAttribute(): ?string
+    {
+        if ($this->artisan_id) {
+            return 'Artisan';
+        }
+        if ($this->hotel_id) {
+            return 'Hotel';
+        }
+        if ($this->transport_ride_id) {
+            return 'Transport';
+        }
+        if ($this->marketplace_product_id) {
+            return 'Product';
+        }
+        if ($this->rental_id) {
+            return 'Rental';
+        }
+        if ($this->job_id) {
+            return 'Job';
+        }
+        if ($this->store_id) {
+            return 'Store';
+        }
+
+        return null;
     }
 
     /**
