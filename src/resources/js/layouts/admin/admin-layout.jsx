@@ -10,6 +10,7 @@ import {
     MessageSquare,
     Package,
     Shield,
+    Star,
     Users,
     X,
 } from 'lucide-react';
@@ -24,6 +25,7 @@ export default function AdminLayout({ children }) {
         { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: route('admin.dashboard'), pattern: 'admin.dashboard' },
         { id: 'users', label: 'Users', icon: Users, href: route('admin.users.index'), pattern: 'admin.users.*' },
         { id: 'marketplace', label: 'Marketplace', icon: Package, href: route('admin.marketplace.index'), pattern: 'admin.marketplace.*' },
+        { id: 'reviews', label: 'Reviews', icon: Star, href: route('admin.reviews.index'), pattern: 'admin.reviews.*' },
         // Super Admin only items
         ...(isSuperAdmin
             ? [

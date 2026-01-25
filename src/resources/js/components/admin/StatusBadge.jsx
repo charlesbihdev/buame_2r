@@ -30,6 +30,17 @@ export function StatusBadge({ status, type = 'default' }) {
                 return status === 'super_admin'
                     ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                     : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400';
+            case 'review':
+                switch (status) {
+                    case 'approved':
+                        return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
+                    case 'pending':
+                        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
+                    case 'disapproved':
+                        return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400';
+                    default:
+                        return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400';
+                }
             default:
                 return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400';
         }
@@ -47,6 +58,8 @@ export function StatusBadge({ status, type = 'default' }) {
                 return status?.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase()) || 'Unknown';
             case 'role':
                 return status === 'super_admin' ? 'Super Admin' : 'Admin';
+            case 'review':
+                return status?.charAt(0).toUpperCase() + status?.slice(1) || 'Unknown';
             default:
                 return String(status);
         }

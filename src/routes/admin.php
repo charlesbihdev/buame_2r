@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminMarketplaceController;
 use App\Http\Controllers\Admin\AdminRevenueController;
+use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminSubscriptionController;
 use App\Http\Controllers\Admin\AdminTestimonialsController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -51,6 +52,19 @@ Route::prefix('admin')->name('admin.')->middleware(['admin.auth'])->group(functi
         Route::post('/{product}/approve', [AdminMarketplaceController::class, 'approve'])->name('approve');
         Route::post('/{product}/reject', [AdminMarketplaceController::class, 'reject'])->name('reject');
         Route::post('/{product}/toggle-active', [AdminMarketplaceController::class, 'toggleActive'])->name('toggle-active');
+    });
+
+    // Review Moderation (All Admins)
+    Route::prefix('reviews')->name('reviews.')->group(function () {
+        Route::get('/', [AdminReviewController::class, 'index'])->name('index');
+        Route::post('/{review}/approve', [AdminReviewController::class, 'approve'])->name('approve');
+        Route::post('/{review}/disapprove', [AdminReviewController::class, 'disapprove'])->name('disapprove');
+        Route::delete('/{review}', [AdminReviewController::class, 'destroy'])->name('destroy');
+
+        // Bulk actions
+        Route::post('/bulk-approve', [AdminReviewController::class, 'bulkApprove'])->name('bulk-approve');
+        Route::post('/bulk-disapprove', [AdminReviewController::class, 'bulkDisapprove'])->name('bulk-disapprove');
+        Route::post('/bulk-delete', [AdminReviewController::class, 'bulkDelete'])->name('bulk-delete');
     });
 
     // Testimonials (All Admins - Placeholder)
