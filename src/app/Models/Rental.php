@@ -6,7 +6,9 @@ use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class Rental extends Model
 {
@@ -58,9 +60,19 @@ class Rental extends Model
         return $this->hasMany(RentalImage::class);
     }
 
-    public function reviews(): MorphMany
+    public function reviews(): HasMany
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return Cache::remember("rental.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        return Cache::remember("rental.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
     }
 
     public function favorites(): MorphMany

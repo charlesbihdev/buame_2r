@@ -1,3 +1,4 @@
+import { ReviewSection } from '@/components/ui/review-section';
 import { StoreEmptyState } from '@/components/visitor/stores/StoreEmptyState';
 import { StoreFooter } from '@/components/visitor/stores/StoreFooter';
 import { StoreHeader } from '@/components/visitor/stores/StoreHeader';
@@ -7,7 +8,7 @@ import { StoreSearch } from '@/components/visitor/stores/StoreSearch';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function StoreShow({ store, products, filters, categoryCounts }) {
+export default function StoreShow({ store, products, filters, categoryCounts, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const [searchQuery, setSearchQuery] = useState(filters?.search || '');
     const [location, setLocation] = useState(filters?.location || '');
     const [viewMode, setViewMode] = useState('grid');
@@ -110,6 +111,16 @@ export default function StoreShow({ store, products, filters, categoryCounts }) 
                         storeName={store.name}
                     />
                 )}
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="store"
+                    reviewableId={store?.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </main>
 
             {/* Store Footer */}

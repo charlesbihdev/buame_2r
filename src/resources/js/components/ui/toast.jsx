@@ -83,7 +83,7 @@ export function Toast({ type, message, onHide, duration = 5000 }) {
 
     return (
         <div
-            className={`fixed top-4 right-4 z-50 transition-all duration-300 transform ${
+            className={`fixed top-4 right-4 z-[9999] transition-all duration-300 transform ${
                 exit ? 'translate-x-full opacity-0' : 'translate-x-0 opacity-100'
             }`}
         >

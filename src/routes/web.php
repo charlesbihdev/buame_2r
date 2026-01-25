@@ -67,6 +67,9 @@ Route::get('/jobs/{id}', function ($id) {
     return Inertia::render('visitor/jobs/view', ['job' => null]);
 })->name('jobs.view');
 
+// Review submission route
+Route::post('/reviews/{type}/{id}', [\App\Http\Controllers\Visitor\ReviewController::class, 'store'])->name('reviews.store');
+
 // Dashboard route moved to routes/user/dashboard.php
 
 // Paystack Payment Routes
@@ -78,5 +81,5 @@ Route::post('/payment/webhook', [\App\Http\Controllers\PaymentController::class,
     ->name('paystack.webhook')
     ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

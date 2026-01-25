@@ -103,6 +103,12 @@ class HotelsController extends Controller
     public function show(string $id): Response
     {
         $hotel = Hotel::with(['images', 'features', 'user'])
+            ->with(['reviews' => function ($query) {
+                $query->approved()
+                    ->with('images')
+                    ->latest()
+                    ->limit(50);
+            }])
             ->withActiveSubscription()
             ->findOrFail($id);
 
@@ -113,13 +119,35 @@ class HotelsController extends Controller
         $checkInTime = $hotel->check_in_time ? date('g:i A', strtotime($hotel->check_in_time)) : null;
         $checkOutTime = $hotel->check_out_time ? date('g:i A', strtotime($hotel->check_out_time)) : null;
 
+        // Calculate rating breakdown from approved reviews
+        $ratingBreakdown = [
+            5 => $hotel->reviews->where('rating', 5)->count(),
+            4 => $hotel->reviews->where('rating', 4)->count(),
+            3 => $hotel->reviews->where('rating', 3)->count(),
+            2 => $hotel->reviews->where('rating', 2)->count(),
+            1 => $hotel->reviews->where('rating', 1)->count(),
+        ];
+
+        // Format reviews for frontend
+        $formattedReviews = $hotel->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'reviewer_name' => $review->reviewer_name,
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'created_at' => $review->created_at->toISOString(),
+                'initials' => collect(explode(' ', $review->reviewer_name))->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join(''),
+                'images' => $review->images->map(fn ($img) => ['url' => asset('storage/'.$img->image_path)]),
+            ];
+        });
+
         return Inertia::render('visitor/hotels/view', [
             'hotel' => [
                 'id' => $hotel->id,
                 'name' => $hotel->name,
                 'type' => $hotel->type,
                 'description' => $hotel->description,
-                'rating' => $hotel->rating ?? 4.5,
+                'rating' => $hotel->average_rating ?: 0,
                 'reviews_count' => $hotel->reviews_count,
                 'price_per_night' => number_format($hotel->price_per_night, 2),
                 'location' => $hotel->location,
@@ -144,6 +172,10 @@ class HotelsController extends Controller
                 'is_active' => $hotel->is_active,
                 'views_count' => $hotel->views_count,
             ],
+            'reviews' => $formattedReviews,
+            'average_rating' => $hotel->average_rating,
+            'reviews_count' => $hotel->reviews_count,
+            'rating_breakdown' => $ratingBreakdown,
         ]);
     }
 }

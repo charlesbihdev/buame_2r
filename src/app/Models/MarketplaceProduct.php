@@ -6,7 +6,9 @@ use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class MarketplaceProduct extends Model
 {
@@ -26,8 +28,6 @@ class MarketplaceProduct extends Model
         'description',
         'delivery_available',
         'warranty',
-        'rating',
-        'reviews_count',
         'is_approved',
         'is_active',
         'views_count',
@@ -39,7 +39,6 @@ class MarketplaceProduct extends Model
             'price' => 'decimal:2',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
-            'rating' => 'decimal:2',
             'delivery_available' => 'boolean',
             'is_approved' => 'boolean',
             'is_active' => 'boolean',
@@ -66,9 +65,19 @@ class MarketplaceProduct extends Model
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 
-    public function reviews(): MorphMany
+    public function reviews(): HasMany
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return Cache::remember("marketplace_product.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        return Cache::remember("marketplace_product.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
     }
 
     public function favorites(): MorphMany

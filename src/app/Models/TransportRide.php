@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 
 class TransportRide extends Model
 {
@@ -21,8 +23,6 @@ class TransportRide extends Model
         'latitude',
         'longitude',
         'operating_locations',
-        'rating',
-        'reviews_count',
         'phone',
         'whatsapp',
         'email',
@@ -40,7 +40,6 @@ class TransportRide extends Model
             'price_per_seat' => 'decimal:2',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
-            'rating' => 'decimal:2',
             'payment_methods' => 'array',
             'is_verified' => 'boolean',
             'is_active' => 'boolean',
@@ -57,9 +56,19 @@ class TransportRide extends Model
         return $this->hasMany(TransportImage::class, 'transport_id');
     }
 
-    public function reviews(): MorphMany
+    public function reviews(): HasMany
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(Review::class);
+    }
+
+    public function getAverageRatingAttribute(): float
+    {
+        return Cache::remember("transport_ride.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
+    }
+
+    public function getReviewsCountAttribute(): int
+    {
+        return Cache::remember("transport_ride.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
     }
 
     public function favorites(): MorphMany

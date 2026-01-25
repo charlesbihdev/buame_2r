@@ -2,9 +2,10 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, ChevronLeft, ChevronRight, Store, ExternalLink, X, ZoomIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ReviewSection } from '@/components/ui/review-section';
 import { useState } from 'react';
 
-export default function MarketplaceView({ product }) {
+export default function MarketplaceView({ product, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!product) {
         return (
             <VisitorLayout>
@@ -299,6 +300,16 @@ export default function MarketplaceView({ product }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="marketplace"
+                    reviewableId={product.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </div>
 
             {/* Lightbox/Zoom Modal */}

@@ -98,12 +98,40 @@ class ArtisansController extends Controller
      */
     public function show(string $id): Response
     {
-        $artisan = Artisan::with(['specialties', 'portfolio', 'reviews', 'user'])
+        $artisan = Artisan::with(['specialties', 'portfolio', 'user'])
+            ->with(['reviews' => function ($query) {
+                $query->approved()
+                    ->with('images')
+                    ->latest()
+                    ->limit(50);
+            }])
             ->withActiveSubscription()
             ->findOrFail($id);
 
         // Increment view count
         $artisan->increment('views_count');
+
+        // Calculate rating breakdown from approved reviews
+        $ratingBreakdown = [
+            5 => $artisan->reviews->where('rating', 5)->count(),
+            4 => $artisan->reviews->where('rating', 4)->count(),
+            3 => $artisan->reviews->where('rating', 3)->count(),
+            2 => $artisan->reviews->where('rating', 2)->count(),
+            1 => $artisan->reviews->where('rating', 1)->count(),
+        ];
+
+        // Format reviews for frontend
+        $formattedReviews = $artisan->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'reviewer_name' => $review->reviewer_name,
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'created_at' => $review->created_at->toISOString(),
+                'initials' => collect(explode(' ', $review->reviewer_name))->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join(''),
+                'images' => $review->images->map(fn ($img) => ['url' => asset('storage/'.$img->image_path)]),
+            ];
+        });
 
         return Inertia::render('visitor/artisans/view', [
             'artisan' => [
@@ -112,7 +140,7 @@ class ArtisansController extends Controller
                 'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
                 'description' => $artisan->description,
-                'rating' => $artisan->rating ?? 4.5, // Default rating
+                'rating' => $artisan->average_rating ?: 0,
                 'reviews_count' => $artisan->reviews_count,
                 'experience_years' => $artisan->experience_years,
                 'price_per_day' => $artisan->show_price && $artisan->price_per_day ? number_format($artisan->price_per_day, 2) : null,
@@ -136,6 +164,10 @@ class ArtisansController extends Controller
                 }),
                 'views_count' => $artisan->views_count,
             ],
+            'reviews' => $formattedReviews,
+            'average_rating' => $artisan->average_rating,
+            'reviews_count' => $artisan->reviews_count,
+            'rating_breakdown' => $ratingBreakdown,
         ]);
     }
 }

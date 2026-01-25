@@ -1,11 +1,12 @@
 import { PortfolioGallery } from '@/components/visitor/artisans/PortfolioGallery';
 import { Button } from '@/components/ui/button';
+import { ReviewSection } from '@/components/ui/review-section';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Award, BadgeCheck, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
 
-export default function ArtisanView({ artisan }) {
+export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
 
     return (
@@ -264,6 +265,16 @@ export default function ArtisanView({ artisan }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="artisan"
+                    reviewableId={artisan?.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </div>
         </VisitorLayout>
     );

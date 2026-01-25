@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
+import { ReviewSection } from '@/components/ui/review-section';
 import { RentalImageGallery } from '@/components/visitor/rentals/RentalImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 
-export default function RentalView({ rental }) {
+export default function RentalView({ rental, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!rental) {
         return (
             <VisitorLayout>
@@ -191,6 +192,16 @@ export default function RentalView({ rental }) {
                         </div>
                     </div>
                 </div>
+
+                {/* Reviews Section */}
+                <ReviewSection
+                    reviewableType="rental"
+                    reviewableId={rental?.id}
+                    reviews={reviews}
+                    averageRating={average_rating}
+                    reviewsCount={reviews_count}
+                    ratingBreakdown={rating_breakdown}
+                />
             </div>
         </VisitorLayout>
     );

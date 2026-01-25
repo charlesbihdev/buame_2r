@@ -86,10 +86,38 @@ class TransportController extends Controller
     public function show(string $id): Response
     {
         $ride = TransportRide::with(['images', 'user'])
+            ->with(['reviews' => function ($query) {
+                $query->approved()
+                    ->with('images')
+                    ->latest()
+                    ->limit(50);
+            }])
             ->findOrFail($id);
 
         // Increment view count
         $ride->increment('views_count');
+
+        // Calculate rating breakdown from approved reviews
+        $ratingBreakdown = [
+            5 => $ride->reviews->where('rating', 5)->count(),
+            4 => $ride->reviews->where('rating', 4)->count(),
+            3 => $ride->reviews->where('rating', 3)->count(),
+            2 => $ride->reviews->where('rating', 2)->count(),
+            1 => $ride->reviews->where('rating', 1)->count(),
+        ];
+
+        // Format reviews for frontend
+        $formattedReviews = $ride->reviews->map(function ($review) {
+            return [
+                'id' => $review->id,
+                'reviewer_name' => $review->reviewer_name,
+                'rating' => $review->rating,
+                'comment' => $review->comment,
+                'created_at' => $review->created_at->toISOString(),
+                'initials' => collect(explode(' ', $review->reviewer_name))->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join(''),
+                'images' => $review->images->map(fn ($img) => ['url' => asset('storage/'.$img->image_path)]),
+            ];
+        });
 
         return Inertia::render('visitor/transport/view', [
             'ride' => [
@@ -97,7 +125,7 @@ class TransportController extends Controller
                 'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
                 'description' => $ride->description,
-                'rating' => $ride->rating ?? 4.5,
+                'rating' => $ride->average_rating ?: 0,
                 'reviews_count' => $ride->reviews_count,
                 'price_per_seat' => number_format($ride->price_per_seat, 2),
                 'seats_available' => $ride->seats_available,
@@ -121,6 +149,10 @@ class TransportController extends Controller
                 'is_active' => $ride->is_active,
                 'views_count' => $ride->views_count,
             ],
+            'reviews' => $formattedReviews,
+            'average_rating' => $ride->average_rating,
+            'reviews_count' => $ride->reviews_count,
+            'rating_breakdown' => $ratingBreakdown,
         ]);
     }
 }
