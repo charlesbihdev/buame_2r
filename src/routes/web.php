@@ -26,9 +26,7 @@ Route::get('/food-stay', function () {
     return Inertia::render('visitor/food-stay');
 })->name('food-stay');
 
-Route::get('/jobs', function () {
-    return Inertia::render('visitor/jobs/index');
-})->name('jobs');
+Route::get('/jobs', [\App\Http\Controllers\Visitor\JobsController::class, 'index'])->name('jobs');
 
 Route::get('/join-as-provider', function () {
     return Inertia::render('user/choose-path');
@@ -63,9 +61,7 @@ Route::get('/transport/{id}', [\App\Http\Controllers\Visitor\TransportController
 
 Route::get('/marketplace/{marketplaceProduct:id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
 
-Route::get('/jobs/{id}', function ($id) {
-    return Inertia::render('visitor/jobs/view', ['job' => null]);
-})->name('jobs.view');
+Route::get('/jobs/{job}', [\App\Http\Controllers\Visitor\JobsController::class, 'show'])->name('jobs.view');
 
 // Review submission route
 Route::post('/reviews/{type}/{id}', [\App\Http\Controllers\Visitor\ReviewController::class, 'store'])->name('reviews.store');

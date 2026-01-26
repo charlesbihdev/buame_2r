@@ -1,8 +1,16 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { JobsListings } from './JobsListings';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
+import { JobFormModal } from './JobFormModal';
+import { useState } from 'react';
 
 export function JobsSection({ activeTab, onTabChange, data }) {
+    const [createModalOpen, setCreateModalOpen] = useState(false);
+
+    const handleAddJob = () => {
+        setCreateModalOpen(true);
+    };
+
     return (
         <div className="space-y-6">
             <div>
@@ -26,7 +34,7 @@ export function JobsSection({ activeTab, onTabChange, data }) {
                 </TabsList>
 
                 <TabsContent value="listings" activeValue={activeTab} className="mt-6">
-                    <JobsListings listings={data?.listings || []} />
+                    <JobsListings listings={data?.listings || []} onAddJob={handleAddJob} />
                 </TabsContent>
 
                 <TabsContent value="applications" activeValue={activeTab} className="mt-6">
@@ -35,6 +43,12 @@ export function JobsSection({ activeTab, onTabChange, data }) {
                     </div>
                 </TabsContent>
             </Tabs>
+
+            {/* Create Job Modal */}
+            <JobFormModal
+                isOpen={createModalOpen}
+                onClose={() => setCreateModalOpen(false)}
+            />
         </div>
     );
 }

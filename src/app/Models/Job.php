@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,9 +22,7 @@ class Job extends Model
         'company',
         'type',
         'category',
-        'salary_min',
-        'salary_max',
-        'salary_display',
+        'salary',
         'location',
         'address',
         'latitude',
@@ -31,6 +31,11 @@ class Job extends Model
         'whatsapp',
         'email',
         'description',
+        'requirements',
+        'responsibilities',
+        'benefits',
+        'application_link',
+        'application_instructions',
         'is_urgent',
         'is_verified_employer',
         'posted_at',
@@ -60,21 +65,6 @@ class Job extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function requirements()
-    {
-        return $this->hasMany(JobRequirement::class);
-    }
-
-    public function responsibilities()
-    {
-        return $this->hasMany(JobResponsibility::class);
-    }
-
-    public function benefits()
-    {
-        return $this->hasMany(JobBenefit::class);
-    }
-
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
@@ -93,5 +83,20 @@ class Job extends Model
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
+    }
+
+    /**
+     * Scope to filter jobs whose owners have active subscriptions.
+     */
+    public function scopeWithActiveSubscription(Builder $query): Builder
+    {
+        return $query->whereHas('user.categories', function (Builder $q) {
+            $q->where('category', 'jobs')
+                ->where('is_active', true)
+                ->whereIn('subscription_status', [
+                    SubscriptionStatus::Active->value,
+                    SubscriptionStatus::GracePeriod->value,
+                ]);
+        });
     }
 }

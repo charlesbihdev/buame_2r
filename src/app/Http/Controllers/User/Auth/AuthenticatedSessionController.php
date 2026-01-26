@@ -74,15 +74,10 @@ class AuthenticatedSessionController extends Controller
             ->exists();
 
         if (! $hasPaidCategory) {
-            // User authenticated but no payment - redirect to payment
+            // User authenticated but no payment - redirect to payment page
             $request->session()->put('registration_user_id', $user->id);
-            if (! $request->session()->has('selected_category')) {
-                return redirect()->route('user.register.category')
-                    ->with('info', 'Please select a category and complete payment to access your dashboard.');
-            }
-
             return redirect()->route('user.register.payment')
-                ->with('info', 'Please complete payment to access your dashboard.');
+                ->with('info', 'Please select a category and complete payment to access your dashboard.');
         }
 
         // Redirect to dashboard

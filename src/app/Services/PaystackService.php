@@ -30,10 +30,17 @@ class PaystackService
     public function getAuthorizationUrl(array $data): object
     {
         try {
-            $response = Http::withHeaders([
+            $httpClient = Http::withHeaders([
                 'Authorization' => 'Bearer '.$this->secretKey,
                 'Content-Type' => 'application/json',
-            ])->post($this->baseUrl.'/transaction/initialize', $data);
+            ]);
+            
+            // Disable SSL verification in local development
+            if (app()->environment('local')) {
+                $httpClient = $httpClient->withoutVerifying();
+            }
+            
+            $response = $httpClient->post($this->baseUrl.'/transaction/initialize', $data);
 
             if (! $response->successful()) {
                 Log::error('Paystack initialization failed', [

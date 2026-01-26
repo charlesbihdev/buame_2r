@@ -126,7 +126,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:jobs'])->group(function () {
-        Route::post('jobs/toggle-active', [JobsController::class, 'toggleActive'])->name('jobs.toggle-active');
+        Route::post('jobs/{job}/toggle-active', [JobsController::class, 'toggleActive'])->name('jobs.toggle-active');
         Route::post('jobs', [JobsController::class, 'store'])->name('jobs.store');
         Route::put('jobs/{job}', [JobsController::class, 'update'])->name('jobs.update');
         Route::patch('jobs/{job}', [JobsController::class, 'update']);
