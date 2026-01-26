@@ -48,8 +48,6 @@ class Job extends Model
     protected function casts(): array
     {
         return [
-            'salary_min' => 'decimal:2',
-            'salary_max' => 'decimal:2',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
             'is_urgent' => 'boolean',

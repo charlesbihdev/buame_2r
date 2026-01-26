@@ -140,13 +140,13 @@ class CategoryProfileService
      */
     protected function getOrCreateJob(User $user): Job
     {
-        return $user->jobs()->with(['requirements', 'responsibilities', 'benefits'])->firstOrCreate(
+        return $user->jobs()->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'title' => '',
                 'company' => '',
                 'type' => 'full_time',
-                'category' => 'other',
+                'category' => 'general_jobs',
                 'location' => '',
                 'phone' => $user->phone,
                 'description' => '',
