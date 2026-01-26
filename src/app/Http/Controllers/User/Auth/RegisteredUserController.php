@@ -208,43 +208,13 @@ class RegisteredUserController extends Controller
 
     /**
      * Show category selection page (for switching categories before payment).
+     * DEPRECATED: This method is no longer used. Redirects to payment page.
      */
-    public function showCategorySelection(Request $request): Response|RedirectResponse
+    public function showCategorySelection(Request $request): RedirectResponse
     {
-        // Check if user is authenticated
-        $user = Auth::user();
-
-        // Fallback to session user_id if not authenticated
-        if (! $user) {
-            $userId = $request->session()->get('registration_user_id');
-            if (! $userId) {
-                return redirect()->route('user.register');
-            }
-            $user = User::find($userId);
-        }
-
-        if (! $user || ! $user->phone_verified_at) {
-            return redirect()->route('user.register');
-        }
-
-        // Build categories from config
-        $categories = [];
-        foreach (config('categories.list', []) as $key => $categoryConfig) {
-            $categories[] = [
-                'value' => $key,
-                'label' => $categoryConfig['label'],
-                'description' => $categoryConfig['description'],
-                'price' => $categoryConfig['price'],
-            ];
-        }
-
-        return Inertia::render('user/auth/select-category', [
-            'categories' => $categories,
-            'user' => [
-                'name' => $user->name,
-                'phone' => $user->phone,
-            ],
-        ]);
+        // Redirect to payment page where category selection is available
+        return redirect()->route('user.register.payment')
+            ->with('info', 'Please select a category and complete payment.');
     }
 
     /**
@@ -301,17 +271,22 @@ class RegisteredUserController extends Controller
         }
 
         // Get category from query parameter or session (for backward compatibility)
-        $selectedCategory = $request->query('category') ?? $request->session()->get('selected_category');
+        // Default to first category if none provided
+        $selectedCategory = $request->query('category') 
+            ?? $request->session()->get('selected_category')
+            ?? array_key_first(config('categories.list', []));
 
-        if (! $selectedCategory) {
-            return redirect()->route('user.register.category');
+        // Validate category exists, default to first if invalid
+        if (!array_key_exists($selectedCategory, config('categories.list', []))) {
+            $selectedCategory = array_key_first(config('categories.list', []));
         }
 
         // Get category config
         $categoryConfig = config("categories.list.{$selectedCategory}");
         if (! $categoryConfig) {
-            return redirect()->route('user.register.category')
-                ->withErrors(['category' => 'Invalid category selected.']);
+            // Fallback to first category if config is missing
+            $selectedCategory = array_key_first(config('categories.list', []));
+            $categoryConfig = config("categories.list.{$selectedCategory}");
         }
 
         // Get default amount (for non-tiered categories or default tier)

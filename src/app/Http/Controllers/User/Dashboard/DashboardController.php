@@ -33,9 +33,9 @@ class DashboardController extends Controller
             ->with('payment')
             ->get();
 
-        // If no paid categories, redirect to category selection for payment
+        // If no paid categories, redirect to payment page
         if ($paidCategories->isEmpty()) {
-            return redirect()->route('user.register.category')
+            return redirect()->route('user.register.payment')
                 ->with('info', 'Please select a category and complete payment to access your dashboard.');
         }
 

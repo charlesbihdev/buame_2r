@@ -94,15 +94,17 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                     </div>
 
                     <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-                        {/* Category Switcher */}
-                        {categories && categories.length > 1 && (
+                        {/* Category Selection/Switcher - Always show */}
+                        {categories && categories.length > 0 && (
                             <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-                                <p className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">Want to switch category?</p>
+                                <p className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                    {category ? 'Want to switch category?' : 'Select a Category'}
+                                </p>
                                 <div className="flex flex-wrap gap-2">
                                     {categories.map((cat) => (
                                         <Link
                                             key={cat.value}
-                                            href={route('user.register', { category: cat.value })}
+                                            href={route('user.register.payment', { category: cat.value })}
                                             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                                                 cat.value === category
                                                     ? 'bg-[var(--primary)] text-white'

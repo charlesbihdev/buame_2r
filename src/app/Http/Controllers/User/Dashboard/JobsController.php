@@ -27,13 +27,31 @@ class JobsController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
+            'company' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
+            'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
+            'salary' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'address' => ['nullable', 'string'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'phone' => ['required', 'string', 'max:20'],
+            'whatsapp' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'description' => ['required', 'string'],
+            'requirements' => ['nullable', 'string'],
+            'responsibilities' => ['nullable', 'string'],
+            'benefits' => ['nullable', 'string'],
+            'application_link' => ['nullable', 'url', 'max:255'],
+            'application_instructions' => ['nullable', 'string'],
+            'is_urgent' => ['nullable', 'boolean'],
         ]);
 
         $user = Auth::user();
-        $user->jobs()->create($validated);
+        
+        $job = $user->jobs()->create(array_merge($validated, [
+            'posted_at' => now(),
+        ]));
 
         return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
             ->with('success', 'Job posting created successfully.');
@@ -60,9 +78,24 @@ class JobsController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
+            'company' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
+            'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
+            'salary' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'address' => ['nullable', 'string'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+            'phone' => ['required', 'string', 'max:20'],
+            'whatsapp' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'description' => ['required', 'string'],
+            'requirements' => ['nullable', 'string'],
+            'responsibilities' => ['nullable', 'string'],
+            'benefits' => ['nullable', 'string'],
+            'application_link' => ['nullable', 'url', 'max:255'],
+            'application_instructions' => ['nullable', 'string'],
+            'is_urgent' => ['nullable', 'boolean'],
         ]);
 
         $job->update($validated);
@@ -74,13 +107,12 @@ class JobsController extends Controller
     /**
      * Toggle job active status.
      */
-    public function toggleActive(Request $request): RedirectResponse
+    public function toggleActive(Job $job): RedirectResponse
     {
         $user = Auth::user();
-        $job = $user->jobs()->first();
-
-        if (!$job) {
-            return back()->with('error', 'Job profile not found.');
+        
+        if ($job->user_id !== $user->id) {
+            abort(403);
         }
 
         // If trying to activate, validate required fields

@@ -58,11 +58,6 @@ Route::prefix('user')->name('user.')->middleware('guest')->group(function () {
 
 // Registration payment routes - accessible after registration (user is logged in)
 Route::prefix('user')->name('user.')->group(function () {
-    Route::get('register/category', [RegisteredUserController::class, 'showCategorySelection'])
-        ->name('register.category');
-
-    Route::post('register/category', [RegisteredUserController::class, 'selectCategory']);
-
     Route::get('register/payment', [RegisteredUserController::class, 'showPayment'])
         ->name('register.payment');
 
