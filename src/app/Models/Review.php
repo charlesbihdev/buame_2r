@@ -25,6 +25,7 @@ class Review extends Model
         'rental_id',
         'job_id',
         'store_id',
+        'job_poster_id',
     ];
 
     protected function casts(): array
@@ -69,7 +70,8 @@ class Review extends Model
             ?? $this->marketplaceProduct
             ?? $this->rental
             ?? $this->job
-            ?? $this->store;
+            ?? $this->store
+            ?? $this->jobPoster;
     }
 
     /**
@@ -97,6 +99,9 @@ class Review extends Model
         }
         if ($this->store_id) {
             return 'Store';
+        }
+        if ($this->job_poster_id) {
+            return 'Employer';
         }
 
         return null;
@@ -159,5 +164,10 @@ class Review extends Model
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    public function jobPoster(): BelongsTo
+    {
+        return $this->belongsTo(JobPoster::class);
     }
 }
