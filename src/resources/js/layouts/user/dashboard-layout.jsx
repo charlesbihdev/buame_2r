@@ -2,7 +2,7 @@ import { AppLogo } from '@/components/visitor/app-logo';
 import { navigateToSection } from '@/services/dashboardNavigation';
 import ToastProvider from '@/components/ui/toast-provider';
 import { Link } from '@inertiajs/react';
-import { Bell, Building2, Car, Home, Image as ImageIcon, ListChecks, LogOut, Menu, Package, Store, User, X } from 'lucide-react';
+import { Bell, Briefcase, Building2, Car, Home, Image as ImageIcon, ListChecks, LogOut, Menu, Package, Store, User, X } from 'lucide-react';
 import { useState } from 'react';
 
 export default function DashboardLayout({ user, children, activeCategory, activeSection, categoryData }) {
@@ -37,6 +37,11 @@ export default function DashboardLayout({ user, children, activeCategory, active
                 return [
                     { id: 'store', label: 'Store Settings', icon: Store },
                     { id: 'products', label: 'Products', icon: Package },
+                ];
+            case 'jobs':
+                return [
+                    { id: 'poster', label: 'Profile', icon: User },
+                    { id: 'listings', label: 'Jobs', icon: Briefcase },
                 ];
             default:
                 return [];

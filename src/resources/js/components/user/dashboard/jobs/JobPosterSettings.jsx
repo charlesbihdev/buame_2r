@@ -3,8 +3,9 @@ import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useForm, router } from '@inertiajs/react';
-import { CheckCircle, Copy, ExternalLink, Eye, EyeOff } from 'lucide-react';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
+import { useForm } from '@inertiajs/react';
+import { CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export function JobPosterSettings({ poster }) {
@@ -67,12 +68,6 @@ export function JobPosterSettings({ poster }) {
         });
     };
 
-    const handleToggleActive = () => {
-        router.post(route('user.dashboard.jobs.poster.toggle-active'), {}, {
-            preserveScroll: true,
-        });
-    };
-
     const handleCopy = () => {
         const posterUrl = `${window.location.origin}/jobs/employer/${data.slug || poster?.slug}`;
         navigator.clipboard.writeText(posterUrl);
@@ -91,40 +86,11 @@ export function JobPosterSettings({ poster }) {
             </div>
 
             {/* Visibility Toggle */}
-            <div
-                className={`rounded-xl border-2 p-6 ${poster?.is_active ? 'border-[var(--primary)] bg-[var(--buame-border-light)] dark:bg-[#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5'}`}
-            >
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div
-                            className={`flex h-12 w-12 items-center justify-center rounded-full ${poster?.is_active ? 'bg-[var(--primary)]/20' : 'bg-[var(--accent)]/20 dark:bg-[var(--accent)]/10'}`}
-                        >
-                            {poster?.is_active ? (
-                                <Eye className="h-6 w-6 text-[var(--primary)]" />
-                            ) : (
-                                <EyeOff className="h-6 w-6 text-[var(--accent)] dark:text-[var(--accent)]" />
-                            )}
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
-                                Profile is {poster?.is_active ? 'Visible' : 'Hidden'}
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                {poster?.is_active
-                                    ? 'Your employer profile and jobs are visible to visitors'
-                                    : 'Your profile is hidden from visitors. Toggle to make it visible.'}
-                            </p>
-                        </div>
-                    </div>
-                    <Button
-                        onClick={handleToggleActive}
-                        variant={poster?.is_active ? 'outline' : 'default'}
-                        className={poster?.is_active ? '' : 'bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90'}
-                    >
-                        {poster?.is_active ? 'Hide Profile' : 'Show Profile'}
-                    </Button>
-                </div>
-            </div>
+            <ListingVisibilityBanner
+                listing={poster}
+                routeName="user.dashboard.jobs.poster.toggle-active"
+                label="Profile"
+            />
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Company Name and Slug */}
@@ -132,9 +98,9 @@ export function JobPosterSettings({ poster }) {
                     <div className="grid gap-6 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
-                                Company / Employer Name *
+                                Employer Name *
                             </Label>
-                            <Input id="name" value={data.name} onChange={handleNameChange} placeholder="Enter company name" className="w-full" required />
+                            <Input id="name" value={data.name} onChange={handleNameChange} placeholder="Enter employer name" className="w-full" required />
                             <FormError error={errors.name} />
                         </div>
                         <div>
@@ -147,7 +113,7 @@ export function JobPosterSettings({ poster }) {
                                     id="slug"
                                     value={data.slug}
                                     onChange={handleSlugChange}
-                                    placeholder="your-company"
+                                    placeholder="your-profile"
                                     className="flex-1"
                                     pattern="[a-z0-9-]+"
                                 />
@@ -162,13 +128,13 @@ export function JobPosterSettings({ poster }) {
                 <div className="grid gap-6 md:grid-cols-2">
                     <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                         <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
-                            About Your Company
+                            About Employer
                         </Label>
                         <Textarea
                             id="description"
                             value={data.description}
                             onChange={(e) => setData('description', e.target.value)}
-                            placeholder="Tell job seekers about your company..."
+                            placeholder="Tell job seekers about yourself..."
                             rows={4}
                             className="w-full"
                         />
@@ -195,7 +161,7 @@ export function JobPosterSettings({ poster }) {
                 {/* Location */}
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <Label htmlFor="location" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
-                        Business Location
+                        Location
                     </Label>
                     <Input
                         id="location"
@@ -260,7 +226,7 @@ export function JobPosterSettings({ poster }) {
                                 type="url"
                                 value={data.website}
                                 onChange={(e) => setData('website', e.target.value)}
-                                placeholder="https://yourcompany.com"
+                                placeholder="https://yourwebsite.com"
                             />
                             <FormError error={errors.website} />
                         </div>
