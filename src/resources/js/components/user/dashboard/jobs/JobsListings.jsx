@@ -37,6 +37,8 @@ export function JobsListings({ listings, onAddJob, poster }) {
         const labels = {
             full_time: 'Full Time',
             part_time: 'Part Time',
+            contract: 'Contract',
+            internship: 'Internship',
             daily_wage: 'Daily Wage',
             apprenticeship: 'Apprenticeship',
         };

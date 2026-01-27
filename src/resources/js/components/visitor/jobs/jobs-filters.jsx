@@ -8,6 +8,8 @@ export function JobsFilters({ filters = {} }) {
     const jobTypes = [
         { id: 'full_time', label: 'Full Time' },
         { id: 'part_time', label: 'Part Time' },
+        { id: 'contract', label: 'Contract' },
+        { id: 'internship', label: 'Internship' },
         { id: 'daily_wage', label: 'Daily Wage' },
         { id: 'apprenticeship', label: 'Apprenticeship' },
     ];
