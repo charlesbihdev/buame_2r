@@ -3,6 +3,15 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const formatSalary = (salary) => {
+    if (!salary) return null;
+    const s = salary.toString().trim();
+    if (s.startsWith('₵') || s.startsWith('GH₵') || s.toLowerCase().startsWith('ghs')) {
+        return s;
+    }
+    return `₵${s}`;
+};
+
 export default function JobView({ job, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!job) {
         return (
@@ -186,7 +195,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                         <Banknote className="h-5 w-5 text-[var(--primary)]" />
                                         <div className="text-sm text-gray-600 dark:text-gray-400">Salary</div>
                                     </div>
-                                    <div className="text-2xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{job.salary}</div>
+                                    <div className="text-2xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{formatSalary(job.salary)}</div>
                                 </div>
                             )}
 

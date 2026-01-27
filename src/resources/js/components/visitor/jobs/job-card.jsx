@@ -2,6 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
 import { MapPin, Clock, Banknote } from 'lucide-react';
 
+const formatSalary = (salary) => {
+    if (!salary) return null;
+    const s = salary.toString().trim();
+    if (s.startsWith('₵') || s.startsWith('GH₵') || s.toLowerCase().startsWith('ghs')) {
+        return s;
+    }
+    return `₵${s}`;
+};
+
 export function JobCard({ job }) {
     return (
         <div className="group flex flex-col overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all duration-300 hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-white/10 dark:bg-white/5">
@@ -46,7 +55,7 @@ export function JobCard({ job }) {
                 {job.salary && (
                     <div className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-[var(--foreground)] dark:text-white">
                         <Banknote className="h-4 w-4 text-[var(--primary)]" />
-                        <span>{job.salary}</span>
+                        <span>{formatSalary(job.salary)}</span>
                     </div>
                 )}
 
