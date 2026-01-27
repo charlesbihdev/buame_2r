@@ -1,0 +1,1 @@
+import{j as s,$ as l}from"./app-CXk3mNX-.js";function g({className:e="",size:o="default",href:a="/"}){const t={default:"h-18",sm:"h-10",lg:"h-24"};return s.jsx(l,{href:a,className:`flex items-center gap-2 ${e}`,children:s.jsx("img",{src:"/assets/logo/logo.png",alt:"2RBUAME Logo",className:`${t[o]} w-auto`})})}export{g as A};
