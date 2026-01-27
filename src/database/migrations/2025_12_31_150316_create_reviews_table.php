@@ -31,6 +31,7 @@ return new class extends Migration
             $table->foreignId('rental_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('job_id')->nullable()->constrained('job_listings')->onDelete('cascade');
             $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('job_poster_id')->nullable()->constrained('job_posters')->onDelete('cascade');
 
             $table->timestamps();
         });
