@@ -4,6 +4,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\User\Dashboard\ArtisansController;
 use App\Http\Controllers\User\Dashboard\DashboardController;
 use App\Http\Controllers\User\Dashboard\HotelsController;
+use App\Http\Controllers\User\Dashboard\JobPosterController;
 use App\Http\Controllers\User\Dashboard\JobsController;
 use App\Http\Controllers\User\Dashboard\MarketplaceController;
 use App\Http\Controllers\User\Dashboard\RentalsController;
@@ -126,6 +127,12 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
 
     // Write routes (require active subscription)
     Route::middleware(['subscription.active:jobs'])->group(function () {
+        // Job Poster routes (must come before parameterized routes)
+        Route::post('jobs/poster/toggle-active', [JobPosterController::class, 'toggleActive'])->name('jobs.poster.toggle-active');
+        Route::put('jobs/poster', [JobPosterController::class, 'update'])->name('jobs.poster.update');
+        Route::delete('jobs/poster/logo', [JobPosterController::class, 'removeLogo'])->name('jobs.poster.remove-logo');
+
+        // Job listing routes
         Route::post('jobs/{job}/toggle-active', [JobsController::class, 'toggleActive'])->name('jobs.toggle-active');
         Route::post('jobs', [JobsController::class, 'store'])->name('jobs.store');
         Route::put('jobs/{job}', [JobsController::class, 'update'])->name('jobs.update');

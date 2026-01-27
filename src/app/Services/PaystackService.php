@@ -86,10 +86,17 @@ class PaystackService
         }
 
         try {
-            $response = Http::withHeaders([
+            $httpClient = Http::withHeaders([
                 'Authorization' => 'Bearer '.$this->secretKey,
                 'Content-Type' => 'application/json',
-            ])->get($this->baseUrl.'/transaction/verify/'.$reference);
+            ]);
+            
+            // Disable SSL verification in local development
+            if (app()->environment('local')) {
+                $httpClient = $httpClient->withoutVerifying();
+            }
+            
+            $response = $httpClient->get($this->baseUrl.'/transaction/verify/'.$reference);
 
             if (! $response->successful()) {
                 Log::error('Paystack verification failed', [

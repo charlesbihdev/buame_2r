@@ -25,9 +25,16 @@ class JobsController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+        $poster = $user->jobPoster;
+
+        if (!$poster) {
+            return back()->with('error', 'Please set up your employer profile first.');
+        }
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'company' => ['required', 'string', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
             'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
             'salary' => ['nullable', 'string', 'max:255'],
@@ -35,7 +42,7 @@ class JobsController extends Controller
             'address' => ['nullable', 'string'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'description' => ['required', 'string'],
@@ -47,10 +54,9 @@ class JobsController extends Controller
             'is_urgent' => ['nullable', 'boolean'],
         ]);
 
-        $user = Auth::user();
-        
-        $job = $user->jobs()->create(array_merge($validated, [
+        $poster->jobs()->create(array_merge($validated, [
             'posted_at' => now(),
+            'is_active' => false,
         ]));
 
         return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
@@ -60,7 +66,8 @@ class JobsController extends Controller
     public function edit(Job $job): Response
     {
         $user = Auth::user();
-        if ($job->user_id !== $user->id) {
+
+        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
@@ -72,13 +79,14 @@ class JobsController extends Controller
     public function update(Request $request, Job $job): RedirectResponse
     {
         $user = Auth::user();
-        if ($job->user_id !== $user->id) {
+
+        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'company' => ['required', 'string', 'max:255'],
+            'company' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
             'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
             'salary' => ['nullable', 'string', 'max:255'],
@@ -86,7 +94,7 @@ class JobsController extends Controller
             'address' => ['nullable', 'string'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'description' => ['required', 'string'],
@@ -110,8 +118,8 @@ class JobsController extends Controller
     public function toggleActive(Job $job): RedirectResponse
     {
         $user = Auth::user();
-        
-        if ($job->user_id !== $user->id) {
+
+        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
@@ -121,10 +129,6 @@ class JobsController extends Controller
 
             if (empty($job->title)) {
                 $errors['title'] = 'Job title is required before making it visible.';
-            }
-
-            if (empty($job->company)) {
-                $errors['company'] = 'Company name is required before making it visible.';
             }
 
             if (empty($job->type)) {
@@ -139,23 +143,16 @@ class JobsController extends Controller
                 $errors['location'] = 'Location is required before making it visible.';
             }
 
-            if (empty($job->phone)) {
-                $errors['phone'] = 'Phone number is required before making it visible.';
-            }
-
             if (empty($job->description)) {
                 $errors['description'] = 'Description is required before making it visible.';
             }
 
             if (!empty($errors)) {
-                // Map field names to user-friendly labels
                 $fieldLabels = [
                     'title' => 'job title',
-                    'company' => 'company name',
                     'type' => 'job type',
                     'category' => 'job category',
                     'location' => 'location',
-                    'phone' => 'phone number',
                     'description' => 'description',
                 ];
 
@@ -164,7 +161,7 @@ class JobsController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your job with ' . implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
@@ -179,7 +176,8 @@ class JobsController extends Controller
     public function destroy(Job $job): RedirectResponse
     {
         $user = Auth::user();
-        if ($job->user_id !== $user->id) {
+
+        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 

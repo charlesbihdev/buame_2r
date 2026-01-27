@@ -20,7 +20,8 @@ return new class extends Migration
             $table->text('comment')->nullable();
 
             // Moderation - admin must approve before visible
-            $table->boolean('is_approved')->default(false)->index();
+            $table->string('status', 20)->default('pending')->after('comment')->index();
+
 
             // Optional foreign keys for each category (only one will be set)
             $table->foreignId('artisan_id')->nullable()->constrained()->onDelete('cascade');

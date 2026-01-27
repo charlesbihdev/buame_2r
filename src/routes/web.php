@@ -61,6 +61,8 @@ Route::get('/transport/{id}', [\App\Http\Controllers\Visitor\TransportController
 
 Route::get('/marketplace/{marketplaceProduct:id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
 
+Route::get('/jobs/employer/{slug}', [\App\Http\Controllers\Visitor\JobPosterController::class, 'show'])->name('jobs.employer');
+
 Route::get('/jobs/{job}', [\App\Http\Controllers\Visitor\JobsController::class, 'show'])->name('jobs.view');
 
 // Review submission route

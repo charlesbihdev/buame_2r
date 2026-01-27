@@ -16,45 +16,52 @@ class JobsController extends Controller
     public function index(Request $request): Response
     {
         $query = Job::query()
+            ->with(['poster'])
             ->where('is_active', true)
+            ->whereHas('poster', function ($q) {
+                $q->where('is_active', true);
+            })
             ->withActiveSubscription();
 
         // Apply type filter
         if ($request->filled('type') && $request->type !== 'all') {
-            $types = is_array($request->type) 
-                ? $request->type 
-                : (str_contains($request->type, ',') 
-                    ? explode(',', $request->type) 
+            $types = is_array($request->type)
+                ? $request->type
+                : (str_contains($request->type, ',')
+                    ? explode(',', $request->type)
                     : [$request->type]);
             $query->whereIn('type', $types);
         }
 
         // Apply category filter
         if ($request->filled('category') && $request->category !== 'all') {
-            $categories = is_array($request->category) 
-                ? $request->category 
-                : (str_contains($request->category, ',') 
-                    ? explode(',', $request->category) 
+            $categories = is_array($request->category)
+                ? $request->category
+                : (str_contains($request->category, ',')
+                    ? explode(',', $request->category)
                     : [$request->category]);
             $query->whereIn('category', $categories);
         }
 
         // Apply location filter
         if ($request->filled('location')) {
-            $query->where('location', 'like', '%'.$request->location.'%');
+            $query->where('location', 'like', '%' . $request->location . '%');
         }
 
-        // Apply search filter (title/company)
+        // Apply search filter (title or poster name)
         if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%'.$request->search.'%')
-                    ->orWhere('company', 'like', '%'.$request->search.'%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhereHas('poster', function ($pq) use ($search) {
+                        $pq->where('name', 'like', '%' . $search . '%');
+                    });
             });
         }
 
         // Apply salary filter (text search)
         if ($request->filled('salary')) {
-            $query->where('salary', 'like', '%'.$request->salary.'%');
+            $query->where('salary', 'like', '%' . $request->salary . '%');
         }
 
         // Apply urgent filter
@@ -108,6 +115,13 @@ class JobsController extends Controller
                 'id' => $job->id,
                 'title' => $job->title,
                 'company' => $job->company,
+                'poster' => $job->poster ? [
+                    'id' => $job->poster->id,
+                    'name' => $job->poster->name,
+                    'slug' => $job->poster->slug,
+                    'logo' => $job->poster->logo ? '/storage/' . $job->poster->logo : null,
+                    'is_verified' => $job->poster->is_verified,
+                ] : null,
                 'type' => $job->type,
                 'type_label' => $typeLabels[$job->type] ?? ucfirst($job->type),
                 'category' => $job->category ? ($categoryLabels[$job->category] ?? ucfirst(str_replace('_', ' ', $job->category))) : null,
@@ -132,7 +146,7 @@ class JobsController extends Controller
         // Previous link
         if ($currentPage > 1) {
             $paginationLinks[] = [
-                'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])),
+                'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])),
                 'label' => '&laquo; Previous',
                 'active' => false,
             ];
@@ -142,7 +156,7 @@ class JobsController extends Controller
         for ($i = 1; $i <= $lastPage; $i++) {
             if ($i == 1 || $i == $lastPage || ($i >= $currentPage - 2 && $i <= $currentPage + 2)) {
                 $paginationLinks[] = [
-                    'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $i])),
+                    'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $i])),
                     'label' => (string) $i,
                     'active' => $i == $currentPage,
                 ];
@@ -158,7 +172,7 @@ class JobsController extends Controller
         // Next link
         if ($currentPage < $lastPage) {
             $paginationLinks[] = [
-                'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])),
+                'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])),
                 'label' => 'Next &raquo;',
                 'active' => false,
             ];
@@ -195,11 +209,14 @@ class JobsController extends Controller
         $job = Job::query()
             ->where('id', $job->id)
             ->where('is_active', true)
+            ->whereHas('poster', function ($q) {
+                $q->where('is_active', true);
+            })
             ->withActiveSubscription()
-            ->with(['user' => function ($query) {
+            ->with(['poster.user' => function ($query) {
                 $query->select('id', 'name', 'email', 'phone');
             }])
-            ->with(['reviews' => function ($query) {
+            ->with(['poster.reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
                     ->latest()
@@ -207,20 +224,22 @@ class JobsController extends Controller
             }])
             ->first();
 
-        if (! $job) {
+        if (!$job) {
             abort(404, 'Job not found or not available');
         }
 
         // Increment views count
         $job->increment('views_count');
 
-        // Calculate rating breakdown
+        $poster = $job->poster;
+
+        // Calculate rating breakdown from poster reviews
         $ratingBreakdown = [
-            5 => $job->reviews->where('rating', 5)->count(),
-            4 => $job->reviews->where('rating', 4)->count(),
-            3 => $job->reviews->where('rating', 3)->count(),
-            2 => $job->reviews->where('rating', 2)->count(),
-            1 => $job->reviews->where('rating', 1)->count(),
+            5 => $poster->reviews->where('rating', 5)->count(),
+            4 => $poster->reviews->where('rating', 4)->count(),
+            3 => $poster->reviews->where('rating', 3)->count(),
+            2 => $poster->reviews->where('rating', 2)->count(),
+            1 => $poster->reviews->where('rating', 1)->count(),
         ];
 
         $typeLabels = [
@@ -253,26 +272,28 @@ class JobsController extends Controller
         $responsibilities = $job->responsibilities ? array_filter(array_map('trim', explode("\n", $job->responsibilities))) : [];
         $benefits = $job->benefits ? array_filter(array_map('trim', explode("\n", $job->benefits))) : [];
 
-        // Get user contact info
-        $user = $job->user;
-        $phone = $job->phone ?? $user->phone ?? null;
-        $whatsapp = $job->whatsapp ?? null;
-        $email = $job->email ?? $user->email ?? null;
+        // Get contact info from job (jobs can have their own contact for posting jobs for others)
+        // Fallback to poster contact if job contact is not available
+        $phone = $job->phone ?? $poster->phone ?? $poster->user?->phone ?? null;
+        $whatsapp = $job->whatsapp ?? $poster->whatsapp ?? null;
+        $email = $job->email ?? $poster->email ?? $poster->user?->email ?? null;
 
         // Build WhatsApp URL
         $whatsappUrl = null;
         if ($whatsapp) {
             $whatsappNumber = preg_replace('/\D/', '', $whatsapp);
-            $message = urlencode("Hello, I'm interested in applying for the {$job->title} position.");
+            $companyName = $job->company ?? $poster->name;
+            $message = urlencode("Hello, I'm interested in applying for the {$job->title} position at {$companyName}.");
             $whatsappUrl = "https://wa.me/{$whatsappNumber}?text={$message}";
         } elseif ($phone) {
             $whatsappNumber = preg_replace('/\D/', '', $phone);
-            $message = urlencode("Hello, I'm interested in applying for the {$job->title} position.");
+            $companyName = $job->company ?? $poster->name;
+            $message = urlencode("Hello, I'm interested in applying for the {$job->title} position at {$companyName}.");
             $whatsappUrl = "https://wa.me/{$whatsappNumber}?text={$message}";
         }
 
         // Format reviews for frontend
-        $formattedReviews = $job->reviews->map(function ($review) {
+        $formattedReviews = $poster->reviews->map(function ($review) {
             return [
                 'id' => $review->id,
                 'reviewer_name' => $review->reviewer_name,
@@ -283,7 +304,7 @@ class JobsController extends Controller
                 'images' => $review->images->map(function ($image) {
                     return [
                         'id' => $image->id,
-                        'url' => asset('storage/'.$image->image_path),
+                        'url' => asset('storage/' . $image->image_path),
                     ];
                 })->toArray(),
             ];
@@ -294,6 +315,16 @@ class JobsController extends Controller
                 'id' => $job->id,
                 'title' => $job->title,
                 'company' => $job->company,
+                'poster' => [
+                    'id' => $poster->id,
+                    'name' => $poster->name,
+                    'slug' => $poster->slug,
+                    'description' => $poster->description,
+                    'logo' => $poster->logo ? '/storage/' . $poster->logo : null,
+                    'location' => $poster->location,
+                    'website' => $poster->website,
+                    'is_verified' => $poster->is_verified,
+                ],
                 'type' => $job->type,
                 'type_label' => $typeLabels[$job->type] ?? ucfirst($job->type),
                 'category' => $job->category ? ($categoryLabels[$job->category] ?? ucfirst(str_replace('_', ' ', $job->category))) : null,
@@ -315,8 +346,8 @@ class JobsController extends Controller
                 'email' => $email,
             ],
             'reviews' => $formattedReviews,
-            'average_rating' => $job->average_rating,
-            'reviews_count' => $job->reviews_count,
+            'average_rating' => $poster->average_rating,
+            'reviews_count' => $poster->reviews_count,
             'rating_breakdown' => $ratingBreakdown,
         ]);
     }

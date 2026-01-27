@@ -54,6 +54,7 @@ class DashboardController extends Controller
         // Default section based on category
         $defaultSection = match ($activeCategory) {
             'marketplace' => 'store',
+            'jobs' => 'poster',
             default => 'profile',
         };
         $activeSection = $request->query('section', $defaultSection);
@@ -196,13 +197,25 @@ class DashboardController extends Controller
                 ],
             ],
             'jobs' => [
-                'profile' => $profileService->getOrCreateProfile($user, 'jobs'),
-                'listings' => $user->jobs()->latest()->get(),
+                'poster' => $user->jobPoster ? [
+                    'id' => $user->jobPoster->id,
+                    'name' => $user->jobPoster->name,
+                    'slug' => $user->jobPoster->slug,
+                    'description' => $user->jobPoster->description,
+                    'logo' => $user->jobPoster->logo ? '/storage/' . $user->jobPoster->logo : null,
+                    'location' => $user->jobPoster->location,
+                    'phone' => $user->jobPoster->phone,
+                    'whatsapp' => $user->jobPoster->whatsapp,
+                    'email' => $user->jobPoster->email,
+                    'website' => $user->jobPoster->website,
+                    'is_verified' => $user->jobPoster->is_verified,
+                    'is_active' => $user->jobPoster->is_active,
+                ] : $profileService->getOrCreateProfile($user, 'jobs'),
+                'listings' => $user->jobPoster?->jobs()->latest()->get() ?? collect(),
                 'stats' => [
-                    'total' => $user->jobs()->count(),
-                    'active' => $user->jobs()->where('is_active', true)->count(),
-                    'views' => $user->jobs()->sum('views_count'),
-                    'applications' => $user->jobs()->sum('applications_count'),
+                    'total' => $user->jobPoster?->jobs()->count() ?? 0,
+                    'active' => $user->jobPoster?->jobs()->where('is_active', true)->count() ?? 0,
+                    'views' => $user->jobPoster?->jobs()->sum('views_count') ?? 0,
                 ],
             ],
             default => [],

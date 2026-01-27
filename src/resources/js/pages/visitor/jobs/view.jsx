@@ -16,10 +16,12 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
     }
 
     const whatsappUrl = job.whatsapp_url || null;
+    const companyName = job.company || job.poster?.name || 'Company';
+    const posterName = job.poster?.name;
 
     return (
         <VisitorLayout>
-            <Head title={`${job.title} - ${job.company} | 2RBUAME Jobs`} />
+            <Head title={`${job.title} - ${companyName} | 2RBUAME Jobs`} />
             
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <Link
@@ -43,8 +45,19 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                 </div>
                                 <div className="mb-4 flex items-center gap-2">
                                     <Briefcase className="h-5 w-5 text-gray-400" />
-                                    <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">{job.company}</span>
+                                    <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">{companyName}</span>
                                 </div>
+                                {job.poster && (
+                                    <div className="mb-4">
+                                        <span className="text-sm text-gray-600 dark:text-gray-400">Posted by </span>
+                                        <Link
+                                            href={`/jobs/employer/${job.poster.slug}`}
+                                            className="text-sm font-semibold text-[var(--primary)] hover:underline"
+                                        >
+                                            {posterName}
+                                        </Link>
+                                    </div>
+                                )}
                                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                                     <div className="flex items-center gap-1">
                                         <MapPin className="h-4 w-4" />
@@ -134,6 +147,38 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                     {/* Sidebar */}
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
+                            {/* Poster Info */}
+                            {job.poster && (
+                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <div className="mb-4 flex items-center gap-3">
+                                        {job.poster.logo && (
+                                            <img
+                                                src={job.poster.logo}
+                                                alt={posterName}
+                                                className="h-12 w-12 rounded-full object-cover"
+                                            />
+                                        )}
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-[var(--foreground)] dark:text-white">{posterName}</h4>
+                                            {job.poster.is_verified && (
+                                                <span className="text-xs text-[var(--primary)]">Verified Employer</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    {job.poster.description && (
+                                        <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                                            {job.poster.description}
+                                        </p>
+                                    )}
+                                    <Link
+                                        href={`/jobs/employer/${job.poster.slug}`}
+                                        className="text-sm font-semibold text-[var(--primary)] hover:underline"
+                                    >
+                                        View all jobs by this employer →
+                                    </Link>
+                                </div>
+                            )}
+
                             {/* Salary */}
                             {job.salary && (
                                 <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
