@@ -6,9 +6,8 @@ use App\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Cache;
 
 class Job extends Model
 {
@@ -17,9 +16,12 @@ class Job extends Model
     protected $table = 'job_listings';
 
     protected $fillable = [
-        'user_id',
-        'title',
+        'job_poster_id',
         'company',
+        'phone',
+        'whatsapp',
+        'email',
+        'title',
         'type',
         'category',
         'salary',
@@ -27,9 +29,6 @@ class Job extends Model
         'address',
         'latitude',
         'longitude',
-        'phone',
-        'whatsapp',
-        'email',
         'description',
         'requirements',
         'responsibilities',
@@ -37,12 +36,10 @@ class Job extends Model
         'application_link',
         'application_instructions',
         'is_urgent',
-        'is_verified_employer',
         'posted_at',
         'expires_at',
         'is_active',
         'views_count',
-        'applications_count',
     ];
 
     protected function casts(): array
@@ -51,31 +48,23 @@ class Job extends Model
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
             'is_urgent' => 'boolean',
-            'is_verified_employer' => 'boolean',
             'is_active' => 'boolean',
             'posted_at' => 'datetime',
             'expires_at' => 'datetime',
         ];
     }
 
-    public function user()
+    public function poster(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(JobPoster::class, 'job_poster_id');
     }
 
-    public function reviews(): HasMany
+    /**
+     * Get the user through the poster relationship.
+     */
+    public function getUserAttribute()
     {
-        return $this->hasMany(Review::class);
-    }
-
-    public function getAverageRatingAttribute(): float
-    {
-        return Cache::remember("job.{$this->id}.rating", 300, fn () => round($this->reviews()->approved()->avg('rating') ?? 0, 1));
-    }
-
-    public function getReviewsCountAttribute(): int
-    {
-        return Cache::remember("job.{$this->id}.reviews_count", 300, fn () => $this->reviews()->approved()->count());
+        return $this->poster?->user;
     }
 
     public function favorites(): MorphMany
@@ -84,11 +73,11 @@ class Job extends Model
     }
 
     /**
-     * Scope to filter jobs whose owners have active subscriptions.
+     * Scope to filter jobs whose poster owners have active subscriptions.
      */
     public function scopeWithActiveSubscription(Builder $query): Builder
     {
-        return $query->whereHas('user.categories', function (Builder $q) {
+        return $query->whereHas('poster.user.categories', function (Builder $q) {
             $q->where('category', 'jobs')
                 ->where('is_active', true)
                 ->whereIn('subscription_status', [

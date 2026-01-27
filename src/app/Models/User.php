@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TransportRide> $transportRides
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Rental> $rentals
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MarketplaceProduct> $marketplaceProducts
+ * @property-read \App\Models\JobPoster|null $jobPoster
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Job> $jobs
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Favorite> $favorites
@@ -94,9 +95,17 @@ class User extends Authenticatable
         return $this->hasOne(Store::class);
     }
 
+    public function jobPoster()
+    {
+        return $this->hasOne(JobPoster::class);
+    }
+
+    /**
+     * Get jobs through the job poster.
+     */
     public function jobs()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasManyThrough(Job::class, JobPoster::class);
     }
 
     public function reviews()

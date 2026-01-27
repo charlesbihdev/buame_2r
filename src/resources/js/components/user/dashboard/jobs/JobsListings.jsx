@@ -4,7 +4,7 @@ import { Plus, Edit, Briefcase, MapPin, Trash2, Eye, EyeOff } from 'lucide-react
 import { useState } from 'react';
 import { EditJobModal } from './EditJobModal';
 
-export function JobsListings({ listings, onAddJob }) {
+export function JobsListings({ listings, onAddJob, poster }) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
 
@@ -47,10 +47,12 @@ export function JobsListings({ listings, onAddJob }) {
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Job Postings</h3>
-                <Button onClick={handleCreate} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Post Job
-                </Button>
+                {poster && (
+                    <Button onClick={handleCreate} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Post Job
+                    </Button>
+                )}
             </div>
 
             {listings && listings.length > 0 ? (
@@ -127,11 +129,15 @@ export function JobsListings({ listings, onAddJob }) {
             ) : (
                 <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
                     <Briefcase className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-4 text-gray-600 dark:text-gray-400">No job postings yet</p>
-                    <Button onClick={handleCreate} className="mt-4 cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
-                        <Plus className="mr-2 h-4 w-4" />
-                        Post Your First Job
-                    </Button>
+                    <p className="mt-4 text-gray-600 dark:text-gray-400">
+                        {poster ? 'No job postings yet. Start posting jobs!' : 'Please set up your employer profile first to post jobs.'}
+                    </p>
+                    {poster && (
+                        <Button onClick={handleCreate} className="mt-4 cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
+                            <Plus className="mr-2 h-4 w-4" />
+                            Post Your First Job
+                        </Button>
+                    )}
                 </div>
             )}
 

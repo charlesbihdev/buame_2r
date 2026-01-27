@@ -9,7 +9,18 @@ export function JobCard({ job }) {
                 <div className="mb-2 flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
                         <h3 className="text-base leading-tight font-bold text-[var(--foreground)] dark:text-white">{job.title}</h3>
-                        <p className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{job.company}</p>
+                        {job.company && (
+                            <p className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{job.company}</p>
+                        )}
+                        {job.poster && (
+                            <Link
+                                href={`/jobs/employer/${job.poster.slug}`}
+                                className="mt-1 text-sm font-medium text-[var(--primary)] hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {job.poster.name}
+                            </Link>
+                        )}
                     </div>
                     {job.is_urgent && (
                         <span className="shrink-0 rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">Urgent</span>

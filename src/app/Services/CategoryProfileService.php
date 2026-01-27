@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Artisan;
 use App\Models\Hotel;
-use App\Models\Job;
+use App\Models\JobPoster;
 use App\Models\Rental;
 use App\Models\Store;
 use App\Models\TransportRide;
@@ -24,7 +24,7 @@ class CategoryProfileService
             'transport' => $this->getOrCreateTransport($user),
             'rentals' => $this->getOrCreateRental($user),
             'marketplace' => $this->getOrCreateStore($user),
-            'jobs' => $this->getOrCreateJob($user),
+            'jobs' => $this->getOrCreateJobPoster($user),
             default => null,
         };
     }
@@ -136,23 +136,32 @@ class CategoryProfileService
     }
 
     /**
-     * Get or create job profile.
+     * Get or create job poster profile.
      */
-    protected function getOrCreateJob(User $user): Job
+    protected function getOrCreateJobPoster(User $user): JobPoster
     {
-        return $user->jobs()->firstOrCreate(
-            ['user_id' => $user->id],
-            [
-                'title' => '',
-                'company' => '',
-                'type' => 'full_time',
-                'category' => 'general_jobs',
-                'location' => '',
+        $poster = $user->jobPoster;
+
+        if (!$poster) {
+            $baseSlug = Str::slug($user->name);
+            $slug = $baseSlug;
+            $counter = 1;
+
+            while (JobPoster::where('slug', $slug)->exists()) {
+                $slug = $baseSlug . '-' . $counter;
+                $counter++;
+            }
+
+            $poster = JobPoster::create([
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'slug' => $slug,
                 'phone' => $user->phone,
-                'description' => '',
                 'is_active' => false,
-            ]
-        );
+            ]);
+        }
+
+        return $poster->load('jobs');
     }
 
     /**
