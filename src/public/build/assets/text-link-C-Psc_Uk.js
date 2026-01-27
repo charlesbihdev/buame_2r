@@ -1,1 +1,0 @@
-import{j as n,$ as x}from"./app-B9bxUm39.js";function i({href:e,children:t,className:r="",...s}){return n.jsx(x,{href:e,className:`text-sm text-primary hover:underline ${r}`,...s,children:t})}export{i as T};

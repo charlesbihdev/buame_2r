@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
-import { MapPin, Clock, AlertCircle } from 'lucide-react';
+import { MapPin, Clock, Banknote } from 'lucide-react';
 
 export function JobCard({ job }) {
     return (
@@ -44,8 +44,9 @@ export function JobCard({ job }) {
                 </div>
 
                 {job.salary && (
-                    <div className="mb-3 text-sm font-semibold text-[var(--foreground)] dark:text-white">
-                        {job.salary}
+                    <div className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                        <Banknote className="h-4 w-4 text-[var(--primary)]" />
+                        <span>{job.salary}</span>
                     </div>
                 )}
 
