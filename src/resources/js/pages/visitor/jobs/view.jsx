@@ -1,6 +1,6 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, DollarSign, Clock, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function JobView({ job, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -183,7 +183,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                             {job.salary && (
                                 <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                     <div className="mb-2 flex items-center gap-2">
-                                        <DollarSign className="h-5 w-5 text-[var(--primary)]" />
+                                        <Banknote className="h-5 w-5 text-[var(--primary)]" />
                                         <div className="text-sm text-gray-600 dark:text-gray-400">Salary</div>
                                     </div>
                                     <div className="text-2xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{job.salary}</div>

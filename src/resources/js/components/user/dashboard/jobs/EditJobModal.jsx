@@ -152,7 +152,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
                             id="edit-salary"
                             value={data.salary}
                             onChange={(e) => setData('salary', e.target.value)}
-                            placeholder="e.g., GHS 2000-3000/month or Negotiable"
+                            placeholder="e.g., GH₵ 2,000 - 3,000/month"
                         />
                         <FormError error={errors.salary} />
                     </div>
