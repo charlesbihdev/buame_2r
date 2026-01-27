@@ -87,31 +87,33 @@ export function JobsListings({ listings, onAddJob, poster }) {
                                     <span>{listing.location}</span>
                                 </div>
 
-                                <div className="mt-2 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-500">
-                                    <span>{listing.is_active ? 'Visible' : 'Hidden'}</span>
-                                </div>
-
                                 <div className="mt-4 flex items-center gap-2">
+                                    <Button
+                                        onClick={() => handleToggleActive(listing)}
+                                        variant={listing.is_active ? 'outline' : 'default'}
+                                        size="sm"
+                                        className={listing.is_active
+                                            ? 'flex-1 border-green-500 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20'
+                                            : 'flex-1 bg-gray-500 text-white hover:bg-gray-600'}
+                                    >
+                                        {listing.is_active ? (
+                                            <>
+                                                <Eye className="mr-2 h-3 w-3" />
+                                                Live
+                                            </>
+                                        ) : (
+                                            <>
+                                                <EyeOff className="mr-2 h-3 w-3" />
+                                                Hidden
+                                            </>
+                                        )}
+                                    </Button>
                                     <Button
                                         onClick={() => handleEdit(listing)}
                                         variant="outline"
                                         size="sm"
-                                        className="flex-1"
                                     >
-                                        <Edit className="mr-2 h-3 w-3" />
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        onClick={() => handleToggleActive(listing)}
-                                        variant="outline"
-                                        size="sm"
-                                        title={listing.is_active ? 'Hide job' : 'Show job'}
-                                    >
-                                        {listing.is_active ? (
-                                            <EyeOff className="h-3 w-3" />
-                                        ) : (
-                                            <Eye className="h-3 w-3" />
-                                        )}
+                                        <Edit className="h-3 w-3" />
                                     </Button>
                                     <Button
                                         onClick={() => handleDelete(listing)}
