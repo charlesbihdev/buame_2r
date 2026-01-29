@@ -2,6 +2,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CautionBanner } from '@/components/ui/caution-banner';
 
 const formatSalary = (salary) => {
     if (!salary) return null;
@@ -40,6 +41,9 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                     <ArrowLeft className="h-4 w-4" />
                     Back to Jobs
                 </Link>
+
+                {/* Caution Banner */}
+                <CautionBanner type="job" className="mb-8" />
 
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
