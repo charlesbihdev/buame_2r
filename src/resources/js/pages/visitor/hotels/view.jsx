@@ -1,6 +1,7 @@
 import { HotelImageGallery } from '@/components/visitor/hotels/HotelImageGallery';
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
+import { CautionBanner } from '@/components/ui/caution-banner';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
@@ -92,6 +93,9 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
                         <ArrowLeft className="h-4 w-4" />
                         Back to Hotels
                     </Link>
+
+                    {/* Caution Banner */}
+                    <CautionBanner type="service" className="mb-8" />
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[var(--card)] md:p-8">

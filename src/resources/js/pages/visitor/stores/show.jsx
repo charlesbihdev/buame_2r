@@ -1,4 +1,5 @@
 import { ReviewSection } from '@/components/ui/review-section';
+import { CautionBanner } from '@/components/ui/caution-banner';
 import { StoreEmptyState } from '@/components/visitor/stores/StoreEmptyState';
 import { StoreFooter } from '@/components/visitor/stores/StoreFooter';
 import { StoreHeader } from '@/components/visitor/stores/StoreHeader';
@@ -73,6 +74,11 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
 
             {/* Hero Section with Store Info */}
             <StoreHero store={store} productCount={productCount} />
+
+            {/* Caution Banner */}
+            <div className="mx-auto max-w-7xl px-4 py-8">
+                <CautionBanner type="product" />
+            </div>
 
             {/* Search & Filters */}
             <StoreSearch

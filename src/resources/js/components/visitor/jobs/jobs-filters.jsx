@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { router } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 
-export function JobsFilters({ filters = {} }) {
+export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {} }) {
     const jobTypes = [
         { id: 'full_time', label: 'Full Time' },
         { id: 'part_time', label: 'Part Time' },
@@ -43,11 +43,11 @@ export function JobsFilters({ filters = {} }) {
             params.set(key, value);
         }
         params.delete('page'); // Reset to first page when filter changes
-        router.get('/jobs', Object.fromEntries(params), {
+        router.get(baseRoute, { ...routeParams, ...Object.fromEntries(params) }, {
             preserveState: true,
             preserveScroll: true,
         });
-    }, []);
+    }, [baseRoute, routeParams]);
 
     const handleLocationFilter = useCallback(() => {
         const params = new URLSearchParams(window.location.search);
@@ -57,11 +57,11 @@ export function JobsFilters({ filters = {} }) {
             params.delete('location');
         }
         params.delete('page');
-        router.get('/jobs', Object.fromEntries(params), {
+        router.get(baseRoute, { ...routeParams, ...Object.fromEntries(params) }, {
             preserveState: true,
             preserveScroll: true,
         });
-    }, [location]);
+    }, [location, baseRoute, routeParams]);
 
     const handleSalaryFilter = useCallback(() => {
         const params = new URLSearchParams(window.location.search);
@@ -71,11 +71,11 @@ export function JobsFilters({ filters = {} }) {
             params.delete('salary');
         }
         params.delete('page');
-        router.get('/jobs', Object.fromEntries(params), {
+        router.get(baseRoute, { ...routeParams, ...Object.fromEntries(params) }, {
             preserveState: true,
             preserveScroll: true,
         });
-    }, [salary]);
+    }, [salary, baseRoute, routeParams]);
 
     const activeTypes = Array.isArray(filters.type) 
         ? filters.type 
@@ -99,7 +99,7 @@ export function JobsFilters({ filters = {} }) {
                 <div>
                     <div className="mb-2 flex items-center justify-between">
                         <h3 className="text-sm font-bold tracking-wider text-gray-500 uppercase dark:text-gray-400">Active Filters</h3>
-                        <button onClick={() => router.get('/jobs')} className="text-xs text-[var(--primary)] hover:underline">
+                        <button onClick={() => router.get(baseRoute, routeParams)} className="text-xs text-[var(--primary)] hover:underline">
                             Clear All
                         </button>
                     </div>
@@ -163,7 +163,7 @@ export function JobsFilters({ filters = {} }) {
                                             params.set('type', newTypes.join(','));
                                         }
                                         params.delete('page');
-                                        router.get('/jobs', Object.fromEntries(params), {
+                                        router.get(baseRoute, { ...routeParams, ...Object.fromEntries(params) }, {
                                             preserveState: true,
                                             preserveScroll: true,
                                         });
@@ -204,7 +204,7 @@ export function JobsFilters({ filters = {} }) {
                                             params.set('category', newCategories.join(','));
                                         }
                                         params.delete('page');
-                                        router.get('/jobs', Object.fromEntries(params), {
+                                        router.get(baseRoute, { ...routeParams, ...Object.fromEntries(params) }, {
                                             preserveState: true,
                                             preserveScroll: true,
                                         });

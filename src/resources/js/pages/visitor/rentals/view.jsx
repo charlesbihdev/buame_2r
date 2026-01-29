@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
+import { CautionBanner } from '@/components/ui/caution-banner';
 import { RentalImageGallery } from '@/components/visitor/rentals/RentalImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
@@ -61,6 +62,9 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                     <ArrowLeft className="h-4 w-4" />
                     Back to Rentals
                 </Link>
+
+                {/* Caution Banner */}
+                <CautionBanner type="service" className="mb-8" />
 
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">

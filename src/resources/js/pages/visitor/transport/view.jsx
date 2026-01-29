@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
+import { CautionBanner } from '@/components/ui/caution-banner';
 import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
@@ -88,6 +89,9 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                         <ArrowLeft className="h-4 w-4" />
                         Back to Transport
                     </Link>
+
+                    {/* Caution Banner */}
+                    <CautionBanner type="service" className="mb-8" />
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
