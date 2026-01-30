@@ -15,7 +15,10 @@ class JobsController extends Controller
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
-        return redirect()->route('user.dashboard.index', ['category' => 'jobs']);
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'jobs',
+            'section' => 'listings',
+        ]);
     }
 
     public function create(): Response
@@ -28,7 +31,7 @@ class JobsController extends Controller
         $user = Auth::user();
         $poster = $user->jobPoster;
 
-        if (!$poster) {
+        if (! $poster) {
             return back()->with('error', 'Please set up your employer profile first.');
         }
 
@@ -59,15 +62,17 @@ class JobsController extends Controller
             'is_active' => false,
         ]));
 
-        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
-            ->with('success', 'Job posting created successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'jobs',
+            'section' => 'listings',
+        ])->with('success', 'Job posting created successfully.');
     }
 
     public function edit(Job $job): Response
     {
         $user = Auth::user();
 
-        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
+        if (! $user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
@@ -80,7 +85,7 @@ class JobsController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
+        if (! $user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
@@ -108,8 +113,10 @@ class JobsController extends Controller
 
         $job->update($validated);
 
-        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
-            ->with('success', 'Job posting updated successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'jobs',
+            'section' => 'listings',
+        ])->with('success', 'Job posting updated successfully.');
     }
 
     /**
@@ -119,12 +126,12 @@ class JobsController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
+        if (! $user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
         // If trying to activate, validate required fields
-        if (!$job->is_active) {
+        if (! $job->is_active) {
             $errors = [];
 
             if (empty($job->title)) {
@@ -147,7 +154,7 @@ class JobsController extends Controller
                 $errors['description'] = 'Description is required before making it visible.';
             }
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 $fieldLabels = [
                     'title' => 'job title',
                     'type' => 'job type',
@@ -161,13 +168,13 @@ class JobsController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your job with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your job with '.implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
         }
 
-        $job->is_active = !$job->is_active;
+        $job->is_active = ! $job->is_active;
         $job->save();
 
         return back()->with('success', $job->is_active ? 'Job posting is now visible.' : 'Job posting is now hidden.');
@@ -177,13 +184,15 @@ class JobsController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
+        if (! $user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
             abort(403);
         }
 
         $job->delete();
 
-        return redirect()->route('user.dashboard.index', ['category' => 'jobs'])
-            ->with('success', 'Job posting deleted successfully.');
+        return redirect()->route('user.dashboard.index', [
+            'category' => 'jobs',
+            'section' => 'listings',
+        ])->with('success', 'Job posting deleted successfully.');
     }
 }

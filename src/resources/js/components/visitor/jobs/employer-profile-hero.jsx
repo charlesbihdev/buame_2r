@@ -51,7 +51,7 @@ export function EmployerProfileHero({
                 <div className="absolute -bottom-20 -left-20 h-96 w-96 rounded-full bg-[var(--primary)]"></div>
             </div>
 
-            <div className="relative mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+            <div className="relative mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
                 <div className="grid gap-8 lg:grid-cols-3 lg:gap-12">
                     {/* Left: Logo & Info */}
                     <div className="lg:col-span-2">
