@@ -45,28 +45,62 @@ class JobsController extends Controller
 
         // Apply location filter
         if ($request->filled('location')) {
-            $query->where('location', 'like', '%' . $request->location . '%');
+            $query->where('location', 'like', '%'.$request->location.'%');
         }
 
         // Apply search filter (title or poster name)
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', '%' . $search . '%')
+                $q->where('title', 'like', '%'.$search.'%')
                     ->orWhereHas('poster', function ($pq) use ($search) {
-                        $pq->where('name', 'like', '%' . $search . '%');
+                        $pq->where('name', 'like', '%'.$search.'%');
                     });
             });
         }
 
-        // Apply salary filter (text search)
+        // Apply salary range filter
         if ($request->filled('salary')) {
-            $query->where('salary', 'like', '%' . $request->salary . '%');
+            $salaryRanges = is_array($request->salary)
+                ? $request->salary
+                : (str_contains($request->salary, ',')
+                    ? explode(',', $request->salary)
+                    : [$request->salary]);
+
+            $query->where(function ($q) use ($salaryRanges) {
+                foreach ($salaryRanges as $range) {
+                    $q->orWhere(function ($subQ) use ($range) {
+                        // Extract numeric value from salary field using regex
+                        // Salary format is typically like "GH₵ 2000" or "GH₵ 2000 - 3000"
+                        $extractSalary = "CAST(REGEXP_REPLACE(REGEXP_REPLACE(salary, '[^0-9.-]', ''), '-.*', '') AS UNSIGNED)";
+
+                        if ($range === '10000+') {
+                            $subQ->whereRaw("{$extractSalary} >= 10000");
+                        } else {
+                            [$min, $max] = explode('-', $range);
+                            $subQ->whereRaw("{$extractSalary} >= ?", [(int) $min])
+                                ->whereRaw("{$extractSalary} < ?", [(int) $max]);
+                        }
+                    });
+                }
+            });
         }
 
         // Apply urgent filter
         if ($request->filled('urgent') && $request->urgent === '1') {
             $query->where('is_urgent', true);
+        }
+
+        // Apply date posted filter
+        if ($request->filled('date_posted') && $request->date_posted !== '0') {
+            $days = (int) $request->date_posted;
+            $query->where(function ($q) use ($days) {
+                $q->where('posted_at', '>=', now()->subDays($days))
+                    ->orWhere(function ($q2) use ($days) {
+                        $q2->whereNull('posted_at')
+                            ->where('created_at', '>=', now()->subDays($days));
+                    });
+            });
         }
 
         // Apply sorting
@@ -121,7 +155,7 @@ class JobsController extends Controller
                     'id' => $job->poster->id,
                     'name' => $job->poster->name,
                     'slug' => $job->poster->slug,
-                    'logo' => $job->poster->logo ? '/storage/' . $job->poster->logo : null,
+                    'logo' => $job->poster->logo ? '/storage/'.$job->poster->logo : null,
                     'is_verified' => $job->poster->is_verified,
                 ] : null,
                 'type' => $job->type,
@@ -148,7 +182,7 @@ class JobsController extends Controller
         // Previous link
         if ($currentPage > 1) {
             $paginationLinks[] = [
-                'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])),
+                'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage - 1])),
                 'label' => '&laquo; Previous',
                 'active' => false,
             ];
@@ -158,7 +192,7 @@ class JobsController extends Controller
         for ($i = 1; $i <= $lastPage; $i++) {
             if ($i == 1 || $i == $lastPage || ($i >= $currentPage - 2 && $i <= $currentPage + 2)) {
                 $paginationLinks[] = [
-                    'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $i])),
+                    'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $i])),
                     'label' => (string) $i,
                     'active' => $i == $currentPage,
                 ];
@@ -174,7 +208,7 @@ class JobsController extends Controller
         // Next link
         if ($currentPage < $lastPage) {
             $paginationLinks[] = [
-                'url' => $baseUrl . '?' . http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])),
+                'url' => $baseUrl.'?'.http_build_query(array_merge($queryParams, ['page' => $currentPage + 1])),
                 'label' => 'Next &raquo;',
                 'active' => false,
             ];
@@ -198,6 +232,7 @@ class JobsController extends Controller
                 'search' => $request->get('search', ''),
                 'salary' => $request->get('salary', ''),
                 'urgent' => $request->get('urgent'),
+                'date_posted' => $request->get('date_posted', '0'),
                 'sort' => $sortBy,
             ],
         ]);
@@ -226,7 +261,7 @@ class JobsController extends Controller
             }])
             ->first();
 
-        if (!$job) {
+        if (! $job) {
             abort(404, 'Job not found or not available');
         }
 
@@ -308,7 +343,7 @@ class JobsController extends Controller
                 'images' => $review->images->map(function ($image) {
                     return [
                         'id' => $image->id,
-                        'url' => asset('storage/' . $image->image_path),
+                        'url' => asset('storage/'.$image->image_path),
                     ];
                 })->toArray(),
             ];
@@ -324,7 +359,7 @@ class JobsController extends Controller
                     'name' => $poster->name,
                     'slug' => $poster->slug,
                     'description' => $poster->description,
-                    'logo' => $poster->logo ? '/storage/' . $poster->logo : null,
+                    'logo' => $poster->logo ? '/storage/'.$poster->logo : null,
                     'location' => $poster->location,
                     'website' => $poster->website,
                     'is_verified' => $poster->is_verified,

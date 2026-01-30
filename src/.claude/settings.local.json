@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(vendor/bin/pint:*)"
+      "Bash(vendor/bin/pint:*)",
+      "Bash(npm install:*)",
+      "Bash(ls -la \"d:\\\\charlesbih\\\\buame_2r\\\\src\\\\resources\\\\js\\\\components\\\\visitor\"\" | grep \"^d \")"
     ]
   }
 }
