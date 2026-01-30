@@ -82,9 +82,9 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
 
                 {/* Jobs Section */}
                 <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-[var(--buame-background-dark)]">
-                    <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
+                    <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
                         {/* Section Header */}
-                        <div className="mb-8">
+                        <div className="mb-6">
                             <div className="flex items-center gap-3 mb-2">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--primary)]/10">
                                     <Briefcase className="h-6 w-6 text-[var(--primary)]" />

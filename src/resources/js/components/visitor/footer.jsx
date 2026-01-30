@@ -81,17 +81,17 @@ export function Footer() {
                         <h3 className="text-foreground mb-4 font-bold">Support</h3>
                         <ul className="text-muted-foreground flex flex-col gap-2 text-sm">
                             <li>
-                                <Link href="/contact" className="hover:text-primary transition-colors">
+                                <Link href="/help" className="hover:text-primary transition-colors">
                                     Help Center
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/help" className="hover:text-primary transition-colors">
+                                <Link href="/safety" className="hover:text-primary transition-colors">
                                     Safety Tips
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/about" className="hover:text-primary transition-colors">
+                                <Link href="/provider-guidelines" className="hover:text-primary transition-colors">
                                     Provider Guidelines
                                 </Link>
                             </li>

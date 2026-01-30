@@ -20,6 +20,26 @@ Route::get('/contact', function () {
     return Inertia::render('visitor/contact');
 })->name('contact');
 
+Route::get('/help', function () {
+    return Inertia::render('visitor/help-center');
+})->name('help');
+
+Route::get('/safety', function () {
+    return Inertia::render('visitor/safety-tips');
+})->name('safety');
+
+Route::get('/provider-guidelines', function () {
+    return Inertia::render('visitor/provider-guidelines');
+})->name('provider-guidelines');
+
+Route::get('/privacy', function () {
+    return Inertia::render('visitor/privacy');
+})->name('privacy');
+
+Route::get('/terms', function () {
+    return Inertia::render('visitor/terms');
+})->name('terms');
+
 Route::get('/marketplace', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'index'])->name('marketplace');
 
 Route::get('/food-stay', function () {
