@@ -2,7 +2,9 @@ import { Link } from '@inertiajs/react';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { AppLogo } from './app-logo';
 
-export function Footer() {
+export default function Footer() {
+    const currentYear = new Date().getFullYear();
+
     return (
         <footer className="border-border bg-card border-t pt-16">
             <div className="mx-auto max-w-[1200px] px-4 pb-8 md:px-8 lg:px-40">
@@ -109,7 +111,7 @@ export function Footer() {
                         <ul className="text-muted-foreground flex flex-col gap-3 text-sm">
                             <li className="flex items-center gap-2">
                                 <Phone className="text-primary h-5 w-5" />
-                                <span>+233 54 092 9012</span>
+                                <span>+233 54 092 9012 / +233 53 809 0998</span>
                             </li>
                             <li className="flex items-center gap-2">
                                 <Mail className="text-primary h-5 w-5" />
@@ -125,7 +127,7 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-border flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-                    <p className="text-muted-foreground text-xs">© 2023 2RBUAME. All rights reserved.</p>
+                    <p className="text-muted-foreground text-xs">© {currentYear} 2RBUAME. All rights reserved.</p>
                     <div className="text-muted-foreground flex gap-6 text-xs">
                         <Link href="/privacy" className="hover:text-primary transition-colors">
                             Privacy Policy
@@ -139,3 +141,5 @@ export function Footer() {
         </footer>
     );
 }
+
+export { Footer };

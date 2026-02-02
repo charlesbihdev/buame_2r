@@ -35,7 +35,7 @@ function SafetyHero() {
                 </div>
                 <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Safety Tips</h1>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-200 md:text-xl">
-                    Your safety is very important to us. Follow these guidelines to ensure a secure experience on BUAME 2R.
+                    Your safety is very important to us. Follow these guidelines to ensure a secure experience on 2RBUAME.
                 </p>
             </div>
         </section>
@@ -77,7 +77,7 @@ function CustomerSafetySection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">For Customers</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        Essential safety guidelines when using services on BUAME 2R
+                        Essential safety guidelines when using services on 2RBUAME
                     </p>
                 </div>
 
@@ -131,7 +131,7 @@ function ProviderSafetySection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">For Service Providers</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        Safety guidelines for providers offering services on BUAME 2R
+                        Safety guidelines for providers offering services on 2RBUAME
                     </p>
                 </div>
 
@@ -160,7 +160,7 @@ function GeneralSafetySection() {
         {
             icon: Lock,
             title: 'Protect Your Credentials',
-            description: 'Do not share passwords or verification codes with anyone. BUAME 2R will never ask for your password.',
+            description: 'Do not share passwords or verification codes with anyone. 2RBUAME will never ask for your password.',
         },
         {
             icon: Eye,
@@ -209,7 +209,7 @@ function GeneralSafetySection() {
 function SafetyChecklistSection() {
     const checklist = [
         'Verify the identity of service providers before booking',
-        'Keep all conversations within the BUAME 2R platform',
+        'Keep all conversations within the 2RBUAME platform',
         'Never share sensitive personal information unnecessarily',
         'Report any suspicious activity immediately',
         'Read reviews and ratings before making decisions',
@@ -224,7 +224,7 @@ function SafetyChecklistSection() {
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Safety Checklist</h2>
                     <p className="text-muted-foreground mb-8">
-                        Keep these points in mind every time you use BUAME 2R
+                        Keep these points in mind every time you use 2RBUAME
                     </p>
 
                     <div className="space-y-4 text-left">

@@ -18,13 +18,21 @@ export function ContactSidebar() {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-[#4c9a4c] dark:text-gray-400">Call Us Directly</p>
-                        <a
-                            href="tel:+233540929012"
-                            className="text-lg font-bold text-[var(--foreground)] transition-colors hover:text-[var(--primary)] dark:text-white"
-                        >
-                            +233 54 092 9012
-                        </a>
-                        <p className="mt-1 text-xs text-[#4c9a4c]">Available Mon-Fri, 8am-5pm</p>
+                        <div className="flex flex-col gap-1">
+                            <a
+                                href="tel:+233540929012"
+                                className="text-lg font-bold text-[var(--foreground)] transition-colors hover:text-[var(--primary)] dark:text-white"
+                            >
+                                +233 54 092 9012
+                            </a>
+                            <a
+                                href="tel:+233538090998"
+                                className="text-lg font-bold text-[var(--foreground)] transition-colors hover:text-[var(--primary)] dark:text-white"
+                            >
+                                +233 53 809 0998
+                            </a>
+                        </div>
+                        <p className="mt-1 text-xs text-[#4c9a4c]">Available Monday to Friday, 8:30am-5pm</p>
                     </div>
                 </div>
                 {/* WhatsApp CTA */}
@@ -60,8 +68,7 @@ export function ContactSidebar() {
                     </div>
                     <div>
                         <p className="text-sm font-medium text-[#4c9a4c] dark:text-gray-400">Business Hours</p>
-                        <p className="mt-0.5 font-semibold text-[var(--foreground)] dark:text-white">Mon - Fri: 8:00 AM - 5:00 PM</p>
-                        <p className="text-sm text-[#4c9a4c]">Sat: 9:00 AM - 2:00 PM</p>
+                        <p className="mt-0.5 font-semibold text-[var(--foreground)] dark:text-white">Monday to Friday: 8:30 AM - 5:00 PM</p>
                     </div>
                 </div>
             </div>

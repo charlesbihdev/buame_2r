@@ -37,7 +37,7 @@ function ProviderHero() {
                 </div>
                 <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Provider Guidelines</h1>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-200 md:text-xl">
-                    All service providers on BUAME 2R must follow these rules to ensure a safe, professional, and trustworthy marketplace.
+                    All service providers on 2RBUAME must follow these rules to ensure a safe, professional, and trustworthy marketplace.
                 </p>
             </div>
         </section>
@@ -69,7 +69,7 @@ function RegistrationSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Registration Requirements</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        What you need to become a service provider on BUAME 2R
+                        What you need to become a service provider on 2RBUAME
                     </p>
                 </div>
 
@@ -223,7 +223,7 @@ function ProhibitedSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Prohibited Activities</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        Activities that are strictly forbidden on BUAME 2R
+                        Activities that are strictly forbidden on 2RBUAME
                     </p>
                 </div>
 

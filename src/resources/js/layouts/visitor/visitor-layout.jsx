@@ -1,5 +1,5 @@
 import { BuameNavbar } from '@/components/visitor/buame-navbar';
-import { Footer } from '@/components/visitor/footer';
+import Footer from '@/components/visitor/footer';
 import { WhatsAppButton } from '@/components/visitor/whatsapp-button';
 import ToastProvider from '@/components/ui/toast-provider';
 

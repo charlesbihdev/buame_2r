@@ -35,7 +35,7 @@ function TermsHero() {
                 </div>
                 <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Terms of Service</h1>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-200 md:text-xl">
-                    By using BUAME 2R, you agree to the following terms and conditions. Please read them carefully.
+                    By using 2RBUAME, you agree to the following terms and conditions. Please read them carefully.
                 </p>
             </div>
         </section>
@@ -67,7 +67,7 @@ function UserResponsibilitiesSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">User Responsibilities</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        As a user of BUAME 2R, you agree to the following responsibilities
+                        As a user of 2RBUAME, you agree to the following responsibilities
                     </p>
                 </div>
 
@@ -116,7 +116,7 @@ function PaymentsSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Subscriptions & Payments</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        Terms regarding payment, subscriptions, and fees on BUAME 2R
+                        Terms regarding payment, subscriptions, and fees on 2RBUAME
                     </p>
                 </div>
 
@@ -156,7 +156,7 @@ function AccountSuspensionSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Account Suspension</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        BUAME 2R reserves the right to take the following actions to maintain platform integrity
+                        2RBUAME reserves the right to take the following actions to maintain platform integrity
                     </p>
                 </div>
 
@@ -186,7 +186,7 @@ function LimitationSection() {
         {
             icon: AlertTriangle,
             title: 'Service Quality Disputes',
-            description: 'BUAME 2R is not directly responsible for disputes regarding service quality between users.',
+            description: '2RBUAME is not directly responsible for disputes regarding service quality between users.',
         },
         {
             icon: CreditCard,
@@ -196,7 +196,7 @@ function LimitationSection() {
         {
             icon: MessageSquare,
             title: 'External Agreements',
-            description: 'Agreements made outside the platform are between users and not guaranteed by BUAME 2R.',
+            description: 'Agreements made outside the platform are between users and not guaranteed by 2RBUAME.',
         },
     ];
 
@@ -206,7 +206,7 @@ function LimitationSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Limitation of Liability</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        BUAME 2R acts as a connector and has the following limitations of liability
+                        2RBUAME acts as a connector and has the following limitations of liability
                     </p>
                 </div>
 

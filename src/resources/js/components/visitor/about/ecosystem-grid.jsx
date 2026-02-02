@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Store, Bus, Wrench, Briefcase, ArrowRight } from 'lucide-react';
+import { Store, Bus, Wrench, Briefcase, ArrowRight, Home, Hotel } from 'lucide-react';
 
 export function EcosystemGrid() {
     const ecosystemItems = [
@@ -12,6 +12,16 @@ export function EcosystemGrid() {
             icon: Bus,
             title: 'Transport',
             description: 'Reliable links for goods and passengers.',
+        },
+        {
+            icon: Home,
+            title: 'Rentals',
+            description: 'Helping people find and list rooms, houses, and spaces.',
+        },
+        {
+            icon: Hotel,
+            title: 'Hotels',
+            description: 'Discover and book guest houses and hotels with ease.',
         },
         {
             icon: Wrench,
@@ -42,11 +52,13 @@ export function EcosystemGrid() {
                 <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
                     {ecosystemItems.map((item, index) => {
                         const Icon = item.icon;
-                        // Strategic color variation: Green, Gold, Blue, Green
+                        // Strategic color variation (cycles)
                         const colorVariants = [
                             { bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]', border: 'hover:border-[var(--primary)]/20' }, // Local Traders - Green
                             { bg: 'bg-[var(--secondary)]/10', text: 'text-[var(--secondary)]', border: 'hover:border-[var(--secondary)]/20' }, // Transport - Gold
-                            { bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]', border: 'hover:border-[var(--primary)]/20' }, // Artisans - Green
+                            { bg: 'bg-[var(--accent)]/10', text: 'text-[var(--accent)]', border: 'hover:border-[var(--accent)]/20' }, // Rentals - Blue (trust)
+                            { bg: 'bg-[var(--primary)]/10', text: 'text-[var(--primary)]', border: 'hover:border-[var(--primary)]/20' }, // Hotels - Green
+                            { bg: 'bg-[var(--secondary)]/10', text: 'text-[var(--secondary)]', border: 'hover:border-[var(--secondary)]/20' }, // Artisans - Gold
                             { bg: 'bg-[var(--accent)]/10', text: 'text-[var(--accent)]', border: 'hover:border-[var(--accent)]/20' }, // Employment - Blue (trust)
                         ];
                         const colors = colorVariants[index % colorVariants.length];

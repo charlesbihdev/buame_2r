@@ -35,7 +35,7 @@ function PrivacyHero() {
                 </div>
                 <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Privacy Policy</h1>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-200 md:text-xl">
-                    BUAME 2R is committed to protecting your personal data. Learn how we collect, use, and safeguard your information.
+                    2RBUAME is committed to protecting your personal data. Learn how we collect, use, and safeguard your information.
                 </p>
             </div>
         </section>
@@ -123,7 +123,7 @@ function DataUsageSection() {
                 <div className="mb-12 text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">How We Use Your Information</h2>
                     <p className="text-muted-foreground mx-auto max-w-2xl">
-                        Your data helps us deliver a better experience on BUAME 2R
+                        Your data helps us deliver a better experience on 2RBUAME
                     </p>
                 </div>
 
@@ -216,7 +216,7 @@ function YourRightsSection() {
                 <div className="mx-auto max-w-3xl text-center">
                     <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">Your Rights</h2>
                     <p className="text-muted-foreground mb-8">
-                        As a user of BUAME 2R, you have the following rights regarding your personal data
+                        As a user of 2RBUAME, you have the following rights regarding your personal data
                     </p>
 
                     <div className="grid grid-cols-1 gap-4 text-left md:grid-cols-2">
