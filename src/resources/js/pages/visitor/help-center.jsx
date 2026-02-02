@@ -31,7 +31,7 @@ function HelpHero() {
             <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
                 <h1 className="mb-6 text-4xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">Help Center</h1>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-gray-200 md:text-xl">
-                    Welcome to BUAME 2R, your trusted local digital services and marketplace platform for the Western North Region of Ghana.
+                    Welcome to 2RBUAME, your trusted local digital services and marketplace platform for the Western North Region of Ghana.
                 </p>
             </div>
         </section>
@@ -43,9 +43,9 @@ function AboutSection() {
         <section className="py-12 md:py-16">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mb-12 text-center">
-                    <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">About BUAME 2R</h2>
+                    <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl">About 2RBUAME</h2>
                     <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
-                        BUAME 2R is a community-centered digital platform connecting people who need services with trusted local service providers.
+                        2RBUAME is a community-centered digital platform connecting people who need services with trusted local service providers.
                     </p>
                 </div>
 
@@ -78,7 +78,7 @@ function SupportTopicsSection() {
         {
             icon: UserCheck,
             title: 'Account Registration & Verification',
-            description: 'Learn how to create and verify your account on BUAME 2R',
+            description: 'Learn how to create and verify your account on 2RBUAME',
         },
         {
             icon: CreditCard,
@@ -158,7 +158,7 @@ function ContactSupportSection() {
                         </CardHeader>
                         <CardContent>
                             <p className="text-muted-foreground mb-4">Contact our support team via phone or WhatsApp</p>
-                            <p className="text-foreground font-semibold">+233 54 092 9012</p>
+                            <p className="text-foreground font-semibold">+233 54 092 9012 / +233 53 809 0998</p>
                         </CardContent>
                     </Card>
 

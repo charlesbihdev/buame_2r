@@ -68,11 +68,35 @@ export function JobPosterSettings({ poster }) {
         });
     };
 
-    const handleCopy = () => {
+    const copyTextToClipboard = async (text) => {
+        // Preferred modern API (requires secure context in most browsers)
+        if (navigator?.clipboard?.writeText && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
+        }
+
+        // Fallback for non-secure contexts / older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    };
+
+    const handleCopy = async () => {
         const posterUrl = `${window.location.origin}/jobs/employer/${data.slug || poster?.slug}`;
-        navigator.clipboard.writeText(posterUrl);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        try {
+            await copyTextToClipboard(posterUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Copy failed:', err);
+        }
     };
 
     const posterUrl = `${window.location.origin}/jobs/employer/${data.slug || poster?.slug || 'your-profile'}`;
