@@ -148,7 +148,7 @@ return [
 
     'free_access' => [
         'enabled' => env('FREE_ACCESS_ENABLED', false),
-        'duration_days' => env('FREE_ACCESS_DAYS', 30),
+        'duration_days' => (int) env('FREE_ACCESS_DAYS', 30),
     ],
 
     /*
