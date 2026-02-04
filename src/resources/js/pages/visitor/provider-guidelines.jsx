@@ -282,7 +282,15 @@ function CTASection() {
 export default function ProviderGuidelines() {
     return (
         <VisitorLayout>
-            <Head title="Provider Guidelines - 2RBUAME" />
+            <Head title="Provider Guidelines">
+                <meta name="description" content="Guidelines for service providers on 2RBUAME. Learn about registration requirements, service delivery standards, ratings policies, and prohibited activities." />
+                <meta name="keywords" content="2RBUAME provider guidelines, service provider rules, seller guidelines, platform policies, provider requirements" />
+                <meta property="og:title" content="Provider Guidelines - 2RBUAME" />
+                <meta property="og:description" content="All service providers on 2RBUAME must follow these rules to ensure a safe, professional, and trustworthy marketplace." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Provider Guidelines - 2RBUAME" />
+                <meta name="twitter:description" content="Rules and guidelines for service providers on 2RBUAME." />
+            </Head>
             <ProviderHero />
             <RegistrationSection />
             <ServiceDeliverySection />

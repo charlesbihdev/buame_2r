@@ -59,7 +59,9 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
     if (!hotel) {
         return (
             <VisitorLayout>
-                <Head title="Hotel Not Found | 2RBUAME" />
+                <Head title="Hotel Not Found">
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     <p className="text-center text-gray-600 dark:text-gray-400">Hotel not found</p>
                 </div>
@@ -78,9 +80,22 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
             .join(' ');
     };
 
+    const hotelDescription = hotel?.description ? hotel.description.substring(0, 150) : `${formatHotelType(hotel?.type)} in ${hotel?.location}`;
+    const amenitiesText = hotel?.amenities?.slice(0, 3)?.join(', ') || 'various amenities';
+
     return (
         <VisitorLayout>
-            <Head title={`${hotel?.name} | 2RBUAME`} />
+            <Head title={hotel?.name}>
+                <meta name="description" content={`${hotel?.name} - ${formatHotelType(hotel?.type)} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night. ${hotelDescription}${hotelDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="keywords" content={`${hotel?.name}, ${formatHotelType(hotel?.type)}, ${hotel?.location}, hotel booking, accommodation Ghana, ${amenitiesText}`} />
+                <meta property="og:title" content={`${hotel?.name} | 2RBUAME Hotels`} />
+                <meta property="og:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night.`} />
+                <meta property="og:type" content="hotel" />
+                {hotel?.images?.[0] && <meta property="og:image" content={hotel.images[0]} />}
+                <meta name="twitter:title" content={`${hotel?.name} | 2RBUAME Hotels`} />
+                <meta name="twitter:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night.`} />
+                {hotel?.images?.[0] && <meta name="twitter:image" content={hotel.images[0]} />}
+            </Head>
 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">

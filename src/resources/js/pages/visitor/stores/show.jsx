@@ -65,9 +65,21 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
     const productCount = products?.total || 0;
     const hasProducts = products?.data && products.data.length > 0;
 
+    const storeDescription = store.description ? store.description.substring(0, 150) : `Shop at ${store.name} - Browse ${productCount} products`;
+
     return (
         <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
-            <Head title={`${store.name} | 2RBUAME`} />
+            <Head title={store.name}>
+                <meta name="description" content={`${store.name} - ${storeDescription}${storeDescription.length >= 150 ? '...' : ''} Shop ${productCount} products on 2RBUAME marketplace.`} />
+                <meta name="keywords" content={`${store.name}, marketplace, shop, products, buy, Ghana, 2RBUAME`} />
+                <meta property="og:title" content={`${store.name} | 2RBUAME Marketplace`} />
+                <meta property="og:description" content={`Shop at ${store.name}. Browse ${productCount} products on 2RBUAME.`} />
+                <meta property="og:type" content="website" />
+                {store.logo && <meta property="og:image" content={store.logo} />}
+                <meta name="twitter:title" content={`${store.name} | 2RBUAME Marketplace`} />
+                <meta name="twitter:description" content={`Shop at ${store.name}. Browse ${productCount} products on 2RBUAME.`} />
+                {store.logo && <meta name="twitter:image" content={store.logo} />}
+            </Head>
 
             {/* Sticky Header with Store Branding & Share */}
             <StoreHeader store={store} />

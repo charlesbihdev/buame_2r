@@ -63,7 +63,9 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
     if (!ride) {
         return (
             <VisitorLayout>
-                <Head title="Transport Not Found | 2RBUAME" />
+                <Head title="Transport Not Found">
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     <p className="text-center text-gray-600 dark:text-gray-400">Transport service not found</p>
                 </div>
@@ -73,10 +75,21 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
     const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.driver_name}.`);
     const TypeIcon = getTypeIcon(ride?.type);
+    const rideDescription = ride?.description ? ride.description.substring(0, 150) : `${formatTransportType(ride?.type)} service in ${ride?.location}`;
 
     return (
         <VisitorLayout>
-            <Head title={`${ride?.driver_name} | 2RBUAME`} />
+            <Head title={`${ride?.driver_name} - ${formatTransportType(ride?.type)}`}>
+                <meta name="description" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} service in ${ride?.location}. ${ride?.seats_available} seats available at GH₵${ride?.price_per_seat}/seat. ${rideDescription}${rideDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="keywords" content={`${ride?.driver_name}, ${formatTransportType(ride?.type)}, ${ride?.location}, transport, rides, book ride, Ghana transport, 2RBUAME`} />
+                <meta property="og:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME Transport`} />
+                <meta property="og:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}. GH₵${ride?.price_per_seat}/seat.`} />
+                <meta property="og:type" content="website" />
+                {ride?.image && <meta property="og:image" content={ride.image} />}
+                <meta name="twitter:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME`} />
+                <meta name="twitter:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.`} />
+                {ride?.image && <meta name="twitter:image" content={ride.image} />}
+            </Head>
 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">

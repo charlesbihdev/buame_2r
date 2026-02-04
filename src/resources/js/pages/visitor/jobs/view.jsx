@@ -17,7 +17,9 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
     if (!job) {
         return (
             <VisitorLayout>
-                <Head title="Job Not Found - 2RBUAME Jobs" />
+                <Head title="Job Not Found">
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                     <p className="text-center text-gray-600 dark:text-gray-400">Job not found</p>
                 </div>
@@ -29,9 +31,19 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
     const companyName = job.company || job.poster?.name || 'Company';
     const posterName = job.poster?.name;
 
+    const jobDescription = job.description ? job.description.substring(0, 160) : `${job.title} position at ${companyName} in ${job.location}`;
+
     return (
         <VisitorLayout>
-            <Head title={`${job.title} - ${companyName} | 2RBUAME Jobs`} />
+            <Head title={`${job.title} - ${companyName}`}>
+                <meta name="description" content={`${job.title} job at ${companyName} in ${job.location}. ${jobDescription}${jobDescription.length >= 160 ? '...' : ''}`} />
+                <meta name="keywords" content={`${job.title}, ${companyName}, ${job.location}, job vacancy, employment, Ghana jobs, 2RBUAME`} />
+                <meta property="og:title" content={`${job.title} - ${companyName} | 2RBUAME Jobs`} />
+                <meta property="og:description" content={`${job.title} position at ${companyName} in ${job.location}. Apply now on 2RBUAME.`} />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content={`${job.title} - ${companyName} | 2RBUAME Jobs`} />
+                <meta name="twitter:description" content={`${job.title} position at ${companyName} in ${job.location}. Apply now.`} />
+            </Head>
             
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <Link

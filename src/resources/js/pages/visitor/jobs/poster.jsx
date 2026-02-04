@@ -53,9 +53,19 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
     const jobCount = jobs?.total || 0;
     const hasJobs = jobs?.data && jobs.data.length > 0;
 
+    const posterDescription = poster.description ? poster.description.substring(0, 150) : `View all job opportunities from ${poster.name}`;
+
     return (
         <VisitorLayout>
-            <Head title={`${poster.name} - Jobs | 2RBUAME`} />
+            <Head title={`${poster.name} - Jobs`}>
+                <meta name="description" content={`Explore job opportunities from ${poster.name}. ${posterDescription}${posterDescription.length >= 150 ? '...' : ''} Browse ${jobCount} available positions.`} />
+                <meta name="keywords" content={`${poster.name}, jobs, employment, careers, job openings, Ghana jobs, 2RBUAME`} />
+                <meta property="og:title" content={`${poster.name} - Job Openings | 2RBUAME`} />
+                <meta property="og:description" content={`Browse ${jobCount} job opportunities from ${poster.name} on 2RBUAME.`} />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content={`${poster.name} - Job Openings | 2RBUAME`} />
+                <meta name="twitter:description" content={`Browse ${jobCount} job opportunities from ${poster.name} on 2RBUAME.`} />
+            </Head>
 
             <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
                 {/* Back Navigation */}

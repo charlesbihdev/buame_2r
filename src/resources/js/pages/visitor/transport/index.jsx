@@ -65,7 +65,15 @@ export default function Transport({ rides, typeCounts, filters }) {
 
     return (
         <VisitorLayout>
-            <Head title="Transport & Rides | 2RBUAME" />
+            <Head title="Transport & Rides">
+                <meta name="description" content="Find reliable transport services in Ghana - okada, taxis, cars, buses, and cargo services. Book rides from trusted drivers on 2RBUAME." />
+                <meta name="keywords" content="transport Ghana, taxi, okada, car hire, bus, cargo, rides, drivers, book transport, 2RBUAME" />
+                <meta property="og:title" content="Transport & Rides - 2RBUAME" />
+                <meta property="og:description" content="Find reliable transport services in Ghana. Book okada, taxis, cars, buses, and cargo from trusted drivers." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Transport & Rides - 2RBUAME" />
+                <meta name="twitter:description" content="Find reliable transport services in Ghana. Book from trusted drivers." />
+            </Head>
 
             {/* Hero with Location Search */}
             <div className="bg-gradient-to-r from-[var(--primary)]/20 via-[var(--primary)]/10 to-transparent dark:from-[var(--primary)]/10 dark:via-[var(--primary)]/5">

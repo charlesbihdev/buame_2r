@@ -9,10 +9,22 @@ import { ArrowLeft, Award, BadgeCheck, Calendar, Clock, Eye, Mail, MapPin, Messa
 
 export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
+    const artisanDescription = artisan?.description ? artisan.description.substring(0, 150) : `Professional artisan with ${artisan?.experience_years || 'years of'} experience`;
+    const specialtiesText = artisan?.specialties?.slice(0, 3)?.join(', ') || 'various services';
 
     return (
         <VisitorLayout>
-            <Head title={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
+            <Head title={`${artisan?.name} - ${artisan?.company_name || 'Artisan'}`}>
+                <meta name="description" content={`${artisan?.name} - ${artisan?.company_name || 'Professional Artisan'} in ${artisan?.location}. Specializing in ${specialtiesText}. ${artisanDescription}${artisanDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="keywords" content={`${artisan?.name}, ${artisan?.company_name || 'artisan'}, ${artisan?.location}, ${specialtiesText}, hire artisan Ghana, 2RBUAME`} />
+                <meta property="og:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
+                <meta property="og:description" content={`Professional artisan in ${artisan?.location}. ${artisan?.experience_years} years experience. Contact now on 2RBUAME.`} />
+                <meta property="og:type" content="profile" />
+                {artisan?.profile_image && <meta property="og:image" content={artisan.profile_image} />}
+                <meta name="twitter:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
+                <meta name="twitter:description" content={`Professional artisan in ${artisan?.location}. Contact now on 2RBUAME.`} />
+                {artisan?.profile_image && <meta name="twitter:image" content={artisan.profile_image} />}
+            </Head>
 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">

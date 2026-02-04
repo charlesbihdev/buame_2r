@@ -10,7 +10,9 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
     if (!rental) {
         return (
             <VisitorLayout>
-                <Head title="Rental Not Found | 2RBUAME" />
+                <Head title="Rental Not Found">
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">Rental not found.</p>
@@ -49,10 +51,22 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
 
     const whatsappNumber = rental.whatsapp || rental.phone;
     const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=Hello, I'm interested in renting ${rental.name}.`;
+    const rentalDescription = rental.description ? rental.description.substring(0, 150) : `${getTypeLabel(rental.type)} for rent in ${rental.location}`;
+    const featuresText = rental.features?.slice(0, 3)?.join(', ') || '';
 
     return (
         <VisitorLayout>
-            <Head title={`${rental.name} - ${getTypeLabel(rental.type)} Rental | 2RBUAME`} />
+            <Head title={`${rental.name} - ${getTypeLabel(rental.type)} Rental`}>
+                <meta name="description" content={`${rental.name} - ${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}. ${rentalDescription}${rentalDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="keywords" content={`${rental.name}, ${getTypeLabel(rental.type)} rental, ${rental.location}, rent ${getTypeLabel(rental.type).toLowerCase()}, ${featuresText}, 2RBUAME`} />
+                <meta property="og:title" content={`${rental.name} - ${getTypeLabel(rental.type)} Rental | 2RBUAME`} />
+                <meta property="og:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}. Contact now on 2RBUAME.`} />
+                <meta property="og:type" content="website" />
+                {rental.primary_image && <meta property="og:image" content={rental.primary_image} />}
+                <meta name="twitter:title" content={`${rental.name} - ${getTypeLabel(rental.type)} Rental | 2RBUAME`} />
+                <meta name="twitter:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}.`} />
+                {rental.primary_image && <meta name="twitter:image" content={rental.primary_image} />}
+            </Head>
 
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <Link
