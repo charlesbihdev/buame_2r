@@ -144,7 +144,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                     <div>
                                         <h3 className="text-lg font-bold text-green-700 dark:text-green-300">Free Access Period</h3>
                                         <p className="mt-1 text-green-600 dark:text-green-400">
-                                            Get <strong>{freeAccessDays} days</strong> free access while we complete payment integration. No payment
+                                            Get <strong>{freeAccessDays} days</strong> free access. No payment
                                             required!
                                         </p>
                                         <p className="mt-2 text-sm text-green-600 dark:text-green-400">
