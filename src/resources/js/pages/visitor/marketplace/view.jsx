@@ -10,7 +10,9 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
     if (!product) {
         return (
             <VisitorLayout>
-                <Head title="Product Not Found | 2RBUAME Marketplace" />
+                <Head title="Product Not Found">
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">Product not found.</p>
@@ -50,9 +52,21 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
 
     const whatsappUrl = product.whatsapp_url || (product.whatsapp ? `https://wa.me/${product.whatsapp.replace(/\D/g, '')}?text=Hello, I'm interested in buying ${product.title}.` : null);
 
+    const productDescription = product.description ? product.description.substring(0, 150) : `${product.title} available for ${product.price || 'negotiable price'}`;
+
     return (
         <VisitorLayout>
-            <Head title={`${product.title} | 2RBUAME Marketplace`} />
+            <Head title={`${product.title} | Marketplace`}>
+                <meta name="description" content={`${product.title} - ${product.price || 'Contact for price'}. ${productDescription}${productDescription.length >= 150 ? '...' : ''} Located in ${product.location}.`} />
+                <meta name="keywords" content={`${product.title}, ${product.category}, buy ${product.title}, ${product.location}, 2RBUAME marketplace`} />
+                <meta property="og:title" content={`${product.title} | 2RBUAME Marketplace`} />
+                <meta property="og:description" content={`${product.title} - ${product.price || 'Contact for price'}. Shop now on 2RBUAME.`} />
+                <meta property="og:type" content="product" />
+                {product.primary_image && <meta property="og:image" content={product.primary_image} />}
+                <meta name="twitter:title" content={`${product.title} | 2RBUAME Marketplace`} />
+                <meta name="twitter:description" content={`${product.title} - ${product.price || 'Contact for price'}. Shop now on 2RBUAME.`} />
+                {product.primary_image && <meta name="twitter:image" content={product.primary_image} />}
+            </Head>
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <Link
                     href="/marketplace"

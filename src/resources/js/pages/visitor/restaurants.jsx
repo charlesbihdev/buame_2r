@@ -6,7 +6,15 @@ import { Head } from '@inertiajs/react';
 export default function Restaurants() {
     return (
         <VisitorLayout>
-            <Head title="Restaurants & Food | 2RBUAME" />
+            <Head title="Restaurants & Food">
+                <meta name="description" content="Experience the best local flavors across Western North Ghana. Find chop bars, restaurants, and food spots serving fufu, jollof, and local delicacies on 2RBUAME." />
+                <meta name="keywords" content="restaurants Ghana, chop bars, local food, fufu, jollof rice, Ghanaian food, Western North restaurants, 2RBUAME" />
+                <meta property="og:title" content="Restaurants & Food - 2RBUAME" />
+                <meta property="og:description" content="Find the best local food joints, chop bars, and restaurants across Western North Ghana." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Restaurants & Food - 2RBUAME" />
+                <meta name="twitter:description" content="Find the best local food joints and restaurants across Western North Ghana." />
+            </Head>
             
             {/* Hero Section */}
             <RestaurantsHero />

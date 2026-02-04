@@ -245,7 +245,15 @@ function QuickLinksSection() {
 export default function HelpCenter() {
     return (
         <VisitorLayout>
-            <Head title="Help Center - 2RBUAME" />
+            <Head title="Help Center">
+                <meta name="description" content="Welcome to 2RBUAME Help Center. Get support for account registration, subscriptions, bookings, and more. Find answers to frequently asked questions." />
+                <meta name="keywords" content="2RBUAME help, customer support, FAQ, help center, account help, booking issues, payment support" />
+                <meta property="og:title" content="Help Center - 2RBUAME" />
+                <meta property="og:description" content="Get support and find answers to your questions about using 2RBUAME services." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Help Center - 2RBUAME" />
+                <meta name="twitter:description" content="Get support and find answers to your questions about using 2RBUAME services." />
+            </Head>
             <HelpHero />
             <AboutSection />
             <SupportTopicsSection />

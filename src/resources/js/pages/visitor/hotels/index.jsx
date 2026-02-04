@@ -62,7 +62,15 @@ export default function Hotels({ hotels, filters }) {
 
     return (
         <VisitorLayout>
-            <Head title="Hotels & Guest Houses | 2RBUAME" />
+            <Head title="Hotels & Guest Houses">
+                <meta name="description" content="Find comfortable hotels and guest houses in Ghana. Browse and book accommodation across Western North and beyond on 2RBUAME." />
+                <meta name="keywords" content="hotels Ghana, guest houses, accommodation, lodging, book hotel, places to stay, 2RBUAME hotels" />
+                <meta property="og:title" content="Hotels & Guest Houses - 2RBUAME" />
+                <meta property="og:description" content="Discover and book comfortable hotels and guest houses across Ghana. Find your perfect stay on 2RBUAME." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Hotels & Guest Houses - 2RBUAME" />
+                <meta name="twitter:description" content="Discover and book comfortable hotels and guest houses across Ghana." />
+            </Head>
 
             {/* Hero with Search */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">

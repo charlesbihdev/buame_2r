@@ -272,7 +272,15 @@ function ContactSection() {
 export default function Privacy() {
     return (
         <VisitorLayout>
-            <Head title="Privacy Policy - 2RBUAME" />
+            <Head title="Privacy Policy">
+                <meta name="description" content="Learn how 2RBUAME collects, uses, and protects your personal data. Our privacy policy outlines your rights and how we safeguard your information." />
+                <meta name="keywords" content="2RBUAME privacy policy, data protection, personal information, privacy rights, data security, GDPR" />
+                <meta property="og:title" content="Privacy Policy - 2RBUAME" />
+                <meta property="og:description" content="2RBUAME is committed to protecting your personal data. Learn how we collect, use, and safeguard your information." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Privacy Policy - 2RBUAME" />
+                <meta name="twitter:description" content="Learn how 2RBUAME protects your personal data and privacy." />
+            </Head>
             <PrivacyHero />
             <DataCollectionSection />
             <DataUsageSection />

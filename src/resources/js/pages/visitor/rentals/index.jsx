@@ -91,7 +91,15 @@ export default function Rentals({ rentals, filters, typeCounts }) {
 
     return (
         <VisitorLayout>
-            <Head title="Rentals - House & Equipment | 2RBUAME" />
+            <Head title="Rentals - House & Equipment">
+                <meta name="description" content="Find houses, equipment, tools, vehicles, and land for rent in Ghana. Browse affordable rental options across Western North and beyond on 2RBUAME." />
+                <meta name="keywords" content="rentals Ghana, house rental, equipment rental, tools, vehicles, land, commercial space, rent, 2RBUAME" />
+                <meta property="og:title" content="Rentals - House & Equipment - 2RBUAME" />
+                <meta property="og:description" content="Find houses, equipment, tools, vehicles, and land for rent in Ghana. Browse affordable options on 2RBUAME." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Rentals - House & Equipment - 2RBUAME" />
+                <meta name="twitter:description" content="Find houses, equipment, tools, vehicles, and land for rent in Ghana." />
+            </Head>
 
             {/* Hero Section */}
             <div className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[var(--foreground)]">

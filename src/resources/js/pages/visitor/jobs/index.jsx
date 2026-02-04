@@ -13,7 +13,15 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
 
     return (
         <VisitorLayout>
-            <Head title="Jobs - 2RBUAME" />
+            <Head title="Jobs">
+                <meta name="description" content="Browse the latest job opportunities in Ghana on 2RBUAME. Find full-time, part-time, and contract positions across various industries. Start your career journey today." />
+                <meta name="keywords" content="jobs Ghana, job vacancies, employment opportunities, career, full-time jobs, part-time jobs, contract work, 2RBUAME jobs" />
+                <meta property="og:title" content="Job Opportunities in Ghana - 2RBUAME" />
+                <meta property="og:description" content="Find your next career opportunity on 2RBUAME. Browse job listings across various industries in Ghana." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Job Opportunities in Ghana - 2RBUAME" />
+                <meta name="twitter:description" content="Find your next career opportunity on 2RBUAME. Browse job listings across various industries in Ghana." />
+            </Head>
             <JobsHero />
             <div className="flex grow flex-col lg:flex-row">
                 {/* Desktop Filters */}

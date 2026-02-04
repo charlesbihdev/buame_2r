@@ -13,7 +13,15 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
 
     return (
         <VisitorLayout>
-            <Head title="Marketplace - 2RBUAME" />
+            <Head title="Marketplace">
+                <meta name="description" content="Shop the 2RBUAME marketplace for new and used products in Ghana. Find electronics, fashion, home goods, and more from trusted sellers." />
+                <meta name="keywords" content="2RBUAME marketplace, buy and sell Ghana, online shopping, products Ghana, electronics, fashion, home goods" />
+                <meta property="og:title" content="Marketplace - Buy & Sell on 2RBUAME" />
+                <meta property="og:description" content="Discover amazing products from trusted sellers across Ghana. Shop electronics, fashion, home goods, and more." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Marketplace - Buy & Sell on 2RBUAME" />
+                <meta name="twitter:description" content="Discover amazing products from trusted sellers across Ghana." />
+            </Head>
             <MarketplaceHero />
             <div className="flex grow flex-col lg:flex-row">
                 {/* Desktop Filters */}

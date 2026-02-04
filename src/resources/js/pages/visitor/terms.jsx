@@ -313,7 +313,15 @@ function ContactSection() {
 export default function Terms() {
     return (
         <VisitorLayout>
-            <Head title="Terms of Service - 2RBUAME" />
+            <Head title="Terms of Service">
+                <meta name="description" content="Read the 2RBUAME Terms of Service. Understand your responsibilities, payment terms, and how we handle disputes on our platform." />
+                <meta name="keywords" content="2RBUAME terms of service, terms and conditions, user agreement, platform rules, service terms" />
+                <meta property="og:title" content="Terms of Service - 2RBUAME" />
+                <meta property="og:description" content="By using 2RBUAME, you agree to these terms and conditions. Read our Terms of Service." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Terms of Service - 2RBUAME" />
+                <meta name="twitter:description" content="Read the 2RBUAME Terms of Service and understand our platform rules." />
+            </Head>
             <TermsHero />
             <UserResponsibilitiesSection />
             <PaymentsSection />

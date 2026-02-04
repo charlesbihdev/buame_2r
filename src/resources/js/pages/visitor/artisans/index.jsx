@@ -81,7 +81,15 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
 
     return (
         <VisitorLayout>
-            <Head title="Skilled Artisans | 2RBUAME" />
+            <Head title="Skilled Artisans">
+                <meta name="description" content="Find skilled artisans and professionals in Ghana. Connect with verified electricians, plumbers, carpenters, mechanics, and more on 2RBUAME." />
+                <meta name="keywords" content="artisans Ghana, skilled workers, electricians, plumbers, carpenters, mechanics, handymen, professionals, 2RBUAME" />
+                <meta property="og:title" content="Find Skilled Artisans - 2RBUAME" />
+                <meta property="og:description" content="Connect with verified skilled workers and artisans in Ghana. Find electricians, plumbers, carpenters, and more." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Find Skilled Artisans - 2RBUAME" />
+                <meta name="twitter:description" content="Connect with verified skilled workers and artisans in Ghana." />
+            </Head>
 
             {/* Hero with Search */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">

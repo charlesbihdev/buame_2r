@@ -259,7 +259,15 @@ function SafetyChecklistSection() {
 export default function SafetyTips() {
     return (
         <VisitorLayout>
-            <Head title="Safety Tips - 2RBUAME" />
+            <Head title="Safety Tips">
+                <meta name="description" content="Stay safe while using 2RBUAME. Learn important safety guidelines for customers and service providers. Protect yourself with our safety checklist." />
+                <meta name="keywords" content="2RBUAME safety, safety tips, secure transactions, customer safety, provider safety, online safety Ghana" />
+                <meta property="og:title" content="Safety Tips - 2RBUAME" />
+                <meta property="og:description" content="Your safety is important to us. Follow these guidelines to ensure a secure experience on 2RBUAME." />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:title" content="Safety Tips - 2RBUAME" />
+                <meta name="twitter:description" content="Your safety is important to us. Follow these guidelines for a secure experience." />
+            </Head>
             <SafetyHero />
             <CustomerSafetySection />
             <ProviderSafetySection />
