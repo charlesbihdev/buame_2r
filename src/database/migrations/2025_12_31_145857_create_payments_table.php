@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('previous_payment_id')->nullable()->constrained('payments')->onDelete('set null');
             $table->decimal('amount', 10, 2);
             $table->string('currency', 3)->default('GHS');
-            $table->enum('payment_method', ['paystack'])->default('paystack');
+            $table->enum('payment_method', ['paystack', 'free_trial'])->default('paystack');
             $table->string('transaction_id')->nullable()->index();
             $table->string('payment_reference')->nullable()->index();
             $table->enum('status', ['pending', 'completed', 'failed', 'refunded'])->default('pending')->index();

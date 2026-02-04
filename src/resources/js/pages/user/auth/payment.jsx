@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import BillingCycleSelector from '@/components/user/BillingCycleSelector';
 import { Head, Link, router, useForm } from '@inertiajs/react';
-import { Check, CheckCircle, CreditCard } from 'lucide-react';
+import { Check, CheckCircle, CreditCard, Gift } from 'lucide-react';
 import { useState } from 'react';
 
 const categoryLabels = {
@@ -13,7 +13,7 @@ const categoryLabels = {
     jobs: 'Jobs',
 };
 
-export default function Payment({ category, amount, categories, user, tiers, selectedTier, categoryConfig }) {
+export default function Payment({ category, amount, categories, user, tiers, selectedTier, categoryConfig, isFreeAccess, freeAccessDays }) {
     const [selectedTierState, setSelectedTierState] = useState(selectedTier || 'starter');
     const [billingCycle, setBillingCycle] = useState('monthly');
 
@@ -38,18 +38,28 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
         const formData = {
             category: category,
-            billing_cycle: billingCycle,
         };
 
         if (category === 'marketplace') {
             formData.tier = selectedTierState || 'starter';
         }
 
-        router.post(route('user.register.payment'), formData, {
-            onError: (errors) => {
-                console.error('Payment submission errors:', errors);
-            },
-        });
+        if (isFreeAccess) {
+            // Submit to free access route
+            router.post(route('user.register.free-access'), formData, {
+                onError: (errors) => {
+                    console.error('Free access errors:', errors);
+                },
+            });
+        } else {
+            // Normal Paystack payment
+            formData.billing_cycle = billingCycle;
+            router.post(route('user.register.payment'), formData, {
+                onError: (errors) => {
+                    console.error('Payment submission errors:', errors);
+                },
+            });
+        }
     };
 
     // Get pricing based on category and tier
@@ -84,13 +94,19 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
     return (
         <>
-            <Head title="Payment" />
+            <Head title={isFreeAccess ? 'Activate Free Access' : 'Payment'} />
 
             <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
                 <div className="w-full max-w-2xl">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Complete Payment</h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">You're almost there! Complete payment to activate your account.</p>
+                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">
+                            {isFreeAccess ? 'Activate Free Access' : 'Complete Payment'}
+                        </h1>
+                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                            {isFreeAccess
+                                ? 'Select your category to get started with free access!'
+                                : "You're almost there! Complete payment to activate your account."}
+                        </p>
                     </div>
 
                     <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
@@ -114,6 +130,27 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                             {cat.label}
                                         </Link>
                                     ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Free Access Banner */}
+                        {isFreeAccess && (
+                            <div className="mb-6 rounded-lg border-2 border-green-500 bg-green-50 p-6 dark:border-green-600 dark:bg-green-900/20">
+                                <div className="flex items-start gap-4">
+                                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
+                                        <Gift className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-green-700 dark:text-green-300">Free Access Period</h3>
+                                        <p className="mt-1 text-green-600 dark:text-green-400">
+                                            Get <strong>{freeAccessDays} days</strong> free access while we complete payment integration. No payment
+                                            required!
+                                        </p>
+                                        <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                                            After your free period ends, you'll receive reminders to subscribe and continue using the platform.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -150,14 +187,18 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                             </div>
                         )}
 
-                        {/* Billing Cycle Selector */}
-                        <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                            <BillingCycleSelector selected={billingCycle} onChange={handleBillingCycleChange} pricing={pricing} />
-                        </div>
+                        {/* Billing Cycle Selector - Hidden in free access mode */}
+                        {!isFreeAccess && (
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+                                <BillingCycleSelector selected={billingCycle} onChange={handleBillingCycleChange} pricing={pricing} />
+                            </div>
+                        )}
 
                         {/* Order Summary */}
                         <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                            <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Order Summary</h3>
+                            <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                {isFreeAccess ? 'Selection Summary' : 'Order Summary'}
+                            </h3>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-600 dark:text-gray-400">Category</span>
@@ -169,65 +210,107 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                         <span className="font-semibold text-[var(--foreground)] dark:text-white">{tiers[selectedTierState].name}</span>
                                     </div>
                                 )}
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-gray-600 dark:text-gray-400">Billing Cycle</span>
-                                    <span className="font-semibold text-[var(--foreground)] dark:text-white capitalize">{billingCycle}</span>
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-gray-600 dark:text-gray-400">Subscription Fee</span>
-                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">
-                                        GH₵ {displayAmount?.toFixed(2) || amount}
-                                    </span>
-                                </div>
-                                <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
-                                    <div className="flex justify-between">
-                                        <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
-                                        <div className="text-right">
-                                            <span className="text-2xl font-bold text-[var(--primary)]">GH₵ {displayAmount?.toFixed(2) || amount}</span>
-                                            <p className="text-xs text-gray-500">/ {getBillingCycleLabel()}</p>
+                                {isFreeAccess ? (
+                                    <>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-600 dark:text-gray-400">Access Period</span>
+                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{freeAccessDays} days</span>
                                         </div>
-                                    </div>
-                                </div>
+                                        <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
+                                            <div className="flex justify-between">
+                                                <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
+                                                <div className="text-right">
+                                                    <span className="text-2xl font-bold text-green-600">FREE</span>
+                                                    <p className="text-xs text-gray-500">for {freeAccessDays} days</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-600 dark:text-gray-400">Billing Cycle</span>
+                                            <span className="font-semibold text-[var(--foreground)] dark:text-white capitalize">{billingCycle}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-gray-600 dark:text-gray-400">Subscription Fee</span>
+                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">
+                                                GH₵ {displayAmount?.toFixed(2) || amount}
+                                            </span>
+                                        </div>
+                                        <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
+                                            <div className="flex justify-between">
+                                                <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
+                                                <div className="text-right">
+                                                    <span className="text-2xl font-bold text-[var(--primary)]">
+                                                        GH₵ {displayAmount?.toFixed(2) || amount}
+                                                    </span>
+                                                    <p className="text-xs text-gray-500">/ {getBillingCycleLabel()}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
 
                         <form onSubmit={submit} className="space-y-6">
-                            {/* Paystack Payment Option */}
-                            <div>
-                                <label className="mb-3 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Payment Method</label>
-                                <div className="rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 p-4">
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--primary)] text-white">
-                                            <CreditCard className="h-6 w-6" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <p className="font-semibold text-[var(--foreground)] dark:text-white">Paystack</p>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400">
-                                                Secure payment via card, bank transfer, or mobile money
-                                            </p>
-                                        </div>
-                                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--primary)]">
-                                            <Check className="h-3 w-3 text-white" />
+                            {/* Paystack Payment Option - Hidden in free access mode */}
+                            {!isFreeAccess && (
+                                <div>
+                                    <label className="mb-3 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Payment Method</label>
+                                    <div className="rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 p-4">
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--primary)] text-white">
+                                                <CreditCard className="h-6 w-6" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Paystack</p>
+                                                <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                    Secure payment via card, bank transfer, or mobile money
+                                                </p>
+                                            </div>
+                                            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[var(--primary)]">
+                                                <Check className="h-3 w-3 text-white" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                {errors.payment && <p className="mt-2 text-sm text-red-600">{errors.payment}</p>}
-                                {errors.billing_cycle && <p className="mt-2 text-sm text-red-600">{errors.billing_cycle}</p>}
-                            </div>
+                            )}
+
+                            {errors.payment && <p className="text-sm text-red-600">{errors.payment}</p>}
+                            {errors.billing_cycle && <p className="text-sm text-red-600">{errors.billing_cycle}</p>}
 
                             <Button
                                 type="submit"
                                 disabled={processing}
-                                className="h-12 w-full bg-[var(--primary)] text-base font-bold text-white hover:bg-[#0eb50e] disabled:opacity-50"
+                                className={`h-12 w-full text-base font-bold text-white disabled:opacity-50 ${
+                                    isFreeAccess ? 'bg-green-600 hover:bg-green-700' : 'bg-[var(--primary)] hover:bg-[#0eb50e]'
+                                }`}
                             >
-                                {processing ? 'Redirecting to Paystack...' : `Pay GH₵ ${displayAmount?.toFixed(2) || amount} with Paystack`}
+                                {processing
+                                    ? isFreeAccess
+                                        ? 'Activating...'
+                                        : 'Redirecting to Paystack...'
+                                    : isFreeAccess
+                                      ? `Activate ${freeAccessDays}-Day Free Access`
+                                      : `Pay GH₵ ${displayAmount?.toFixed(2) || amount} with Paystack`}
                             </Button>
                         </form>
 
-                        <div className="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
-                            <p className="text-sm text-blue-800 dark:text-blue-300">
-                                Your subscription will be active for <strong>{getBillingCycleLabel()}</strong>. We'll send you reminders before it
-                                expires so you can renew on time.
+                        <div className={`mt-6 rounded-lg p-4 ${isFreeAccess ? 'bg-green-50 dark:bg-green-900/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
+                            <p className={`text-sm ${isFreeAccess ? 'text-green-800 dark:text-green-300' : 'text-blue-800 dark:text-blue-300'}`}>
+                                {isFreeAccess ? (
+                                    <>
+                                        Your free access will be active for <strong>{freeAccessDays} days</strong>. We'll send you reminders before it
+                                        expires so you can subscribe to continue using the platform.
+                                    </>
+                                ) : (
+                                    <>
+                                        Your subscription will be active for <strong>{getBillingCycleLabel()}</strong>. We'll send you reminders before
+                                        it expires so you can renew on time.
+                                    </>
+                                )}
                             </p>
                         </div>
                     </div>
