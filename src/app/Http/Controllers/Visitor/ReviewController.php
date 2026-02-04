@@ -36,6 +36,7 @@ class ReviewController extends Controller
             'reviewer_phone' => $request->reviewer_phone,
             'rating' => $request->rating,
             'comment' => $request->comment,
+            'status' => 'approved',
             $foreignKeyMap[$type] => $id,
         ]);
 
@@ -51,6 +52,6 @@ class ReviewController extends Controller
         Cache::forget("{$type}.{$id}.rating");
         Cache::forget("{$type}.{$id}.reviews_count");
 
-        return back()->with('success', 'Thank you for your review! It will be published after approval.');
+        return back()->with('success', 'Thank you for your review!');
     }
 }
