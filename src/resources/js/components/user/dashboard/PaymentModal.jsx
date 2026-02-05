@@ -158,16 +158,18 @@ export default function PaymentModal({ isOpen, onClose, category, subscription, 
                     {/* Billing Cycle Selector - Hide when using free access */}
                     {!isFreeAccess && <BillingCycleSelector selected={billingCycle} onChange={setBillingCycle} pricing={pricing} />}
 
-                    {/* Price Card */}
-                    <div className="rounded-lg border-2 border-[var(--primary)]/20 bg-[var(--primary)]/5 p-4">
-                        <div className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Subscription Fee</div>
-                        <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-black text-[var(--foreground)] dark:text-white">
-                                GH₵ {displayAmount?.toFixed(2) || '0.00'}
-                            </span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">/ {getBillingCycleLabel()}</span>
+                    {/* Price Card - Hide when using free access */}
+                    {!isFreeAccess && (
+                        <div className="rounded-lg border-2 border-[var(--primary)]/20 bg-[var(--primary)]/5 p-4">
+                            <div className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Subscription Fee</div>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-4xl font-black text-[var(--foreground)] dark:text-white">
+                                    GH₵ {displayAmount?.toFixed(2) || '0.00'}
+                                </span>
+                                <span className="text-sm text-gray-500 dark:text-gray-400">/ {getBillingCycleLabel()}</span>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Features */}
                     <div className="space-y-2">
@@ -192,14 +194,16 @@ export default function PaymentModal({ isOpen, onClose, category, subscription, 
                         </ul>
                     </div>
 
-                    {/* Payment Info */}
-                    <div className="flex items-start gap-2 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-3 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5">
-                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)] dark:text-[var(--accent)]" />
-                        <p className="text-xs text-[var(--accent)] dark:text-[var(--accent)]/80">
-                            You'll be redirected to Paystack for secure payment. Your subscription will be active for {getBillingCycleLabel()}.
-                            We'll send you reminders before it expires.
-                        </p>
-                    </div>
+                    {/* Payment Info - Hide when using free access */}
+                    {!isFreeAccess && (
+                        <div className="flex items-start gap-2 rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-3 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5">
+                            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)] dark:text-[var(--accent)]" />
+                            <p className="text-xs text-[var(--accent)] dark:text-[var(--accent)]/80">
+                                You'll be redirected to Paystack for secure payment. Your subscription will be active for {getBillingCycleLabel()}.
+                                We'll send you reminders before it expires.
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 <DialogFooter className="gap-2 sm:gap-0">
