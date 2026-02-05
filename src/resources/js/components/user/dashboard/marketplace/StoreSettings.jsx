@@ -7,12 +7,15 @@ import { router, useForm } from '@inertiajs/react';
 import { ArrowUpRight, CheckCircle, Copy, ExternalLink, Eye, EyeOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { StoreVisibilityToggle } from './StoreVisibilityToggle';
+import SaveButton from '@/components/user/dashboard/SaveButton';
+import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function StoreSettings({ store, tiers }) {
     const [copied, setCopied] = useState(false);
     const [slugValue, setSlugValue] = useState(store?.slug || '');
+    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { data, setData, put, processing, errors, reset, isDirty } = useForm({
         name: store?.name || '',
         slug: store?.slug || '',
         description: store?.description || '',
@@ -50,10 +53,32 @@ export function StoreSettings({ store, tiers }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         put(route('user.dashboard.marketplace.store.update'), {
             preserveScroll: true,
             onSuccess: () => {
+                reset();
+            },
+        });
+    };
+
+    const handleBeforeToggle = () => {
+        // Check if form has unsaved changes
+        if (isDirty) {
+            setShowUnsavedModal(true);
+            return false; // Prevent toggle
+        }
+        return true; // Allow toggle
+    };
+
+    const handleSaveAndGoLive = () => {
+        // Save form first
+        put(route('user.dashboard.marketplace.store.update'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                // After save succeeds, toggle active
+                router.post(route('user.dashboard.marketplace.store.toggle-active'));
+                setShowUnsavedModal(false);
                 reset();
             },
         });
@@ -109,6 +134,11 @@ export function StoreSettings({ store, tiers }) {
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your store information and visibility</p>
             </div>
 
+            {/* Save button - always visible, state changes */}
+            <div className="flex items-center justify-end">
+                <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
+            </div>
+
             {/* Store Visibility Toggle - Prominent at the top */}
             <div
                 className={`rounded-xl border-2 p-6 ${store?.is_active ? 'border-[var(--primary)] bg-[var(--buame-border-light)] dark:bg-[#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5'}`}
@@ -135,7 +165,7 @@ export function StoreSettings({ store, tiers }) {
                             </p>
                         </div>
                     </div>
-                    <StoreVisibilityToggle store={store} />
+                    <StoreVisibilityToggle store={store} onBeforeToggle={handleBeforeToggle} />
                 </div>
             </div>
 
@@ -207,15 +237,12 @@ export function StoreSettings({ store, tiers }) {
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
-                    <Button
-                        type="submit"
-                        disabled={processing}
-                        className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
-                    >
-                        {processing ? 'Saving...' : 'Save Changes'}
-                    </Button>
+                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
+
+            {/* Unsaved Changes Modal */}
+            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
 
             {/* Current Plan and Upgrade - Side by Side */}
             <div className="grid gap-6 md:grid-cols-2">

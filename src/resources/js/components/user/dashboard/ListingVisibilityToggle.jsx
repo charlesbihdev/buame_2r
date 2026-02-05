@@ -4,11 +4,16 @@ import { router } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
-export function ListingVisibilityToggle({ listing, routeName, label = 'Listing' }) {
+export function ListingVisibilityToggle({ listing, routeName, label = 'Listing', onBeforeToggle }) {
     const [isActive, setIsActive] = useState(listing?.is_active ?? false);
     const [processing, setProcessing] = useState(false);
 
     const handleToggle = () => {
+        // Check if there's a beforeToggle callback that prevents the toggle
+        if (onBeforeToggle && onBeforeToggle() === false) {
+            return;
+        }
+
         setIsActive(!isActive);
         setProcessing(true);
 

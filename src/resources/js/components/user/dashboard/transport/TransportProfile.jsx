@@ -4,15 +4,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
+import SaveButton from '@/components/user/dashboard/SaveButton';
+import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const primaryImage = profile?.images?.find((img) => img.is_primary) || profile?.images?.[0];
     const [profileImagePreview, setProfileImagePreview] = useState(primaryImage?.image_path || null);
+    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
     // Ensure profile exists - if not, show message
     if (!profile || !profile.id) {
@@ -25,7 +28,7 @@ export function TransportProfile({ profile }) {
         );
     }
 
-    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+    const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         driver_name: profile?.driver_name || '',
         type: profile?.type || 'okada',
@@ -67,7 +70,7 @@ export function TransportProfile({ profile }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         if (!profile?.id) {
             console.error('Profile ID is missing. Cannot submit form.');
             return;
@@ -79,6 +82,30 @@ export function TransportProfile({ profile }) {
         });
     };
 
+    const handleBeforeToggle = () => {
+        // Check if form has unsaved changes
+        if (isDirty) {
+            setShowUnsavedModal(true);
+            return false; // Prevent toggle
+        }
+        return true; // Allow toggle
+    };
+
+    const handleSaveAndGoLive = () => {
+        // Save form first
+        post(route('user.dashboard.transport.update', profile.id), {
+            preserveScroll: true,
+            forceFormData: true,
+            onSuccess: () => {
+                // After save succeeds, toggle active
+                router.post(route('user.dashboard.transport.toggle-active'), {
+                    transport_id: profile.id,
+                });
+                setShowUnsavedModal(false);
+            },
+        });
+    };
+
     return (
         <div className="space-y-6">
             <div>
@@ -86,12 +113,20 @@ export function TransportProfile({ profile }) {
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your transport service information</p>
             </div>
 
+            {/* Save button - always visible, state changes */}
+            {profile && (
+                <div className="flex items-center justify-end">
+                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
+                </div>
+            )}
+
             {/* Visibility Banner */}
             {profile && (
                 <ListingVisibilityBanner
                     listing={profile}
                     routeName="user.dashboard.transport.toggle-active"
                     label="Service"
+                    onBeforeToggle={handleBeforeToggle}
                 />
             )}
 
@@ -297,21 +332,12 @@ export function TransportProfile({ profile }) {
                             <span>Profile saved successfully</span>
                         </div>
                     )}
-                    <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
-                        {processing ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Saving...
-                            </>
-                        ) : (
-                            <>
-                                <Save className="h-4 w-4" />
-                                Save Profile
-                            </>
-                        )}
-                    </Button>
+                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
+
+            {/* Unsaved Changes Modal */}
+            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
         </div>
     );
 }

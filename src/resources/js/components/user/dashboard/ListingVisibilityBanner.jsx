@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { ListingVisibilityToggle } from './ListingVisibilityToggle';
 
-export function ListingVisibilityBanner({ listing, routeName, label = 'Listing' }) {
+export function ListingVisibilityBanner({ listing, routeName, label = 'Listing', onBeforeToggle }) {
     const isActive = listing?.is_active ?? false;
 
     return (
@@ -30,7 +30,7 @@ export function ListingVisibilityBanner({ listing, routeName, label = 'Listing' 
                         </p>
                     </div>
                 </div>
-                <ListingVisibilityToggle listing={listing} routeName={routeName} label={label} />
+                <ListingVisibilityToggle listing={listing} routeName={routeName} label={label} onBeforeToggle={onBeforeToggle} />
             </div>
         </div>
     );
