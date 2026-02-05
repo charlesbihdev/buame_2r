@@ -9,14 +9,12 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useEffect, useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function ArtisanProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const [specialties, setSpecialties] = useState(profile?.specialties?.map((s) => s.specialty) || []);
     const [newSpecialty, setNewSpecialty] = useState('');
     const [profileImagePreview, setProfileImagePreview] = useState(profile?.profile_image || null);
-    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
@@ -117,30 +115,6 @@ export function ArtisanProfile({ profile }) {
         });
     };
 
-    const handleBeforeToggle = () => {
-        // Check if form has unsaved changes
-        if (isDirty) {
-            setShowUnsavedModal(true);
-            return false; // Prevent toggle
-        }
-        return true; // Allow toggle
-    };
-
-    const handleSaveAndGoLive = () => {
-        // Save form first
-        post(route('user.dashboard.artisans.update', profile.id), {
-            preserveScroll: true,
-            forceFormData: true,
-            onSuccess: () => {
-                // After save succeeds, toggle active
-                router.post(route('user.dashboard.artisans.toggle-active'), {
-                    artisan_id: profile.id,
-                });
-                setShowUnsavedModal(false);
-            },
-        });
-    };
-
     // Update form data when specialties change
     useEffect(() => {
         setData('specialties', specialties);
@@ -153,20 +127,17 @@ export function ArtisanProfile({ profile }) {
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your artisan profile information</p>
             </div>
 
-            {/* Save button - always visible, state changes */}
-            {profile && (
-                <div className="flex items-center justify-end">
-                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
-                </div>
-            )}
-
-            {/* Visibility Banner */}
+            {/* Visibility Banner with save button */}
             {profile && (
                 <ListingVisibilityBanner
                     listing={profile}
                     routeName="user.dashboard.artisans.toggle-active"
                     label="Profile"
-                    onBeforeToggle={handleBeforeToggle}
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit
+                    }}
                 />
             )}
 
@@ -437,9 +408,6 @@ export function ArtisanProfile({ profile }) {
                     <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
-
-            {/* Unsaved Changes Modal */}
-            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
         </div>
     );
 }

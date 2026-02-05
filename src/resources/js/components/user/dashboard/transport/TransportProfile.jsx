@@ -9,13 +9,11 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const primaryImage = profile?.images?.find((img) => img.is_primary) || profile?.images?.[0];
     const [profileImagePreview, setProfileImagePreview] = useState(primaryImage?.image_path || null);
-    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
     // Ensure profile exists - if not, show message
     if (!profile || !profile.id) {
@@ -82,30 +80,6 @@ export function TransportProfile({ profile }) {
         });
     };
 
-    const handleBeforeToggle = () => {
-        // Check if form has unsaved changes
-        if (isDirty) {
-            setShowUnsavedModal(true);
-            return false; // Prevent toggle
-        }
-        return true; // Allow toggle
-    };
-
-    const handleSaveAndGoLive = () => {
-        // Save form first
-        post(route('user.dashboard.transport.update', profile.id), {
-            preserveScroll: true,
-            forceFormData: true,
-            onSuccess: () => {
-                // After save succeeds, toggle active
-                router.post(route('user.dashboard.transport.toggle-active'), {
-                    transport_id: profile.id,
-                });
-                setShowUnsavedModal(false);
-            },
-        });
-    };
-
     return (
         <div className="space-y-6">
             <div>
@@ -113,20 +87,17 @@ export function TransportProfile({ profile }) {
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your transport service information</p>
             </div>
 
-            {/* Save button - always visible, state changes */}
-            {profile && (
-                <div className="flex items-center justify-end">
-                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
-                </div>
-            )}
-
-            {/* Visibility Banner */}
+            {/* Visibility Banner with save button */}
             {profile && (
                 <ListingVisibilityBanner
                     listing={profile}
                     routeName="user.dashboard.transport.toggle-active"
                     label="Service"
-                    onBeforeToggle={handleBeforeToggle}
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit
+                    }}
                 />
             )}
 
@@ -335,9 +306,6 @@ export function TransportProfile({ profile }) {
                     <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
-
-            {/* Unsaved Changes Modal */}
-            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
         </div>
     );
 }

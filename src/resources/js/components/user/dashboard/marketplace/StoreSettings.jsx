@@ -8,7 +8,7 @@ import { ArrowUpRight, CheckCircle, Copy, ExternalLink, Eye, EyeOff } from 'luci
 import { useEffect, useState } from 'react';
 import { StoreVisibilityToggle } from './StoreVisibilityToggle';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
+
 
 export function StoreSettings({ store, tiers }) {
     const [copied, setCopied] = useState(false);
@@ -241,8 +241,7 @@ export function StoreSettings({ store, tiers }) {
                 </div>
             </form>
 
-            {/* Unsaved Changes Modal */}
-            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
+           
 
             {/* Current Plan and Upgrade - Side by Side */}
             <div className="grid gap-6 md:grid-cols-2">

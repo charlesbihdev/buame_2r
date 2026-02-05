@@ -8,13 +8,11 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Loader2, Save, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const [imagePreview, setImagePreview] = useState(null);
     const [showPricing, setShowPricing] = useState(!!profile?.price);
-    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
     const fileInputRef = useRef(null);
 
     if (!profile) {
@@ -64,29 +62,6 @@ export function RentalProfile({ profile }) {
         });
     };
 
-    const handleBeforeToggle = () => {
-        // Check if form has unsaved changes
-        if (isDirty) {
-            setShowUnsavedModal(true);
-            return false; // Prevent toggle
-        }
-        return true; // Allow toggle
-    };
-
-    const handleSaveAndGoLive = () => {
-        // Save form first
-        post(route('user.dashboard.rentals.update', profile.id), {
-            forceFormData: true,
-            onSuccess: () => {
-                // After save succeeds, toggle active
-                router.post(route('user.dashboard.rentals.toggle-active'), {
-                    rental_id: profile.id,
-                });
-                setShowUnsavedModal(false);
-            },
-        });
-    };
-
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -103,15 +78,19 @@ export function RentalProfile({ profile }) {
 
     return (
         <div className="space-y-6">
-            {/* Save button - always visible, state changes */}
+            {/* Visibility Banner with save button */}
             {profile && (
-                <div className="flex items-center justify-end">
-                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
-                </div>
+                <ListingVisibilityBanner
+                    listing={profile}
+                    routeName="user.dashboard.rentals.toggle-active"
+                    label="Listing"
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit
+                    }}
+                />
             )}
-
-            {/* Visibility Banner */}
-            {profile && <ListingVisibilityBanner listing={profile} routeName="user.dashboard.rentals.toggle-active" label="Listing" onBeforeToggle={handleBeforeToggle} />}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Primary Image Upload */}
@@ -329,9 +308,6 @@ export function RentalProfile({ profile }) {
                     </div>
                 </div>
             </form>
-
-            {/* Unsaved Changes Modal */}
-            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
         </div>
     );
 }

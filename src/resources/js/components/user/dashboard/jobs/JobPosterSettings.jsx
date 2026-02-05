@@ -8,12 +8,10 @@ import { router, useForm } from '@inertiajs/react';
 import { CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import UnsavedChangesModal from '@/components/user/dashboard/UnsavedChangesModal';
 
 export function JobPosterSettings({ poster }) {
     const [copied, setCopied] = useState(false);
     const [slugValue, setSlugValue] = useState(poster?.slug || '');
-    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
 
     const { data, setData, put, processing, errors, reset, isDirty } = useForm({
         name: poster?.name || '',
@@ -71,28 +69,6 @@ export function JobPosterSettings({ poster }) {
         });
     };
 
-    const handleBeforeToggle = () => {
-        // Check if form has unsaved changes
-        if (isDirty) {
-            setShowUnsavedModal(true);
-            return false; // Prevent toggle
-        }
-        return true; // Allow toggle
-    };
-
-    const handleSaveAndGoLive = () => {
-        // Save form first
-        put(route('user.dashboard.jobs.poster.update'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                // After save succeeds, toggle active
-                router.post(route('user.dashboard.jobs.poster.toggle-active'));
-                setShowUnsavedModal(false);
-                reset();
-            },
-        });
-    };
-
     const copyTextToClipboard = async (text) => {
         // Preferred modern API (requires secure context in most browsers)
         if (navigator?.clipboard?.writeText && window.isSecureContext) {
@@ -134,17 +110,16 @@ export function JobPosterSettings({ poster }) {
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your employer profile and contact information</p>
             </div>
 
-            {/* Save button - always visible, state changes */}
-            <div className="flex items-center justify-end">
-                <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
-            </div>
-
-            {/* Visibility Toggle */}
+            {/* Visibility Banner with save button */}
             <ListingVisibilityBanner
                 listing={poster}
                 routeName="user.dashboard.jobs.poster.toggle-active"
                 label="Profile"
-                onBeforeToggle={handleBeforeToggle}
+                saveButton={{
+                    isProcessing: processing,
+                    isDirty: isDirty,
+                    onClick: handleSubmit
+                }}
             />
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -293,9 +268,6 @@ export function JobPosterSettings({ poster }) {
                     <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
-
-            {/* Unsaved Changes Modal */}
-            <UnsavedChangesModal isOpen={showUnsavedModal} onClose={() => setShowUnsavedModal(false)} onSaveAndContinue={handleSaveAndGoLive} />
         </div>
     );
 }
