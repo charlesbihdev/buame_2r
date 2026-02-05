@@ -13,7 +13,7 @@ const categoryConfig = {
     jobs: { label: 'Jobs', icon: Briefcase, color: 'gray' },
 };
 
-export default function CategorySwitcher({ paidCategories, activeCategory, unpaidCategories }) {
+export default function CategorySwitcher({ paidCategories, activeCategory, unpaidCategories, isFreeAccess = false, freeAccessDays = 30 }) {
     const [paymentModalOpen, setPaymentModalOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -94,7 +94,13 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
             </div>
 
             {/* Payment Modal */}
-            <PaymentModal isOpen={paymentModalOpen} onClose={closePaymentModal} category={selectedCategory} />
+            <PaymentModal
+                isOpen={paymentModalOpen}
+                onClose={closePaymentModal}
+                category={selectedCategory}
+                isFreeAccess={isFreeAccess}
+                freeAccessDays={freeAccessDays}
+            />
         </div>
     );
 }

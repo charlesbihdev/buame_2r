@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Store;
 use App\Services\CategoryProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -126,6 +130,8 @@ class DashboardController extends Controller
             'categoryData' => $categoryData,
             'payments' => $payments,
             'categories' => $categories,
+            'isFreeAccess' => app(\App\Services\SubscriptionService::class)->isFreeAccessEnabled(),
+            'freeAccessDays' => config('categories.free_access.duration_days', 30),
         ]);
     }
 
@@ -220,5 +226,79 @@ class DashboardController extends Controller
             ],
             default => [],
         };
+    }
+
+    /**
+     * Process free access for logged-in users adding categories.
+     */
+    public function processFreeAccess(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        $subscriptionService = app(\App\Services\SubscriptionService::class);
+
+        // Verify free access is enabled
+        if (! $subscriptionService->isFreeAccessEnabled()) {
+            return redirect()->route('user.dashboard.index')
+                ->with('error', 'Free access is not currently available.');
+        }
+
+        $validated = $request->validate([
+            'category' => ['required', 'string', 'in:'.implode(',', config('categories.valid'))],
+            'tier' => ['nullable', 'string', 'in:starter,professional,enterprise'],
+        ]);
+
+        $category = $validated['category'];
+        $tier = $validated['tier'] ?? null;
+
+        try {
+            DB::beginTransaction();
+
+            // Reuse existing free trial subscription logic
+            $subscription = $subscriptionService->createFreeTrialSubscription(
+                $user->id,
+                $category,
+                $tier
+            );
+
+            // Create store for marketplace
+            if ($category === 'marketplace' && ! $user->store) {
+                $baseSlug = Str::slug($user->name);
+                $slug = $baseSlug;
+                $counter = 1;
+                while (Store::where('slug', $slug)->exists()) {
+                    $slug = $baseSlug.'-'.$counter;
+                    $counter++;
+                }
+
+                Store::create([
+                    'user_id' => $user->id,
+                    'name' => $user->name."'s Store",
+                    'slug' => $slug,
+                    'tier' => $tier,
+                    'is_active' => false,
+                ]);
+            }
+
+            $user->update(['is_active' => true]);
+
+            DB::commit();
+
+            $daysRemaining = $subscription->daysUntilExpiry();
+            $categoryLabel = config("categories.list.{$category}.label", $category);
+
+            return redirect()->route('user.dashboard.index', ['category' => $category])
+                ->with('success', "You now have {$daysRemaining} days of free access to {$categoryLabel}!");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Dashboard free access processing failed', [
+                'user_id' => $user->id,
+                'category' => $category,
+                'error' => $e->getMessage(),
+            ]);
+
+            return redirect()->route('user.dashboard.index')
+                ->with('error', 'Failed to activate free access. Please try again.');
+        }
     }
 }

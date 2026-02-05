@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import BillingCycleSelector from '@/components/user/BillingCycleSelector';
 import { router, usePage } from '@inertiajs/react';
-import { AlertCircle, Bike, Briefcase, CheckCircle, CreditCard, Hammer, Home, Hotel, ShoppingBag } from 'lucide-react';
+import { AlertCircle, Bike, Briefcase, CheckCircle, CreditCard, Gift, Hammer, Home, Hotel, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
 const categoryIcons = {
@@ -14,7 +14,7 @@ const categoryIcons = {
     jobs: Briefcase,
 };
 
-export default function PaymentModal({ isOpen, onClose, category, subscription }) {
+export default function PaymentModal({ isOpen, onClose, category, subscription, isFreeAccess = false, freeAccessDays = 30 }) {
     const [isProcessing, setIsProcessing] = useState(false);
     const [selectedTier, setSelectedTier] = useState('starter');
     const isRenewal = subscription && (subscription.subscription_status === 'expired' || subscription.subscription_status === 'grace_period' || subscription.is_expiring_soon);
@@ -56,15 +56,29 @@ export default function PaymentModal({ isOpen, onClose, category, subscription }
 
     const handlePayment = () => {
         setIsProcessing(true);
+
         const data = {
             category,
-            billing_cycle: billingCycle,
         };
 
         if (isMarketplace) {
             data.tier = selectedTier;
         }
 
+        // If free access is enabled, use free access route
+        if (isFreeAccess) {
+            router.post(route('user.dashboard.free-access'), data, {
+                onFinish: () => {
+                    setIsProcessing(false);
+                    onClose();
+                },
+                onError: () => setIsProcessing(false),
+            });
+            return;
+        }
+
+        // Otherwise, use normal payment flow
+        data.billing_cycle = billingCycle;
         router.post(route('user.dashboard.payment.initialize'), data, {
             onFinish: () => setIsProcessing(false),
             onError: () => setIsProcessing(false),
@@ -87,6 +101,26 @@ export default function PaymentModal({ isOpen, onClose, category, subscription }
                             : `Subscribe to the ${categoryData.label} category to start using its features`}
                     </DialogDescription>
                 </DialogHeader>
+
+                {/* Free Access Banner - Matches registration payment page */}
+                {isFreeAccess && (
+                    <div className="mb-4 rounded-lg border-2 border-green-500 bg-green-50 p-6 dark:border-green-600 dark:bg-green-900/20">
+                        <div className="flex items-start gap-4">
+                            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
+                                <Gift className="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-green-700 dark:text-green-300">Free Access Period</h3>
+                                <p className="mt-1 text-green-600 dark:text-green-400">
+                                    Get <strong>{freeAccessDays} days</strong> free access. No payment required!
+                                </p>
+                                <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                                    After your free period ends, you'll receive reminders to subscribe and continue using the platform.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="flex-1 space-y-4 overflow-y-auto py-4">
                     {/* Tier Selection for Marketplace */}
@@ -121,8 +155,8 @@ export default function PaymentModal({ isOpen, onClose, category, subscription }
                         </div>
                     )}
 
-                    {/* Billing Cycle Selector */}
-                    <BillingCycleSelector selected={billingCycle} onChange={setBillingCycle} pricing={pricing} />
+                    {/* Billing Cycle Selector - Hide when using free access */}
+                    {!isFreeAccess && <BillingCycleSelector selected={billingCycle} onChange={setBillingCycle} pricing={pricing} />}
 
                     {/* Price Card */}
                     <div className="rounded-lg border-2 border-[var(--primary)]/20 bg-[var(--primary)]/5 p-4">
@@ -185,8 +219,17 @@ export default function PaymentModal({ isOpen, onClose, category, subscription }
                             </>
                         ) : (
                             <>
-                                <CreditCard className="h-4 w-4" />
-                                {isRenewal ? 'Renew' : 'Pay'} GH₵ {displayAmount?.toFixed(2) || '0.00'}
+                                {isFreeAccess ? (
+                                    <>
+                                        <Gift className="h-4 w-4" />
+                                        Activate {freeAccessDays}-Day Free Access
+                                    </>
+                                ) : (
+                                    <>
+                                        <CreditCard className="h-4 w-4" />
+                                        {isRenewal ? 'Renew' : 'Pay'} GH₵ {displayAmount?.toFixed(2) || '0.00'}
+                                    </>
+                                )}
                             </>
                         )}
                     </Button>

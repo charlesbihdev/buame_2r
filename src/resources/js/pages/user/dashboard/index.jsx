@@ -10,7 +10,7 @@ import { TransportSection } from '@/components/user/dashboard/transport/Transpor
 import DashboardLayout from '@/layouts/user/dashboard-layout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ user, paidCategories, unpaidCategories, activeCategory, categoryData, payments, activeSection = 'profile' }) {
+export default function Dashboard({ user, paidCategories, unpaidCategories, activeCategory, categoryData, payments, activeSection = 'profile', isFreeAccess = false, freeAccessDays = 30 }) {
     const activeSubscription = paidCategories?.find((cat) => cat.category === activeCategory);
 
     const renderCategorySection = () => {
@@ -40,7 +40,13 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
         <DashboardLayout user={user} activeCategory={activeCategory} activeSection={activeSection} categoryData={categoryData}>
             <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : '2RBUAME'}`} />
             <div className="mx-auto w-full max-w-[1400px] p-4 md:p-6 lg:p-8">
-                <CategorySwitcher paidCategories={paidCategories} activeCategory={activeCategory} unpaidCategories={unpaidCategories} />
+                <CategorySwitcher
+                    paidCategories={paidCategories}
+                    activeCategory={activeCategory}
+                    unpaidCategories={unpaidCategories}
+                    isFreeAccess={isFreeAccess}
+                    freeAccessDays={freeAccessDays}
+                />
                 <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} />
                 {renderCategorySection()}
             </div>

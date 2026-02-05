@@ -19,6 +19,9 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
     // Payment route - always accessible (for renewals)
     Route::post('/payment/initialize', [PaymentController::class, 'processPayment'])->name('payment.initialize');
 
+    // Free access route - always accessible (for free trial)
+    Route::post('/free-access', [DashboardController::class, 'processFreeAccess'])->name('free-access');
+
     // ========== ARTISANS ==========
     // Read routes (no subscription check)
     Route::get('artisans', [ArtisansController::class, 'index'])->name('artisans.index');
