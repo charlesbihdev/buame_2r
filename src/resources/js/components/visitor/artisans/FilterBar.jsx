@@ -32,6 +32,15 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
                 <option value="shoe_making">Shoe Making</option>
                 <option value="event_mc">Event MC</option>
                 <option value="event_planners">Event Planners</option>
+                <option value="graphics_designer">Graphics Designer</option>
+                <option value="radio_presenter">Radio Presenter</option>
+                <option value="drivers">Drivers</option>
+                <option value="borehole_drillers">Borehole Drillers</option>
+                <option value="printer_repairers">Printer Repairers</option>
+                <option value="tv_decoder_repairers">TV & Decoder Repairers</option>
+                <option value="air_conditioning_installers">Air-Conditioning Installers</option>
+                <option value="multi_tv_dstv_installers">Multi TV, DStv Installers</option>
+                <option value="phone_repairers">Phone Repairers</option>
                 <option value="other">Other</option>
             </select>
 

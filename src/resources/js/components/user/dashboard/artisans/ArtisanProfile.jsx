@@ -54,6 +54,15 @@ export function ArtisanProfile({ profile }) {
         { value: 'shoe_making', label: 'Shoe Making' },
         { value: 'event_mc', label: 'Event MC' },
         { value: 'event_planners', label: 'Event Planners' },
+        { value: 'graphics_designer', label: 'Graphics Designer' },
+        { value: 'radio_presenter', label: 'Radio Presenter' },
+        { value: 'drivers', label: 'Drivers' },
+        { value: 'borehole_drillers', label: 'Borehole Drillers' },
+        { value: 'printer_repairers', label: 'Printer Repairers' },
+        { value: 'tv_decoder_repairers', label: 'TV & Decoder Repairers' },
+        { value: 'air_conditioning_installers', label: 'Air-Conditioning Installers' },
+        { value: 'multi_tv_dstv_installers', label: 'Multi TV, DStv Installers' },
+        { value: 'phone_repairers', label: 'Phone Repairers' },
         { value: 'other', label: 'Other' },
     ];
 

@@ -1,5 +1,5 @@
 import { Hammer, Home, Paintbrush, Scissors, Wrench, Zap, Car, Cake, Sparkles, Gem, Footprints, Mic, Calendar } from 'lucide-react';
-import { Droplets, Flame } from 'lucide-react';
+import { Droplets, Flame, Palette, Radio, Truck, Drill, Printer, Tv, Wind, Satellite, Smartphone } from 'lucide-react';
 
 const SKILL_TYPES = [
     { icon: Hammer, label: 'Carpenter', key: 'carpenter' },
@@ -19,6 +19,15 @@ const SKILL_TYPES = [
     { icon: Footprints, label: 'Shoe Making', key: 'shoe_making' },
     { icon: Mic, label: 'Event MC', key: 'event_mc' },
     { icon: Calendar, label: 'Event Planners', key: 'event_planners' },
+    { icon: Palette, label: 'Graphics Designer', key: 'graphics_designer' },
+    { icon: Radio, label: 'Radio Presenter', key: 'radio_presenter' },
+    { icon: Truck, label: 'Drivers', key: 'drivers' },
+    { icon: Drill, label: 'Borehole Drillers', key: 'borehole_drillers' },
+    { icon: Printer, label: 'Printer Repairers', key: 'printer_repairers' },
+    { icon: Tv, label: 'TV & Decoder Repairers', key: 'tv_decoder_repairers' },
+    { icon: Wind, label: 'Air-Conditioning Installers', key: 'air_conditioning_installers' },
+    { icon: Satellite, label: 'Multi TV, DStv Installers', key: 'multi_tv_dstv_installers' },
+    { icon: Smartphone, label: 'Phone Repairers', key: 'phone_repairers' },
 ];
 
 export function QuickCategories({ categoryCounts, activeSkillType, onCategoryClick }) {

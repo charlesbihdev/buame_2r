@@ -16,7 +16,10 @@ return new class extends Migration
             $table->enum('skill_type', [
                 'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
                 'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
-                'bead_making', 'shoe_making', 'event_mc', 'event_planners', 'other',
+                'bead_making', 'shoe_making', 'event_mc', 'event_planners',
+                'graphics_designer', 'radio_presenter', 'drivers', 'borehole_drillers',
+                'printer_repairers', 'tv_decoder_repairers', 'air_conditioning_installers',
+                'multi_tv_dstv_installers', 'phone_repairers', 'other',
             ])->index();
             $table->integer('experience_years')->nullable();
             $table->enum('experience_level', ['beginner', 'intermediate', 'expert'])->default('expert');
