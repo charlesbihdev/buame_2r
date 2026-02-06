@@ -5,7 +5,41 @@ import { CautionBanner } from '@/components/ui/caution-banner';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Award, BadgeCheck, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
+
+// Helper function to format skill type for display
+const formatSkillType = (skillType) => {
+    const skillTypeLabels = {
+        carpenter: 'Carpenter',
+        mason: 'Mason',
+        electrician: 'Electrician',
+        plumber: 'Plumber',
+        tiler: 'Tiler',
+        tailor: 'Tailor',
+        welder: 'Welder',
+        painter: 'Painter',
+        hairdressing: 'Hairdressing',
+        mechanic: 'Mechanic',
+        bakery: 'Bakery',
+        decoration: 'Decoration',
+        makeup_artistry: 'Makeup Artistry',
+        bead_making: 'Bead Making',
+        shoe_making: 'Shoe Making',
+        event_mc: 'Event MC',
+        event_planners: 'Event Planners',
+        graphics_designer: 'Graphics Designer',
+        radio_presenter: 'Radio Presenter',
+        drivers: 'Drivers',
+        borehole_drillers: 'Borehole Drillers',
+        printer_repairers: 'Printer Repairers',
+        tv_decoder_repairers: 'TV & Decoder Repairers',
+        air_conditioning_installers: 'Air-Conditioning Installers',
+        multi_tv_dstv_installers: 'Multi TV, DStv Installers',
+        phone_repairers: 'Phone Repairers',
+        other: 'Other',
+    };
+    return skillTypeLabels[skillType] || skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
+};
 
 export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
@@ -62,6 +96,16 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
                             {/* Profile Info */}
                             <div className="flex-1">
+                                {/* Skill Type Badge */}
+                                {artisan?.skill_type && (
+                                    <div className="mb-3">
+                                        <span className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] px-4 py-1.5 text-sm font-bold text-white shadow-sm">
+                                            <Briefcase className="h-4 w-4" />
+                                            {formatSkillType(artisan.skill_type)}
+                                        </span>
+                                    </div>
+                                )}
+
                                 <div className="mb-3 flex flex-wrap items-center gap-2">
                                     <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl">{artisan?.name}</h1>
                                     {artisan?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}

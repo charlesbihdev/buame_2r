@@ -1,6 +1,40 @@
 import { Button } from '@/components/ui/button';
-import { BadgeCheck, MapPin, Phone, Star } from 'lucide-react';
+import { BadgeCheck, Briefcase, MapPin, Phone, Star } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+
+// Helper function to format skill type for display
+const formatSkillType = (skillType) => {
+    const skillTypeLabels = {
+        carpenter: 'Carpenter',
+        mason: 'Mason',
+        electrician: 'Electrician',
+        plumber: 'Plumber',
+        tiler: 'Tiler',
+        tailor: 'Tailor',
+        welder: 'Welder',
+        painter: 'Painter',
+        hairdressing: 'Hairdressing',
+        mechanic: 'Mechanic',
+        bakery: 'Bakery',
+        decoration: 'Decoration',
+        makeup_artistry: 'Makeup Artistry',
+        bead_making: 'Bead Making',
+        shoe_making: 'Shoe Making',
+        event_mc: 'Event MC',
+        event_planners: 'Event Planners',
+        graphics_designer: 'Graphics Designer',
+        radio_presenter: 'Radio Presenter',
+        drivers: 'Drivers',
+        borehole_drillers: 'Borehole Drillers',
+        printer_repairers: 'Printer Repairers',
+        tv_decoder_repairers: 'TV & Decoder Repairers',
+        air_conditioning_installers: 'Air-Conditioning Installers',
+        multi_tv_dstv_installers: 'Multi TV, DStv Installers',
+        phone_repairers: 'Phone Repairers',
+        other: 'Other',
+    };
+    return skillTypeLabels[skillType] || skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
+};
 
 export function ArtisanCard({ artisan }) {
     return (
@@ -34,6 +68,16 @@ export function ArtisanCard({ artisan }) {
 
             {/* Details */}
             <div className="flex flex-1 flex-col">
+                {/* Skill Type Badge */}
+                {artisan.skill_type && (
+                    <div className="mb-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3 py-1 text-xs font-bold text-white">
+                            <Briefcase className="h-3 w-3" />
+                            {formatSkillType(artisan.skill_type)}
+                        </span>
+                    </div>
+                )}
+
                 <div className="mb-2">
                     <h3 className="text-lg font-bold text-foreground">{artisan.name}</h3>
                     {artisan.company_name && <p className="text-sm font-medium text-primary">{artisan.company_name}</p>}
