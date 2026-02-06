@@ -67,7 +67,7 @@ class TransportController extends Controller
                 'id' => $ride->id,
                 'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
-                'rating' => $ride->rating ?? 4.5,
+                'rating' => $ride->rating > 0 ? round($ride->rating, 1) : 4.5,
                 'reviews_count' => $ride->reviews_count,
                 'price_per_seat' => number_format($ride->price_per_seat, 2),
                 'seats_available' => $ride->seats_available,

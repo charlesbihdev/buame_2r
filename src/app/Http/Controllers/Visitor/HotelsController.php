@@ -72,7 +72,7 @@ class HotelsController extends Controller
                 'id' => $hotel->id,
                 'name' => $hotel->name,
                 'type' => $hotel->type,
-                'rating' => $hotel->rating ?? 4.5,
+                'rating' => $hotel->rating > 0 ? round($hotel->rating, 1) : 4.5,
                 'reviews_count' => $hotel->reviews_count,
                 'price_per_night' => number_format($hotel->price_per_night, 2),
                 'location' => $hotel->location,
