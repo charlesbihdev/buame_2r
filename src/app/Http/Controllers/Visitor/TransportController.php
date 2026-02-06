@@ -19,6 +19,20 @@ class TransportController extends Controller
             ->with(['images', 'user'])
             ->where('is_active', true);
 
+        // Add subquery to calculate average rating from approved reviews
+        $query->addSelect([
+            'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
+                ->whereColumn('transport_ride_id', 'transport_rides.id')
+                ->where('status', 'approved')
+        ]);
+
+        // Add subquery to count approved reviews
+        $query->addSelect([
+            'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
+                ->whereColumn('transport_ride_id', 'transport_rides.id')
+                ->where('status', 'approved')
+        ]);
+
         // Filter by type
         if ($request->filled('type')) {
             $query->where('type', $request->type);

@@ -56,28 +56,26 @@ export function ArtisanCard({ artisan }) {
                         <span className="text-4xl font-bold text-primary">{artisan.name.charAt(0).toUpperCase()}</span>
                     </div>
                 )}
-                {artisan.is_verified && (
-                    <div className="absolute right-2 top-2">
-                        <BadgeCheck className="h-5 w-5 fill-primary text-white" />
+                {/* Skill Type Badge - Top Left */}
+                {artisan.skill_type && (
+                    <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-[var(--primary)] px-2 py-1 text-xs font-bold text-white">
+                        <Briefcase className="h-3 w-3" />
+                        {formatSkillType(artisan.skill_type)}
                     </div>
                 )}
+                {/* Available Badge - Top Right */}
                 {artisan.is_available && (
-                    <div className="absolute left-2 top-2 rounded-full bg-primary px-2 py-1 text-xs font-bold text-primary-foreground">Available</div>
+                    <div className="absolute right-2 top-2 rounded-full bg-green-500 px-2 py-1 text-xs font-bold text-white">Available</div>
+                )}
+                {artisan.is_verified && (
+                    <div className="absolute bottom-2 right-2">
+                        <BadgeCheck className="h-5 w-5 fill-primary text-white" />
+                    </div>
                 )}
             </div>
 
             {/* Details */}
             <div className="flex flex-1 flex-col">
-                {/* Skill Type Badge */}
-                {artisan.skill_type && (
-                    <div className="mb-2">
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3 py-1 text-xs font-bold text-white">
-                            <Briefcase className="h-3 w-3" />
-                            {formatSkillType(artisan.skill_type)}
-                        </span>
-                    </div>
-                )}
-
                 <div className="mb-2">
                     <h3 className="text-lg font-bold text-foreground">{artisan.name}</h3>
                     {artisan.company_name && <p className="text-sm font-medium text-primary">{artisan.company_name}</p>}

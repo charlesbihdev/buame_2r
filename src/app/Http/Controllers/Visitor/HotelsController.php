@@ -20,6 +20,20 @@ class HotelsController extends Controller
             ->where('is_active', true)
             ->withActiveSubscription();
 
+        // Add subquery to calculate average rating from approved reviews
+        $query->addSelect([
+            'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
+                ->whereColumn('hotel_id', 'hotels.id')
+                ->where('status', 'approved')
+        ]);
+
+        // Add subquery to count approved reviews
+        $query->addSelect([
+            'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
+                ->whereColumn('hotel_id', 'hotels.id')
+                ->where('status', 'approved')
+        ]);
+
         // Filter by type
         if ($request->filled('type')) {
             $query->where('type', $request->type);
