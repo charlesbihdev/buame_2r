@@ -8,7 +8,8 @@
       "Bash(mkdir:*)",
       "Bash(find:*)",
       "Bash(vendor/bin/pint:*)",
-      "Read(//c/Users/KARL/Desktop/charles-bih/GIGGS/**)"
+      "Read(//c/Users/KARL/Desktop/charles-bih/GIGGS/**)",
+      "Bash(npm run build:*)"
     ]
   }
 }
