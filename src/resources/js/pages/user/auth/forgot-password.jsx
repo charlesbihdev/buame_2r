@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Phone } from 'lucide-react';
 
 export default function ForgotPassword({ status }) {
@@ -64,9 +65,7 @@ export default function ForgotPassword({ status }) {
                         </form>
 
                         <div className="mt-6 text-center">
-                            <Link href={route('user.login')} className="text-sm font-medium text-gray-500 hover:text-[var(--primary)] dark:text-gray-400">
-                                Back to Login
-                            </Link>
+                            <BackToHome to={route('user.login')} label="Back to Login" />
                         </div>
                     </div>
                 </div>

@@ -5,11 +5,21 @@ import { JobsToolbar } from '@/components/visitor/jobs/jobs-toolbar';
 import { JobsGrid } from '@/components/visitor/jobs/jobs-grid';
 import { Button } from '@/components/ui/button';
 import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
     const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+    // Lock body scroll when mobile filters are open
+    useEffect(() => {
+        if (showMobileFilters) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [showMobileFilters]);
 
     return (
         <VisitorLayout>
@@ -25,15 +35,27 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
             <JobsHero />
             <div className="flex grow flex-col lg:flex-row">
                 {/* Desktop Filters */}
-                <div className="hidden lg:block">
-                    <JobsFilters filters={filters} />
-                </div>
-                {/* Mobile Filters */}
-                {showMobileFilters && (
-                    <div className="lg:hidden">
-                        <JobsFilters filters={filters} />
+                <JobsFilters filters={filters} isMobile={false} />
+
+                {/* Mobile Filters - Slide-over Drawer */}
+                <div className={`fixed inset-0 z-50 lg:hidden ${showMobileFilters ? 'visible' : 'invisible'}`}>
+                    {/* Backdrop */}
+                    <div
+                        className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${showMobileFilters ? 'opacity-100' : 'opacity-0'}`}
+                        onClick={() => setShowMobileFilters(false)}
+                    />
+                    {/* Drawer Panel */}
+                    <div
+                        className={`absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-gray-900 ${showMobileFilters ? 'translate-x-0' : '-translate-x-full'}`}
+                    >
+                        <JobsFilters
+                            filters={filters}
+                            isMobile={true}
+                            onClose={() => setShowMobileFilters(false)}
+                        />
                     </div>
-                )}
+                </div>
+
                 <main className="flex flex-1 flex-col bg-background-light p-4 dark:bg-background-dark md:p-6 lg:p-8">
                     <JobsToolbar filters={filters} pagination={pagination} onFilterToggle={() => setShowMobileFilters(!showMobileFilters)} />
                     <JobsGrid jobs={jobs} />
@@ -66,11 +88,10 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                                             key={index}
                                             asChild
                                             variant={isActive ? 'default' : 'outline'}
-                                            className={`h-10 min-w-10 rounded-lg px-4 ${
-                                                isActive
-                                                    ? 'bg-[var(--primary)] text-white'
-                                                    : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
-                                            }`}
+                                            className={`h-10 min-w-10 rounded-lg px-4 ${isActive
+                                                ? 'bg-[var(--primary)] text-white'
+                                                : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
+                                                }`}
                                         >
                                             <Link href={link.url || '#'} preserveState preserveScroll>
                                                 {page}

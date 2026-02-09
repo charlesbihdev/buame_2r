@@ -4,17 +4,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { router, useForm } from '@inertiajs/react';
-import { ArrowUpRight, CheckCircle, Copy, ExternalLink, Eye, EyeOff } from 'lucide-react';
+import { ArrowUpRight, CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { StoreVisibilityToggle } from './StoreVisibilityToggle';
+import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
 
 
-export function StoreSettings({ store, tiers }) {
+export function StoreSettings({ store, tiers, isFreeAccess = false }) {
     const [copied, setCopied] = useState(false);
     const [slugValue, setSlugValue] = useState(store?.slug || '');
-    const [showUnsavedModal, setShowUnsavedModal] = useState(false);
-
     const { data, setData, put, processing, errors, reset, isDirty } = useForm({
         name: store?.name || '',
         slug: store?.slug || '',
@@ -57,28 +55,6 @@ export function StoreSettings({ store, tiers }) {
         put(route('user.dashboard.marketplace.store.update'), {
             preserveScroll: true,
             onSuccess: () => {
-                reset();
-            },
-        });
-    };
-
-    const handleBeforeToggle = () => {
-        // Check if form has unsaved changes
-        if (isDirty) {
-            setShowUnsavedModal(true);
-            return false; // Prevent toggle
-        }
-        return true; // Allow toggle
-    };
-
-    const handleSaveAndGoLive = () => {
-        // Save form first
-        put(route('user.dashboard.marketplace.store.update'), {
-            preserveScroll: true,
-            onSuccess: () => {
-                // After save succeeds, toggle active
-                router.post(route('user.dashboard.marketplace.store.toggle-active'));
-                setShowUnsavedModal(false);
                 reset();
             },
         });
@@ -134,40 +110,17 @@ export function StoreSettings({ store, tiers }) {
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your store information and visibility</p>
             </div>
 
-            {/* Save button - always visible, state changes */}
-            <div className="flex items-center justify-end">
-                <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="top" />
-            </div>
-
-            {/* Store Visibility Toggle - Prominent at the top */}
-            <div
-                className={`rounded-xl border-2 p-6 ${store?.is_active ? 'border-[var(--primary)] bg-[var(--buame-border-light)] dark:bg-[#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5'}`}
-            >
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div
-                            className={`flex h-12 w-12 items-center justify-center rounded-full ${store?.is_active ? 'bg-[var(--primary)]/20' : 'bg-[var(--accent)]/20 dark:bg-[var(--accent)]/10'}`}
-                        >
-                            {store?.is_active ? (
-                                <Eye className="h-6 w-6 text-[var(--primary)]" />
-                            ) : (
-                                <EyeOff className="h-6 w-6 text-[var(--accent)] dark:text-[var(--accent)]" />
-                            )}
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
-                                Store is {store?.is_active ? 'Visible' : 'Hidden'}
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                {store?.is_active
-                                    ? 'Your store and products are visible to visitors'
-                                    : 'Your store is hidden from visitors. Toggle to make it visible.'}
-                            </p>
-                        </div>
-                    </div>
-                    <StoreVisibilityToggle store={store} onBeforeToggle={handleBeforeToggle} />
-                </div>
-            </div>
+            {/* Store Visibility Toggle - Using reusable ListingVisibilityBanner */}
+            <ListingVisibilityBanner
+                listing={store}
+                routeName="user.dashboard.marketplace.store.toggle-active"
+                label="Store"
+                saveButton={{
+                    isProcessing: processing,
+                    isDirty: isDirty,
+                    onClick: handleSubmit,
+                }}
+            />
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Store Name and Slug - Side by Side */}
@@ -192,7 +145,7 @@ export function StoreSettings({ store, tiers }) {
                                     onChange={handleSlugChange}
                                     placeholder="your-store-name"
                                     className="flex-1"
-                                    pattern="[a-z0-9-]+"
+                                    pattern="[a-z0-9\-]+"
                                 />
                             </div>
                             <FormError error={errors.slug} />
@@ -257,14 +210,18 @@ export function StoreSettings({ store, tiers }) {
                                 </p>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-[var(--primary)]">GH₵ {currentTier.price}</p>
+                                {isFreeAccess ? (
+                                    <p className="text-2xl font-bold text-[var(--primary)]">Free Access</p>
+                                ) : (
+                                    <p className="text-2xl font-bold text-[var(--primary)]">GH₵ {currentTier.price}</p>
+                                )}
                             </div>
                         </div>
                     </div>
                 )}
 
                 {/* Upgrade Options */}
-                {availableTiers.length > 0 && (
+                {!isFreeAccess && availableTiers.length > 0 && (
                     <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                         <h4 className="mb-3 font-semibold text-[var(--foreground)] dark:text-white">Upgrade Your Store</h4>
                         <div className="space-y-3">

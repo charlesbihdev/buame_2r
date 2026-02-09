@@ -12,7 +12,7 @@ import SaveButton from '@/components/user/dashboard/SaveButton';
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const [imagePreview, setImagePreview] = useState(null);
-    const [showPricing, setShowPricing] = useState(!!profile?.price);
+    const [showPricing, setShowPricing] = useState(false);
     const fileInputRef = useRef(null);
 
     if (!profile) {

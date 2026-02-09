@@ -1,6 +1,8 @@
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { MapPin, Search } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { ArrowLeft, MapPin, Search } from 'lucide-react';
 import { useState } from 'react';
 
 export function MarketplaceHero() {
@@ -27,7 +29,9 @@ export function MarketplaceHero() {
         <div className="w-full border-b border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5">
             <div className="mx-auto max-w-[1440px]">
                 <div className="p-4 @[480px]:p-6">
-                    <div
+                    <div className="relative mb-6">
+                        <BackToHome />
+                    </div>         <div
                         className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl bg-cover bg-center bg-no-repeat p-8 py-12"
                         style={{
                             backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%), url(/assets/visitors/bekwai.jpg)',

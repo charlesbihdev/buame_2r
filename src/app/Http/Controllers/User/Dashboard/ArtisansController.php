@@ -42,6 +42,17 @@ class ArtisansController extends Controller
             'company_name' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+             'skill_type' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (empty($value)) return;
+                    $validSkills = array_keys(config('artisan_skills.skills', []));
+                    if (!in_array($value, $validSkills)) {
+                        $fail("The selected {$attribute} is invalid.");
+                    }
+                },
+            ],
         ]);
 
         /** @var User $user */
@@ -80,7 +91,17 @@ class ArtisansController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
-            'skill_type' => ['required', 'string', 'in:carpenter,mason,electrician,plumber,tiler,tailor,welder,painter,hairdressing,mechanic,bakery,decoration,makeup_artistry,bead_making,shoe_making,event_mc,event_planners,graphics_designer,radio_presenter,drivers,borehole_drillers,printer_repairers,tv_decoder_repairers,air_conditioning_installers,multi_tv_dstv_installers,phone_repairers,other'],
+            'skill_type' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (empty($value)) return; // Allow null/empty if the field itself allows it
+                    $validSkills = array_keys(config('artisan_skills.skills', []));
+                    if (!in_array($value, $validSkills)) {
+                        $fail("The selected {$attribute} is invalid.");
+                    }
+                },
+            ],
             'description' => ['nullable', 'string'],
             'experience_years' => ['nullable', 'integer', 'min:0'],
             'price_per_day' => ['nullable', 'numeric', 'min:0'],
@@ -150,8 +171,14 @@ class ArtisansController extends Controller
                 $errors['name'] = 'Name is required before making your profile visible.';
             }
 
-            if (empty($artisan->skill_type) || $artisan->skill_type === 'other') {
+            if (empty($artisan->skill_type)) {
                 $errors['skill_type'] = 'Skill type is required before making your profile visible.';
+            } else {
+                 $validSkills = array_keys(config('artisan_skills.skills', []));
+                 
+                 if (!in_array($artisan->skill_type, $validSkills)) {
+                      $errors['skill_type'] = 'Selected skill type is currently invalid.';
+                 }
             }
 
             if (empty($artisan->location)) {

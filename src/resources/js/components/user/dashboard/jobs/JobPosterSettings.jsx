@@ -145,7 +145,7 @@ export function JobPosterSettings({ poster }) {
                                     onChange={handleSlugChange}
                                     placeholder="your-profile"
                                     className="flex-1"
-                                    pattern="[a-z0-9-]+"
+                                    pattern="[a-z0-9\-]+"
                                 />
                             </div>
                             <FormError error={errors.slug} />

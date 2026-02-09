@@ -1,5 +1,6 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { ReviewSection } from '@/components/ui/review-section';
 import { JobsGrid } from '@/components/visitor/jobs/jobs-grid';
 import { JobsFilters } from '@/components/visitor/jobs/jobs-filters';
@@ -7,7 +8,7 @@ import { EmployerProfileHero } from '@/components/visitor/jobs/employer-profile-
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
-import { ArrowLeft, Filter, Briefcase } from 'lucide-react';
+import { Filter, Briefcase } from 'lucide-react';
 
 export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts = {}, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -53,7 +54,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
     const jobCount = jobs?.total || 0;
     const hasJobs = jobs?.data && jobs.data.length > 0;
 
-    const posterDescription = poster.description ? poster.description.substring(0, 150) : `View all job opportunities from ${poster.name}`;
+    const posterDescription = poster.description ? poster.description.substring(0, 150) : `View all job opportunities from ${poster.name} `;
 
     return (
         <VisitorLayout>
@@ -71,13 +72,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                 {/* Back Navigation */}
                 <div className="sticky top-0 z-10 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-[var(--card)]/95">
                     <div className="mx-auto max-w-7xl px-4 py-3 md:px-8">
-                        <Link
-                            href="/jobs"
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                        >
-                            <ArrowLeft className="h-4 w-4" />
-                            Back to All Jobs
-                        </Link>
+                        <BackToHome to="/jobs" label="Back to All Jobs" />
                     </div>
                 </div>
 
@@ -217,7 +212,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                                             key={index}
                                                             asChild
                                                             variant={link.active ? 'default' : 'outline'}
-                                                            className={`h-10 rounded-lg px-4 ${link.active ? 'bg-[var(--primary)] text-white' : 'border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'}`}
+                                                            className={`h - 10 rounded - lg px - 4 ${link.active ? 'bg-[var(--primary)] text-white' : 'border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'} `}
                                                         >
                                                             <Link href={link.url || '#'} preserveState preserveScroll>
                                                                 {link.label}
@@ -240,19 +235,19 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                             {hasActiveFilters
                                                 ? 'Try adjusting your filters to see more results'
                                                 : `${poster.name} hasn't posted any job openings yet`}
-                                        </p>
+                                        </p >
                                         {hasActiveFilters && (
                                             <Button onClick={handleClearFilters} variant="outline">
                                                 Clear All Filters
                                             </Button>
                                         )}
-                                    </div>
+                                    </div >
                                 )}
-                            </div>
-                        </div>
+                            </div >
+                        </div >
 
                         {/* Reviews Section */}
-                        <div className="mt-16">
+                        < div className="mt-16" >
                             <ReviewSection
                                 reviewableType="job_poster"
                                 reviewableId={poster?.id}
@@ -261,10 +256,10 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                 reviewsCount={reviews_count}
                                 ratingBreakdown={rating_breakdown}
                             />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </VisitorLayout>
+                        </div >
+                    </div >
+                </div >
+            </div >
+        </VisitorLayout >
     );
 }

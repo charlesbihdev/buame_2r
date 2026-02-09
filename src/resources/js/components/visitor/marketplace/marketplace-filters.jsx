@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { router } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 
-export function MarketplaceFilters({ filters = {} }) {
+export function MarketplaceFilters({ filters = {}, isMobile = false }) {
     const categories = [
         { id: 'all', label: 'All Categories' },
         { id: 'mobile_phones', label: 'Mobile Phones & Accessories' },
@@ -87,14 +87,14 @@ export function MarketplaceFilters({ filters = {} }) {
     }, [location]);
 
     return (
-        <aside className="hidden min-h-[calc(100vh-80px)] w-80 shrink-0 flex-col gap-8 border-r border-[var(--buame-border-light)] bg-white p-6 lg:flex dark:border-white/10 dark:bg-white/5">
+        <aside className={`min-h-[calc(100vh-80px)] w-full shrink-0 flex-col gap-8 border-r border-[var(--buame-border-light)] bg-white p-6 dark:border-white/10 dark:bg-white/5 ${isMobile ? 'flex' : 'hidden lg:flex lg:w-80'}`}>
             {/* Active Filters Summary */}
             {(filters.category && filters.category !== 'all') ||
-            filters.location ||
-            filters.price_min ||
-            filters.price_max ||
-            (filters.condition && filters.condition !== 'all') ||
-            filters.delivery_available ? (
+                filters.location ||
+                filters.price_min ||
+                filters.price_max ||
+                (filters.condition && filters.condition !== 'all') ||
+                filters.delivery_available ? (
                 <div>
                     <div className="mb-2 flex items-center justify-between">
                         <h3 className="text-sm font-bold tracking-wider text-gray-500 uppercase dark:text-gray-400">Active Filters</h3>

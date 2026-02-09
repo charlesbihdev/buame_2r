@@ -1,7 +1,8 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { TransportPagination } from '@/components/visitor/transport/TransportPagination';
 import { Head, Link, router } from '@inertiajs/react';
-import { MapPin, Star, Users, Search, Navigation, BadgeCheck } from 'lucide-react';
+import { ArrowLeft, MapPin, Star, Users, Search, Navigation, BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
 
 // Transport type tabs with emojis - Okada (tricycle) separate from Car
@@ -78,6 +79,9 @@ export default function Transport({ rides, typeCounts, filters }) {
             {/* Hero with Location Search */}
             <div className="bg-gradient-to-r from-[var(--primary)]/20 via-[var(--primary)]/10 to-transparent dark:from-[var(--primary)]/10 dark:via-[var(--primary)]/5">
                 <div className="mx-auto max-w-6xl px-4 py-12 md:px-8">
+                    <div className="mb-6">
+                        <BackToHome />
+                    </div>
                     <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white">
                         Find Rides Near You
                     </h1>
@@ -151,11 +155,10 @@ export default function Transport({ rides, typeCounts, filters }) {
                         <button
                             key={tab.label}
                             onClick={() => handleTypeFilter(tab.value)}
-                            className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors ${
-                                filters?.type === tab.value || (!filters?.type && tab.value === null)
-                                    ? 'bg-[var(--primary)] text-white'
-                                    : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-[var(--card)] dark:text-white dark:hover:bg-[#1a2e1a]'
-                            }`}
+                            className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors ${filters?.type === tab.value || (!filters?.type && tab.value === null)
+                                ? 'bg-[var(--primary)] text-white'
+                                : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-[var(--card)] dark:text-white dark:hover:bg-[#1a2e1a]'
+                                }`}
                         >
                             <span className="text-lg">{tab.emoji}</span>
                             {tab.label}
@@ -182,10 +185,10 @@ export default function Transport({ rides, typeCounts, filters }) {
                                         <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
                                             <span className="text-5xl">
                                                 {ride.type === 'okada' ? '🛺' :
-                                                 ride.type === 'car' ? '🚙' :
-                                                 ride.type === 'taxi' ? '🚕' :
-                                                 ride.type === 'bus' ? '🚌' :
-                                                 ride.type === 'cargo' ? '🚚' : '🚗'}
+                                                    ride.type === 'car' ? '🚙' :
+                                                        ride.type === 'taxi' ? '🚕' :
+                                                            ride.type === 'bus' ? '🚌' :
+                                                                ride.type === 'cargo' ? '🚚' : '🚗'}
                                             </span>
                                         </div>
                                     )}
@@ -224,8 +227,14 @@ export default function Transport({ rides, typeCounts, filters }) {
                                     {/* Price & Book */}
                                     <div className="flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-800">
                                         <div>
-                                            <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
-                                            <div className="text-xs text-gray-500">per seat</div>
+                                            {ride.price_per_seat ? (
+                                                <>
+                                                    <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
+                                                    <div className="text-xs text-gray-500">per seat</div>
+                                                </>
+                                            ) : (
+                                                <div className="text-sm font-medium text-gray-600 dark:text-gray-400">Charged based on distance</div>
+                                            )}
                                         </div>
                                         <Link
                                             href={`/transport/${ride.id}`}

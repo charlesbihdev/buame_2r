@@ -15,6 +15,7 @@ export function HotelProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const primaryImage = profile?.images?.find((img) => img.is_primary) || profile?.images?.[0];
     const [profileImagePreview, setProfileImagePreview] = useState(primaryImage?.image_path || null);
+    const [showPricing, setShowPricing] = useState(!!profile?.price_per_night);
 
     // Ensure profile exists - if not, show message
     if (!profile || !profile.id) {
@@ -182,20 +183,6 @@ export function HotelProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="price_per_night">Price per Night (GH₵)</Label>
-                            <Input
-                                id="price_per_night"
-                                type="number"
-                                step="0.01"
-                                value={data.price_per_night}
-                                onChange={(e) => setData('price_per_night', e.target.value)}
-                                className="mt-1"
-                                placeholder="150.00"
-                            />
-                            <FormError error={errors.price_per_night || pageErrors?.price_per_night} className="mt-1" />
-                        </div>
-
-                        <div>
                             <Label htmlFor="rooms_count">Number of Rooms</Label>
                             <Input
                                 id="rooms_count"
@@ -208,6 +195,42 @@ export function HotelProfile({ profile }) {
                             <FormError error={errors.rooms_count || pageErrors?.rooms_count} className="mt-1" />
                         </div>
                     </div>
+                </div>
+
+                {/* Pricing Section */}
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <div className="mb-4 flex items-center justify-between">
+                        <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="showPricing"
+                                checked={showPricing}
+                                onChange={(e) => setShowPricing(e.target.checked)}
+                                className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
+                            />
+                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600 dark:text-gray-400">
+                                Show pricing
+                            </Label>
+                        </div>
+                    </div>
+                    {showPricing && (
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div>
+                                <Label htmlFor="price_per_night">Price per Night (GH₵)</Label>
+                                <Input
+                                    id="price_per_night"
+                                    type="number"
+                                    step="0.01"
+                                    value={data.price_per_night}
+                                    onChange={(e) => setData('price_per_night', e.target.value)}
+                                    className="mt-1"
+                                    placeholder="150.00"
+                                />
+                                <FormError error={errors.price_per_night || pageErrors?.price_per_night} className="mt-1" />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Description Section */}

@@ -22,7 +22,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'artisans':
                 return <ArtisansSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'marketplace':
-                return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} />;
+                return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} isFreeAccess={isFreeAccess} />;
             case 'hotels':
                 return <HotelsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'transport':
@@ -47,7 +47,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
                     isFreeAccess={isFreeAccess}
                     freeAccessDays={freeAccessDays}
                 />
-                <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} />
+                <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} isFreeAccess={isFreeAccess} freeAccessDays={freeAccessDays} />
                 {renderCategorySection()}
             </div>
         </DashboardLayout>

@@ -4,41 +4,15 @@ import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
-import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
+import { BackToHome } from '@/components/ui/back-to-home';
+import { artisanSkills } from '@/config/artisan-skills';
 
 // Helper function to format skill type for display
 const formatSkillType = (skillType) => {
-    const skillTypeLabels = {
-        carpenter: 'Carpenter',
-        mason: 'Mason',
-        electrician: 'Electrician',
-        plumber: 'Plumber',
-        tiler: 'Tiler',
-        tailor: 'Tailor',
-        welder: 'Welder',
-        painter: 'Painter',
-        hairdressing: 'Hairdressing',
-        mechanic: 'Mechanic',
-        bakery: 'Bakery',
-        decoration: 'Decoration',
-        makeup_artistry: 'Makeup Artistry',
-        bead_making: 'Bead Making',
-        shoe_making: 'Shoe Making',
-        event_mc: 'Event MC',
-        event_planners: 'Event Planners',
-        graphics_designer: 'Graphics Designer',
-        radio_presenter: 'Radio Presenter',
-        drivers: 'Drivers',
-        borehole_drillers: 'Borehole Drillers',
-        printer_repairers: 'Printer Repairers',
-        tv_decoder_repairers: 'TV & Decoder Repairers',
-        air_conditioning_installers: 'Air-Conditioning Installers',
-        multi_tv_dstv_installers: 'Multi TV, DStv Installers',
-        phone_repairers: 'Phone Repairers',
-        other: 'Other',
-    };
-    return skillTypeLabels[skillType] || skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
+    const skill = artisanSkills.find(s => s.id === skillType);
+    if (skill) return skill.label;
+
+    return skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
 };
 
 export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -64,13 +38,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
-                    <Link
-                        href="/artisans"
-                        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                    >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to Artisans
-                    </Link>
+                    <BackToHome to="/artisans" label="Back to Artisans" />
 
                     {/* Caution Banner */}
                     <CautionBanner type="service" className="mb-8" />

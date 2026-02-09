@@ -38,8 +38,29 @@ class JobsController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
-            'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
-            'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
+            'type' => ['required', 'string', 'in:full_time,part_time,contract,internship,daily_wage,apprenticeship'],
+            'category' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $validCategories = array_keys(config('job_categories.categories', []));
+                    if (!in_array($value, $validCategories)) {
+                        $fail('The selected job category is invalid.');
+                    }
+                },
+            ],
+            'sub_category' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (empty($value)) return;
+                    $categories = config('job_categories.categories', []);
+                    $validSubCategories = collect($categories)->flatMap(fn($cat) => array_keys($cat['sub_roles'] ?? []))->toArray();
+                    if (!in_array($value, $validSubCategories)) {
+                        $fail('The selected job role is invalid.');
+                    }
+                },
+            ],
             'salary' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
@@ -92,8 +113,29 @@ class JobsController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
-            'type' => ['required', 'string', 'in:full_time,part_time,daily_wage,apprenticeship'],
-            'category' => ['required', 'string', 'in:construction_trades,home_services,auto_mechanical,transport_equipment,electrical_electronics,ict_digital,business_office,education_training,health_care,hospitality_events,fashion_beauty,agriculture,security,media_creative,general_jobs'],
+            'type' => ['required', 'string', 'in:full_time,part_time,contract,internship,daily_wage,apprenticeship'],
+            'category' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $validCategories = array_keys(config('job_categories.categories', []));
+                    if (!in_array($value, $validCategories)) {
+                        $fail('The selected job category is invalid.');
+                    }
+                },
+            ],
+            'sub_category' => [
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) {
+                    if (empty($value)) return;
+                    $categories = config('job_categories.categories', []);
+                    $validSubCategories = collect($categories)->flatMap(fn($cat) => array_keys($cat['sub_roles'] ?? []))->toArray();
+                    if (!in_array($value, $validSubCategories)) {
+                        $fail('The selected job role is invalid.');
+                    }
+                },
+            ],
             'salary' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
@@ -146,6 +188,10 @@ class JobsController extends Controller
                 $errors['category'] = 'Job category is required before making it visible.';
             }
 
+            if (empty($job->sub_category)) {
+                $errors['sub_category'] = 'Job role (sub-category) is required before making it visible.';
+            }
+
             if (empty($job->location)) {
                 $errors['location'] = 'Location is required before making it visible.';
             }
@@ -159,6 +205,7 @@ class JobsController extends Controller
                     'title' => 'job title',
                     'type' => 'job type',
                     'category' => 'job category',
+                    'sub_category' => 'job role',
                     'location' => 'location',
                     'description' => 'description',
                 ];

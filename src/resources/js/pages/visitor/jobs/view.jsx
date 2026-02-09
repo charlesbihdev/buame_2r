@@ -1,8 +1,9 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
+import { Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { BackToHome } from '@/components/ui/back-to-home';
 
 const formatSalary = (salary) => {
     if (!salary) return null;
@@ -44,15 +45,11 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                 <meta name="twitter:title" content={`${job.title} - ${companyName} | 2RBUAME Jobs`} />
                 <meta name="twitter:description" content={`${job.title} position at ${companyName} in ${job.location}. Apply now.`} />
             </Head>
-            
+
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                <Link
-                    href="/jobs"
-                    className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back to Jobs
-                </Link>
+                <div className="mb-6">
+                    <BackToHome to="/jobs" label="Back to Jobs" />
+                </div>
 
                 {/* Caution Banner */}
                 <CautionBanner type="job" className="mb-8" />

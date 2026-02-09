@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->enum('type', ['hotel', 'guest_house', 'lodge', 'short_stay'])->index();
-            $table->decimal('price_per_night', 10, 2)->index();
+            $table->decimal('price_per_night', 10, 2)->nullable()->index();
             $table->string('location')->index();
             $table->text('address')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();

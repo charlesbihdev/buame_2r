@@ -38,7 +38,6 @@ class CategoryProfileService
             ['user_id' => $user->id],
             [
                 'name' => $user->name,
-                'skill' => '',
                 'skill_type' => 'other',
                 'price_per_day' => 0,
                 'location' => '',
@@ -73,7 +72,7 @@ class CategoryProfileService
             [
                 'name' => '',
                 'type' => 'guest_house',
-                'price_per_night' => 0,
+                'price_per_night' => null,
                 'location' => '',
                 'phone' => $user->phone,
                 'is_active' => false,
@@ -94,8 +93,8 @@ class CategoryProfileService
             $profile = $user->transportRides()->create([
                 'driver_name' => '',
                 'type' => 'okada',
-                'price_per_seat' => 0,
-                'seats_available' => 1,
+                'price_per_seat' => null,
+                'seats_available' => null,
                 'location' => '',
                 'phone' => $user->phone ?? '0000000000', // Ensure phone is not empty
                 'is_active' => false,
@@ -126,8 +125,8 @@ class CategoryProfileService
             [
                 'name' => '',
                 'type' => 'house',
-                'price' => 0,
-                'period' => 'month',
+                'price' => null,
+                'period' => null,
                 'location' => '',
                 'phone' => $user->phone ?? '',
                 'is_active' => false,

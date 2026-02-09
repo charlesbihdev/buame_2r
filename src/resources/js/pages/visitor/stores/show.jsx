@@ -6,7 +6,8 @@ import { StoreHeader } from '@/components/visitor/stores/StoreHeader';
 import { StoreHero } from '@/components/visitor/stores/StoreHero';
 import { StoreProductGrid } from '@/components/visitor/stores/StoreProductGrid';
 import { StoreSearch } from '@/components/visitor/stores/StoreSearch';
-import { Head, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 
 export default function StoreShow({ store, products, filters, categoryCounts, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -83,6 +84,17 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
 
             {/* Sticky Header with Store Branding & Share */}
             <StoreHeader store={store} />
+
+            {/* Back Button */}
+            <div className="mx-auto max-w-7xl px-4 pt-4">
+                <button
+                    onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = '/marketplace'}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
+                >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back
+                </button>
+            </div>
 
             {/* Hero Section with Store Info */}
             <StoreHero store={store} productCount={productCount} />

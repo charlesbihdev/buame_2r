@@ -6,7 +6,7 @@ import { MarketplaceProducts } from '@/components/visitor/marketplace/marketplac
 import { Button } from '@/components/ui/button';
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Marketplace({ products = [], pagination = {}, filters = {} }) {
     const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -25,13 +25,11 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
             <MarketplaceHero />
             <div className="flex grow flex-col lg:flex-row">
                 {/* Desktop Filters */}
-                <div className="hidden lg:block">
-                    <MarketplaceFilters filters={filters} />
-                </div>
+                <MarketplaceFilters filters={filters} isMobile={false} />
                 {/* Mobile Filters */}
                 {showMobileFilters && (
                     <div className="lg:hidden">
-                        <MarketplaceFilters filters={filters} />
+                        <MarketplaceFilters filters={filters} isMobile={true} />
                     </div>
                 )}
                 <main className="flex flex-1 flex-col bg-background-light p-4 dark:bg-background-dark md:p-6 lg:p-8">
@@ -66,11 +64,10 @@ export default function Marketplace({ products = [], pagination = {}, filters = 
                                             key={index}
                                             asChild
                                             variant={isActive ? 'default' : 'outline'}
-                                            className={`h-10 min-w-10 rounded-lg px-4 ${
-                                                isActive
-                                                    ? 'bg-[var(--primary)] text-white'
-                                                    : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
-                                            }`}
+                                            className={`h-10 min-w-10 rounded-lg px-4 ${isActive
+                                                ? 'bg-[var(--primary)] text-white'
+                                                : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
+                                                }`}
                                         >
                                             <Link href={link.url || '#'} preserveState preserveScroll>
                                                 {page}

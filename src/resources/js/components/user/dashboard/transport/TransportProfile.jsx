@@ -14,6 +14,7 @@ export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const primaryImage = profile?.images?.find((img) => img.is_primary) || profile?.images?.[0];
     const [profileImagePreview, setProfileImagePreview] = useState(primaryImage?.image_path || null);
+    const [showPricing, setShowPricing] = useState(!!(profile?.price_per_seat || profile?.seats_available));
 
     // Ensure profile exists - if not, show message
     if (!profile || !profile.id) {
@@ -177,33 +178,56 @@ export function TransportProfile({ profile }) {
                             <FormError error={errors.type || pageErrors?.type} className="mt-1" />
                         </div>
 
-                        <div>
-                            <Label htmlFor="price_per_seat">Price per Seat (GH₵)</Label>
-                            <Input
-                                id="price_per_seat"
-                                type="number"
-                                step="0.01"
-                                value={data.price_per_seat}
-                                onChange={(e) => setData('price_per_seat', e.target.value)}
-                                className="mt-1"
-                                placeholder="15.00"
-                            />
-                            <FormError error={errors.price_per_seat || pageErrors?.price_per_seat} className="mt-1" />
-                        </div>
+                    </div>
+                </div>
 
-                        <div>
-                            <Label htmlFor="seats_available">Seats Available</Label>
-                            <Input
-                                id="seats_available"
-                                type="number"
-                                value={data.seats_available}
-                                onChange={(e) => setData('seats_available', e.target.value)}
-                                className="mt-1"
-                                placeholder="4"
+                {/* Pricing Section */}
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                    <div className="mb-4 flex items-center justify-between">
+                        <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                id="showPricing"
+                                checked={showPricing}
+                                onChange={(e) => setShowPricing(e.target.checked)}
+                                className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <FormError error={errors.seats_available || pageErrors?.seats_available} className="mt-1" />
+                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600 dark:text-gray-400">
+                                Show pricing
+                            </Label>
                         </div>
                     </div>
+                    {showPricing && (
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div>
+                                <Label htmlFor="price_per_seat">Price per Seat (GH₵)</Label>
+                                <Input
+                                    id="price_per_seat"
+                                    type="number"
+                                    step="0.01"
+                                    value={data.price_per_seat}
+                                    onChange={(e) => setData('price_per_seat', e.target.value)}
+                                    className="mt-1"
+                                    placeholder="15.00"
+                                />
+                                <FormError error={errors.price_per_seat || pageErrors?.price_per_seat} className="mt-1" />
+                            </div>
+
+                            <div>
+                                <Label htmlFor="seats_available">Seats Available</Label>
+                                <Input
+                                    id="seats_available"
+                                    type="number"
+                                    value={data.seats_available}
+                                    onChange={(e) => setData('seats_available', e.target.value)}
+                                    className="mt-1"
+                                    placeholder="4"
+                                />
+                                <FormError error={errors.seats_available || pageErrors?.seats_available} className="mt-1" />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Description Section */}

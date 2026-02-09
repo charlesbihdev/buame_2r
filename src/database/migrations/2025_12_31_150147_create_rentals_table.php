@@ -13,8 +13,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->enum('type', ['house', 'equipment', 'tools', 'land', 'commercial', 'vehicle', 'store'])->index();
-            $table->decimal('price', 10, 2)->index();
-            $table->enum('period', ['day', 'week', 'month', 'year'])->index();
+            $table->decimal('price', 10, 2)->nullable()->index();
+            $table->enum('period', ['day', 'week', 'month', 'year'])->nullable()->index();
             $table->string('location')->index();
             $table->text('address')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();

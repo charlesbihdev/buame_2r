@@ -90,18 +90,14 @@ class ArtisansController extends Controller
         });
 
         // Get counts for quick categories (only from users with active subscriptions)
-        $skillTypes = [
-            'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
-            'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
-            'bead_making', 'shoe_making', 'event_mc', 'event_planners',
-            'graphics_designer', 'radio_presenter', 'drivers', 'borehole_drillers',
-            'printer_repairers', 'tv_decoder_repairers', 'air_conditioning_installers',
-            'multi_tv_dstv_installers', 'phone_repairers',
-        ];
-        $categoryCounts = [];
-        foreach ($skillTypes as $type) {
-            $categoryCounts[$type] = Artisan::where('skill_type', $type)->where('is_active', true)->withActiveSubscription()->count();
-        }
+        $categoryCounts = Artisan::query()
+            ->where('is_active', true)
+            ->withActiveSubscription()
+            ->whereNotNull('skill_type')
+            ->selectRaw('skill_type, COUNT(*) as count')
+            ->groupBy('skill_type')
+            ->pluck('count', 'skill_type')
+            ->toArray();
 
         return Inertia::render('visitor/artisans/index', [
             'artisans' => $artisans,
@@ -122,6 +118,8 @@ class ArtisansController extends Controller
                     ->latest()
                     ->limit(50);
             }])
+            ->where('is_active', true)
+            ->where('is_available', true)
             ->withActiveSubscription()
             ->findOrFail($id);
 

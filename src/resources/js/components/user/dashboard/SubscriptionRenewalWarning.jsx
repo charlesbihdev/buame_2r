@@ -3,7 +3,7 @@ import { AlertCircle, AlertTriangle, Clock } from 'lucide-react';
 import { useState } from 'react';
 import PaymentModal from './PaymentModal';
 
-export default function SubscriptionRenewalWarning({ subscription, category }) {
+export default function SubscriptionRenewalWarning({ subscription, category, isFreeAccess = false, freeAccessDays = 30 }) {
     const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
     if (!subscription) {
@@ -107,7 +107,7 @@ export default function SubscriptionRenewalWarning({ subscription, category }) {
                 </div>
             </div>
 
-            <PaymentModal isOpen={paymentModalOpen} onClose={() => setPaymentModalOpen(false)} category={category} subscription={subscription} />
+            <PaymentModal isOpen={paymentModalOpen} onClose={() => setPaymentModalOpen(false)} category={category} subscription={subscription} isFreeAccess={isFreeAccess} freeAccessDays={freeAccessDays} />
         </>
     );
 }

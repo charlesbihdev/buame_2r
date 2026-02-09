@@ -43,6 +43,18 @@ class JobsController extends Controller
             $query->whereIn('category', $categories);
         }
 
+        // Apply sub_category filter
+        if ($request->filled('sub_category')) {
+            $subCategories = is_array($request->sub_category)
+                ? $request->sub_category
+                : (str_contains($request->sub_category, ',')
+                    ? explode(',', $request->sub_category)
+                    : [$request->sub_category]);
+            $query->whereIn('sub_category', $subCategories);
+        }
+
+
+
         // Apply location filter
         if ($request->filled('location')) {
             $query->where('location', 'like', '%'.$request->location.'%');
@@ -129,23 +141,9 @@ class JobsController extends Controller
                 'apprenticeship' => 'Apprenticeship',
             ];
 
-            $categoryLabels = [
-                'construction_trades' => 'Construction & Trades',
-                'home_services' => 'Home Services',
-                'auto_mechanical' => 'Auto & Mechanical',
-                'transport_equipment' => 'Transport & Equipment',
-                'electrical_electronics' => 'Electrical & Electronics',
-                'ict_digital' => 'ICT & Digital',
-                'business_office' => 'Business & Office',
-                'education_training' => 'Education & Training',
-                'health_care' => 'Health & Care',
-                'hospitality_events' => 'Hospitality & Events',
-                'fashion_beauty' => 'Fashion & Beauty',
-                'agriculture' => 'Agriculture',
-                'security' => 'Security',
-                'media_creative' => 'Media & Creative',
-                'general_jobs' => 'General Jobs',
-            ];
+            $categoryLabels = collect(config('job_categories.categories', []))
+                ->mapWithKeys(fn($cat, $id) => [$id => $cat['label']])
+                ->toArray();
 
             return [
                 'id' => $job->id,
@@ -228,6 +226,7 @@ class JobsController extends Controller
             'filters' => [
                 'type' => $request->get('type', 'all'),
                 'category' => $request->get('category', 'all'),
+                'sub_category' => $request->get('sub_category', ''),
                 'location' => $request->get('location', ''),
                 'search' => $request->get('search', ''),
                 'salary' => $request->get('salary', ''),
@@ -288,23 +287,9 @@ class JobsController extends Controller
             'apprenticeship' => 'Apprenticeship',
         ];
 
-        $categoryLabels = [
-            'construction_trades' => 'Construction & Trades',
-            'home_services' => 'Home Services',
-            'auto_mechanical' => 'Auto & Mechanical',
-            'transport_equipment' => 'Transport & Equipment',
-            'electrical_electronics' => 'Electrical & Electronics',
-            'ict_digital' => 'ICT & Digital',
-            'business_office' => 'Business & Office',
-            'education_training' => 'Education & Training',
-            'health_care' => 'Health & Care',
-            'hospitality_events' => 'Hospitality & Events',
-            'fashion_beauty' => 'Fashion & Beauty',
-            'agriculture' => 'Agriculture',
-            'security' => 'Security',
-            'media_creative' => 'Media & Creative',
-            'general_jobs' => 'General Jobs',
-        ];
+        $categoryLabels = collect(config('job_categories.categories', []))
+            ->mapWithKeys(fn($cat, $id) => [$id => $cat['label']])
+            ->toArray();
 
         // Parse requirements/responsibilities/benefits from text
         $requirements = $job->requirements ? array_filter(array_map('trim', explode("\n", $job->requirements))) : [];

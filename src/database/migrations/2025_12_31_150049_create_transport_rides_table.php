@@ -13,8 +13,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('driver_name');
             $table->enum('type', ['okada', 'car', 'taxi', 'bus', 'cargo', 'other'])->index();
-            $table->decimal('price_per_seat', 10, 2);
-            $table->integer('seats_available');
+            $table->decimal('price_per_seat', 10, 2)->nullable();
+            $table->integer('seats_available')->nullable();
             $table->string('location')->index();
             $table->text('address')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();

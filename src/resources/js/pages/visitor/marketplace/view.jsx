@@ -1,5 +1,6 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, ChevronLeft, ChevronRight, Store, ExternalLink, X, ZoomIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
@@ -16,12 +17,9 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">Product not found.</p>
-                        <Link
-                            href="/marketplace"
-                            className="mt-4 inline-block rounded-lg bg-[var(--primary)] px-6 py-2 font-bold text-white transition-colors hover:bg-[var(--primary)]"
-                        >
-                            Back to Marketplace
-                        </Link>
+                        <div className="mt-6 flex justify-center">
+                            <BackToHome to="/marketplace" label="Back to Marketplace" />
+                        </div>
                     </div>
                 </div>
             </VisitorLayout>
@@ -68,13 +66,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                 {product.primary_image && <meta name="twitter:image" content={product.primary_image} />}
             </Head>
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                <Link
-                    href="/marketplace"
-                    className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back to Marketplace
-                </Link>
+                <BackToHome to="/marketplace" label="Back to Marketplace" />
 
                 {/* Caution Banner */}
                 <CautionBanner type="product" className="mb-8" />
@@ -105,11 +97,10 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         <button
                                             key={index}
                                             onClick={() => setCurrentImageIndex(index)}
-                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${
-                                                index === currentImageIndex
-                                                    ? 'ring-2 ring-[var(--primary)] ring-offset-2'
-                                                    : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
-                                            }`}
+                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${index === currentImageIndex
+                                                ? 'ring-2 ring-[var(--primary)] ring-offset-2'
+                                                : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
+                                                }`}
                                         >
                                             <img
                                                 src={image}
@@ -169,7 +160,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                             <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Description</h2>
                             <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">{product.description || 'No description available.'}</p>
-                            
+
                             {product.specifications && product.specifications.length > 0 && (
                                 <div className="mb-4">
                                     <h3 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Specifications</h3>
@@ -385,9 +376,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                 <button
                                     key={index}
                                     onClick={() => setCurrentImageIndex(index)}
-                                    className={`h-2 w-2 rounded-full transition-all ${
-                                        index === currentImageIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
-                                    }`}
+                                    className={`h-2 w-2 rounded-full transition-all ${index === currentImageIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
+                                        }`}
                                 />
                             ))}
                         </div>
