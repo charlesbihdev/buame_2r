@@ -123,7 +123,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                         <span>{ride?.rating}</span>
                                         <span className="text-xs opacity-75">({ride?.reviews_count} reviews)</span>
                                     </div>
-                                    {ride?.seats_available && (
+                                    {ride?.seats_available > 0 && (
                                         <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
                                             <Users className="h-4 w-4" />
                                             <span>{ride?.seats_available} seats</span>
@@ -313,7 +313,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                             </div>
                                         </div>
                                     )}
-                                    {ride?.rating && (
+                                    {ride?.rating > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
@@ -324,7 +324,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                             </div>
                                         </div>
                                     )}
-                                    {ride?.seats_available && (
+                                    {ride?.seats_available > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Users className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
                                             <div>
