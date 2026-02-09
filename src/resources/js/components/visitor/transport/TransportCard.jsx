@@ -90,7 +90,7 @@ export function TransportCard({ ride }) {
                 </div>
 
                 <div className="mt-auto space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
-                    {ride?.price_per_seat > 0 && (
+                    {Number(ride?.price_per_seat) > 0 && (
                         <div className="flex items-center justify-between">
                             <div>
                                 <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
