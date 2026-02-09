@@ -2,7 +2,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { BackToHome } from '@/components/ui/back-to-home';
 import { TransportPagination } from '@/components/visitor/transport/TransportPagination';
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowLeft, MapPin, Star, Users, Search, Navigation, BadgeCheck } from 'lucide-react';
+import { MapPin, Star, Users, Search, BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
 
 // Transport type tabs with emojis - Okada (tricycle) separate from Car
@@ -88,44 +88,26 @@ export default function Transport({ rides, typeCounts, filters }) {
 
                     {/* Location Search */}
                     <div className="mx-auto max-w-4xl rounded-2xl bg-white p-6 shadow-xl dark:bg-[var(--card)]">
-                        <div className="mb-4 flex items-center gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)]">
-                                <Navigation className="h-5 w-5 text-[var(--foreground)]" />
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]">
+                                <MapPin className="h-5 w-5 text-white" />
                             </div>
-                            <div className="flex-1">
-                                <label className="mb-1 block text-xs font-semibold text-gray-600 dark:text-gray-400">
-                                    Your Location
-                                </label>
-                                <input
-                                    type="text"
-                                    value={location}
-                                    onChange={(e) => setLocation(e.target.value)}
-                                    placeholder="Enter your location"
-                                    className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleLocationSearch()}
+                                placeholder="Search by location..."
+                                className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
+                            />
                             <button
                                 onClick={handleLocationSearch}
-                                className="mt-6 rounded-lg bg-[var(--primary)] px-6 py-3 font-bold text-white transition-colors hover:bg-[var(--primary)]"
+                                className="shrink-0 rounded-lg bg-[var(--primary)] px-6 py-3 font-bold text-white transition-colors hover:bg-[var(--primary)]/90"
                             >
-                                <MapPin className="h-5 w-5" />
+                                <Search className="h-5 w-5" />
                             </button>
                         </div>
-
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => setLocation('')}
-                                className="flex-1 rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary)]/20 dark:text-white"
-                            >
-                                Use Current Location
-                            </button>
-                            <button
-                                onClick={handleLocationSearch}
-                                className="flex-1 rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[var(--primary)]"
-                            >
-                                <Search className="mx-auto h-5 w-5" />
-                            </button>
-                        </div>
+                        {/* TODO: Add "Use Current Location" button once geolocation is implemented */}
                     </div>
                 </div>
             </div>

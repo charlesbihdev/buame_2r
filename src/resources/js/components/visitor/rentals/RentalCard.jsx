@@ -98,14 +98,16 @@ export function RentalCard({ rental }) {
                 )}
 
                 <div className="mt-auto space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
-                                ₵{parseFloat(rental.price).toLocaleString()}
+                    {parseFloat(rental?.price) > 0 && (
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                    ₵{parseFloat(rental.price).toLocaleString()}
+                                </div>
+                                <div className="text-xs text-gray-500">{getPeriodLabel(rental.period)}</div>
                             </div>
-                            <div className="text-xs text-gray-500">{getPeriodLabel(rental.period)}</div>
                         </div>
-                    </div>
+                    )}
                     <button className="w-full rounded-lg border border-[var(--primary)] bg-transparent px-4 py-2 text-xs font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)] hover:text-white">
                         View Details
                     </button>
