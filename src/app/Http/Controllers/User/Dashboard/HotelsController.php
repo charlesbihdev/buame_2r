@@ -30,7 +30,7 @@ class HotelsController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'price_per_night' => ['required', 'numeric', 'min:0'],
+            'price_per_night' => ['nullable', 'numeric', 'min:0'],
             'description' => ['nullable', 'string'],
         ]);
 
@@ -101,7 +101,7 @@ class HotelsController extends Controller
             'phone' => ['required', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
-            'price_per_night' => ['required', 'numeric', 'min:0'],
+            'price_per_night' => ['nullable', 'numeric', 'min:0'],
             'rooms_count' => ['nullable', 'integer', 'min:1'],
             'description' => ['nullable', 'string'],
             'check_in_time' => ['nullable', 'date_format:H:i'],
@@ -144,7 +144,7 @@ class HotelsController extends Controller
             'phone' => $validated['phone'],
             'whatsapp' => $validated['whatsapp'] ?? null,
             'email' => $validated['email'] ?? null,
-            'price_per_night' => $validated['price_per_night'],
+            'price_per_night' => $validated['price_per_night'] ?? null,
             'rooms_count' => $validated['rooms_count'] ?? 1,
             'description' => $validated['description'] ?? null,
             'check_in_time' => $validated['check_in_time'] ?? null,

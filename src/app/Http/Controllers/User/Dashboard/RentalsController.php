@@ -32,8 +32,8 @@ class RentalsController extends Controller
             'type' => ['required', 'string', 'in:house,equipment,tools,land,commercial,vehicle,store'],
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'period' => ['required', 'string', 'in:day,week,month,year'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+            'period' => ['nullable', 'string', 'in:day,week,month,year'],
             'description' => ['nullable', 'string'],
         ]);
 
@@ -70,8 +70,8 @@ class RentalsController extends Controller
             'phone' => ['required', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'period' => ['required', 'string', 'in:day,week,month,year'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+            'period' => ['nullable', 'string', 'in:day,week,month,year'],
             'description' => ['nullable', 'string'],
             'rental_terms' => ['nullable', 'string'],
             'is_active' => ['boolean'],
@@ -140,10 +140,6 @@ class RentalsController extends Controller
                 $errors['phone'] = 'Phone number is required before making it visible.';
             }
 
-            if (empty($rental->period)) {
-                $errors['period'] = 'Rental period is required before making it visible.';
-            }
-
             if (empty($rental->description)) {
                 $errors['description'] = 'Description is required before making it visible.';
             }
@@ -160,7 +156,6 @@ class RentalsController extends Controller
                     'type' => 'rental type',
                     'location' => 'location',
                     'phone' => 'phone number',
-                    'period' => 'rental period',
                     'description' => 'description',
                     'images' => 'at least one image',
                 ];

@@ -8,6 +8,9 @@ Route::get('/', function () {
     return Inertia::render('visitor/home');
 })->name('home');
 
+// Sitemap for SEO
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+
 Route::get('/services', function () {
     return Inertia::render('visitor/services');
 })->name('services');

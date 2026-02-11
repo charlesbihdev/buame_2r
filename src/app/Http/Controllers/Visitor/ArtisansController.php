@@ -21,6 +21,20 @@ class ArtisansController extends Controller
             ->where('is_available', true)
             ->withActiveSubscription();
 
+        // Add subquery to calculate average rating from approved reviews
+        $query->addSelect([
+            'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
+                ->whereColumn('artisan_id', 'artisans.id')
+                ->where('status', 'approved')
+        ]);
+
+        // Add subquery to count approved reviews
+        $query->addSelect([
+            'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
+                ->whereColumn('artisan_id', 'artisans.id')
+                ->where('status', 'approved')
+        ]);
+
         // Filter by skill type
         if ($request->filled('skill_type')) {
             $query->where('skill_type', $request->skill_type);
@@ -61,7 +75,7 @@ class ArtisansController extends Controller
                 'name' => $artisan->name,
                 'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
-                'rating' => $artisan->rating ?? 4.5, // Default rating for new artisans
+                'rating' => $artisan->rating > 0 ? round($artisan->rating, 1) : 4.5, // Default rating for new artisans
                 'reviews_count' => $artisan->reviews_count,
                 'experience_years' => $artisan->experience_years,
                 'price_per_day' => $artisan->show_price && $artisan->price_per_day ? number_format($artisan->price_per_day, 2) : null,
@@ -76,15 +90,14 @@ class ArtisansController extends Controller
         });
 
         // Get counts for quick categories (only from users with active subscriptions)
-        $skillTypes = [
-            'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
-            'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
-            'bead_making', 'shoe_making', 'event_mc', 'event_planners',
-        ];
-        $categoryCounts = [];
-        foreach ($skillTypes as $type) {
-            $categoryCounts[$type] = Artisan::where('skill_type', $type)->where('is_active', true)->withActiveSubscription()->count();
-        }
+        $categoryCounts = Artisan::query()
+            ->where('is_active', true)
+            ->withActiveSubscription()
+            ->whereNotNull('skill_type')
+            ->selectRaw('skill_type, COUNT(*) as count')
+            ->groupBy('skill_type')
+            ->pluck('count', 'skill_type')
+            ->toArray();
 
         return Inertia::render('visitor/artisans/index', [
             'artisans' => $artisans,
@@ -105,6 +118,8 @@ class ArtisansController extends Controller
                     ->latest()
                     ->limit(50);
             }])
+            ->where('is_active', true)
+            ->where('is_available', true)
             ->withActiveSubscription()
             ->findOrFail($id);
 

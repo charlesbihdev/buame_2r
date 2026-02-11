@@ -19,7 +19,7 @@ const categories = [
         subtitle: 'Skilled workers',
         icon: Hammer,
         popular: false,
-        benefits: ['Get instant job alerts nearby', 'Showcase your portfolio', 'Secure direct payments'],
+        benefits: ['Get jobs available nearby', 'Showcase your portfolio'],
         color: 'blue',
     },
     {
@@ -28,7 +28,7 @@ const categories = [
         subtitle: 'Accommodation',
         icon: Hotel,
         popular: false,
-        benefits: ['List your rooms easily', 'Manage bookings online', 'Reach more guests'],
+        benefits: ['List your rooms easily', 'Your hotel get seen online', 'Reach more guests'],
         color: 'green',
     },
     {
@@ -46,7 +46,7 @@ const categories = [
         subtitle: 'Property rentals',
         icon: Home,
         popular: false,
-        benefits: ['List properties easily', 'Manage tenants online', 'Secure rental agreements'],
+        benefits: ['List properties easily', 'Get the visibility you need', 'Secure rental properties listing'],
         color: 'purple',
     },
     {
@@ -55,7 +55,7 @@ const categories = [
         subtitle: 'Buy & sell goods',
         icon: ShoppingBag,
         popular: false,
-        benefits: ['Sell to the whole region', 'Manage inventory easily', 'Digital storefront included'],
+        benefits: ['Sell online', 'Manage inventory easily', 'Digital storefront included'],
         color: 'pink',
     },
     {
@@ -64,7 +64,7 @@ const categories = [
         subtitle: 'Career & Hiring',
         icon: Briefcase,
         popular: false,
-        benefits: ['Find verified local talent', 'Post job listings free', 'Review applicant history'],
+        benefits: ['Find verified local talent', 'Post job listings', 'Review applicant history'],
         color: 'gray',
     },
 ];

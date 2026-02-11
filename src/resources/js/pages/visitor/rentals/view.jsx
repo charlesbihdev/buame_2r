@@ -4,6 +4,7 @@ import { CautionBanner } from '@/components/ui/caution-banner';
 import { RentalImageGallery } from '@/components/visitor/rentals/RentalImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { ArrowLeft, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 
 export default function RentalView({ rental, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -16,12 +17,9 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">Rental not found.</p>
-                        <Link
-                            href="/rentals"
-                            className="mt-4 inline-block rounded-lg bg-[var(--primary)] px-6 py-2 font-bold text-white transition-colors hover:bg-[var(--primary)]"
-                        >
-                            Back to Rentals
-                        </Link>
+                        <div className="mt-6 flex justify-center">
+                            <BackToHome to="/rentals" label="Back to Rentals" />
+                        </div>
                     </div>
                 </div>
             </VisitorLayout>
@@ -53,29 +51,24 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
     const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=Hello, I'm interested in renting ${rental.name}.`;
     const rentalDescription = rental.description ? rental.description.substring(0, 150) : `${getTypeLabel(rental.type)} for rent in ${rental.location}`;
     const featuresText = rental.features?.slice(0, 3)?.join(', ') || '';
+    const hasPricing = !!rental.price;
 
     return (
         <VisitorLayout>
             <Head title={`${rental.name} - ${getTypeLabel(rental.type)} Rental`}>
-                <meta name="description" content={`${rental.name} - ${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}. ${rentalDescription}${rentalDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="description" content={`${rental.name} - ${getTypeLabel(rental.type)} for rent in ${rental.location}.${hasPricing ? ` ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}.` : ''} ${rentalDescription}${rentalDescription.length >= 150 ? '...' : ''}`} />
                 <meta name="keywords" content={`${rental.name}, ${getTypeLabel(rental.type)} rental, ${rental.location}, rent ${getTypeLabel(rental.type).toLowerCase()}, ${featuresText}, 2RBUAME`} />
                 <meta property="og:title" content={`${rental.name} - ${getTypeLabel(rental.type)} Rental | 2RBUAME`} />
-                <meta property="og:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}. Contact now on 2RBUAME.`} />
+                <meta property="og:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}.${hasPricing ? ` ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}.` : ''} Contact now on 2RBUAME.`} />
                 <meta property="og:type" content="website" />
                 {rental.primary_image && <meta property="og:image" content={rental.primary_image} />}
                 <meta name="twitter:title" content={`${rental.name} - ${getTypeLabel(rental.type)} Rental | 2RBUAME`} />
-                <meta name="twitter:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}. ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}.`} />
+                <meta name="twitter:description" content={`${getTypeLabel(rental.type)} for rent in ${rental.location}.${hasPricing ? ` ₵${parseFloat(rental.price).toLocaleString()}${getPeriodLabel(rental.period)}.` : ''}`} />
                 {rental.primary_image && <meta name="twitter:image" content={rental.primary_image} />}
             </Head>
 
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                <Link
-                    href="/rentals"
-                    className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back to Rentals
-                </Link>
+                <BackToHome to="/rentals" label="Back to Rentals" />
 
                 {/* Caution Banner */}
                 <CautionBanner type="service" className="mb-8" />
@@ -140,13 +133,15 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Rental Price</div>
-                                <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
-                                    ₵{parseFloat(rental.price).toLocaleString()}
+                            {rental.price && (
+                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Rental Price</div>
+                                    <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                        ₵{parseFloat(rental.price).toLocaleString()}
+                                    </div>
+                                    {rental.period && <div className="text-sm text-gray-500">{getPeriodLabel(rental.period)}</div>}
                                 </div>
-                                <div className="text-sm text-gray-500">{getPeriodLabel(rental.period)}</div>
-                            </div>
+                            )}
 
                             {/* Contact */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

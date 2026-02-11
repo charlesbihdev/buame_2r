@@ -2,12 +2,14 @@ import { Button } from '@/components/ui/button';
 import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
+import SaveButton from '@/components/user/dashboard/SaveButton';
+import { artisanSkills } from '@/config/artisan-skills';
 
 export function ArtisanProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -15,14 +17,14 @@ export function ArtisanProfile({ profile }) {
     const [newSpecialty, setNewSpecialty] = useState('');
     const [profileImagePreview, setProfileImagePreview] = useState(profile?.profile_image || null);
 
-    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+    const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
         company_name: profile?.company_name || '',
-        skill_type: profile?.skill_type || 'other',
+        skill_type: profile?.skill_type || '', // Removed default 'other' to encourage explicit selection
         description: profile?.description || '',
         experience_years: profile?.experience_years || '',
-        experience_level: profile?.experience_level || 'expert', // Hidden field, defaults to expert
+        experience_level: profile?.experience_level || 'expert',
         price_per_day: profile?.price_per_day || '',
         show_price: profile?.show_price ?? false,
         location: profile?.location || '',
@@ -35,27 +37,6 @@ export function ArtisanProfile({ profile }) {
         specialties: specialties,
         profile_image: null,
     });
-
-    const skillTypes = [
-        { value: 'carpenter', label: 'Carpenter' },
-        { value: 'mason', label: 'Mason' },
-        { value: 'electrician', label: 'Electrician' },
-        { value: 'plumber', label: 'Plumber' },
-        { value: 'tiler', label: 'Tiler' },
-        { value: 'tailor', label: 'Tailor' },
-        { value: 'welder', label: 'Welder' },
-        { value: 'painter', label: 'Painter' },
-        { value: 'hairdressing', label: 'Hairdressing' },
-        { value: 'mechanic', label: 'Mechanic' },
-        { value: 'bakery', label: 'Bakery' },
-        { value: 'decoration', label: 'Decoration' },
-        { value: 'makeup_artistry', label: 'Makeup Artistry' },
-        { value: 'bead_making', label: 'Bead Making' },
-        { value: 'shoe_making', label: 'Shoe Making' },
-        { value: 'event_mc', label: 'Event MC' },
-        { value: 'event_planners', label: 'Event Planners' },
-        { value: 'other', label: 'Other' },
-    ];
 
     const handleAddSpecialty = () => {
         if (newSpecialty.trim() && !specialties.includes(newSpecialty.trim())) {
@@ -90,19 +71,29 @@ export function ArtisanProfile({ profile }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!profile?.id) {
-            console.error('Profile ID is missing. Cannot submit form.');
-            return;
+        e?.preventDefault();
+
+        if (profile?.id) {
+            // Update existing profile
+            post(route('user.dashboard.artisans.update', profile.id), {
+                preserveScroll: true,
+                forceFormData: true,
+                onSuccess: () => {
+                    // Keep preview as is on success
+                },
+            });
+        } else {
+            // Create new profile
+            // Remove _method: PUT from data for creation
+            data._method = undefined;
+            post(route('user.dashboard.artisans.store'), {
+                preserveScroll: true,
+                forceFormData: true,
+                onSuccess: () => {
+                    // Redirect usually handled by controller, but we can ensure state clean up here if needed
+                },
+            });
         }
-        // Use POST with _method spoofing for file uploads (Laravel limitation with PUT)
-        post(route('user.dashboard.artisans.update', profile.id), {
-            preserveScroll: true,
-            forceFormData: true,
-            onSuccess: () => {
-                // Keep preview as is on success
-            },
-        });
     };
 
     // Update form data when specialties change
@@ -117,12 +108,17 @@ export function ArtisanProfile({ profile }) {
                 <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your artisan profile information</p>
             </div>
 
-            {/* Visibility Banner */}
+            {/* Visibility Banner with save button */}
             {profile && (
                 <ListingVisibilityBanner
                     listing={profile}
                     routeName="user.dashboard.artisans.toggle-active"
                     label="Profile"
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit
+                    }}
                 />
             )}
 
@@ -189,10 +185,10 @@ export function ArtisanProfile({ profile }) {
                                 <SelectTrigger className="mt-1">
                                     <SelectValue placeholder="Select skill type" />
                                 </SelectTrigger>
-                                <SelectContent>
-                                    {skillTypes.map((type) => (
-                                        <SelectItem key={type.value} value={type.value}>
-                                            {type.label}
+                                <SelectContent className="max-h-[300px]">
+                                    {artisanSkills.map((skill) => (
+                                        <SelectItem key={skill.id} value={skill.id}>
+                                            {skill.label}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>
@@ -390,19 +386,7 @@ export function ArtisanProfile({ profile }) {
                             <span>Profile saved successfully</span>
                         </div>
                     )}
-                    <Button type="submit" disabled={processing} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
-                        {processing ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Saving...
-                            </>
-                        ) : (
-                            <>
-                                <Save className="h-4 w-4" />
-                                Save Profile
-                            </>
-                        )}
-                    </Button>
+                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
         </div>

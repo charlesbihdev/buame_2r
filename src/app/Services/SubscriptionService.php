@@ -116,6 +116,57 @@ class SubscriptionService
     }
 
     /**
+     * Check if free access mode is enabled.
+     */
+    public function isFreeAccessEnabled(): bool
+    {
+        return config('categories.free_access.enabled', false);
+    }
+
+    /**
+     * Create a free trial subscription without payment.
+     */
+    public function createFreeTrialSubscription(int $userId, string $category, ?string $tier = null): UserCategory
+    {
+        $durationDays = config('categories.free_access.duration_days', 30);
+        $gracePeriodDays = config('categories.subscription.grace_period_days', 7);
+        $expiryDate = now()->addDays($durationDays);
+
+        // Create Payment record for tracking
+        $payment = Payment::create([
+            'user_id' => $userId,
+            'category' => $category,
+            'billing_cycle' => BillingCycle::Monthly,
+            'payment_type' => 'initial',
+            'amount' => 0.00,
+            'currency' => 'GHS',
+            'payment_method' => 'free_trial',
+            'status' => 'completed',
+            'paid_at' => now(),
+            'expires_at' => $expiryDate,
+            'metadata' => [
+                'type' => 'free_trial',
+                'tier' => $tier,
+                'reason' => 'Paystack verification pending',
+            ],
+        ]);
+
+        return UserCategory::updateOrCreate(
+            ['user_id' => $userId, 'category' => $category],
+            [
+                'payment_id' => $payment->id,
+                'billing_cycle' => BillingCycle::Monthly,
+                'subscription_status' => SubscriptionStatus::Active,
+                'expires_at' => $expiryDate,
+                'grace_period_ends_at' => $expiryDate->copy()->addDays($gracePeriodDays),
+                'is_active' => true,
+                'reminder_count' => 0,
+                'last_reminder_sent_at' => null,
+            ]
+        );
+    }
+
+    /**
      * Update subscription statuses based on expiry dates.
      * Should be called by a scheduled command.
      */

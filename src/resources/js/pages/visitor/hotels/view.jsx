@@ -5,6 +5,7 @@ import { CautionBanner } from '@/components/ui/caution-banner';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head, Link } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
 import {
     ArrowLeft,
     Award,
@@ -82,18 +83,19 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
 
     const hotelDescription = hotel?.description ? hotel.description.substring(0, 150) : `${formatHotelType(hotel?.type)} in ${hotel?.location}`;
     const amenitiesText = hotel?.amenities?.slice(0, 3)?.join(', ') || 'various amenities';
+    const hasPricing = !!hotel?.price_per_night;
 
     return (
         <VisitorLayout>
             <Head title={hotel?.name}>
-                <meta name="description" content={`${hotel?.name} - ${formatHotelType(hotel?.type)} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night. ${hotelDescription}${hotelDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="description" content={`${hotel?.name} - ${formatHotelType(hotel?.type)} in ${hotel?.location}.${hasPricing ? ` Starting from GH₵${hotel?.price_per_night}/night.` : ''} ${hotelDescription}${hotelDescription.length >= 150 ? '...' : ''}`} />
                 <meta name="keywords" content={`${hotel?.name}, ${formatHotelType(hotel?.type)}, ${hotel?.location}, hotel booking, accommodation Ghana, ${amenitiesText}`} />
                 <meta property="og:title" content={`${hotel?.name} | 2RBUAME Hotels`} />
-                <meta property="og:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night.`} />
+                <meta property="og:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}.${hasPricing ? ` Starting from GH₵${hotel?.price_per_night}/night.` : ''}`} />
                 <meta property="og:type" content="hotel" />
                 {hotel?.images?.[0] && <meta property="og:image" content={hotel.images[0]} />}
                 <meta name="twitter:title" content={`${hotel?.name} | 2RBUAME Hotels`} />
-                <meta name="twitter:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}. Starting from GH₵${hotel?.price_per_night}/night.`} />
+                <meta name="twitter:description" content={`Book your stay at ${hotel?.name} in ${hotel?.location}.${hasPricing ? ` Starting from GH₵${hotel?.price_per_night}/night.` : ''}`} />
                 {hotel?.images?.[0] && <meta name="twitter:image" content={hotel.images[0]} />}
             </Head>
 
@@ -101,13 +103,7 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
-                    <Link
-                        href="/hotels"
-                        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                    >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to Hotels
-                    </Link>
+                    <BackToHome to="/hotels" label="Back to Hotels" />
 
                     {/* Caution Banner */}
                     <CautionBanner type="service" className="mb-8" />
@@ -161,11 +157,13 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
                             </div>
 
                             {/* Pricing Card - Desktop */}
-                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{hotel?.price_per_night}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per night</p>
-                            </div>
+                            {hotel?.price_per_night && (
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{hotel?.price_per_night}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per night</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -260,11 +258,13 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
-                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{hotel?.price_per_night}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per night</p>
-                            </div>
+                            {hotel?.price_per_night && (
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{hotel?.price_per_night}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per night</p>
+                                </div>
+                            )}
 
                             {/* Contact Actions */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

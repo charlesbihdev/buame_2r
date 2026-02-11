@@ -1,3 +1,4 @@
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -110,9 +111,7 @@ export default function PhoneLogin({ status }) {
                         </div>
 
                         <div className="mt-6 text-center">
-                            <Link href="/" className="text-sm font-medium text-muted-foreground hover:text-primary">
-                                Back to Home
-                            </Link>
+                            <BackToHome />
                         </div>
                     </div>
                 </div>

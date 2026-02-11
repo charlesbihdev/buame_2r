@@ -63,6 +63,9 @@ Route::prefix('user')->name('user.')->group(function () {
 
     Route::post('register/payment', [PaymentController::class, 'processPayment']);
 
+    Route::post('register/free-access', [RegisteredUserController::class, 'processFreeAccess'])
+        ->name('register.free-access');
+
     Route::post('register/payment/tier', [RegisteredUserController::class, 'updateTier'])
         ->name('register.payment.tier');
 });

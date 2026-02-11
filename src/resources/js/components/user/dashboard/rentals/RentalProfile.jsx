@@ -4,14 +4,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Loader2, Save, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
+import SaveButton from '@/components/user/dashboard/SaveButton';
 
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
     const [imagePreview, setImagePreview] = useState(null);
-    const [showPricing, setShowPricing] = useState(!!profile?.price);
+    const [showPricing, setShowPricing] = useState(false);
     const fileInputRef = useRef(null);
 
     if (!profile) {
@@ -22,7 +23,7 @@ export function RentalProfile({ profile }) {
         );
     }
 
-    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
+    const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
         type: profile?.type || 'house',
@@ -55,7 +56,7 @@ export function RentalProfile({ profile }) {
     ];
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         post(route('user.dashboard.rentals.update', profile.id), {
             forceFormData: true,
         });
@@ -77,8 +78,19 @@ export function RentalProfile({ profile }) {
 
     return (
         <div className="space-y-6">
-            {/* Visibility Banner */}
-            {profile && <ListingVisibilityBanner listing={profile} routeName="user.dashboard.rentals.toggle-active" label="Listing" />}
+            {/* Visibility Banner with save button */}
+            {profile && (
+                <ListingVisibilityBanner
+                    listing={profile}
+                    routeName="user.dashboard.rentals.toggle-active"
+                    label="Listing"
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit
+                    }}
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Primary Image Upload */}
@@ -292,23 +304,7 @@ export function RentalProfile({ profile }) {
                                 <span>Profile saved successfully</span>
                             </div>
                         )}
-                        <Button
-                            type="submit"
-                            disabled={processing}
-                            className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
-                        >
-                            {processing ? (
-                                <>
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                    Saving...
-                                </>
-                            ) : (
-                                <>
-                                    <Save className="h-4 w-4" />
-                                    Save Profile
-                                </>
-                            )}
-                        </Button>
+                        <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                     </div>
                 </div>
             </form>

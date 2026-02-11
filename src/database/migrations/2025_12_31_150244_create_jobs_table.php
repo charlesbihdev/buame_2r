@@ -36,7 +36,8 @@ return new class extends Migration
             $table->string('email')->nullable(); // Contact email for this job
             $table->string('title');
             $table->enum('type', ['full_time', 'part_time', 'contract', 'internship', 'daily_wage', 'apprenticeship'])->index();
-            $table->enum('category', ['construction_trades', 'home_services', 'auto_mechanical', 'transport_equipment', 'electrical_electronics', 'ict_digital', 'business_office', 'education_training', 'health_care', 'hospitality_events', 'fashion_beauty', 'agriculture', 'security', 'media_creative', 'general_jobs'])->nullable()->index();
+            $table->string('category')->nullable()->index();
+            $table->string('sub_category')->nullable()->index();
             $table->string('salary')->nullable();
             $table->string('location')->index();
             $table->text('address')->nullable();

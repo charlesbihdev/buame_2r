@@ -1,3 +1,4 @@
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Head, Link, useForm } from '@inertiajs/react';
@@ -187,9 +188,7 @@ export default function PhoneRegister({ category }) {
                         </div>
 
                         <div className="mt-6 text-center">
-                            <Link href="/" className="text-sm font-medium text-gray-500 hover:text-[var(--primary)] dark:text-gray-400">
-                                Back to Home
-                            </Link>
+                            <BackToHome />
                         </div>
                     </div>
                 </div>

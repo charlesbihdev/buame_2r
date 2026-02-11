@@ -3,8 +3,9 @@ import { HotelCard } from '@/components/visitor/hotels/HotelCard';
 import { HotelFilterBar } from '@/components/visitor/hotels/HotelFilterBar';
 import { HotelPagination } from '@/components/visitor/hotels/HotelPagination';
 import { Button } from '@/components/ui/button';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Head, Link, router } from '@inertiajs/react';
-import { MapPin, Search } from 'lucide-react';
+import { ArrowLeft, MapPin, Search } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Hotels({ hotels, filters }) {
@@ -75,6 +76,9 @@ export default function Hotels({ hotels, filters }) {
             {/* Hero with Search */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 lg:px-12">
+                    <div className="mb-6">
+                        <BackToHome />
+                    </div>
                     <div className="mb-8 text-center">
                         <h1 className="mb-3 text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">Find Your Perfect Stay</h1>
                         <p className="text-lg text-gray-600 dark:text-gray-300">Discover comfortable hotels and guest houses across Western North and beyond</p>

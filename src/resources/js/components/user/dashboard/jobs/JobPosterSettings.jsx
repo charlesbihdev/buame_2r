@@ -4,15 +4,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import SaveButton from '@/components/user/dashboard/SaveButton';
 
 export function JobPosterSettings({ poster }) {
     const [copied, setCopied] = useState(false);
     const [slugValue, setSlugValue] = useState(poster?.slug || '');
 
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { data, setData, put, processing, errors, reset, isDirty } = useForm({
         name: poster?.name || '',
         slug: poster?.slug || '',
         description: poster?.description || '',
@@ -59,7 +60,7 @@ export function JobPosterSettings({ poster }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e?.preventDefault();
         put(route('user.dashboard.jobs.poster.update'), {
             preserveScroll: true,
             onSuccess: () => {
@@ -109,11 +110,16 @@ export function JobPosterSettings({ poster }) {
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your employer profile and contact information</p>
             </div>
 
-            {/* Visibility Toggle */}
+            {/* Visibility Banner with save button */}
             <ListingVisibilityBanner
                 listing={poster}
                 routeName="user.dashboard.jobs.poster.toggle-active"
                 label="Profile"
+                saveButton={{
+                    isProcessing: processing,
+                    isDirty: isDirty,
+                    onClick: handleSubmit
+                }}
             />
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -139,7 +145,7 @@ export function JobPosterSettings({ poster }) {
                                     onChange={handleSlugChange}
                                     placeholder="your-profile"
                                     className="flex-1"
-                                    pattern="[a-z0-9-]+"
+                                    pattern="[a-z0-9\-]+"
                                 />
                             </div>
                             <FormError error={errors.slug} />
@@ -259,13 +265,7 @@ export function JobPosterSettings({ poster }) {
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
-                    <Button
-                        type="submit"
-                        disabled={processing}
-                        className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90"
-                    >
-                        {processing ? 'Saving...' : 'Save Changes'}
-                    </Button>
+                    <SaveButton isProcessing={processing} isDirty={isDirty} onClick={handleSubmit} position="bottom" />
                 </div>
             </form>
         </div>

@@ -5,12 +5,18 @@ namespace App\Http\Controllers\User\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\PhoneRegisterRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
+use App\Models\Store;
 use App\Models\User;
 use App\Services\PhoneVerificationService;
+use App\Services\SubscriptionService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -319,6 +325,10 @@ class RegisteredUserController extends Controller
             ];
         }
 
+        // Check if free access mode is enabled
+        $subscriptionService = app(SubscriptionService::class);
+        $isFreeAccess = $subscriptionService->isFreeAccessEnabled();
+
         return Inertia::render('user/auth/payment', [
             'category' => $selectedCategory,
             'amount' => $amount,
@@ -330,6 +340,8 @@ class RegisteredUserController extends Controller
                 'name' => $user->name,
                 'phone' => $user->phone,
             ],
+            'isFreeAccess' => $isFreeAccess,
+            'freeAccessDays' => config('categories.free_access.duration_days', 30),
         ]);
     }
 
@@ -350,5 +362,88 @@ class RegisteredUserController extends Controller
         $request->session()->put('selected_tier', $request->tier);
 
         return redirect()->route('user.register.payment');
+    }
+
+    /**
+     * Process free access subscription (skip payment).
+     */
+    public function processFreeAccess(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        if (! $user || ! $user->phone_verified_at) {
+            return redirect()->route('user.register');
+        }
+
+        $subscriptionService = app(SubscriptionService::class);
+
+        if (! $subscriptionService->isFreeAccessEnabled()) {
+            return redirect()->route('user.register.payment')
+                ->withErrors(['payment' => 'Free access is not currently available.']);
+        }
+
+        $validated = $request->validate([
+            'category' => ['required', 'string', 'in:'.implode(',', config('categories.valid'))],
+            'tier' => ['nullable', 'string', 'in:starter,professional,enterprise'],
+        ]);
+
+        $tier = $validated['category'] === 'marketplace'
+            ? ($validated['tier'] ?? 'starter')
+            : null;
+
+        try {
+            DB::beginTransaction();
+
+            $subscriptionService->createFreeTrialSubscription(
+                $user->id,
+                $validated['category'],
+                $tier
+            );
+
+            // Create store for marketplace
+            if ($validated['category'] === 'marketplace' && ! $user->store) {
+                $this->createMarketplaceStore($user, $tier);
+            }
+
+            $user->update(['is_active' => true]);
+
+            DB::commit();
+
+            event(new Registered($user));
+            $request->session()->forget(['registration_user_id', 'selected_category', 'selected_tier']);
+
+            $days = config('categories.free_access.duration_days', 30);
+
+            return redirect()->route('user.dashboard.index', ['category' => $validated['category']])
+                ->with('success', "Welcome! You have {$days} days free access.");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Free access failed', ['user_id' => $user->id, 'error' => $e->getMessage()]);
+
+            return back()->withErrors(['payment' => 'Failed to activate. Please try again.']);
+        }
+    }
+
+    /**
+     * Create marketplace store for user.
+     */
+    protected function createMarketplaceStore(User $user, ?string $tier): void
+    {
+        $baseSlug = Str::slug($user->name);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Store::where('slug', $slug)->exists()) {
+            $slug = $baseSlug.'-'.$counter++;
+        }
+
+        Store::create([
+            'user_id' => $user->id,
+            'name' => $user->name."'s Store",
+            'slug' => $slug,
+            'tier' => $tier ?? 'starter',
+            'is_active' => false,
+        ]);
     }
 }

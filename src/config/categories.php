@@ -138,6 +138,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Free Access Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Settings for temporary free access during Paystack verification.
+    | Set FREE_ACCESS_ENABLED=true in .env to enable free trial mode.
+    |
+    */
+
+    'free_access' => [
+        'enabled' => env('FREE_ACCESS_ENABLED', false),
+        'duration_days' => (int) env('FREE_ACCESS_DAYS', 30),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Default Category Price
     |--------------------------------------------------------------------------
     |

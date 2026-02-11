@@ -4,7 +4,8 @@ import { CautionBanner } from '@/components/ui/caution-banner';
 import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react'; // Removed Link as it's no longer directly used
+import { BackToHome } from '@/components/ui/back-to-home';
 import {
     ArrowLeft,
     BadgeCheck,
@@ -76,14 +77,15 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
     const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.driver_name}.`);
     const TypeIcon = getTypeIcon(ride?.type);
     const rideDescription = ride?.description ? ride.description.substring(0, 150) : `${formatTransportType(ride?.type)} service in ${ride?.location}`;
+    const hasPricing = !!ride?.price_per_seat;
 
     return (
         <VisitorLayout>
             <Head title={`${ride?.driver_name} - ${formatTransportType(ride?.type)}`}>
-                <meta name="description" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} service in ${ride?.location}. ${ride?.seats_available} seats available at GH₵${ride?.price_per_seat}/seat. ${rideDescription}${rideDescription.length >= 150 ? '...' : ''}`} />
+                <meta name="description" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} service in ${ride?.location}.${hasPricing ? ` ${ride?.seats_available} seats available at GH₵${ride?.price_per_seat}/seat.` : ''} ${rideDescription}${rideDescription.length >= 150 ? '...' : ''}`} />
                 <meta name="keywords" content={`${ride?.driver_name}, ${formatTransportType(ride?.type)}, ${ride?.location}, transport, rides, book ride, Ghana transport, 2RBUAME`} />
                 <meta property="og:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME Transport`} />
-                <meta property="og:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}. GH₵${ride?.price_per_seat}/seat.`} />
+                <meta property="og:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.${hasPricing ? ` GH₵${ride?.price_per_seat}/seat.` : ''}`} />
                 <meta property="og:type" content="website" />
                 {ride?.image && <meta property="og:image" content={ride.image} />}
                 <meta name="twitter:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME`} />
@@ -95,13 +97,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
-                    <Link
-                        href="/transport"
-                        className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
-                    >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to Transport
-                    </Link>
+                    <BackToHome to="/transport" label="Back to Transport" />
 
                     {/* Caution Banner */}
                     <CautionBanner type="service" className="mb-8" />
@@ -127,10 +123,12 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                         <span>{ride?.rating}</span>
                                         <span className="text-xs opacity-75">({ride?.reviews_count} reviews)</span>
                                     </div>
-                                    <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                                        <Users className="h-4 w-4" />
-                                        <span>{ride?.seats_available} seats</span>
-                                    </div>
+                                    {ride?.seats_available > 0 && (
+                                        <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                            <Users className="h-4 w-4" />
+                                            <span>{ride?.seats_available} seats</span>
+                                        </div>
+                                    )}
                                     <div className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                                         <Eye className="h-4 w-4" />
                                         <span>{ride?.views_count} views</span>
@@ -157,9 +155,15 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
                             {/* Pricing Card - Desktop */}
                             <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                {ride?.price_per_seat ? (
+                                    <>
+                                        <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                        <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                    </>
+                                ) : (
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Charged based on distance</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -231,9 +235,15 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
                             <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                {ride?.price_per_seat ? (
+                                    <>
+                                        <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                        <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                    </>
+                                ) : (
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Charged based on distance</p>
+                                )}
                             </div>
 
                             {/* Contact Actions */}
@@ -303,7 +313,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                             </div>
                                         </div>
                                     )}
-                                    {ride?.rating && (
+                                    {ride?.rating > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
@@ -314,7 +324,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                             </div>
                                         </div>
                                     )}
-                                    {ride?.seats_available && (
+                                    {ride?.seats_available > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Users className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
                                             <div>

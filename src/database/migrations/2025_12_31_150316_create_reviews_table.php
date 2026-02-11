@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('comment')->nullable();
 
             // Moderation - admin must approve before visible
-            $table->string('status', 20)->default('pending')->after('comment')->index();
+            $table->string('status', 20)->default('pending')->index();
 
 
             // Optional foreign keys for each category (only one will be set)

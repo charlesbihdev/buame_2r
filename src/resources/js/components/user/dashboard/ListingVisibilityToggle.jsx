@@ -2,13 +2,23 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { router } from '@inertiajs/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function ListingVisibilityToggle({ listing, routeName, label = 'Listing' }) {
+export function ListingVisibilityToggle({ listing, routeName, label = 'Listing', onBeforeToggle }) {
     const [isActive, setIsActive] = useState(listing?.is_active ?? false);
     const [processing, setProcessing] = useState(false);
 
+    useEffect(() => {
+        setIsActive(listing?.is_active ?? false);
+    }, [listing?.is_active]);
+
     const handleToggle = () => {
+        // Check if there's a beforeToggle callback that prevents the toggle
+        if (onBeforeToggle && onBeforeToggle() === false) {
+            return;
+        }
+
+        const previousState = isActive;
         setIsActive(!isActive);
         setProcessing(true);
 
@@ -20,8 +30,8 @@ export function ListingVisibilityToggle({ listing, routeName, label = 'Listing' 
                 preserveState: true,
                 only: ['categoryData', 'flash'],
                 onFinish: () => setProcessing(false),
-                onError: (errors) => {
-                    setIsActive(isActive); // Revert on error
+                onError: () => {
+                    setIsActive(previousState);
                     setProcessing(false);
                 },
             },

@@ -5,7 +5,7 @@ import { AlertCircle, ArrowUpRight, Edit, MapPin, Package, Plus, Trash2 } from '
 import { useState } from 'react';
 import { EditProductModal } from './EditProductModal';
 
-export function MyProducts({ products, store, tiers, onAddProduct }) {
+export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess = false }) {
     const [deletingId, setDeletingId] = useState(null);
     const [editingProduct, setEditingProduct] = useState(null);
 
@@ -80,18 +80,23 @@ export function MyProducts({ products, store, tiers, onAddProduct }) {
                                     Product Limit Reached
                                 </p>
                                 <p className="mt-1 text-sm text-[var(--secondary)]/80 dark:text-[var(--secondary)]/70">
-                                    You've reached your limit of {productLimit} products. Upgrade to add more.
+                                    {isFreeAccess
+                                        ? `You've reached your limit of ${productLimit} products. Upgrade options will be available after the free trial period.`
+                                        : `You've reached your limit of ${productLimit} products. Upgrade to add more.`
+                                    }
                                 </p>
                             </div>
                         </div>
-                        <Button
-                            onClick={handleUpgrade}
-                            size="sm"
-                            className="bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90 flex-shrink-0"
-                        >
-                            <ArrowUpRight className="mr-2 h-4 w-4" />
-                            Upgrade
-                        </Button>
+                        {!isFreeAccess && (
+                            <Button
+                                onClick={handleUpgrade}
+                                size="sm"
+                                className="bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary)]/90 flex-shrink-0"
+                            >
+                                <ArrowUpRight className="mr-2 h-4 w-4" />
+                                Upgrade
+                            </Button>
+                        )}
                     </div>
                 </div>
             )}

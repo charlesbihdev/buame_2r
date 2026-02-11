@@ -4,7 +4,9 @@ import { FilterBar } from '@/components/visitor/artisans/FilterBar';
 import { Pagination } from '@/components/visitor/artisans/Pagination';
 import { QuickCategories } from '@/components/visitor/artisans/QuickCategories';
 import { SearchBar } from '@/components/visitor/artisans/SearchBar';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Head, Link, router } from '@inertiajs/react';
+import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Artisans({ artisans, categoryCounts, filters }) {
@@ -94,6 +96,9 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
             {/* Hero with Search */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 lg:px-12">
+                    <div className="mb-6">
+                        <BackToHome />
+                    </div>
                     <div className="mb-8 text-center">
                         <h1 className="mb-3 text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">Find Expert Artisans</h1>
                         <p className="text-lg text-gray-600 dark:text-gray-300">Connect with verified skilled workers across Western North and beyond. We welcome customers from all backgrounds.</p>

@@ -10,7 +10,7 @@ import { TransportSection } from '@/components/user/dashboard/transport/Transpor
 import DashboardLayout from '@/layouts/user/dashboard-layout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ user, paidCategories, unpaidCategories, activeCategory, categoryData, payments, activeSection = 'profile' }) {
+export default function Dashboard({ user, paidCategories, unpaidCategories, activeCategory, categoryData, payments, activeSection = 'profile', isFreeAccess = false, freeAccessDays = 30 }) {
     const activeSubscription = paidCategories?.find((cat) => cat.category === activeCategory);
 
     const renderCategorySection = () => {
@@ -22,7 +22,7 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
             case 'artisans':
                 return <ArtisansSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'marketplace':
-                return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} />;
+                return <MarketplaceSection activeTab={activeSection || 'store'} data={categoryData} isFreeAccess={isFreeAccess} />;
             case 'hotels':
                 return <HotelsSection activeSection={activeSection} profile={categoryData?.profile} />;
             case 'transport':
@@ -40,8 +40,14 @@ export default function Dashboard({ user, paidCategories, unpaidCategories, acti
         <DashboardLayout user={user} activeCategory={activeCategory} activeSection={activeSection} categoryData={categoryData}>
             <Head title={`Dashboard - ${activeCategory ? activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1) : '2RBUAME'}`} />
             <div className="mx-auto w-full max-w-[1400px] p-4 md:p-6 lg:p-8">
-                <CategorySwitcher paidCategories={paidCategories} activeCategory={activeCategory} unpaidCategories={unpaidCategories} />
-                <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} />
+                <CategorySwitcher
+                    paidCategories={paidCategories}
+                    activeCategory={activeCategory}
+                    unpaidCategories={unpaidCategories}
+                    isFreeAccess={isFreeAccess}
+                    freeAccessDays={freeAccessDays}
+                />
+                <SubscriptionRenewalWarning subscription={activeSubscription} category={activeCategory} isFreeAccess={isFreeAccess} freeAccessDays={freeAccessDays} />
                 {renderCategorySection()}
             </div>
         </DashboardLayout>

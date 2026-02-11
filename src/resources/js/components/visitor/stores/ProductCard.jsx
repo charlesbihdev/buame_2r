@@ -50,10 +50,12 @@ export function ProductCard({ product }) {
                     )}
                 </div>
                 <p className="mb-2 text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">{getCategoryLabel(product.category)}</p>
-                <div className="mb-2 flex items-center gap-1">
-                    <span className="text-primary text-lg font-bold">GH₵ {product.price}</span>
-                    {product.price_type && <span className="text-sm text-gray-600 dark:text-gray-400">{product.price_type}</span>}
-                </div>
+                {product?.price > 0 && (
+                    <div className="mb-2 flex items-center gap-1">
+                        <span className="text-primary text-lg font-bold">GH₵ {product?.price}</span>
+                        {product?.price_type && <span className="text-sm text-gray-600 dark:text-gray-400">{product?.price_type}</span>}
+                    </div>
+                )}
                 <div className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400">
                     <div className="flex items-center gap-1">
                         <MapPin className="h-3 w-3" />

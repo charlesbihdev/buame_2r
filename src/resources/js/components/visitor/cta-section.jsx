@@ -11,7 +11,7 @@ export function CTASection() {
                     <div
                         className="absolute inset-0 bg-cover bg-center opacity-30 transition-transform duration-700 group-hover:scale-105"
                         style={{
-                            backgroundImage: 'url(/assets/visitors/cta-users-bg.jpg)',
+                            backgroundImage: 'url(/assets/visitors/artisan2.jpg)',
                         }}
                     />
                     <div className="relative z-10 flex h-full flex-col items-start justify-center">
@@ -35,7 +35,7 @@ export function CTASection() {
                     <div className="relative z-10 flex h-full flex-col items-start justify-center">
                         <h3 className="mb-4 text-3xl font-bold text-foreground">Are you a Provider?</h3>
                         <p className="mb-8 max-w-md text-muted-foreground">
-                            Grow your business, find new customers, and build your reputation online. It's free to join.
+                            Grow your business, find new customers, and build your reputation online. Join our platform today!
                         </p>
                         <Button
                             asChild

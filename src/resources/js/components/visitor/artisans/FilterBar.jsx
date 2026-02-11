@@ -1,7 +1,15 @@
+import { artisanSkills } from '@/config/artisan-skills';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 
 export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters }) {
+    const skillTypes = [
+        { value: 'all', label: 'All Skills' },
+        ...artisanSkills.map(skill => ({
+            value: skill.id,
+            label: skill.label
+        })).sort((a, b) => a.label.localeCompare(b.label))
+    ];
     const hasActiveFilters = filters?.skill_type || filters?.experience_level || (filters?.sort && filters.sort !== 'rating');
 
     return (
@@ -14,25 +22,11 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
                 onChange={(e) => onFilterChange('skill_type', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
-                <option value="all">All Skills</option>
-                <option value="carpenter">Carpenter</option>
-                <option value="mason">Mason</option>
-                <option value="electrician">Electrician</option>
-                <option value="plumber">Plumber</option>
-                <option value="tiler">Tiler</option>
-                <option value="tailor">Tailor</option>
-                <option value="welder">Welder</option>
-                <option value="painter">Painter</option>
-                <option value="hairdressing">Hairdressing</option>
-                <option value="mechanic">Mechanic</option>
-                <option value="bakery">Bakery</option>
-                <option value="decoration">Decoration</option>
-                <option value="makeup_artistry">Makeup Artistry</option>
-                <option value="bead_making">Bead Making</option>
-                <option value="shoe_making">Shoe Making</option>
-                <option value="event_mc">Event MC</option>
-                <option value="event_planners">Event Planners</option>
-                <option value="other">Other</option>
+                {skillTypes.map((skill) => (
+                    <option key={skill.value} value={skill.value}>
+                        {skill.label}
+                    </option>
+                ))}
             </select>
 
             {/* Experience Level Filter */}

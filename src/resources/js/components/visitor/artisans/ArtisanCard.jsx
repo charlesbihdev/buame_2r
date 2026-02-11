@@ -1,6 +1,15 @@
+import { artisanSkills } from '@/config/artisan-skills';
 import { Button } from '@/components/ui/button';
-import { BadgeCheck, MapPin, Phone, Star } from 'lucide-react';
+import { BadgeCheck, Briefcase, MapPin, Phone, Star } from 'lucide-react';
 import { Link } from '@inertiajs/react';
+
+// Helper function to format skill type for display
+const formatSkillType = (skillType) => {
+    const skill = artisanSkills.find(s => s.id === skillType);
+    if (skill) return skill.label;
+
+    return skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
+};
 
 export function ArtisanCard({ artisan }) {
     return (
@@ -22,13 +31,21 @@ export function ArtisanCard({ artisan }) {
                         <span className="text-4xl font-bold text-primary">{artisan.name.charAt(0).toUpperCase()}</span>
                     </div>
                 )}
-                {artisan.is_verified && (
-                    <div className="absolute right-2 top-2">
-                        <BadgeCheck className="h-5 w-5 fill-primary text-white" />
+                {/* Skill Type Badge - Top Left */}
+                {artisan.skill_type && (
+                    <div className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-[var(--primary)] px-2 py-1 text-xs font-bold text-white">
+                        <Briefcase className="h-3 w-3" />
+                        {formatSkillType(artisan.skill_type)}
                     </div>
                 )}
+                {/* Available Badge - Top Right */}
                 {artisan.is_available && (
-                    <div className="absolute left-2 top-2 rounded-full bg-primary px-2 py-1 text-xs font-bold text-primary-foreground">Available</div>
+                    <div className="absolute right-2 top-2 rounded-full bg-green-500 px-2 py-1 text-xs font-bold text-white">Available</div>
+                )}
+                {artisan.is_verified && (
+                    <div className="absolute bottom-2 right-2">
+                        <BadgeCheck className="h-5 w-5 fill-primary text-white" />
+                    </div>
                 )}
             </div>
 

@@ -106,6 +106,12 @@ class StoreController extends Controller
             return back()->withErrors(['store' => 'Store not found.']);
         }
 
+        // Block upgrades during free access mode
+        $subscriptionService = app(\App\Services\SubscriptionService::class);
+        if ($subscriptionService->isFreeAccessEnabled()) {
+            return back()->with('error', 'Store upgrades are not available during the free access period.');
+        }
+
         // Merge category and tier into request and forward to payment controller
         // Only set category if not already set (safety check)
         $request->merge([

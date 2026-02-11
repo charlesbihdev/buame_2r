@@ -1,9 +1,10 @@
+import { jobCategories } from '@/config/job-categories';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from '@inertiajs/react';
 
@@ -13,6 +14,7 @@ export function JobFormModal({ isOpen, onClose }) {
         company: '',
         type: '',
         category: '',
+        sub_category: '',
         salary: '',
         location: '',
         address: '',
@@ -46,6 +48,24 @@ export function JobFormModal({ isOpen, onClose }) {
         onClose();
     };
 
+    const handleJobRoleChange = (roleId) => {
+        // Find the category that contains this role
+        const category = jobCategories.find(cat =>
+            cat.subRoles && cat.subRoles.some(role => role.id === roleId)
+        );
+
+        if (category) {
+            setData((prevData) => ({
+                ...prevData,
+                sub_category: roleId,
+                category: category.id
+            }));
+        } else {
+            // Fallback for flat categories or if not found (shouldn't happen with subRoles)
+            setData('sub_category', roleId);
+        }
+    };
+
     const jobTypes = [
         { value: 'full_time', label: 'Full Time' },
         { value: 'part_time', label: 'Part Time' },
@@ -53,24 +73,6 @@ export function JobFormModal({ isOpen, onClose }) {
         { value: 'internship', label: 'Internship' },
         { value: 'daily_wage', label: 'Daily Wage' },
         { value: 'apprenticeship', label: 'Apprenticeship' },
-    ];
-
-    const jobCategories = [
-        { value: 'construction_trades', label: 'Construction & Trades' },
-        { value: 'home_services', label: 'Home Services' },
-        { value: 'auto_mechanical', label: 'Auto & Mechanical' },
-        { value: 'transport_equipment', label: 'Transport & Equipment' },
-        { value: 'electrical_electronics', label: 'Electrical & Electronics' },
-        { value: 'ict_digital', label: 'ICT & Digital' },
-        { value: 'business_office', label: 'Business & Office' },
-        { value: 'education_training', label: 'Education & Training' },
-        { value: 'health_care', label: 'Health & Care' },
-        { value: 'hospitality_events', label: 'Hospitality & Events' },
-        { value: 'fashion_beauty', label: 'Fashion & Beauty' },
-        { value: 'agriculture', label: 'Agriculture' },
-        { value: 'security', label: 'Security' },
-        { value: 'media_creative', label: 'Media & Creative' },
-        { value: 'general_jobs', label: 'General Jobs' },
     ];
 
     if (!isOpen) return null;
@@ -109,7 +111,7 @@ export function JobFormModal({ isOpen, onClose }) {
                         <FormError error={errors.company} />
                     </div>
 
-                    {/* Type and Category */}
+                    {/* Type and Sub-Category (Job Role) */}
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <Label htmlFor="type">Job Type *</Label>
@@ -129,19 +131,27 @@ export function JobFormModal({ isOpen, onClose }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="category">Category *</Label>
-                            <Select value={data.category} onValueChange={(value) => setData('category', value)}>
+                            <Label htmlFor="sub_category">Job Role / Category *</Label>
+                            <Select value={data.sub_category} onValueChange={handleJobRoleChange}>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select category" />
+                                    <SelectValue placeholder="Select job role" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {jobCategories.map((cat) => (
-                                        <SelectItem key={cat.value} value={cat.value}>
-                                            {cat.label}
-                                        </SelectItem>
+                                    {jobCategories.map((group) => (
+                                        <SelectGroup key={group.id}>
+                                            <SelectLabel className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                                                {group.label}
+                                            </SelectLabel>
+                                            {group.subRoles && group.subRoles.map((role) => (
+                                                <SelectItem key={role.id} value={role.id}>
+                                                    {role.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
                                     ))}
                                 </SelectContent>
                             </Select>
+                            <FormError error={errors.sub_category} />
                             <FormError error={errors.category} />
                         </div>
                     </div>

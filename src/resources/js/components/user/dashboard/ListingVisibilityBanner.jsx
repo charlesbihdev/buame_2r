@@ -1,7 +1,8 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { ListingVisibilityToggle } from './ListingVisibilityToggle';
+import SaveButton from './SaveButton';
 
-export function ListingVisibilityBanner({ listing, routeName, label = 'Listing' }) {
+export function ListingVisibilityBanner({ listing, routeName, label = 'Listing', onBeforeToggle, saveButton }) {
     const isActive = listing?.is_active ?? false;
 
     return (
@@ -30,7 +31,18 @@ export function ListingVisibilityBanner({ listing, routeName, label = 'Listing' 
                         </p>
                     </div>
                 </div>
-                <ListingVisibilityToggle listing={listing} routeName={routeName} label={label} />
+                {/* Render save button side by side with toggle - Responsive layout */}
+                <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+                    {saveButton && (
+                        <SaveButton
+                            isProcessing={saveButton.isProcessing}
+                            isDirty={saveButton.isDirty}
+                            onClick={saveButton.onClick}
+                            position="top"
+                        />
+                    )}
+                    <ListingVisibilityToggle listing={listing} routeName={routeName} label={label} onBeforeToggle={onBeforeToggle} />
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
-import { Search, MapPin, Home, Wrench, Tractor, Car, Store, Building2, Map } from 'lucide-react';
-import { Head, router } from '@inertiajs/react';
+import { BackToHome } from '@/components/ui/back-to-home';
+import { ArrowLeft, Search, MapPin, Home, Wrench, Tractor, Car, Store, Building2, Map } from 'lucide-react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { RentalCard } from '@/components/visitor/rentals/RentalCard';
 import { RentalFilterBar } from '@/components/visitor/rentals/RentalFilterBar';
@@ -19,8 +20,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 location: location,
                 type: filters?.type,
                 sort: filters?.sort,
-        },
-        {
+            },
+            {
                 preserveState: true,
                 preserveScroll: true,
             }
@@ -67,8 +68,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 type: type === 'all' || type === null ? null : type,
                 sort: filters?.sort,
                 page: null,
-        },
-        {
+            },
+            {
                 preserveState: true,
                 preserveScroll: true,
             }
@@ -104,6 +105,10 @@ export default function Rentals({ rentals, filters, typeCounts }) {
             {/* Hero Section */}
             <div className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[var(--foreground)]">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+                    {/* Back Button */}
+                    <div className="mb-6">
+                        <BackToHome />
+                    </div>
                     <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">
                         Rent Anything Across Western North and Beyond
                     </h1>
@@ -144,21 +149,20 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                             {quickCategories.map((cat) => {
                                 const isActive = filters?.type === cat.type;
                                 return (
-                                <button
+                                    <button
                                         key={cat.type}
                                         onClick={() => handleTypeFilter(isActive ? null : cat.type)}
-                                        className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${
-                                            isActive
-                                                ? 'border-[var(--primary)] bg-[var(--primary)]/10'
-                                                : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:bg-[var(--card)]'
-                                        }`}
-                                >
-                                    <cat.icon className="h-5 w-5 text-[var(--primary)]" />
-                                    <span className="text-sm dark:text-white">{cat.label}</span>
-                                    <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
-                                        {cat.count}
-                                    </span>
-                                </button>
+                                        className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${isActive
+                                            ? 'border-[var(--primary)] bg-[var(--primary)]/10'
+                                            : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:bg-[var(--card)]'
+                                            }`}
+                                    >
+                                        <cat.icon className="h-5 w-5 text-[var(--primary)]" />
+                                        <span className="text-sm dark:text-white">{cat.label}</span>
+                                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
+                                            {cat.count}
+                                        </span>
+                                    </button>
                                 );
                             })}
                         </div>
@@ -185,11 +189,10 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                             <button
                                 key={filter}
                                 onClick={() => handleTypeFilter(filterType)}
-                                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                                    isActive
-                                        ? 'bg-[var(--primary)] text-white'
-                                        : 'border border-gray-300 bg-white hover:border-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white'
-                                }`}
+                                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${isActive
+                                    ? 'bg-[var(--primary)] text-white'
+                                    : 'border border-gray-300 bg-white hover:border-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white'
+                                    }`}
                             >
                                 {filter}
                             </button>
@@ -200,19 +203,19 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                 {/* Rentals Grid */}
                 {rentals && rentals.data && rentals.data.length > 0 ? (
                     <>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {rentals.data.map((rental) => (
                                 <RentalCard key={rental.id} rental={rental} />
-                    ))}
-                </div>
+                            ))}
+                        </div>
 
-                {/* Pagination */}
+                        {/* Pagination */}
                         <RentalPagination rentals={rentals} filters={filters} />
                     </>
                 ) : (
                     <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
                         <p className="text-lg text-gray-600 dark:text-gray-400">No rentals found. Try adjusting your filters.</p>
-                </div>
+                    </div>
                 )}
             </div>
         </VisitorLayout>

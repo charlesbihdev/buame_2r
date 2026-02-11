@@ -13,11 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('company_name')->nullable();
-            $table->enum('skill_type', [
-                'carpenter', 'mason', 'electrician', 'plumber', 'tiler', 'tailor', 'welder', 'painter',
-                'hairdressing', 'mechanic', 'bakery', 'decoration', 'makeup_artistry',
-                'bead_making', 'shoe_making', 'event_mc', 'event_planners', 'other',
-            ])->index();
+            $table->string('skill_type')->nullable()->index();
             $table->integer('experience_years')->nullable();
             $table->enum('experience_level', ['beginner', 'intermediate', 'expert'])->default('expert');
             $table->decimal('price_per_day', 10, 2)->nullable();
@@ -34,7 +30,7 @@ return new class extends Migration
             $table->boolean('is_verified')->default(false)->index();
             $table->boolean('is_available')->default(true)->index();
             $table->string('working_hours')->nullable();
-            $table->boolean('is_active')->default(true)->index();
+            $table->boolean('is_active')->default(false)->index();
             $table->integer('views_count')->default(0);
             $table->timestamps();
         });

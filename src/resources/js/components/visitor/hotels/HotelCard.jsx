@@ -115,12 +115,14 @@ export function HotelCard({ hotel }) {
                 )}
 
                 <div className="mt-auto space-y-2 border-t border-border pt-3">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <div className="text-xl font-black text-primary">GH₵{hotel.price_per_night}</div>
-                            <div className="text-xs text-muted-foreground">/night</div>
+                    {hotel?.price_per_night > 0 && (
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <div className="text-xl font-black text-primary">GH₵{hotel.price_per_night}</div>
+                                <div className="text-xs text-muted-foreground">/night</div>
+                            </div>
                         </div>
-                    </div>
+                    )}
                     <Button asChild variant="outline" className="w-full border-primary text-xs text-primary hover:bg-primary hover:text-primary-foreground">
                         <span>View Details</span>
                     </Button>
