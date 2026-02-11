@@ -132,7 +132,7 @@ export function StoreSearch({
                                 <div>
                                     <h3 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">Sort By</h3>
                                     <select
-                                        value={filters?.sort || 'newest'}
+                                        value={filters?.sort != null ? String(filters.sort) : 'newest'}
                                         onChange={(e) => onFilterChange('sort', e.target.value)}
                                         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none dark:border-gray-700 dark:bg-[var(--background-dark)] dark:text-white"
                                     >

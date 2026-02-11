@@ -18,7 +18,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
 
             {/* Skill Type Filter */}
             <select
-                value={filters?.skill_type || 'all'}
+                value={filters?.skill_type != null ? String(filters.skill_type) : 'all'}
                 onChange={(e) => onFilterChange('skill_type', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
@@ -31,7 +31,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
 
             {/* Experience Level Filter */}
             <select
-                value={filters?.experience_level || 'all'}
+                value={filters?.experience_level != null ? String(filters.experience_level) : 'all'}
                 onChange={(e) => onFilterChange('experience_level', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
@@ -43,7 +43,7 @@ export function FilterBar({ filters, totalCount, onFilterChange, onClearFilters 
 
             {/* Sort Filter */}
             <select
-                value={filters?.sort || 'rating'}
+                value={filters?.sort != null ? String(filters.sort) : 'rating'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >

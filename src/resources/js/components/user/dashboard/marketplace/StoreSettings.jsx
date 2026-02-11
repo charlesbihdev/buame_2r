@@ -3,32 +3,21 @@ import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { router, useForm } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { ArrowUpRight, CheckCircle, Copy, ExternalLink } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
 
-
 export function StoreSettings({ store, tiers, isFreeAccess = false }) {
+    const { errors: pageErrors } = usePage().props;
     const [copied, setCopied] = useState(false);
-    const [slugValue, setSlugValue] = useState(store?.slug || '');
+    const [slugValue, setSlugValue] = useState(store?.slug ?? '');
     const { data, setData, put, processing, errors, reset, isDirty } = useForm({
         name: store?.name || '',
         slug: store?.slug || '',
         description: store?.description || '',
     });
-
-    useEffect(() => {
-        if (store) {
-            setData({
-                name: store.name || '',
-                slug: store.slug || '',
-                description: store.description || '',
-            });
-            setSlugValue(store.slug || '');
-        }
-    }, [store]);
 
     const handleNameChange = (e) => {
         const name = e.target.value;
@@ -110,17 +99,19 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                 <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your store information and visibility</p>
             </div>
 
-            {/* Store Visibility Toggle - Using reusable ListingVisibilityBanner */}
-            <ListingVisibilityBanner
-                listing={store}
-                routeName="user.dashboard.marketplace.store.toggle-active"
-                label="Store"
-                saveButton={{
-                    isProcessing: processing,
-                    isDirty: isDirty,
-                    onClick: handleSubmit,
-                }}
-            />
+            {/* Store Visibility Toggle - Using reusable ListingVisibilityBanner (only when store exists, like artisans/hotels) */}
+            {store && (
+                <ListingVisibilityBanner
+                    listing={store}
+                    routeName="user.dashboard.marketplace.store.toggle-active"
+                    label="Store"
+                    saveButton={{
+                        isProcessing: processing,
+                        isDirty: isDirty,
+                        onClick: handleSubmit,
+                    }}
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Store Name and Slug - Side by Side */}
@@ -131,7 +122,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                                 Store Name
                             </Label>
                             <Input id="name" value={data.name} onChange={handleNameChange} placeholder="Enter your store name" className="w-full" />
-                            <FormError error={errors.name} />
+                            <FormError error={errors.name || pageErrors?.name} className="mt-1" />
                         </div>
                         <div>
                             <Label htmlFor="slug" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
@@ -148,7 +139,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                                     pattern="[a-z0-9\-]+"
                                 />
                             </div>
-                            <FormError error={errors.slug} />
+                            <FormError error={errors.slug || pageErrors?.slug} className="mt-1" />
                             <p className="mt-1 text-xs text-gray-500">Lowercase letters, numbers, and hyphens only</p>
                         </div>
                     </div>
@@ -168,7 +159,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                             rows={4}
                             className="w-full"
                         />
-                        <FormError error={errors.description} />
+                        <FormError error={errors.description || pageErrors?.description} className="mt-1" />
                     </div>
 
                     <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
