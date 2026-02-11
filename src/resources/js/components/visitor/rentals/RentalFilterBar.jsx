@@ -23,7 +23,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
 
             {/* Rental Type Filter */}
             <select
-                value={filters?.type || 'all'}
+                value={filters?.type != null ? String(filters.type) : 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >
@@ -39,7 +39,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
 
             {/* Sort Filter */}
             <select
-                value={filters?.sort || 'newest'}
+                value={filters?.sort != null ? String(filters.sort) : 'newest'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
                 className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
             >

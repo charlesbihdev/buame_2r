@@ -47,8 +47,9 @@ export function TransportCard({ ride }) {
                         }}
                     />
                 ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
-                        <TypeIcon className="h-16 w-16 text-[var(--primary)]" />
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--primary)]/10 to-[var(--primary)]/5 dark:from-[var(--primary)]/15 dark:via-[var(--primary)]/10 dark:to-[var(--primary)]/5">
+                        <TypeIcon className="h-14 w-14 text-[var(--primary)] opacity-90" aria-hidden />
+                        <span className="text-xs font-medium text-[var(--primary)] opacity-80">{formatTransportType(ride.type)}</span>
                     </div>
                 )}
                 {ride.is_verified && (
@@ -68,39 +69,40 @@ export function TransportCard({ ride }) {
                     <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.driver_name}</h3>
                 </div>
 
-                <div className="mb-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                    <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="font-bold">{ride.rating}</span>
-                        <span className="text-gray-400">({ride.reviews_count})</span>
-                    </div>
-                </div>
-
                 <div className="mb-3 flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
-                    <MapPin className="h-3 w-3" />
-                    {ride.location}
+                    <MapPin className="h-3 w-3 shrink-0" />
+                    <span>{ride.location}</span>
                 </div>
 
-                {/* Seats Available */}
-                <div className="mb-3 flex items-center gap-1">
-                    <span className="flex items-center gap-1 rounded-md bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                        <Users className="h-3 w-3" />
-                        {ride.seats_available} seats
+                {/* Seats + Reviews row */}
+                <div className="mb-4 flex flex-wrap items-center gap-2 text-xs">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                        <Users className="h-3.5 w-3.5" />
+                        {ride.seats_available != null && ride.seats_available !== '' ? ride.seats_available : '—'} seats
                     </span>
+                    {Number(ride.reviews_count) > 0 ? (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 font-medium text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                            <Star className="h-3.5 w-3.5 fill-amber-500" />
+                            {ride.rating} · {ride.reviews_count} review{ride.reviews_count !== 1 ? 's' : ''}
+                        </span>
+                    ) : (
+                        <span className="rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                            No reviews yet
+                        </span>
+                    )}
                 </div>
 
-                <div className="mt-auto space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
+                {/* Price (if set) + CTA */}
+                <div className="mt-auto border-t border-gray-100 pt-4 dark:border-gray-800">
                     {Number(ride?.price_per_seat) > 0 && (
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
-                                <div className="text-xs text-gray-500">/seat</div>
-                            </div>
+                        <div className="mb-3">
+                            <div className="text-lg font-bold text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
+                            <div className="text-xs text-gray-500">per seat</div>
                         </div>
                     )}
-                    <Button asChild variant="outline" className="w-full border-[var(--primary)] text-xs text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--primary-foreground)]">
-                        <span>View Details</span>
-                    </Button>
+                    <span className="block w-full rounded-lg bg-[var(--primary)] py-2.5 text-center text-sm font-semibold text-[var(--primary-foreground)] transition-colors group-hover:opacity-95">
+                        View Details
+                    </span>
                 </div>
             </div>
         </Link>

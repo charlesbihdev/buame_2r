@@ -1,0 +1,1 @@
+import{j as r,$ as s}from"./app-BXOmdBfV.js";import{A as a}from"./arrow-left-Bj6MAvFw.js";function n({to:e="/",label:t="Back to Home",className:o=""}){return r.jsxs(s,{href:e,className:`inline-flex items-center gap-2 text-sm font-semibold text-[var(--primary)] transition-colors hover:text-[var(--primary)]/80 ${o}`,children:[r.jsx(a,{className:"h-4 w-4"}),t]})}export{n as B};

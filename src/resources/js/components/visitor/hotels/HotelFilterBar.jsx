@@ -10,7 +10,7 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
 
             {/* Hotel Type Filter */}
             <select
-                value={filters?.type || 'all'}
+                value={filters?.type != null ? String(filters.type) : 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
                 className="rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground focus:border-primary focus:ring-primary"
             >
@@ -23,7 +23,7 @@ export function HotelFilterBar({ filters, totalCount, onFilterChange, onClearFil
 
             {/* Sort Filter */}
             <select
-                value={filters?.sort || 'rating'}
+                value={filters?.sort != null ? String(filters.sort) : 'rating'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
                 className="rounded-lg border border-border bg-card px-4 py-2 text-sm text-foreground focus:border-primary focus:ring-primary"
             >

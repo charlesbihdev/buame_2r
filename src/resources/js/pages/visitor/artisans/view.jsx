@@ -1,3 +1,5 @@
+import { Head } from '@inertiajs/react';
+import { Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
 import { PortfolioGallery } from '@/components/visitor/artisans/PortfolioGallery';
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';

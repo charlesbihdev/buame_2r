@@ -77,7 +77,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
     const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.driver_name}.`);
     const TypeIcon = getTypeIcon(ride?.type);
     const rideDescription = ride?.description ? ride.description.substring(0, 150) : `${formatTransportType(ride?.type)} service in ${ride?.location}`;
-    const hasPricing = !!ride?.price_per_seat;
+    const hasPricing = Number(ride?.price_per_seat) > 0;
 
     return (
         <VisitorLayout>
@@ -154,17 +154,13 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             </div>
 
                             {/* Pricing Card - Desktop */}
-                            <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                {ride?.price_per_seat ? (
-                                    <>
-                                        <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                        <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
-                                    </>
-                                ) : (
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Charged based on distance</p>
-                                )}
-                            </div>
+                            {Number(ride?.price_per_seat) > 0 && (
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -234,17 +230,13 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                     <div className="lg:col-span-1">
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
-                            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                {ride?.price_per_seat ? (
-                                    <>
-                                        <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                        <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
-                                    </>
-                                ) : (
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Charged based on distance</p>
-                                )}
-                            </div>
+                            {Number(ride?.price_per_seat) > 0 && (
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
+                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                </div>
+                            )}
 
                             {/* Contact Actions */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

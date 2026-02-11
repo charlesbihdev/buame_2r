@@ -93,13 +93,19 @@ export function ArtisanCard({ artisan }) {
                     </div>
                     <div className="flex gap-2">
                         <Button asChild variant="outline" className="flex-1 border-primary text-xs text-primary hover:bg-primary hover:text-primary-foreground">
-                            <Link href={`/artisans/${artisan.id}`}>View</Link>
+                            <span>View</span>
                         </Button>
                         {artisan.phone && (
-                            <Button asChild className="bg-primary text-xs text-primary-foreground hover:bg-primary/90">
-                                <a href={`tel:${artisan.phone}`}>
-                                    <Phone className="h-3 w-3" />
-                                </a>
+                            <Button
+                                type="button"
+                                className="bg-primary text-xs text-primary-foreground hover:bg-primary/90"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    window.location.href = `tel:${artisan.phone}`;
+                                }}
+                            >
+                                <Phone className="h-3 w-3" />
                             </Button>
                         )}
                     </div>
