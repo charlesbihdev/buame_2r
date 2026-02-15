@@ -278,13 +278,19 @@ class RegisteredUserController extends Controller
 
         // Get category from query parameter or session (for backward compatibility)
         // Default to first category if none provided
-        $selectedCategory = $request->query('category') 
+        $selectedCategory = $request->query('category')
             ?? $request->session()->get('selected_category')
             ?? array_key_first(config('categories.list', []));
 
         // Validate category exists, default to first if invalid
         if (!array_key_exists($selectedCategory, config('categories.list', []))) {
             $selectedCategory = array_key_first(config('categories.list', []));
+        }
+
+        // If user already has an active subscription for this category, go to dashboard
+        $subscriptionService = app(SubscriptionService::class);
+        if ($subscriptionService->canUserAccessCategory($user->id, $selectedCategory)) {
+            return redirect()->route('user.dashboard.index', ['category' => $selectedCategory]);
         }
 
         // Get category config

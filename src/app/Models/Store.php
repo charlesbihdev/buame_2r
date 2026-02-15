@@ -59,7 +59,7 @@ class Store extends Model
 
     public function getProductLimitAttribute()
     {
-        return config("categories.list.marketplace.tiers.{$this->tier}.product_limit", 5);
+        return config("categories.list.marketplace.tiers.{$this->tier}.product_limit", 10);
     }
 
     public function getRemainingProductSlotsAttribute()

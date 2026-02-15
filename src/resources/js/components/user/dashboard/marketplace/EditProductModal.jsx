@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { ImagePlus, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -132,25 +132,8 @@ export function EditProductModal({ isOpen, onClose, product }) {
         onClose();
     };
 
-    const categories = [
-        { value: 'mobile_phones', label: 'Mobile Phones & Accessories' },
-        { value: 'electronics', label: 'Electronics & Appliances' },
-        { value: 'computers', label: 'Computers & Laptops' },
-        { value: 'fashion', label: 'Fashion & Apparel' },
-        { value: 'footwear', label: 'Footwear' },
-        { value: 'health_beauty', label: 'Health & Beauty' },
-        { value: 'groceries', label: 'Groceries & Food Items' },
-        { value: 'home_living', label: 'Home & Living' },
-        { value: 'baby_kids', label: 'Baby & Kids' },
-        { value: 'sports_outdoor', label: 'Sports & Outdoor' },
-        { value: 'automotive', label: 'Automotive' },
-        { value: 'books_stationery', label: 'Books & Stationery' },
-        { value: 'building_hardware', label: 'Building & Hardware' },
-        { value: 'agriculture', label: 'Agriculture & Farm Supplies' },
-        { value: 'pet_supplies', label: 'Pet Supplies' },
-        { value: 'gifts', label: 'Gifts & Occasion Items' },
-        { value: 'others', label: 'Others' },
-    ];
+    const { marketplaceCategories = {} } = usePage().props;
+    const categories = Object.entries(marketplaceCategories).map(([value, label]) => ({ value, label }));
 
     const conditions = [
         { value: 'new', label: 'New' },

@@ -56,6 +56,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'admin' => $admin,
             'categories' => config('categories.list'),
+            'marketplaceCategories' => config('categories.marketplace_categories'),
             'flash' => [
                 'error' => $request->session()->get('error'),
                 'success' => $request->session()->get('success'),

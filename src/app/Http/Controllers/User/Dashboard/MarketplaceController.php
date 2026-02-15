@@ -61,9 +61,11 @@ class MarketplaceController extends Controller
             }
         }
 
+        $validCategories = implode(',', array_keys(config('categories.marketplace_categories', [])));
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:mobile_phones,electronics,computers,fashion,footwear,health_beauty,groceries,home_living,baby_kids,sports_outdoor,automotive,books_stationery,building_hardware,agriculture,pet_supplies,gifts,others'],
+            'category' => ['required', 'string', 'in:' . $validCategories],
             'has_price' => ['nullable', 'boolean'],
             'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],
@@ -144,9 +146,11 @@ class MarketplaceController extends Controller
             abort(403);
         }
 
+        $validCategories = implode(',', array_keys(config('categories.marketplace_categories', [])));
+
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:mobile_phones,electronics,computers,fashion,footwear,health_beauty,groceries,home_living,baby_kids,sports_outdoor,automotive,books_stationery,building_hardware,agriculture,pet_supplies,gifts,others'],
+            'category' => ['required', 'string', 'in:' . $validCategories],
             'has_price' => ['nullable', 'boolean'],
             'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],

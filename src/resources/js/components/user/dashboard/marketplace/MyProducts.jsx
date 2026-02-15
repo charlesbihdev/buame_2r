@@ -42,7 +42,7 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
     };
 
     const remainingSlots = store?.remaining_slots || 0;
-    const productLimit = store?.product_limit || 5;
+    const productLimit = store?.product_limit || 10;
     const productsCount = products?.length || 0;
     const canAddProducts = remainingSlots > 0 && store?.is_active;
 
