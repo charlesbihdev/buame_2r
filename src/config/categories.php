@@ -60,7 +60,7 @@ return [
             'tiers' => [
                 'starter' => [
                     'name' => 'Starter Store',
-                    'product_limit' => 5,
+                    'product_limit' => 10,
                     'description' => 'Perfect for small sellers just getting started',
                     'pricing' => [
                         'monthly' => 20.00,
@@ -71,7 +71,7 @@ return [
                 ],
                 'professional' => [
                     'name' => 'Professional Store',
-                    'product_limit' => 10,
+                    'product_limit' => 15,
                     'description' => 'Ideal for growing businesses',
                     'pricing' => [
                         'monthly' => 35.00,
@@ -183,5 +183,69 @@ return [
     */
 
     'valid' => ['artisans', 'hotels', 'transport', 'rentals', 'marketplace', 'jobs'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Marketplace Product Categories
+    |--------------------------------------------------------------------------
+    |
+    | Categories available for marketplace products. This is the single
+    | source of truth used across backend validation and frontend UI.
+    | Sorted alphabetically.
+    |
+    */
+
+    'marketplace_categories' => [
+        'agriculture' => 'Agriculture & Farm Supplies',
+        'automotive' => 'Automotive',
+        'baby_kids' => 'Baby & Kids',
+        'bags_luggage' => 'Bags & Luggage',
+        'bedding_textiles' => 'Bedding & Home Textiles',
+        'beekeeping_honey' => 'Beekeeping & Honey Products',
+        'beverages_drinks' => 'Beverages & Drinks',
+        'books_stationery' => 'Books & Stationery',
+        'building_hardware' => 'Building & Hardware',
+        'cleaning_laundry' => 'Cleaning & Laundry Supplies',
+        'computers_gaming' => 'Computers & Gaming',
+        'craft_art' => 'Craft & Art Supplies',
+        'dairy_eggs' => 'Dairy Products & Eggs',
+        'eco_sustainable' => 'Eco-friendly & Sustainable Products',
+        'electronics' => 'Electronics & Appliances',
+        'energy_backup' => 'Energy & Backup Solutions (Generators, Batteries, Solar)',
+        'fashion' => 'Fashion & Apparel',
+        'fertilizers_soil' => 'Fertilizers & Soil Enhancers',
+        'food_groceries' => 'Food & Groceries',
+        'footwear' => 'Footwear',
+        'frozen_meals' => 'Frozen & Ready Meals',
+        'furniture_decor' => 'Furniture & Home Decor',
+        'gifts' => 'Gifts & Occasion Items',
+        'health_beauty' => 'Health & Beauty',
+        'herbs_spices' => 'Herbs, Spices & Medicinal Plants',
+        'home_living' => 'Home & Living',
+        'industrial_tools' => 'Industrial Tools & Machinery',
+        'irrigation_pumps' => 'Irrigation & Water Pumps',
+        'kitchen_appliances' => 'Kitchen Appliances & Cookware',
+        'legumes_grains' => 'Legumes, Grains & Cereals',
+        'local_farm_produce' => 'Local Ghanaian Farm Produce',
+        'meat_seafood' => 'Meat, Poultry & Seafood',
+        'mobile_phones' => 'Mobile Phones & Accessories',
+        'musical_instruments' => 'Musical Instruments',
+        'networking_security' => 'Networking & Security Devices',
+        'office_equipment' => 'Office Equipment & Supplies',
+        'party_events' => 'Party & Event Supplies',
+        'pets_animals' => 'Pets & Animals',
+        'poultry_livestock' => 'Poultry, Livestock & Animal Feed',
+        'roots_tubers' => 'Roots, Tubers & Plantains',
+        'seeds_plants' => 'Seeds, Seedlings & Plants',
+        'smart_home' => 'Smart Home & Devices',
+        'snacks_confectioneries' => 'Snacks & Confectioneries',
+        'solar_power' => 'Solar & Power Equipment',
+        'sports_outdoors' => 'Sports & Outdoors',
+        'tractors_machinery' => 'Tractors & Farm Machinery',
+        'traditional_cultural' => 'Traditional & Cultural Products',
+        'traditional_food' => 'Traditional Food & Sauces',
+        'travel_outdoor' => 'Travel & Outdoor Accessories',
+        'watches_jewelry' => 'Watches & Jewelry',
+    ],
 
 ];

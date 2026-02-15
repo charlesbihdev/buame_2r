@@ -2,29 +2,14 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useCallback, useState } from 'react';
 
 export function MarketplaceFilters({ filters = {}, isMobile = false }) {
+    const { marketplaceCategories = {} } = usePage().props;
     const categories = [
         { id: 'all', label: 'All Categories' },
-        { id: 'mobile_phones', label: 'Mobile Phones & Accessories' },
-        { id: 'electronics', label: 'Electronics & Appliances' },
-        { id: 'computers', label: 'Computers & Laptops' },
-        { id: 'fashion', label: 'Fashion & Apparel' },
-        { id: 'footwear', label: 'Footwear' },
-        { id: 'health_beauty', label: 'Health & Beauty' },
-        { id: 'groceries', label: 'Groceries & Food Items' },
-        { id: 'home_living', label: 'Home & Living' },
-        { id: 'baby_kids', label: 'Baby & Kids' },
-        { id: 'sports_outdoor', label: 'Sports & Outdoor' },
-        { id: 'automotive', label: 'Automotive' },
-        { id: 'books_stationery', label: 'Books & Stationery' },
-        { id: 'building_hardware', label: 'Building & Hardware' },
-        { id: 'agriculture', label: 'Agriculture & Farm Supplies' },
-        { id: 'pet_supplies', label: 'Pet Supplies' },
-        { id: 'gifts', label: 'Gifts & Occasion Items' },
-        { id: 'others', label: 'Others' },
+        ...Object.entries(marketplaceCategories).map(([id, label]) => ({ id, label })),
     ];
 
     const conditions = [

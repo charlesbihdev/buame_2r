@@ -19,7 +19,7 @@ const categories = [
         subtitle: 'Skilled workers',
         icon: Hammer,
         popular: false,
-        benefits: ['Get jobs available nearby', 'Showcase your portfolio'],
+        benefits: ['Customers come looking, you just show up', 'Let your work speak with a stunning portfolio'],
         color: 'blue',
     },
     {
@@ -28,16 +28,16 @@ const categories = [
         subtitle: 'Accommodation',
         icon: Hotel,
         popular: false,
-        benefits: ['List your rooms easily', 'Your hotel get seen online', 'Reach more guests'],
+        benefits: ['Put your hotel on the map, literally', 'Show off your rooms with beautiful photos', 'Guests find you before they find your competition'],
         color: 'green',
     },
     {
         value: 'transport',
-        label: 'Okada',
+        label: 'Okada / Transport',
         subtitle: 'Motorcycle & car transport',
         icon: Bike,
         popular: false,
-        benefits: ['Set your own schedule', 'Keep 100% of your earnings', 'Verified driver profile'],
+        benefits: ['Passengers find you, no middleman, no commission', 'Your profile, your number, your customers', 'Build a name people trust on the road'],
         color: 'orange',
     },
     {
@@ -46,7 +46,7 @@ const categories = [
         subtitle: 'Property rentals',
         icon: Home,
         popular: false,
-        benefits: ['List properties easily', 'Get the visibility you need', 'Secure rental properties listing'],
+        benefits: ['Your property seen by hundreds of renters', 'Upload photos and fill vacancies faster', 'No agent stress, tenants contact you direct'],
         color: 'purple',
     },
     {
@@ -55,7 +55,7 @@ const categories = [
         subtitle: 'Buy & sell goods',
         icon: ShoppingBag,
         popular: false,
-        benefits: ['Sell online', 'Manage inventory easily', 'Digital storefront included'],
+        benefits: ['Showcase your products to ready buyers', 'Your own profile, like a shop that never closes', 'Buyers call you direct, no middleman'],
         color: 'pink',
     },
     {
@@ -64,7 +64,7 @@ const categories = [
         subtitle: 'Career & Hiring',
         icon: Briefcase,
         popular: false,
-        benefits: ['Find verified local talent', 'Post job listings', 'Review applicant history'],
+        benefits: ['Post a job and let the right people find it', 'Tap into a pool of skilled, local workers', 'They come to you, no endless searching'],
         color: 'gray',
     },
 ];

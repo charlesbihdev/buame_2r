@@ -197,7 +197,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                             <div>
                                 <p className="text-lg font-bold text-[var(--foreground)] dark:text-white">{currentTier.name}</p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    {store?.products_count || 0} / {store?.product_limit || 5} products used
+                                    {store?.products_count || 0} / {store?.product_limit || 10} products used
                                 </p>
                             </div>
                             <div className="text-right">
