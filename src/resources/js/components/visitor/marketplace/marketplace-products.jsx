@@ -56,13 +56,15 @@ export function MarketplaceProducts({ products = [] }) {
                             </div>
                         )}
 
-                        {/* Description - fixed 2 lines */}
-                        <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                            {product.description || product.title}
-                        </p>
+                        {/* Description */}
+                        {product.description && (
+                            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+                                {product.description}
+                            </p>
+                        )}
 
-                        {/* Location */}
-                        <div className="mt-2 flex items-center gap-1 text-[11px] text-gray-400 dark:text-gray-500">
+                        {/* Location - fills remaining space */}
+                        <div className="mt-auto flex items-center gap-1 pt-2 text-[11px] text-gray-400 dark:text-gray-500">
                             <MapPin className="h-3 w-3 shrink-0" />
                             <span className="truncate">{product.location}</span>
                         </div>
