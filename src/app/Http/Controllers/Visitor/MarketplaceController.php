@@ -108,7 +108,7 @@ class MarketplaceController extends Controller
                 'id' => $product->id,
                 'title' => $product->title,
                 'description' => $product->description,
-                'category' => ucfirst($product->category),
+                'category' => config('categories.marketplace_categories.'.$product->category, ucfirst($product->category)),
                 'price' => $priceDisplay,
                 'location' => $product->location,
                 'image' => $imageUrl,
@@ -304,7 +304,7 @@ class MarketplaceController extends Controller
             'product' => [
                 'id' => $product->id,
                 'title' => $product->title,
-                'category' => ucfirst($product->category),
+                'category' => config('categories.marketplace_categories.'.$product->category, ucfirst($product->category)),
                 'price' => $priceDisplay,
                 'price_raw' => $product->price,
                 'condition' => $conditionLabel,
