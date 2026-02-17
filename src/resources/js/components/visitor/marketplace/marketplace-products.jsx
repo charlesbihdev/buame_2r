@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { CheckCircle2, MapPin, Store, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MapPin, Store } from 'lucide-react';
 
 export function MarketplaceProducts({ products = [] }) {
     if (products.length === 0) {
@@ -39,7 +39,7 @@ export function MarketplaceProducts({ products = [] }) {
                     {/* Content */}
                     <div className="flex flex-1 flex-col px-4 pt-3 pb-4">
                         {/* Title */}
-                        <h3 className="line-clamp-1 text-sm font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
+                        <h3 className="line-clamp-2 text-sm font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                             {product.title}
                         </h3>
 
@@ -57,10 +57,8 @@ export function MarketplaceProducts({ products = [] }) {
                         )}
 
                         {/* Description */}
-                        {product.description && (
-                            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-                                {product.description}
-                            </p>
+                        {product?.description && (
+                            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-gray-500 dark:text-gray-400">{product.description}</p>
                         )}
 
                         {/* Location - fills remaining space */}

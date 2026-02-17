@@ -100,6 +100,7 @@ class MarketplaceController extends Controller
             return [
                 'id' => $product->id,
                 'title' => $product->title,
+                'description' => $product->description,
                 'category' => ucfirst($product->category),
                 'price' => $priceDisplay,
                 'location' => $product->location,
