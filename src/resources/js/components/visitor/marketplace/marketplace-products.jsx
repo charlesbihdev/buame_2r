@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
 import { CheckCircle2, MapPin, Store, ArrowRight } from 'lucide-react';
 
@@ -12,10 +11,8 @@ export function MarketplaceProducts({ products = [] }) {
         );
     }
 
-    const truncateSpec = (text, max = 20) => (text.length > max ? text.slice(0, max) + '...' : text);
-
     return (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
                 <Link
                     key={product.id}
@@ -29,7 +26,7 @@ export function MarketplaceProducts({ products = [] }) {
                             style={{ backgroundImage: `url(${product.image})` }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div className="absolute top-3 left-3 z-10 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold tracking-wider text-gray-700 uppercase shadow-sm backdrop-blur-sm dark:bg-black/70 dark:text-gray-200">
+                        <div className="absolute top-3 left-3 z-10 rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-gray-700 uppercase shadow-sm backdrop-blur-sm dark:bg-black/70 dark:text-gray-200">
                             {product.category}
                         </div>
                         {product.verified && (
@@ -39,59 +36,40 @@ export function MarketplaceProducts({ products = [] }) {
                         )}
                     </div>
 
-                    {/* Content - fixed height structure */}
-                    <div className="flex flex-1 flex-col p-4">
-                        {/* Title - always 2 lines */}
-                        <h3 className="line-clamp-2 min-h-[2.75rem] text-[15px] leading-snug font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
+                    {/* Content */}
+                    <div className="flex flex-1 flex-col px-4 pt-3 pb-4">
+                        {/* Title */}
+                        <h3 className="line-clamp-1 text-sm font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                             {product.title}
                         </h3>
 
                         {/* Store */}
-                        {product.store && product.store.is_active ? (
+                        {product.store && product.store.is_active && (
                             <div
                                 onClick={(e) => e.stopPropagation()}
-                                className="mt-1.5 flex items-center gap-1.5 text-xs font-medium text-[var(--primary)]"
+                                className="mt-1 flex items-center gap-1 text-[11px] font-medium text-[var(--primary)]"
                             >
                                 <Store className="h-3 w-3 shrink-0" />
-                                <Link
-                                    href={`/store/${product.store.slug}`}
-                                    className="truncate hover:underline"
-                                >
+                                <Link href={`/store/${product.store.slug}`} className="truncate hover:underline">
                                     {product.store.name}
                                 </Link>
                             </div>
-                        ) : (
-                            <div className="mt-1.5 h-4" />
                         )}
 
-                        {/* Specs - truncated chips */}
-                        {product.specifications && product.specifications.length > 0 && (
-                            <div className="mt-3 flex flex-wrap gap-1.5">
-                                {product.specifications.slice(0, 3).map((spec, index) => (
-                                    <span
-                                        key={index}
-                                        className="max-w-[120px] truncate rounded-full bg-[var(--primary)]/10 px-2.5 py-0.5 text-[10px] font-semibold text-[var(--primary)] dark:bg-[var(--primary)]/20"
-                                    >
-                                        {truncateSpec(spec)}
-                                    </span>
-                                ))}
-                                {product.specifications.length > 3 && (
-                                    <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-[10px] font-semibold text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                                        +{product.specifications.length - 3}
-                                    </span>
-                                )}
-                            </div>
-                        )}
+                        {/* Description - fixed 2 lines */}
+                        <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+                            {product.description || product.title}
+                        </p>
 
                         {/* Location */}
-                        <div className="mt-auto flex items-center gap-1.5 pt-3 text-xs text-gray-500 dark:text-gray-400">
-                            <MapPin className="h-3.5 w-3.5 shrink-0" />
+                        <div className="mt-2 flex items-center gap-1 text-[11px] text-gray-400 dark:text-gray-500">
+                            <MapPin className="h-3 w-3 shrink-0" />
                             <span className="truncate">{product.location}</span>
                         </div>
 
                         {/* Price + Action */}
                         <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3 dark:border-white/10">
-                            <span className="text-lg font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                            <span className="text-base font-black text-[var(--foreground)] dark:text-[var(--primary)]">
                                 {product.price || 'Contact for price'}
                             </span>
                             <span className="flex items-center gap-1 text-xs font-bold text-[var(--primary)] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
