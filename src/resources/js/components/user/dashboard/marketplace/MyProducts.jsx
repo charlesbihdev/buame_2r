@@ -155,7 +155,9 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                                 </div>
                                 <div className="p-4">
                                     <h4 className="font-bold text-[var(--foreground)] dark:text-white">{product.title}</h4>
-                                    <p className="mt-1 text-sm font-semibold text-[var(--primary)]">GH₵ {product.price}</p>
+                                    {product.price > 0 && (
+                                        <p className="mt-1 text-sm font-semibold text-[var(--primary)]">GH₵ {product.price}</p>
+                                    )}
                                     <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                                         <MapPin className="h-3 w-3" />
                                         <span>{product.location}</span>
