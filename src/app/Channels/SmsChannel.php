@@ -34,7 +34,7 @@ class SmsChannel
 
         // In testing/local environment, just log the message
         if (empty($apiKey) || app()->environment('testing', 'local')) {
-            Log::info('SMS Reminder (not sent in '.app()->environment().')', [
+            Log::info('SMS Reminder (not sent in ' . app()->environment() . ')', [
                 'phone' => $formattedPhone,
                 'message' => $message,
             ]);
@@ -54,6 +54,7 @@ class SmsChannel
             if ($response->successful()) {
                 Log::info('SMS sent successfully', [
                     'phone' => $formattedPhone,
+                    'code' => $message,
                     'response' => $response->json(),
                 ]);
 
@@ -83,12 +84,12 @@ class SmsChannel
 
         // Convert local format to international
         if (str_starts_with($phone, '0')) {
-            $phone = '233'.substr($phone, 1);
+            $phone = '233' . substr($phone, 1);
         }
 
         // Add country code if missing
         if (! str_starts_with($phone, '233')) {
-            $phone = '233'.$phone;
+            $phone = '233' . $phone;
         }
 
         return $phone;
