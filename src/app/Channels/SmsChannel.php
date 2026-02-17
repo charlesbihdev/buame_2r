@@ -48,6 +48,7 @@ class SmsChannel
                 'recipient' => [$formattedPhone],
                 'sender' => $senderId,
                 'message' => $message,
+                'sms_type' => 'otp',
                 'is_schedule' => false,
             ]);
 
@@ -55,6 +56,7 @@ class SmsChannel
                 Log::info('SMS sent successfully', [
                     'phone' => $formattedPhone,
                     'code' => $message,
+                    'sms_type' => 'otp',
                     'response' => $response->json(),
                 ]);
 
