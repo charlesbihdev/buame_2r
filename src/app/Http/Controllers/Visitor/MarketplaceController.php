@@ -35,9 +35,16 @@ class MarketplaceController extends Controller
 
         // Apply search filter
         if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhereHas('store', function ($sq) use ($search) {
+                        $sq->where('name', 'like', '%'.$search.'%');
+                    })
+                    ->orWhereHas('specifications', function ($sq) use ($search) {
+                        $sq->where('specification', 'like', '%'.$search.'%');
+                    });
             });
         }
 

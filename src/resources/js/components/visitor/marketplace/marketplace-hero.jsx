@@ -6,8 +6,9 @@ import { ArrowLeft, MapPin, Search } from 'lucide-react';
 import { useState } from 'react';
 
 export function MarketplaceHero() {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [location, setLocation] = useState('');
+    const urlParams = new URLSearchParams(window.location.search);
+    const [searchQuery, setSearchQuery] = useState(urlParams.get('search') || '');
+    const [location, setLocation] = useState(urlParams.get('location') || '');
 
     const handleSearch = () => {
         const params = new URLSearchParams();

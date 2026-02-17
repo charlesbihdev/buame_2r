@@ -50,12 +50,16 @@ class ArtisansController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Search by name or company_name
+        // Search by name, company_name, description, or specialties
         if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('company_name', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('company_name', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhereHas('specialties', function ($sq) use ($search) {
+                        $sq->where('specialty', 'like', '%'.$search.'%');
+                    });
             });
         }
 

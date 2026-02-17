@@ -60,11 +60,12 @@ class JobsController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Apply search filter (title or poster name)
+        // Apply search filter (title, description, or poster name)
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
                     ->orWhereHas('poster', function ($pq) use ($search) {
                         $pq->where('name', 'like', '%'.$search.'%');
                     });
