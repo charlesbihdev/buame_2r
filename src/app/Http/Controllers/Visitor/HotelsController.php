@@ -44,11 +44,15 @@ class HotelsController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Search by name or description
+        // Search by name, description, or features
         if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('description', 'like', '%'.$request->search.'%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('description', 'like', '%'.$search.'%')
+                    ->orWhereHas('features', function ($sq) use ($search) {
+                        $sq->where('feature', 'like', '%'.$search.'%');
+                    });
             });
         }
 
