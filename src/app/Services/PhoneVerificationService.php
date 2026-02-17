@@ -171,7 +171,9 @@ class PhoneVerificationService
 
             if ($response->successful() && isset($result['status']) && $result['status'] === 'success') {
                 Log::info("mNotify OTP sent successfully to {$formattedPhone}", [
-                    'message_id' => $result['message_id'] ?? null,
+                    'message' => $message,
+                    'status_code' => $response->status(),
+                    'response' => $result,
                 ]);
                 return true;
             }
