@@ -1,29 +1,13 @@
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
-import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { ReviewSection } from '@/components/ui/review-section';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { TransportImageGallery } from '@/components/visitor/transport/TransportImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head } from '@inertiajs/react'; // Removed Link as it's no longer directly used
-import { BackToHome } from '@/components/ui/back-to-home';
-import {
-    ArrowLeft,
-    BadgeCheck,
-    Bike,
-    Bus,
-    Car,
-    Clock,
-    CreditCard,
-    Eye,
-    Mail,
-    MapPin,
-    MessageCircle,
-    Phone,
-    Star,
-    Truck,
-    Users,
-    Wallet,
-} from 'lucide-react';
+import { BadgeCheck, Bike, Bus, Car, Clock, CreditCard, Eye, Mail, MapPin, MessageCircle, Phone, Star, Truck, Users, Wallet } from 'lucide-react';
 
 // Transport type icon mapping
 const typeIcons = {
@@ -76,20 +60,34 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
     const whatsappUrl = buildWhatsAppUrl(ride?.whatsapp, `Hello, I'm interested in booking a ride with ${ride?.driver_name}.`);
     const TypeIcon = getTypeIcon(ride?.type);
-    const rideDescription = ride?.description ? ride.description.substring(0, 150) : `${formatTransportType(ride?.type)} service in ${ride?.location}`;
+    const rideDescription = ride?.description
+        ? ride.description.substring(0, 150)
+        : `${formatTransportType(ride?.type)} service in ${ride?.location}`;
     const hasPricing = Number(ride?.price_per_seat) > 0;
 
     return (
         <VisitorLayout>
             <Head title={`${ride?.driver_name} - ${formatTransportType(ride?.type)}`}>
-                <meta name="description" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} service in ${ride?.location}.${hasPricing ? ` ${ride?.seats_available} seats available at GH₵${ride?.price_per_seat}/seat.` : ''} ${rideDescription}${rideDescription.length >= 150 ? '...' : ''}`} />
-                <meta name="keywords" content={`${ride?.driver_name}, ${formatTransportType(ride?.type)}, ${ride?.location}, transport, rides, book ride, Ghana transport, 2RBUAME`} />
+                <meta
+                    name="description"
+                    content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} service in ${ride?.location}.${hasPricing ? ` ${ride?.seats_available} seats available at GH₵${ride?.price_per_seat}/seat.` : ''} ${rideDescription}${rideDescription.length >= 150 ? '...' : ''}`}
+                />
+                <meta
+                    name="keywords"
+                    content={`${ride?.driver_name}, ${formatTransportType(ride?.type)}, ${ride?.location}, transport, rides, book ride, Ghana transport, 2RBUAME`}
+                />
                 <meta property="og:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME Transport`} />
-                <meta property="og:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.${hasPricing ? ` GH₵${ride?.price_per_seat}/seat.` : ''}`} />
+                <meta
+                    property="og:description"
+                    content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.${hasPricing ? ` GH₵${ride?.price_per_seat}/seat.` : ''}`}
+                />
                 <meta property="og:type" content="website" />
                 {ride?.image && <meta property="og:image" content={ride.image} />}
                 <meta name="twitter:title" content={`${ride?.driver_name} - ${formatTransportType(ride?.type)} | 2RBUAME`} />
-                <meta name="twitter:description" content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.`} />
+                <meta
+                    name="twitter:description"
+                    content={`Book a ${formatTransportType(ride?.type)} ride with ${ride?.driver_name} in ${ride?.location}.`}
+                />
                 {ride?.image && <meta name="twitter:image" content={ride.image} />}
             </Head>
 
@@ -157,7 +155,9 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             {Number(ride?.price_per_seat) > 0 && (
                                 <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                     <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                        GH₵{ride?.price_per_seat}
+                                    </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
                                 </div>
                             )}
@@ -176,6 +176,51 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Vehicle Images</h2>
                             <TransportImageGallery images={ride?.images || []} />
                         </div>
+
+                        {/* Videos */}
+                        {ride?.video_links &&
+                            ride.video_links.length > 0 &&
+                            (() => {
+                                const tallPlatforms = ['tiktok', 'instagram'];
+                                const tallVideos = ride.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                                const wideVideos = ride.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                                return (
+                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                        <div className="space-y-4">
+                                            {wideVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {wideVideos.map((link) => (
+                                                        <VideoEmbed
+                                                            key={link.id}
+                                                            url={link.url}
+                                                            platform={link.platform}
+                                                            embedUrl={link.embed_url}
+                                                            tiktokVideoId={link.tiktok_video_id}
+                                                            title={link.title}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {tallVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {tallVideos.map((link) => (
+                                                        <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                            <VideoEmbed
+                                                                url={link.url}
+                                                                platform={link.platform}
+                                                                embedUrl={link.embed_url}
+                                                                tiktokVideoId={link.tiktok_video_id}
+                                                                title={link.title}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })()}
 
                         {/* About Section */}
                         <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
@@ -233,7 +278,9 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             {Number(ride?.price_per_seat) > 0 && (
                                 <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                     <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride?.price_per_seat}</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                        GH₵{ride?.price_per_seat}
+                                    </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
                                 </div>
                             )}
@@ -323,17 +370,20 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                             </div>
                                         </div>
                                     )}
-                                    {ride?.rating > 0 && (
+                                    {parseFloat(ride?.rating) > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Highly Rated</p>
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">
+                                                    {parseFloat(ride?.rating) > 4.0 ? `Highly Rated` : `Rated`}
+                                                </p>
                                                 <p className="text-gray-600 dark:text-gray-400">
-                                                    {ride.rating}/5.0 from {ride.reviews_count} reviews
+                                                    {parseFloat(ride?.rating)}/5.0 from {parseInt(ride?.reviews_count) || 0} reviews
                                                 </p>
                                             </div>
                                         </div>
                                     )}
+
                                     {ride?.seats_available > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Users className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />

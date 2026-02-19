@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Phone, Mail, MessageCircle, MapPin, Briefcase, Calendar, Banknote, Clock, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { BackToHome } from '@/components/ui/back-to-home';
 
 const formatSalary = (salary) => {
@@ -96,6 +97,36 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                 </div>
                             </div>
                         </div>
+
+                        {/* Videos */}
+                        {job.video_links && job.video_links.length > 0 && (() => {
+                            const tallPlatforms = ['tiktok', 'instagram'];
+                            const tallVideos = job.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                            const wideVideos = job.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                            return (
+                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                    <div className="space-y-4">
+                                        {wideVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {wideVideos.map((link) => (
+                                                    <VideoEmbed key={link.id} url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                ))}
+                                            </div>
+                                        )}
+                                        {tallVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {tallVideos.map((link) => (
+                                                    <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                        <VideoEmbed url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })()}
 
                         {/* Description */}
                         <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

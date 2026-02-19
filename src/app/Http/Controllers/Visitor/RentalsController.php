@@ -85,7 +85,7 @@ class RentalsController extends Controller
      */
     public function show(string $id): Response
     {
-        $rental = Rental::with(['images', 'features', 'user'])
+        $rental = Rental::with(['images', 'features', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
@@ -151,6 +151,15 @@ class RentalsController extends Controller
                     'name' => $rental->user->name,
                     'phone' => $rental->user->phone,
                 ],
+                'video_links' => $rental->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $rental->average_rating,

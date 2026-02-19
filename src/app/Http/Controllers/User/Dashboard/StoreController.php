@@ -11,6 +11,13 @@ use Illuminate\Support\Str;
 
 class StoreController extends Controller
 {
+    use \App\Http\Traits\HasVideoLinks;
+
+    protected function getVideoLinkableModel($request)
+    {
+        return Auth::user()->store;
+    }
+
     /**
      * Toggle store active status.
      */

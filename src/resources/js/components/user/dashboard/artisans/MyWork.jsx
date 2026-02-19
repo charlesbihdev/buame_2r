@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
 import { router } from '@inertiajs/react';
 import { Edit, Image as ImageIcon, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -95,6 +96,13 @@ export function Portfolio({ profile }) {
             )}
 
             {showForm && <PortfolioForm portfolio={editingItem} onClose={handleCloseForm} />}
+
+            {/* Video Links */}
+            <VideoLinksManager
+                videoLinks={profile?.video_links || []}
+                storeRouteName="user.dashboard.artisans.video-links.store"
+                destroyRouteName="user.dashboard.artisans.video-links.destroy"
+            />
         </div>
     );
 }

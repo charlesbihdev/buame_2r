@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
 import { router } from '@inertiajs/react';
 import { Edit, Image as ImageIcon, Plus, Trash2, Star } from 'lucide-react';
 import { useState } from 'react';
@@ -144,6 +145,13 @@ export function HotelGallery({ profile }) {
             )}
 
             {showForm && <HotelImageForm image={editingImage} onClose={handleCloseForm} />}
+
+            {/* Video Links */}
+            <VideoLinksManager
+                videoLinks={profile?.video_links || []}
+                storeRouteName="user.dashboard.hotels.video-links.store"
+                destroyRouteName="user.dashboard.hotels.video-links.destroy"
+            />
         </div>
     );
 }

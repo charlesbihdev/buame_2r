@@ -15,7 +15,7 @@ class StoreController extends Controller
      */
     public function show(string $slug, Request $request): Response
     {
-        $store = Store::with(['user', 'products' => function ($query) {
+        $store = Store::with(['user', 'videoLinks', 'products' => function ($query) {
             $query->with(['images', 'specifications'])
                 ->where('is_active', true)
                 ->latest();
@@ -122,6 +122,15 @@ class StoreController extends Controller
                     'name' => $store->user->name,
                     'phone' => $store->user->phone,
                 ],
+                'video_links' => $store->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'products' => $products,
             'filters' => $request->only(['search', 'location', 'category', 'sort']),

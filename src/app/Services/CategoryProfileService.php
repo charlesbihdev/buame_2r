@@ -48,7 +48,7 @@ class CategoryProfileService
 
         // Reload with relationships if it was just created
         if ($artisan->wasRecentlyCreated) {
-            $artisan->load(['specialties', 'portfolio']);
+            $artisan->load(['specialties', 'portfolio', 'videoLinks']);
         } else {
             // Ensure relationships are loaded
             if (! $artisan->relationLoaded('specialties')) {
@@ -56,6 +56,9 @@ class CategoryProfileService
             }
             if (! $artisan->relationLoaded('portfolio')) {
                 $artisan->load('portfolio');
+            }
+            if (! $artisan->relationLoaded('videoLinks')) {
+                $artisan->load('videoLinks');
             }
         }
 
@@ -67,7 +70,7 @@ class CategoryProfileService
      */
     protected function getOrCreateHotel(User $user): Hotel
     {
-        return $user->hotels()->with(['features', 'images'])->firstOrCreate(
+        return $user->hotels()->with(['features', 'images', 'videoLinks'])->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => '',
@@ -86,7 +89,7 @@ class CategoryProfileService
     protected function getOrCreateTransport(User $user): TransportRide
     {
         // First, try to get existing profile
-        $profile = $user->transportRides()->with(['images'])->first();
+        $profile = $user->transportRides()->with(['images', 'videoLinks'])->first();
 
         // If no profile exists, create one
         if (! $profile) {
@@ -99,7 +102,7 @@ class CategoryProfileService
                 'phone' => $user->phone ?? '0000000000', // Ensure phone is not empty
                 'is_active' => false,
             ]);
-            $profile->load(['images']);
+            $profile->load(['images', 'videoLinks']);
         } else {
             // Ensure relationships are loaded
             if (! $profile->relationLoaded('images')) {
@@ -120,7 +123,7 @@ class CategoryProfileService
      */
     protected function getOrCreateRental(User $user): Rental
     {
-        return $user->rentals()->with(['images', 'features'])->firstOrCreate(
+        return $user->rentals()->with(['images', 'features', 'videoLinks'])->firstOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => '',

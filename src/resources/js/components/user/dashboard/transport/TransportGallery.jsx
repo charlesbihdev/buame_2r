@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
 import { router } from '@inertiajs/react';
 import { Edit, Image as ImageIcon, Plus, Trash2, Star } from 'lucide-react';
 import { useState } from 'react';
@@ -144,6 +145,13 @@ export function TransportGallery({ profile }) {
             )}
 
             {showForm && <TransportImageForm image={editingImage} onClose={handleCloseForm} profile={profile} />}
+
+            {/* Video Links */}
+            <VideoLinksManager
+                videoLinks={profile?.video_links || []}
+                storeRouteName="user.dashboard.transport.video-links.store"
+                destroyRouteName="user.dashboard.transport.video-links.destroy"
+            />
         </div>
     );
 }

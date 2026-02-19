@@ -3,6 +3,7 @@ import { FormError } from '@/components/ui/form-error';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { ArrowUpRight, CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
@@ -185,7 +186,14 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                 </div>
             </form>
 
-           
+            {/* Video Links */}
+            {store && (
+                <VideoLinksManager
+                    videoLinks={store?.video_links || []}
+                    storeRouteName="user.dashboard.marketplace.store.video-links.store"
+                    destroyRouteName="user.dashboard.marketplace.store.video-links.destroy"
+                />
+            )}
 
             {/* Current Plan and Upgrade - Side by Side */}
             <div className="grid gap-6 md:grid-cols-2">

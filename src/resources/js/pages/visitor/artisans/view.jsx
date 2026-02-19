@@ -1,17 +1,18 @@
-import { Head } from '@inertiajs/react';
-import { Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
-import { PortfolioGallery } from '@/components/visitor/artisans/PortfolioGallery';
+import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
-import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { ReviewSection } from '@/components/ui/review-section';
+import { VideoEmbed } from '@/components/ui/video-embed';
+import { PortfolioGallery } from '@/components/visitor/artisans/PortfolioGallery';
+import { artisanSkills } from '@/config/artisan-skills';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
-import { BackToHome } from '@/components/ui/back-to-home';
-import { artisanSkills } from '@/config/artisan-skills';
+import { Head } from '@inertiajs/react';
+import { Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
 
 // Helper function to format skill type for display
 const formatSkillType = (skillType) => {
-    const skill = artisanSkills.find(s => s.id === skillType);
+    const skill = artisanSkills.find((s) => s.id === skillType);
     if (skill) return skill.label;
 
     return skillType?.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) || 'Artisan';
@@ -19,16 +20,27 @@ const formatSkillType = (skillType) => {
 
 export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
-    const artisanDescription = artisan?.description ? artisan.description.substring(0, 150) : `Professional artisan with ${artisan?.experience_years || 'years of'} experience`;
+    const artisanDescription = artisan?.description
+        ? artisan.description.substring(0, 150)
+        : `Professional artisan with ${artisan?.experience_years || 'years of'} experience`;
     const specialtiesText = artisan?.specialties?.slice(0, 3)?.join(', ') || 'various services';
 
     return (
         <VisitorLayout>
             <Head title={`${artisan?.name} - ${artisan?.company_name || 'Artisan'}`}>
-                <meta name="description" content={`${artisan?.name} - ${artisan?.company_name || 'Professional Artisan'} in ${artisan?.location}. Specializing in ${specialtiesText}. ${artisanDescription}${artisanDescription.length >= 150 ? '...' : ''}`} />
-                <meta name="keywords" content={`${artisan?.name}, ${artisan?.company_name || 'artisan'}, ${artisan?.location}, ${specialtiesText}, hire artisan Ghana, 2RBUAME`} />
+                <meta
+                    name="description"
+                    content={`${artisan?.name} - ${artisan?.company_name || 'Professional Artisan'} in ${artisan?.location}. Specializing in ${specialtiesText}. ${artisanDescription}${artisanDescription.length >= 150 ? '...' : ''}`}
+                />
+                <meta
+                    name="keywords"
+                    content={`${artisan?.name}, ${artisan?.company_name || 'artisan'}, ${artisan?.location}, ${specialtiesText}, hire artisan Ghana, 2RBUAME`}
+                />
                 <meta property="og:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
-                <meta property="og:description" content={`Professional artisan in ${artisan?.location}. ${artisan?.experience_years} years experience. Contact now on 2RBUAME.`} />
+                <meta
+                    property="og:description"
+                    content={`Professional artisan in ${artisan?.location}. ${artisan?.experience_years} years experience. Contact now on 2RBUAME.`}
+                />
                 <meta property="og:type" content="profile" />
                 {artisan?.profile_image && <meta property="og:image" content={artisan.profile_image} />}
                 <meta name="twitter:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
@@ -46,10 +58,10 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                     <CautionBanner type="service" className="mb-8" />
 
                     {/* Profile Header */}
-                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[var(--card)] md:p-8">
+                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
                             {/* Profile Image */}
-                            <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800 md:h-40 md:w-40">
+                            <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl bg-gray-100 md:h-40 md:w-40 dark:bg-gray-800">
                                 {artisan?.profile_image ? (
                                     <img src={artisan.profile_image} alt={artisan.name} className="h-full w-full object-cover" />
                                 ) : (
@@ -58,7 +70,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                     </div>
                                 )}
                                 {artisan?.is_verified && (
-                                    <div className="absolute right-2 top-2">
+                                    <div className="absolute top-2 right-2">
                                         <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />
                                     </div>
                                 )}
@@ -77,7 +89,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                 )}
 
                                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                                    <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl">{artisan?.name}</h1>
+                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl dark:text-white">{artisan?.name}</h1>
                                     {artisan?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                 </div>
                                 {artisan?.company_name && <p className="mb-4 text-xl font-semibold text-[var(--primary)]">{artisan.company_name}</p>}
@@ -94,7 +106,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         <span>{artisan?.experience_years} years experience</span>
                                     </div>
                                     {artisan?.experience_level && (
-                                        <div className="flex items-center gap-1.5 rounded-full bg-purple-100 px-3 py-1.5 font-semibold capitalize text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                                        <div className="flex items-center gap-1.5 rounded-full bg-purple-100 px-3 py-1.5 font-semibold text-purple-700 capitalize dark:bg-purple-900/30 dark:text-purple-400">
                                             <TrendingUp className="h-4 w-4" />
                                             <span>{artisan.experience_level}</span>
                                         </div>
@@ -125,9 +137,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
                             {/* Pricing Card - Desktop */}
                             {artisan?.show_price && artisan?.price_per_day && (
-                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:block">
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                     <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan.price_per_day}</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                        GH₵{artisan.price_per_day}
+                                    </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
                                 </div>
                             )}
@@ -156,7 +170,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         {artisan.specialties.map((spec, index) => (
                                             <span
                                                 key={index}
-                                                className="rounded-lg bg-[var(--primary)]/10 px-4 py-2 text-sm font-semibold text-white dark:text-[var(--primary)]"
+                                                className="rounded-lg bg-[var(--primary)]/10 px-4 py-2 text-sm font-semibold text-[var(--foreground)]"
                                             >
                                                 {spec}
                                             </span>
@@ -169,9 +183,56 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                         {/* Portfolio Section */}
                         <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                             <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Portfolio & Past Work</h2>
-                            <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">View examples of {artisan?.name.split(' ')[0]}'s previous projects</p>
+                            <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+                                View examples of {artisan?.name.split(' ')[0]}'s previous projects
+                            </p>
                             <PortfolioGallery portfolio={artisan?.portfolio || []} />
                         </div>
+
+                        {/* Videos */}
+                        {artisan?.video_links &&
+                            artisan.video_links.length > 0 &&
+                            (() => {
+                                const tallPlatforms = ['tiktok', 'instagram'];
+                                const tallVideos = artisan.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                                const wideVideos = artisan.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                                return (
+                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                        <div className="space-y-4">
+                                            {wideVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {wideVideos.map((link) => (
+                                                        <VideoEmbed
+                                                            key={link.id}
+                                                            url={link.url}
+                                                            platform={link.platform}
+                                                            embedUrl={link.embed_url}
+                                                            tiktokVideoId={link.tiktok_video_id}
+                                                            title={link.title}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {tallVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {tallVideos.map((link) => (
+                                                        <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                            <VideoEmbed
+                                                                url={link.url}
+                                                                platform={link.platform}
+                                                                embedUrl={link.embed_url}
+                                                                tiktokVideoId={link.tiktok_video_id}
+                                                                title={link.title}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })()}
 
                         {/* Working Hours */}
                         <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
@@ -196,9 +257,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
                             {artisan?.show_price && artisan?.price_per_day && (
-                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5 md:hidden">
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
                                     <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{artisan.price_per_day}</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                        GH₵{artisan.price_per_day}
+                                    </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
                                 </div>
                             )}
@@ -216,7 +279,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         </Button>
                                     )}
                                     {artisan?.phone && (
-                                        <Button asChild variant="outline" className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white">
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
+                                        >
                                             <a href={`tel:${artisan.phone}`}>
                                                 <Phone className="mr-2 h-5 w-5" />
                                                 Call Now
@@ -224,7 +291,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         </Button>
                                     )}
                                     {artisan?.phone_2 && (
-                                        <Button asChild variant="outline" className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white">
+                                        <Button
+                                            asChild
+                                            variant="outline"
+                                            className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
+                                        >
                                             <a href={`tel:${artisan.phone_2}`}>
                                                 <Phone className="mr-2 h-5 w-5" />
                                                 Call Line 2
@@ -261,7 +332,7 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                     {artisan?.email && (
                                         <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
                                             <Mail className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="break-all font-medium text-gray-700 dark:text-gray-300">{artisan.email}</span>
+                                            <span className="font-medium break-all text-gray-700 dark:text-gray-300">{artisan.email}</span>
                                         </div>
                                     )}
                                     {artisan?.address && (
@@ -275,7 +346,9 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
                             {/* Trust Indicators */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Why Choose {artisan?.name.split(' ')[0]}?</h3>
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                    Why Choose {artisan?.name.split(' ')[0]}?
+                                </h3>
                                 <div className="space-y-3 text-sm">
                                     {artisan?.is_verified && (
                                         <div className="flex items-start gap-3">
@@ -295,12 +368,16 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                             </div>
                                         </div>
                                     )}
-                                    {artisan?.rating && (
+                                    {parseFloat(artisan?.rating) > 0 && (
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Highly Rated</p>
-                                                <p className="text-gray-600 dark:text-gray-400">{artisan.rating}/5.0 from {artisan.reviews_count} reviews</p>
+                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">
+                                                    {parseFloat(artisan?.rating) > 4.0 ? `Highly Rated` : `Rated`}
+                                                </p>
+                                                <p className="text-gray-600 dark:text-gray-400">
+                                                    {parseFloat(artisan?.rating)}/5.0 from {artisan?.reviews_count} reviews
+                                                </p>
                                             </div>
                                         </div>
                                     )}

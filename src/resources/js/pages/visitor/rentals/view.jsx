@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { RentalImageGallery } from '@/components/visitor/rentals/RentalImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
@@ -95,6 +96,36 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                                 </div>
                             </div>
                         </div>
+
+                        {/* Videos */}
+                        {rental.video_links && rental.video_links.length > 0 && (() => {
+                            const tallPlatforms = ['tiktok', 'instagram'];
+                            const tallVideos = rental.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                            const wideVideos = rental.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                            return (
+                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                    <div className="space-y-4">
+                                        {wideVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {wideVideos.map((link) => (
+                                                    <VideoEmbed key={link.id} url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                ))}
+                                            </div>
+                                        )}
+                                        {tallVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {tallVideos.map((link) => (
+                                                    <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                        <VideoEmbed url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })()}
 
                         {/* Description */}
                         {rental.description && (

@@ -14,6 +14,13 @@ use Inertia\Response;
 
 class TransportController extends Controller
 {
+    use \App\Http\Traits\HasVideoLinks;
+
+    protected function getVideoLinkableModel($request)
+    {
+        return Auth::user()->transportRides()->first();
+    }
+
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there
