@@ -156,6 +156,15 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                                             <span className="font-semibold text-[var(--foreground)] dark:text-white">{rental.phone}</span>
                                         </a>
                                     )}
+                                    {rental.phone_2 && (
+                                        <a
+                                            href={`tel:${rental.phone_2}`}
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                        >
+                                            <Phone className="h-5 w-5 text-[var(--primary)]" />
+                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{rental.phone_2}</span>
+                                        </a>
+                                    )}
                                     {whatsappNumber && (
                                         <a
                                             href={whatsappUrl}
@@ -198,6 +207,18 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                                         <a href={`tel:${rental.phone}`}>
                                             <Phone className="mr-2 h-5 w-5" />
                                             Call Owner
+                                        </a>
+                                    </Button>
+                                )}
+                                {rental.phone_2 && (
+                                    <Button
+                                        asChild
+                                        variant="outline"
+                                        className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
+                                    >
+                                        <a href={`tel:${rental.phone_2}`}>
+                                            <Phone className="mr-2 h-5 w-5" />
+                                            Call Line 2
                                         </a>
                                     </Button>
                                 )}

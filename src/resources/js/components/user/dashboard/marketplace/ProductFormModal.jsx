@@ -214,7 +214,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
 
                     {/* Condition */}
                     <div>
-                        <Label htmlFor="condition">Condition</Label>
+                        <Label htmlFor="condition">Condition <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Select value={data.condition} onValueChange={(value) => setData('condition', value)}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select condition" />
@@ -244,7 +244,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
 
                     {/* Description */}
                     <div>
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="description"
                             value={data.description}
@@ -270,7 +270,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
 
                     {/* Warranty */}
                     <div>
-                        <Label htmlFor="warranty">Warranty</Label>
+                        <Label htmlFor="warranty">Warranty <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="warranty"
                             value={data.warranty}
@@ -282,7 +282,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                     {/* Specifications */}
                     <div>
                         <div className="mb-2 flex items-center justify-between">
-                            <Label>Specifications</Label>
+                            <Label>Specifications <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Button type="button" variant="outline" size="sm" onClick={addSpecification} className="h-8 gap-1 text-xs">
                                 <Plus className="h-3 w-3" />
                                 Add Specification

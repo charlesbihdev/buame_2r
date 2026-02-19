@@ -22,6 +22,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
         latitude: job?.latitude || '',
         longitude: job?.longitude || '',
         phone: job?.phone || '',
+        phone_2: job?.phone_2 || '',
         whatsapp: job?.whatsapp || '',
         email: job?.email || '',
         description: job?.description || '',
@@ -158,7 +159,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Salary */}
                     <div>
-                        <Label htmlFor="edit-salary">Salary</Label>
+                        <Label htmlFor="edit-salary">Salary <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="edit-salary"
                             value={data.salary}
@@ -182,7 +183,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
                     </div>
 
                     <div>
-                        <Label htmlFor="edit-address">Address</Label>
+                        <Label htmlFor="edit-address">Address <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="edit-address"
                             value={data.address}
@@ -208,7 +209,18 @@ export function EditJobModal({ isOpen, onClose, job }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="edit-whatsapp">WhatsApp</Label>
+                            <Label htmlFor="edit-phone_2">Phone 2 <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                            <Input
+                                id="edit-phone_2"
+                                value={data.phone_2}
+                                onChange={(e) => setData('phone_2', e.target.value)}
+                                placeholder="Second phone number"
+                            />
+                            <FormError error={errors.phone_2} />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="edit-whatsapp">WhatsApp <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="edit-whatsapp"
                                 value={data.whatsapp}
@@ -219,7 +231,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="edit-email">Email</Label>
+                            <Label htmlFor="edit-email">Email <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="edit-email"
                                 type="email"
@@ -247,7 +259,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Requirements */}
                     <div>
-                        <Label htmlFor="edit-requirements">Requirements</Label>
+                        <Label htmlFor="edit-requirements">Requirements <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="edit-requirements"
                             value={data.requirements}
@@ -260,7 +272,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Responsibilities */}
                     <div>
-                        <Label htmlFor="edit-responsibilities">Responsibilities</Label>
+                        <Label htmlFor="edit-responsibilities">Responsibilities <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="edit-responsibilities"
                             value={data.responsibilities}
@@ -273,7 +285,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Benefits */}
                     <div>
-                        <Label htmlFor="edit-benefits">Benefits</Label>
+                        <Label htmlFor="edit-benefits">Benefits <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="edit-benefits"
                             value={data.benefits}
@@ -286,7 +298,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Application Link */}
                     <div>
-                        <Label htmlFor="edit-application_link">Application Link</Label>
+                        <Label htmlFor="edit-application_link">Application Link <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="edit-application_link"
                             type="url"
@@ -299,7 +311,7 @@ export function EditJobModal({ isOpen, onClose, job }) {
 
                     {/* Application Instructions */}
                     <div>
-                        <Label htmlFor="edit-application_instructions">Application Instructions</Label>
+                        <Label htmlFor="edit-application_instructions">Application Instructions <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="edit-application_instructions"
                             value={data.application_instructions}

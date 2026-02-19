@@ -223,6 +223,14 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                             </a>
                                         </Button>
                                     )}
+                                    {artisan?.phone_2 && (
+                                        <Button asChild variant="outline" className="w-full border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white">
+                                            <a href={`tel:${artisan.phone_2}`}>
+                                                <Phone className="mr-2 h-5 w-5" />
+                                                Call Line 2
+                                            </a>
+                                        </Button>
+                                    )}
                                     {artisan?.email && (
                                         <Button asChild variant="outline" className="w-full">
                                             <a href={`mailto:${artisan.email}`}>
@@ -242,6 +250,12 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
                                             <Phone className="h-4 w-4 text-[var(--primary)]" />
                                             <span className="font-medium text-gray-700 dark:text-gray-300">{artisan.phone}</span>
+                                        </div>
+                                    )}
+                                    {artisan?.phone_2 && (
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                            <Phone className="h-4 w-4 text-[var(--primary)]" />
+                                            <span className="font-medium text-gray-700 dark:text-gray-300">{artisan.phone_2}</span>
                                         </div>
                                     )}
                                     {artisan?.email && (

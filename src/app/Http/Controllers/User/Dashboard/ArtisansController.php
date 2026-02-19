@@ -109,6 +109,7 @@ class ArtisansController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
             'phone' => ['required', 'string', 'max:20'],
+            'phone_2' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'working_hours' => ['nullable', 'string', 'max:255'],

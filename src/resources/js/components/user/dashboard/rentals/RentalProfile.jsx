@@ -32,6 +32,7 @@ export function RentalProfile({ profile }) {
         period: profile?.period || 'month',
         location: profile?.location || '',
         phone: profile?.phone || '',
+        phone_2: profile?.phone_2 || '',
         whatsapp: profile?.whatsapp || '',
         email: profile?.email || '',
         rental_terms: profile?.rental_terms || '',
@@ -155,7 +156,7 @@ export function RentalProfile({ profile }) {
                         </div>
 
                         <div className="md:col-span-2">
-                            <Label htmlFor="description">Description</Label>
+                            <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Textarea
                                 id="description"
                                 value={data.description}
@@ -252,7 +253,19 @@ export function RentalProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
+                            <Label htmlFor="phone_2">Phone 2 <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                            <Input
+                                id="phone_2"
+                                value={data.phone_2}
+                                onChange={(e) => setData('phone_2', e.target.value)}
+                                className="mt-1"
+                                placeholder="+233 24 987 6543"
+                            />
+                            <FormError error={errors.phone_2 || pageErrors?.phone_2} className="mt-1" />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="whatsapp">WhatsApp <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="whatsapp"
                                 value={data.whatsapp}
@@ -264,7 +277,7 @@ export function RentalProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email (optional)</Label>
+                            <Label htmlFor="email">Email <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -282,7 +295,7 @@ export function RentalProfile({ profile }) {
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Terms</h3>
                     <div>
-                        <Label htmlFor="rental_terms">Terms & Conditions (optional)</Label>
+                        <Label htmlFor="rental_terms">Terms & Conditions <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="rental_terms"
                             value={data.rental_terms}

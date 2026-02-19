@@ -22,6 +22,7 @@ class JobPoster extends Model
         'logo',
         'location',
         'phone',
+        'phone_2',
         'whatsapp',
         'email',
         'website',

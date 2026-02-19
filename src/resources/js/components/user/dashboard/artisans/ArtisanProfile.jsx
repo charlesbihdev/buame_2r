@@ -30,6 +30,7 @@ export function ArtisanProfile({ profile }) {
         location: profile?.location || '',
         address: profile?.address || '',
         phone: profile?.phone || '',
+        phone_2: profile?.phone_2 || '',
         whatsapp: profile?.whatsapp || '',
         email: profile?.email || '',
         working_hours: profile?.working_hours || '',
@@ -197,7 +198,7 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="company_name">Company/Business Name</Label>
+                            <Label htmlFor="company_name">Company/Business Name <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="company_name"
                                 value={data.company_name}
@@ -209,7 +210,7 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="experience_years">Years of Experience</Label>
+                            <Label htmlFor="experience_years">Years of Experience <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="experience_years"
                                 type="number"
@@ -254,7 +255,7 @@ export function ArtisanProfile({ profile }) {
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About</h3>
                     <div>
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="description"
                             value={data.description}
@@ -314,7 +315,7 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="address">Full Address</Label>
+                            <Label htmlFor="address">Full Address <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="address"
                                 value={data.address}
@@ -338,7 +339,19 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="whatsapp">WhatsApp</Label>
+                            <Label htmlFor="phone_2">Phone 2 <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                            <Input
+                                id="phone_2"
+                                value={data.phone_2}
+                                onChange={(e) => setData('phone_2', e.target.value)}
+                                className="mt-1"
+                                placeholder="+233 24 987 6543"
+                            />
+                            <FormError error={errors.phone_2 || pageErrors?.phone_2} className="mt-1" />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="whatsapp">WhatsApp <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="whatsapp"
                                 value={data.whatsapp}
@@ -350,7 +363,7 @@ export function ArtisanProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">Email <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -367,7 +380,7 @@ export function ArtisanProfile({ profile }) {
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Working Hours</h3>
                     <div>
-                        <Label htmlFor="working_hours">Working Hours</Label>
+                        <Label htmlFor="working_hours">Working Hours <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="working_hours"
                             value={data.working_hours}

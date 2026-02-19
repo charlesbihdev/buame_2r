@@ -225,6 +225,15 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                             <span className="font-semibold text-[var(--foreground)] dark:text-white">{job.phone}</span>
                                         </a>
                                     )}
+                                    {job.phone_2 && (
+                                        <a
+                                            href={`tel:${job.phone_2}`}
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                        >
+                                            <Phone className="h-5 w-5 text-[var(--primary)]" />
+                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{job.phone_2}</span>
+                                        </a>
+                                    )}
                                     {whatsappUrl && (
                                         <a
                                             href={whatsappUrl}

@@ -24,6 +24,7 @@ class TransportRide extends Model
         'longitude',
         'operating_locations',
         'phone',
+        'phone_2',
         'whatsapp',
         'email',
         'description',

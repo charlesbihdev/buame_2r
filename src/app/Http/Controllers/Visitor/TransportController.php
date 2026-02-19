@@ -146,6 +146,7 @@ class TransportController extends Controller
                 'location' => $ride->location,
                 'address' => $ride->address,
                 'phone' => $ride->phone,
+                'phone_2' => $ride->phone_2,
                 'whatsapp' => $ride->whatsapp,
                 'email' => $ride->email,
                 'operating_hours' => $ride->operating_hours,
