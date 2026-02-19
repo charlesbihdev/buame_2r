@@ -40,6 +40,8 @@ export function HotelProfile({ profile }) {
         email: profile?.email || '',
         price_per_night: profile?.price_per_night || '',
         rooms_count: profile?.rooms_count || '',
+        phone_2: profile?.phone_2 || '',
+        operating_hours_mode: profile?.operating_hours_mode || 'disabled',
         check_in_time: profile?.check_in_time || '08:00',
         check_out_time: profile?.check_out_time || '20:00',
         primary_image: null,
@@ -183,7 +185,7 @@ export function HotelProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="rooms_count">Number of Rooms</Label>
+                            <Label htmlFor="rooms_count">Number of Rooms <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="rooms_count"
                                 type="number"
@@ -237,7 +239,7 @@ export function HotelProfile({ profile }) {
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About Your Property</h3>
                     <div>
-                        <Label htmlFor="description">Description</Label>
+                        <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="description"
                             value={data.description}
@@ -267,7 +269,7 @@ export function HotelProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="address">Full Address</Label>
+                            <Label htmlFor="address">Full Address <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="address"
                                 value={data.address}
@@ -291,7 +293,19 @@ export function HotelProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="whatsapp">WhatsApp</Label>
+                            <Label htmlFor="phone_2">Phone 2 <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                            <Input
+                                id="phone_2"
+                                value={data.phone_2}
+                                onChange={(e) => setData('phone_2', e.target.value)}
+                                className="mt-1"
+                                placeholder="+233 24 987 6543"
+                            />
+                            <FormError error={errors.phone_2 || pageErrors?.phone_2} className="mt-1" />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="whatsapp">WhatsApp <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="whatsapp"
                                 value={data.whatsapp}
@@ -303,7 +317,7 @@ export function HotelProfile({ profile }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">Email <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -319,37 +333,80 @@ export function HotelProfile({ profile }) {
 
                 {/* Operating Hours Section */}
                 <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Operating Hours</h3>
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                        Operating Hours <span className="text-sm font-normal text-gray-500">(Optional)</span>
+                    </h3>
                     <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                         Set the hours when your hotel reception is open and available for guests
                     </p>
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <div>
-                            <Label htmlFor="check_in_time">Opening Time</Label>
-                            <Input
-                                id="check_in_time"
-                                type="time"
-                                value={data.check_in_time}
-                                onChange={(e) => setData('check_in_time', e.target.value)}
-                                className="mt-1"
-                            />
-                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception opens</p>
-                            <FormError error={errors.check_in_time || pageErrors?.check_in_time} className="mt-1" />
-                        </div>
 
-                        <div>
-                            <Label htmlFor="check_out_time">Closing Time</Label>
-                            <Input
-                                id="check_out_time"
-                                type="time"
-                                value={data.check_out_time}
-                                onChange={(e) => setData('check_out_time', e.target.value)}
-                                className="mt-1"
+                    <div className="space-y-3">
+                        <label className="flex cursor-pointer items-center gap-3">
+                            <input
+                                type="radio"
+                                name="operating_hours_mode"
+                                value="disabled"
+                                checked={data.operating_hours_mode === 'disabled'}
+                                onChange={(e) => setData('operating_hours_mode', e.target.value)}
+                                className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception closes</p>
-                            <FormError error={errors.check_out_time || pageErrors?.check_out_time} className="mt-1" />
-                        </div>
+                            <span className="text-sm text-gray-700 dark:text-gray-300">No operating hours</span>
+                        </label>
+
+                        <label className="flex cursor-pointer items-center gap-3">
+                            <input
+                                type="radio"
+                                name="operating_hours_mode"
+                                value="24_7"
+                                checked={data.operating_hours_mode === '24_7'}
+                                onChange={(e) => setData('operating_hours_mode', e.target.value)}
+                                className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
+                            />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Open 24/7</span>
+                        </label>
+
+                        <label className="flex cursor-pointer items-center gap-3">
+                            <input
+                                type="radio"
+                                name="operating_hours_mode"
+                                value="custom"
+                                checked={data.operating_hours_mode === 'custom'}
+                                onChange={(e) => setData('operating_hours_mode', e.target.value)}
+                                className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
+                            />
+                            <span className="text-sm text-gray-700 dark:text-gray-300">Custom hours</span>
+                        </label>
                     </div>
+
+                    {data.operating_hours_mode === 'custom' && (
+                        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div>
+                                <Label htmlFor="check_in_time">Opening Time</Label>
+                                <Input
+                                    id="check_in_time"
+                                    type="time"
+                                    value={data.check_in_time}
+                                    onChange={(e) => setData('check_in_time', e.target.value)}
+                                    className="mt-1"
+                                />
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception opens</p>
+                                <FormError error={errors.check_in_time || pageErrors?.check_in_time} className="mt-1" />
+                            </div>
+
+                            <div>
+                                <Label htmlFor="check_out_time">Closing Time</Label>
+                                <Input
+                                    id="check_out_time"
+                                    type="time"
+                                    value={data.check_out_time}
+                                    onChange={(e) => setData('check_out_time', e.target.value)}
+                                    className="mt-1"
+                                />
+                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception closes</p>
+                                <FormError error={errors.check_out_time || pageErrors?.check_out_time} className="mt-1" />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Submit Button */}

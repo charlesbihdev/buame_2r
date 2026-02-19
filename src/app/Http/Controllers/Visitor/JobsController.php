@@ -300,6 +300,7 @@ class JobsController extends Controller
         // Get contact info from job (jobs can have their own contact for posting jobs for others)
         // Fallback to poster contact if job contact is not available
         $phone = $job->phone ?? $poster->phone ?? $poster->user?->phone ?? null;
+        $phone2 = $job->phone_2 ?? $poster->phone_2 ?? null;
         $whatsapp = $job->whatsapp ?? $poster->whatsapp ?? null;
         $email = $job->email ?? $poster->email ?? $poster->user?->email ?? null;
 
@@ -366,6 +367,7 @@ class JobsController extends Controller
                 'posted_at' => $job->posted_at ? $job->posted_at->toISOString() : $job->created_at->toISOString(),
                 'posted_at_human' => $job->posted_at ? $job->posted_at->diffForHumans() : $job->created_at->diffForHumans(),
                 'phone' => $phone,
+                'phone_2' => $phone2,
                 'whatsapp' => $whatsapp,
                 'whatsapp_url' => $whatsappUrl,
                 'email' => $email,

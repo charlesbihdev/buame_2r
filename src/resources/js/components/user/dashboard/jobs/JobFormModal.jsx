@@ -21,6 +21,7 @@ export function JobFormModal({ isOpen, onClose }) {
         latitude: '',
         longitude: '',
         phone: '',
+        phone_2: '',
         whatsapp: '',
         email: '',
         description: '',
@@ -158,7 +159,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Salary */}
                     <div>
-                        <Label htmlFor="salary">Salary</Label>
+                        <Label htmlFor="salary">Salary <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="salary"
                             value={data.salary}
@@ -182,7 +183,7 @@ export function JobFormModal({ isOpen, onClose }) {
                     </div>
 
                     <div>
-                        <Label htmlFor="address">Address</Label>
+                        <Label htmlFor="address">Address <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="address"
                             value={data.address}
@@ -208,7 +209,18 @@ export function JobFormModal({ isOpen, onClose }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="whatsapp">WhatsApp</Label>
+                            <Label htmlFor="phone_2">Phone 2 <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                            <Input
+                                id="phone_2"
+                                value={data.phone_2}
+                                onChange={(e) => setData('phone_2', e.target.value)}
+                                placeholder="Second phone number"
+                            />
+                            <FormError error={errors.phone_2} />
+                        </div>
+
+                        <div>
+                            <Label htmlFor="whatsapp">WhatsApp <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="whatsapp"
                                 value={data.whatsapp}
@@ -219,7 +231,7 @@ export function JobFormModal({ isOpen, onClose }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">Email <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -247,7 +259,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Requirements */}
                     <div>
-                        <Label htmlFor="requirements">Requirements</Label>
+                        <Label htmlFor="requirements">Requirements <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="requirements"
                             value={data.requirements}
@@ -260,7 +272,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Responsibilities */}
                     <div>
-                        <Label htmlFor="responsibilities">Responsibilities</Label>
+                        <Label htmlFor="responsibilities">Responsibilities <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="responsibilities"
                             value={data.responsibilities}
@@ -273,7 +285,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Benefits */}
                     <div>
-                        <Label htmlFor="benefits">Benefits</Label>
+                        <Label htmlFor="benefits">Benefits <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="benefits"
                             value={data.benefits}
@@ -286,7 +298,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Application Link */}
                     <div>
-                        <Label htmlFor="application_link">Application Link</Label>
+                        <Label htmlFor="application_link">Application Link <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
                             id="application_link"
                             type="url"
@@ -299,7 +311,7 @@ export function JobFormModal({ isOpen, onClose }) {
 
                     {/* Application Instructions */}
                     <div>
-                        <Label htmlFor="application_instructions">Application Instructions</Label>
+                        <Label htmlFor="application_instructions">Application Instructions <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
                             id="application_instructions"
                             value={data.application_instructions}

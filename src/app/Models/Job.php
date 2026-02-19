@@ -19,6 +19,7 @@ class Job extends Model
         'job_poster_id',
         'company',
         'phone',
+        'phone_2',
         'whatsapp',
         'email',
         'title',

@@ -68,6 +68,7 @@ class RentalsController extends Controller
             'type' => ['required', 'string', 'in:house,equipment,tools,land,commercial,vehicle,store'],
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
+            'phone_2' => ['nullable', 'string', 'max:20'],
             'whatsapp' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
             'price' => ['nullable', 'numeric', 'min:0'],

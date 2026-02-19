@@ -171,6 +171,7 @@ class ArtisansController extends Controller
                 'is_available' => $artisan->is_available,
                 'working_hours' => $artisan->working_hours,
                 'phone' => $artisan->phone,
+                'phone_2' => $artisan->phone_2,
                 'whatsapp' => $artisan->whatsapp,
                 'email' => $artisan->email,
                 'specialties' => $artisan->specialties->pluck('specialty'),

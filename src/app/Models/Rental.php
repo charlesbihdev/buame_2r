@@ -25,6 +25,7 @@ class Rental extends Model
         'latitude',
         'longitude',
         'phone',
+        'phone_2',
         'whatsapp',
         'email',
         'description',

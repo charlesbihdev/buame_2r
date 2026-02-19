@@ -139,6 +139,7 @@ class RentalsController extends Controller
                 'period' => $rental->period,
                 'location' => $rental->location,
                 'phone' => $rental->phone,
+                'phone_2' => $rental->phone_2,
                 'whatsapp' => $rental->whatsapp,
                 'email' => $rental->email,
                 'description' => $rental->description,
