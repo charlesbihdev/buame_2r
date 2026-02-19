@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
-import { ImagePlus, Plus, X } from 'lucide-react';
+import { ImagePlus, Link2, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function ProductFormModal({ isOpen, onClose, store }) {
@@ -25,6 +25,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         warranty: '',
         images: [],
         specifications: [],
+        video_links: [],
     });
     const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -66,6 +67,25 @@ export function ProductFormModal({ isOpen, onClose, store }) {
         setData(
             'specifications',
             data.specifications.filter((_, i) => i !== index),
+        );
+    };
+
+    const addVideoLink = () => {
+        if (data.video_links.length < 5) {
+            setData('video_links', [...data.video_links, '']);
+        }
+    };
+
+    const updateVideoLink = (index, value) => {
+        const updated = [...data.video_links];
+        updated[index] = value;
+        setData('video_links', updated);
+    };
+
+    const removeVideoLink = (index) => {
+        setData(
+            'video_links',
+            data.video_links.filter((_, i) => i !== index),
         );
     };
 
@@ -314,6 +334,46 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                 </p>
                             )}
                         </div>
+                    </div>
+
+                    {/* Video Links */}
+                    <div>
+                        <div className="mb-2 flex items-center justify-between">
+                            <Label>Video Links <span className="text-sm font-normal text-gray-500">(Optional, max 5)</span></Label>
+                            {data.video_links.length < 5 && (
+                                <Button type="button" variant="outline" size="sm" onClick={addVideoLink} className="h-8 gap-1 text-xs">
+                                    <Link2 className="h-3 w-3" />
+                                    Add Video Link
+                                </Button>
+                            )}
+                        </div>
+                        <div className="space-y-2">
+                            {data.video_links.map((link, index) => (
+                                <div key={index} className="flex gap-2">
+                                    <Input
+                                        value={link}
+                                        onChange={(e) => updateVideoLink(index, e.target.value)}
+                                        placeholder="e.g., https://youtube.com/watch?v=... or https://tiktok.com/@user/video/..."
+                                        className="flex-1"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => removeVideoLink(index)}
+                                        className="h-10 w-10 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            {data.video_links.length === 0 && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Add video links to showcase your product in action.
+                                </p>
+                            )}
+                        </div>
+                        <FormError error={errors.video_links} />
                     </div>
 
                     <DialogFooter>

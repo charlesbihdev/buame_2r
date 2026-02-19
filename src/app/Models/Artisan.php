@@ -88,6 +88,11 @@ class Artisan extends Model
         return $this->morphMany(Favorite::class, 'favoritable');
     }
 
+    public function videoLinks(): MorphMany
+    {
+        return $this->morphMany(VideoLink::class, 'linkable');
+    }
+
     /**
      * Scope to filter artisans whose owners have active subscriptions.
      */

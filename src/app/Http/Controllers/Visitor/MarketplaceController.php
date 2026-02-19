@@ -208,6 +208,7 @@ class MarketplaceController extends Controller
                     ->orderBy('display_order');
             }])
             ->with(['specifications'])
+            ->with(['videoLinks'])
             ->with(['user' => function ($query) {
                 $query->select('id', 'name', 'email', 'phone');
             }])
@@ -330,6 +331,15 @@ class MarketplaceController extends Controller
                     'description' => $product->store->description,
                     'is_active' => $product->store->is_active,
                 ] : null,
+                'video_links' => $product->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $product->average_rating,

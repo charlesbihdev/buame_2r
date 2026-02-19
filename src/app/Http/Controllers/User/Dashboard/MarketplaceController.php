@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MarketplaceProduct;
 use App\Models\ProductImage;
 use App\Models\ProductSpecification;
+use App\Models\VideoLink;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -80,6 +81,8 @@ class MarketplaceController extends Controller
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif,webp', 'max:5120'],
             'specifications' => ['nullable', 'array'],
             'specifications.*' => ['string', 'max:255'],
+            'video_links' => ['nullable', 'array', 'max:5'],
+            'video_links.*' => ['url', 'max:500'],
         ]);
 
         $validated['user_id'] = $user->id;
@@ -94,9 +97,10 @@ class MarketplaceController extends Controller
         }
         unset($validated['has_price']);
 
-        // Remove images and specifications from validated data before creating product
+        // Remove images, specifications and video links from validated data before creating product
         $specifications = $request->input('specifications', []);
-        unset($validated['images'], $validated['specifications']);
+        $videoLinks = $request->input('video_links', []);
+        unset($validated['images'], $validated['specifications'], $validated['video_links']);
 
         $product = MarketplaceProduct::create($validated);
 
@@ -117,6 +121,17 @@ class MarketplaceController extends Controller
                 ProductSpecification::create([
                     'product_id' => $product->id,
                     'specification' => trim($specification),
+                ]);
+            }
+        }
+
+        // Handle video links
+        foreach ($videoLinks as $link) {
+            if (!empty(trim($link))) {
+                $url = trim($link);
+                $product->videoLinks()->create([
+                    'url' => $url,
+                    'platform' => VideoLink::detectPlatform($url),
                 ]);
             }
         }
@@ -169,6 +184,10 @@ class MarketplaceController extends Controller
             'specifications.*' => ['string', 'max:255'],
             'remove_specifications' => ['nullable', 'array'],
             'remove_specifications.*' => ['integer', 'exists:product_specifications,id'],
+            'video_links' => ['nullable', 'array', 'max:5'],
+            'video_links.*' => ['url', 'max:500'],
+            'remove_video_links' => ['nullable', 'array'],
+            'remove_video_links.*' => ['integer', 'exists:video_links,id'],
         ]);
 
         $validated['delivery_available'] = in_array($request->input('delivery_available'), ['true', '1', 'yes', true, 1], true);
@@ -186,7 +205,9 @@ class MarketplaceController extends Controller
         $removeImageIds = $request->input('remove_images', []);
         $specifications = $request->input('specifications', []);
         $removeSpecificationIds = $request->input('remove_specifications', []);
-        unset($validated['images'], $validated['remove_images'], $validated['specifications'], $validated['remove_specifications']);
+        $videoLinks = $request->input('video_links', []);
+        $removeVideoLinkIds = $request->input('remove_video_links', []);
+        unset($validated['images'], $validated['remove_images'], $validated['specifications'], $validated['remove_specifications'], $validated['video_links'], $validated['remove_video_links']);
 
         $marketplace->update($validated);
 
@@ -239,6 +260,22 @@ class MarketplaceController extends Controller
             }
         }
 
+        // Remove selected video links
+        if (!empty($removeVideoLinkIds)) {
+            $marketplace->videoLinks()->whereIn('id', $removeVideoLinkIds)->delete();
+        }
+
+        // Add new video links
+        foreach ($videoLinks as $link) {
+            if (!empty(trim($link))) {
+                $url = trim($link);
+                $marketplace->videoLinks()->create([
+                    'url' => $url,
+                    'platform' => VideoLink::detectPlatform($url),
+                ]);
+            }
+        }
+
         return redirect()->route('user.dashboard.index', [
             'category' => 'marketplace',
             'section' => 'products',
@@ -259,6 +296,9 @@ class MarketplaceController extends Controller
         foreach ($marketplace->images as $image) {
             Storage::disk('public')->delete($image->image_path);
         }
+
+        // Delete associated video links
+        $marketplace->videoLinks()->delete();
 
         $marketplace->delete();
 

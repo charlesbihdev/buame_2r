@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm, usePage } from '@inertiajs/react';
-import { ImagePlus, Plus, X } from 'lucide-react';
+import { ImagePlus, Link2, Plus, X } from 'lucide-react';
 import { useState } from 'react';
 
 export function EditProductModal({ isOpen, onClose, product }) {
@@ -28,11 +28,14 @@ export function EditProductModal({ isOpen, onClose, product }) {
         remove_images: [],
         specifications: [],
         remove_specifications: [],
+        video_links: [],
+        remove_video_links: [],
     });
 
     const [newImagePreviews, setNewImagePreviews] = useState([]);
     const [existingImages, setExistingImages] = useState(product?.images || []);
     const [existingSpecifications, setExistingSpecifications] = useState(product?.specifications || []);
+    const [existingVideoLinks, setExistingVideoLinks] = useState(product?.video_links || []);
 
     // Update form data when product changes
     // useEffect(() => {
@@ -111,6 +114,33 @@ export function EditProductModal({ isOpen, onClose, product }) {
         setData('remove_specifications', newRemoveSpecs);
     };
 
+    const addVideoLink = () => {
+        const totalLinks = existingVideoLinks.length - data.remove_video_links.length + data.video_links.length;
+        if (totalLinks < 5) {
+            setData('video_links', [...data.video_links, '']);
+        }
+    };
+
+    const updateVideoLink = (index, value) => {
+        const updated = [...data.video_links];
+        updated[index] = value;
+        setData('video_links', updated);
+    };
+
+    const removeVideoLink = (index) => {
+        setData(
+            'video_links',
+            data.video_links.filter((_, i) => i !== index),
+        );
+    };
+
+    const toggleRemoveExistingVideoLink = (linkId) => {
+        const newRemoveLinks = data.remove_video_links.includes(linkId)
+            ? data.remove_video_links.filter((id) => id !== linkId)
+            : [...data.remove_video_links, linkId];
+        setData('remove_video_links', newRemoveLinks);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('user.dashboard.marketplace.update', product.id), {
@@ -129,6 +159,7 @@ export function EditProductModal({ isOpen, onClose, product }) {
         setNewImagePreviews([]);
         setExistingImages([]);
         setExistingSpecifications([]);
+        setExistingVideoLinks([]);
         onClose();
     };
 
@@ -419,6 +450,67 @@ export function EditProductModal({ isOpen, onClose, product }) {
                                 </p>
                             )}
                         </div>
+                    </div>
+
+                    {/* Video Links */}
+                    <div>
+                        <div className="mb-2 flex items-center justify-between">
+                            <Label>Video Links <span className="text-sm font-normal text-gray-500">(Optional, max 5)</span></Label>
+                            {existingVideoLinks.length - data.remove_video_links.length + data.video_links.length < 5 && (
+                                <Button type="button" variant="outline" size="sm" onClick={addVideoLink} className="h-8 gap-1 text-xs">
+                                    <Link2 className="h-3 w-3" />
+                                    Add Video Link
+                                </Button>
+                            )}
+                        </div>
+                        <div className="space-y-2">
+                            {/* Existing Video Links */}
+                            {existingVideoLinks.map((link) => {
+                                const isMarkedForRemoval = data.remove_video_links.includes(link.id);
+                                return (
+                                    <div key={`existing-link-${link.id}`} className={`flex gap-2 ${isMarkedForRemoval ? 'opacity-40' : ''}`}>
+                                        <Input value={link.url} disabled className={`flex-1 ${isMarkedForRemoval ? 'line-through' : ''}`} />
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => toggleRemoveExistingVideoLink(link.id)}
+                                            className={`h-10 w-10 p-0 ${isMarkedForRemoval ? 'bg-green-500 text-white hover:bg-green-600' : ''}`}
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                );
+                            })}
+
+                            {/* New Video Links */}
+                            {data.video_links.map((link, index) => (
+                                <div key={`new-link-${index}`} className="flex gap-2">
+                                    <Input
+                                        value={link}
+                                        onChange={(e) => updateVideoLink(index, e.target.value)}
+                                        placeholder="e.g., https://youtube.com/watch?v=... or https://tiktok.com/@user/video/..."
+                                        className="flex-1"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => removeVideoLink(index)}
+                                        className="h-10 w-10 p-0"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+
+                            {existingVideoLinks.length === 0 && data.video_links.length === 0 && (
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Add video links to showcase your product in action.
+                                </p>
+                            )}
+                        </div>
+                        <FormError error={errors.video_links} />
                     </div>
 
                     <DialogFooter>

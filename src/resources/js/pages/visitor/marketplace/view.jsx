@@ -5,6 +5,7 @@ import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, Ch
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { useState } from 'react';
 
 export default function MarketplaceView({ product, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -172,6 +173,49 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                 </div>
                             )}
                         </div>
+
+                        {/* Product Videos */}
+                        {product.video_links && product.video_links.length > 0 && (() => {
+                            const tallPlatforms = ['tiktok', 'instagram'];
+                            const tallVideos = product.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                            const wideVideos = product.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                            return (
+                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Product Videos</h2>
+                                    <div className="space-y-4">
+                                        {/* Wide format: YouTube, Facebook, LinkCard */}
+                                        {wideVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {wideVideos.map((link) => (
+                                                    <VideoEmbed
+                                                        key={link.id}
+                                                        url={link.url}
+                                                        platform={link.platform}
+                                                        embedUrl={link.embed_url}
+                                                        tiktokVideoId={link.tiktok_video_id}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+                                        {/* Tall format: TikTok, Instagram - matched heights */}
+                                        {tallVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {tallVideos.map((link) => (
+                                                    <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                        <VideoEmbed
+                                                            url={link.url}
+                                                            platform={link.platform}
+                                                            embedUrl={link.embed_url}
+                                                            tiktokVideoId={link.tiktok_video_id}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })()}
 
                         {/* Delivery & Warranty */}
                         {(product.delivery_available || product.warranty) && (
