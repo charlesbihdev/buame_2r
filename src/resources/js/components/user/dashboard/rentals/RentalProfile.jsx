@@ -8,6 +8,7 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Loader2, Save, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 import SaveButton from '@/components/user/dashboard/SaveButton';
+import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
 
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -90,6 +91,15 @@ export function RentalProfile({ profile }) {
                         isDirty: isDirty,
                         onClick: handleSubmit
                     }}
+                />
+            )}
+
+            {/* Share Link */}
+            {profile?.id && (
+                <DashboardShareLink
+                    label="Rental Listing Link"
+                    url={`/rentals/${profile.id}`}
+                    description="Share this link to show your property to potential tenants"
                 />
             )}
 

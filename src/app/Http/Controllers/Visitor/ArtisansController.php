@@ -115,7 +115,7 @@ class ArtisansController extends Controller
      */
     public function show(string $id): Response
     {
-        $artisan = Artisan::with(['specialties', 'portfolio', 'user'])
+        $artisan = Artisan::with(['specialties', 'portfolio', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
@@ -183,6 +183,15 @@ class ArtisansController extends Controller
                     ];
                 }),
                 'views_count' => $artisan->views_count,
+                'video_links' => $artisan->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $artisan->average_rating,

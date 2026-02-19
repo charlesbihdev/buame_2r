@@ -120,7 +120,7 @@ class HotelsController extends Controller
      */
     public function show(string $id): Response
     {
-        $hotel = Hotel::with(['images', 'features', 'user'])
+        $hotel = Hotel::with(['images', 'features', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
@@ -191,6 +191,15 @@ class HotelsController extends Controller
                 'is_verified' => $hotel->is_verified,
                 'is_active' => $hotel->is_active,
                 'views_count' => $hotel->views_count,
+                'video_links' => $hotel->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $hotel->average_rating,

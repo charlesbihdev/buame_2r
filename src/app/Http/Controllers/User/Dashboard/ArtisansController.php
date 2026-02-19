@@ -15,6 +15,13 @@ use Inertia\Response;
 
 class ArtisansController extends Controller
 {
+    use \App\Http\Traits\HasVideoLinks;
+
+    protected function getVideoLinkableModel($request)
+    {
+        return Auth::user()->artisans()->first();
+    }
+
     /**
      * Display a listing of the resource.
      */

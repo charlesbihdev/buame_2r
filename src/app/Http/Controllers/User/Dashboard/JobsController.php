@@ -12,6 +12,23 @@ use Inertia\Response;
 
 class JobsController extends Controller
 {
+    use \App\Http\Traits\HasVideoLinks;
+
+    protected function getVideoLinkableModel($request)
+    {
+        $user = Auth::user();
+        $job = $request->route('job');
+
+        if ($job instanceof \App\Models\Job) {
+            if (!$user->jobPoster || $job->job_poster_id !== $user->jobPoster->id) {
+                return null;
+            }
+            return $job;
+        }
+
+        return $user->jobPoster?->jobs()->where('id', $job)->first();
+    }
+
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there

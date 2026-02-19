@@ -16,6 +16,11 @@ class VideoLink extends Model
         'platform',
     ];
 
+    protected $appends = [
+        'embed_url',
+        'tiktok_video_id',
+    ];
+
     public function linkable()
     {
         return $this->morphTo();

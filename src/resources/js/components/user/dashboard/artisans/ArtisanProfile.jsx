@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
 import { artisanSkills } from '@/config/artisan-skills';
+import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
 
 export function ArtisanProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -120,6 +121,15 @@ export function ArtisanProfile({ profile }) {
                         isDirty: isDirty,
                         onClick: handleSubmit
                     }}
+                />
+            )}
+
+            {/* Share Link */}
+            {profile?.id && (
+                <DashboardShareLink
+                    label="Artisan Profile Link"
+                    url={`/artisans/${profile.id}`}
+                    description="Share this link to let people view your artisan profile"
                 />
             )}
 

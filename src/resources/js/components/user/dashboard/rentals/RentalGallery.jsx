@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
 import { router } from '@inertiajs/react';
 import { ImagePlus, Star, Trash2, Edit2 } from 'lucide-react';
 import { useState } from 'react';
@@ -140,6 +141,14 @@ export function RentalGallery({ profile }) {
                     setShowImageForm(false);
                     setEditingImage(null);
                 }}
+            />
+
+            {/* Video Links */}
+            <VideoLinksManager
+                videoLinks={profile?.video_links || []}
+                storeRouteName="user.dashboard.rentals.video-links.store"
+                destroyRouteName="user.dashboard.rentals.video-links.destroy"
+                routeParams={{ rental: profile.id }}
             />
         </div>
     );

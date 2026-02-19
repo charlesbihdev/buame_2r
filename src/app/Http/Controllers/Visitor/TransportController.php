@@ -99,7 +99,7 @@ class TransportController extends Controller
      */
     public function show(string $id): Response
     {
-        $ride = TransportRide::with(['images', 'user'])
+        $ride = TransportRide::with(['images', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
@@ -163,6 +163,15 @@ class TransportController extends Controller
                 'is_verified' => $ride->is_verified,
                 'is_active' => $ride->is_active,
                 'views_count' => $ride->views_count,
+                'video_links' => $ride->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $ride->average_rating,

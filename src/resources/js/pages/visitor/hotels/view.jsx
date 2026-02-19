@@ -2,6 +2,7 @@ import { BackToHome } from '@/components/ui/back-to-home';
 import { Button } from '@/components/ui/button';
 import { CautionBanner } from '@/components/ui/caution-banner';
 import { ReviewSection } from '@/components/ui/review-section';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { HotelImageGallery } from '@/components/visitor/hotels/HotelImageGallery';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
@@ -178,6 +179,36 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
                             <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Property Images</h2>
                             <HotelImageGallery images={hotel?.images || []} />
                         </div>
+
+                        {/* Videos */}
+                        {hotel?.video_links && hotel.video_links.length > 0 && (() => {
+                            const tallPlatforms = ['tiktok', 'instagram'];
+                            const tallVideos = hotel.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                            const wideVideos = hotel.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                            return (
+                                <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                    <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                    <div className="space-y-4">
+                                        {wideVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {wideVideos.map((link) => (
+                                                    <VideoEmbed key={link.id} url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                ))}
+                                            </div>
+                                        )}
+                                        {tallVideos.length > 0 && (
+                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                {tallVideos.map((link) => (
+                                                    <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                        <VideoEmbed url={link.url} platform={link.platform} embedUrl={link.embed_url} tiktokVideoId={link.tiktok_video_id} title={link.title} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })()}
 
                         {/* About Section */}
                         <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">

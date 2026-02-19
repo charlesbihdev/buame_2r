@@ -1,11 +1,11 @@
+import { BackToHome } from '@/components/ui/back-to-home';
+import { Button } from '@/components/ui/button';
+import { CautionBanner } from '@/components/ui/caution-banner';
+import { ReviewSection } from '@/components/ui/review-section';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
-import { BackToHome } from '@/components/ui/back-to-home';
-import { ArrowLeft, Phone, Mail, MessageCircle, MapPin, Star, Package, Truck, ChevronLeft, ChevronRight, Store, ExternalLink, X, ZoomIn } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ReviewSection } from '@/components/ui/review-section';
-import { CautionBanner } from '@/components/ui/caution-banner';
-import { VideoEmbed } from '@/components/ui/video-embed';
+import { ChevronLeft, ChevronRight, ExternalLink, Mail, MapPin, MessageCircle, Package, Phone, Star, Store, Truck, X, ZoomIn } from 'lucide-react';
 import { useState } from 'react';
 
 export default function MarketplaceView({ product, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -49,15 +49,25 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
         setLightboxOpen(false);
     };
 
-    const whatsappUrl = product.whatsapp_url || (product.whatsapp ? `https://wa.me/${product.whatsapp.replace(/\D/g, '')}?text=Hello, I'm interested in buying ${product.title}.` : null);
+    const whatsappUrl =
+        product.whatsapp_url ||
+        (product.whatsapp ? `https://wa.me/${product.whatsapp.replace(/\D/g, '')}?text=Hello, I'm interested in buying ${product.title}.` : null);
 
-    const productDescription = product.description ? product.description.substring(0, 150) : `${product.title} available for ${product.price || 'negotiable price'}`;
+    const productDescription = product.description
+        ? product.description.substring(0, 150)
+        : `${product.title} available for ${product.price || 'negotiable price'}`;
 
     return (
         <VisitorLayout>
             <Head title={`${product.title} | Marketplace`}>
-                <meta name="description" content={`${product.title} - ${product.price || 'Contact for price'}. ${productDescription}${productDescription.length >= 150 ? '...' : ''} Located in ${product.location}.`} />
-                <meta name="keywords" content={`${product.title}, ${product.category}, buy ${product.title}, ${product.location}, 2RBUAME marketplace`} />
+                <meta
+                    name="description"
+                    content={`${product.title} - ${product.price || 'Contact for price'}. ${productDescription}${productDescription.length >= 150 ? '...' : ''} Located in ${product.location}.`}
+                />
+                <meta
+                    name="keywords"
+                    content={`${product.title}, ${product.category}, buy ${product.title}, ${product.location}, 2RBUAME marketplace`}
+                />
                 <meta property="og:title" content={`${product.title} | 2RBUAME Marketplace`} />
                 <meta property="og:description" content={`${product.title} - ${product.price || 'Contact for price'}. Shop now on 2RBUAME.`} />
                 <meta property="og:type" content="product" />
@@ -99,8 +109,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                             key={index}
                                             onClick={() => setCurrentImageIndex(index)}
                                             className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${index === currentImageIndex
-                                                ? 'ring-2 ring-[var(--primary)] ring-offset-2'
-                                                : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
+                                                    ? 'ring-2 ring-[var(--primary)] ring-offset-2'
+                                                    : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
                                                 }`}
                                         >
                                             <img
@@ -132,13 +142,14 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                 </div>
                                 <h1 className="mb-3 text-3xl font-bold text-[var(--foreground)] dark:text-white">{product.title}</h1>
                                 <div className="flex flex-wrap items-center gap-4">
-                                    {(product.rating > 0 || product.reviews > 0) && (
+                                    {(parseFloat(product?.rating) > 0 || parseInt(product?.reviews) > 0) && (
                                         <div className="flex items-center gap-1">
                                             <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                                            <span className="font-bold">{product.rating || 0}</span>
-                                            <span className="text-gray-500">({product.reviews || 0} reviews)</span>
+                                            <span className="font-bold">{parseFloat(product?.rating) || 0}</span>
+                                            <span className="text-gray-500">({parseInt(product?.reviews) || 0} reviews)</span>
                                         </div>
                                     )}
+
                                     <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                                         <MapPin className="h-5 w-5" />
                                         {product.location}
@@ -160,7 +171,9 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         {/* Description */}
                         <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                             <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Description</h2>
-                            <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">{product.description || 'No description available.'}</p>
+                            <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+                                {product.description || 'No description available.'}
+                            </p>
 
                             {product.specifications && product.specifications.length > 0 && (
                                 <div className="mb-4">
@@ -175,47 +188,49 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         </div>
 
                         {/* Product Videos */}
-                        {product.video_links && product.video_links.length > 0 && (() => {
-                            const tallPlatforms = ['tiktok', 'instagram'];
-                            const tallVideos = product.video_links.filter((l) => tallPlatforms.includes(l.platform));
-                            const wideVideos = product.video_links.filter((l) => !tallPlatforms.includes(l.platform));
-                            return (
-                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Product Videos</h2>
-                                    <div className="space-y-4">
-                                        {/* Wide format: YouTube, Facebook, LinkCard */}
-                                        {wideVideos.length > 0 && (
-                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                                {wideVideos.map((link) => (
-                                                    <VideoEmbed
-                                                        key={link.id}
-                                                        url={link.url}
-                                                        platform={link.platform}
-                                                        embedUrl={link.embed_url}
-                                                        tiktokVideoId={link.tiktok_video_id}
-                                                    />
-                                                ))}
-                                            </div>
-                                        )}
-                                        {/* Tall format: TikTok, Instagram - matched heights */}
-                                        {tallVideos.length > 0 && (
-                                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                                {tallVideos.map((link) => (
-                                                    <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                        {product.video_links &&
+                            product.video_links.length > 0 &&
+                            (() => {
+                                const tallPlatforms = ['tiktok', 'instagram'];
+                                const tallVideos = product.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                                const wideVideos = product.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                                return (
+                                    <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                        <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Product Videos</h2>
+                                        <div className="space-y-4">
+                                            {/* Wide format: YouTube, Facebook, LinkCard */}
+                                            {wideVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {wideVideos.map((link) => (
                                                         <VideoEmbed
+                                                            key={link.id}
                                                             url={link.url}
                                                             platform={link.platform}
                                                             embedUrl={link.embed_url}
                                                             tiktokVideoId={link.tiktok_video_id}
                                                         />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {/* Tall format: TikTok, Instagram - matched heights */}
+                                            {tallVideos.length > 0 && (
+                                                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                                    {tallVideos.map((link) => (
+                                                        <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                            <VideoEmbed
+                                                                url={link.url}
+                                                                platform={link.platform}
+                                                                embedUrl={link.embed_url}
+                                                                tiktokVideoId={link.tiktok_video_id}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })()}
+                                );
+                            })()}
 
                         {/* Delivery & Warranty */}
                         {(product.delivery_available || product.warranty) && (
@@ -255,19 +270,14 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         <Store className="h-5 w-5 text-[var(--primary)]" />
                                         <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">Sold by</span>
                                     </div>
-                                    <Link
-                                        href={`/store/${product.store.slug}`}
-                                        className="group mb-2 block"
-                                    >
+                                    <Link href={`/store/${product.store.slug}`} className="group mb-2 block">
                                         <h3 className="text-lg font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
                                             {product.store.name}
                                             <ExternalLink className="ml-1.5 inline h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                                         </h3>
                                     </Link>
                                     {product.store.description && (
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                                            {product.store.description}
-                                        </p>
+                                        <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">{product.store.description}</p>
                                     )}
                                     <Link
                                         href={`/store/${product.store.slug}`}
@@ -294,7 +304,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         {product.phone && (
                                             <a
                                                 href={`tel:${product.phone}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
                                             >
                                                 <Phone className="h-5 w-5 text-[var(--primary)]" />
                                                 <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.phone}</span>
@@ -305,7 +315,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                                 href={whatsappUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
                                             >
                                                 <MessageCircle className="h-5 w-5 text-[var(--primary)]" />
                                                 <span className="font-semibold text-[var(--foreground)] dark:text-white">WhatsApp</span>
@@ -314,7 +324,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         {product.email && (
                                             <a
                                                 href={`mailto:${product.email}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
                                             >
                                                 <Mail className="h-5 w-5 text-[var(--primary)]" />
                                                 <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.email}</span>
@@ -327,10 +337,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                             {/* Action Buttons */}
                             <div className="space-y-3">
                                 {whatsappUrl && (
-                                    <Button
-                                        asChild
-                                        className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]"
-                                    >
+                                    <Button asChild className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
                                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                                             <MessageCircle className="mr-2 h-5 w-5" />
                                             Contact via WhatsApp
@@ -371,7 +378,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                     {/* Close Button */}
                     <button
                         onClick={closeLightbox}
-                        className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                        className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                     >
                         <X className="h-6 w-6" />
                     </button>
@@ -380,7 +387,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                     {images.length > 1 && (
                         <button
                             onClick={prevImage}
-                            className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                            className="absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                         >
                             <ChevronLeft className="h-6 w-6" />
                         </button>
@@ -388,11 +395,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
 
                     {/* Main Image */}
                     <div className="relative max-h-[85vh] max-w-5xl">
-                        <img
-                            src={currentImage}
-                            alt={product.title}
-                            className="max-h-[85vh] w-full rounded-lg object-contain"
-                        />
+                        <img src={currentImage} alt={product.title} className="max-h-[85vh] w-full rounded-lg object-contain" />
 
                         {/* Image Counter */}
                         <div className="mt-4 text-center">
@@ -407,7 +410,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                     {images.length > 1 && (
                         <button
                             onClick={nextImage}
-                            className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                            className="absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                         >
                             <ChevronRight className="h-6 w-6" />
                         </button>

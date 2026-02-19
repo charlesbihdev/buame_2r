@@ -166,6 +166,15 @@ class DashboardController extends Controller
                     'product_limit' => $user->store->product_limit,
                     'remaining_slots' => $user->store->remaining_product_slots,
                     'products_count' => $user->store->products()->count(),
+                    'video_links' => $user->store->videoLinks->map(function ($link) {
+                        return [
+                            'id' => $link->id,
+                            'url' => $link->url,
+                            'platform' => $link->platform,
+                            'embed_url' => $link->embed_url,
+                            'tiktok_video_id' => $link->tiktok_video_id,
+                        ];
+                    })->toArray(),
                 ] : null,
                 'products' => $user->marketplaceProducts()->with(['images', 'specifications', 'store', 'videoLinks'])->latest()->get(),
                 'tiers' => config('categories.list.marketplace.tiers', []),
@@ -217,7 +226,7 @@ class DashboardController extends Controller
                     'is_verified' => $user->jobPoster->is_verified,
                     'is_active' => $user->jobPoster->is_active,
                 ] : $profileService->getOrCreateProfile($user, 'jobs'),
-                'listings' => $user->jobPoster?->jobs()->latest()->get() ?? collect(),
+                'listings' => $user->jobPoster?->jobs()->with('videoLinks')->latest()->get() ?? collect(),
                 'stats' => [
                     'total' => $user->jobPoster?->jobs()->count() ?? 0,
                     'active' => $user->jobPoster?->jobs()->where('is_active', true)->count() ?? 0,

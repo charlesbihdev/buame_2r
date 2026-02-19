@@ -253,6 +253,7 @@ class JobsController extends Controller
             ->with(['poster.user' => function ($query) {
                 $query->select('id', 'name', 'email', 'phone');
             }])
+            ->with('videoLinks')
             ->with(['poster.reviews' => function ($query) {
                 $query->approved()
                     ->with('images')
@@ -371,6 +372,15 @@ class JobsController extends Controller
                 'whatsapp' => $whatsapp,
                 'whatsapp_url' => $whatsappUrl,
                 'email' => $email,
+                'video_links' => $job->videoLinks->map(function ($link) {
+                    return [
+                        'id' => $link->id,
+                        'url' => $link->url,
+                        'platform' => $link->platform,
+                        'embed_url' => $link->embed_url,
+                        'tiktok_video_id' => $link->tiktok_video_id,
+                    ];
+                })->toArray(),
             ],
             'reviews' => $formattedReviews,
             'average_rating' => $poster->average_rating,

@@ -14,6 +14,18 @@ use Inertia\Response;
 
 class RentalsController extends Controller
 {
+    use \App\Http\Traits\HasVideoLinks;
+
+    protected function getVideoLinkableModel($request)
+    {
+        $rentalId = $request->route('rental');
+        if ($rentalId instanceof \App\Models\Rental) {
+            return $rentalId;
+        }
+
+        return Auth::user()->rentals()->where('id', $rentalId)->first();
+    }
+
     public function index(): RedirectResponse
     {
         // Redirect to main dashboard - category content is rendered there

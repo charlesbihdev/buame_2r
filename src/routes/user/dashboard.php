@@ -38,6 +38,8 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::post('artisans/portfolio', [ArtisansController::class, 'storePortfolio'])->name('artisans.portfolio.store');
         Route::put('artisans/portfolio/{portfolio}', [ArtisansController::class, 'updatePortfolio'])->name('artisans.portfolio.update');
         Route::delete('artisans/portfolio/{portfolio}', [ArtisansController::class, 'destroyPortfolio'])->name('artisans.portfolio.destroy');
+        Route::post('artisans/video-links', [ArtisansController::class, 'storeVideoLink'])->name('artisans.video-links.store');
+        Route::delete('artisans/video-links/{videoLink}', [ArtisansController::class, 'destroyVideoLink'])->name('artisans.video-links.destroy');
     });
 
     // ========== MARKETPLACE ==========
@@ -54,6 +56,8 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::post('marketplace/store/toggle-active', [StoreController::class, 'toggleActive'])->name('marketplace.store.toggle-active');
         Route::put('marketplace/store', [StoreController::class, 'update'])->name('marketplace.store.update');
         Route::post('marketplace/store/upgrade', [StoreController::class, 'upgrade'])->name('marketplace.store.upgrade');
+        Route::post('marketplace/store/video-links', [StoreController::class, 'storeVideoLink'])->name('marketplace.store.video-links.store');
+        Route::delete('marketplace/store/video-links/{videoLink}', [StoreController::class, 'destroyVideoLink'])->name('marketplace.store.video-links.destroy');
 
         // Parameterized routes come after specific routes
         Route::put('marketplace/{marketplace}', [MarketplaceController::class, 'update'])->name('marketplace.update');
@@ -79,6 +83,8 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::post('hotels/images/{image}', [HotelsController::class, 'updateImage'])->name('hotels.images.update');
         Route::put('hotels/images/{image}/primary', [HotelsController::class, 'setPrimaryImage'])->name('hotels.images.primary');
         Route::delete('hotels/images/{image}', [HotelsController::class, 'destroyImage'])->name('hotels.images.destroy');
+        Route::post('hotels/video-links', [HotelsController::class, 'storeVideoLink'])->name('hotels.video-links.store');
+        Route::delete('hotels/video-links/{videoLink}', [HotelsController::class, 'destroyVideoLink'])->name('hotels.video-links.destroy');
     });
 
     // ========== TRANSPORT ==========
@@ -99,6 +105,8 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::post('transport/images/{image}', [TransportController::class, 'updateImage'])->name('transport.images.update');
         Route::put('transport/images/{image}/primary', [TransportController::class, 'setPrimaryImage'])->name('transport.images.primary');
         Route::delete('transport/images/{image}', [TransportController::class, 'destroyImage'])->name('transport.images.destroy');
+        Route::post('transport/video-links', [TransportController::class, 'storeVideoLink'])->name('transport.video-links.store');
+        Route::delete('transport/video-links/{videoLink}', [TransportController::class, 'destroyVideoLink'])->name('transport.video-links.destroy');
     });
 
     // ========== RENTALS ==========
@@ -120,6 +128,8 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::put('rentals/{rental}/images/{image}/primary', [RentalsController::class, 'setPrimaryImage'])->name('rentals.images.primary');
         Route::post('rentals/{rental}/features', [RentalsController::class, 'storeFeature'])->name('rentals.features.store');
         Route::delete('rentals/{rental}/features/{feature}', [RentalsController::class, 'destroyFeature'])->name('rentals.features.destroy');
+        Route::post('rentals/{rental}/video-links', [RentalsController::class, 'storeVideoLink'])->name('rentals.video-links.store');
+        Route::delete('rentals/{rental}/video-links/{videoLink}', [RentalsController::class, 'destroyVideoLink'])->name('rentals.video-links.destroy');
     });
 
     // ========== JOBS ==========
@@ -141,5 +151,7 @@ Route::middleware(['auth'])->prefix('user/dashboard')->name('user.dashboard.')->
         Route::put('jobs/{job}', [JobsController::class, 'update'])->name('jobs.update');
         Route::patch('jobs/{job}', [JobsController::class, 'update']);
         Route::delete('jobs/{job}', [JobsController::class, 'destroy'])->name('jobs.destroy');
+        Route::post('jobs/{job}/video-links', [JobsController::class, 'storeVideoLink'])->name('jobs.video-links.store');
+        Route::delete('jobs/{job}/video-links/{videoLink}', [JobsController::class, 'destroyVideoLink'])->name('jobs.video-links.destroy');
     });
 });

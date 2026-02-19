@@ -1,12 +1,14 @@
 import { router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Plus, Edit, Briefcase, MapPin, Trash2, Eye, EyeOff } from 'lucide-react';
+import { VideoLinksManager } from '@/components/ui/VideoLinksManager';
+import { Plus, Edit, Briefcase, MapPin, Trash2, Eye, EyeOff, Video } from 'lucide-react';
 import { useState } from 'react';
 import { EditJobModal } from './EditJobModal';
 
 export function JobsListings({ listings, onAddJob, poster }) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [selectedJob, setSelectedJob] = useState(null);
+    const [videoLinksJobId, setVideoLinksJobId] = useState(null);
 
     const handleCreate = () => {
         if (onAddJob) {
@@ -125,7 +127,28 @@ export function JobsListings({ listings, onAddJob, poster }) {
                                     >
                                         <Trash2 className="h-3 w-3" />
                                     </Button>
+                                    <Button
+                                        onClick={() => setVideoLinksJobId(videoLinksJobId === listing.id ? null : listing.id)}
+                                        variant="outline"
+                                        size="sm"
+                                        className={videoLinksJobId === listing.id ? 'border-[var(--primary)] text-[var(--primary)]' : ''}
+                                    >
+                                        <Video className="mr-1 h-3 w-3" />
+                                        {listing.video_links?.length || 0}
+                                    </Button>
                                 </div>
+
+                                {/* Video Links Section */}
+                                {videoLinksJobId === listing.id && (
+                                    <div className="mt-3 border-t border-gray-200 pt-3 dark:border-gray-700">
+                                        <VideoLinksManager
+                                            videoLinks={listing.video_links || []}
+                                            storeRouteName="user.dashboard.jobs.video-links.store"
+                                            destroyRouteName="user.dashboard.jobs.video-links.destroy"
+                                            routeParams={{ job: listing.id }}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

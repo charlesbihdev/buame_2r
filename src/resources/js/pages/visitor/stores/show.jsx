@@ -1,16 +1,26 @@
-import { ReviewSection } from '@/components/ui/review-section';
 import { CautionBanner } from '@/components/ui/caution-banner';
+import { ReviewSection } from '@/components/ui/review-section';
+import { VideoEmbed } from '@/components/ui/video-embed';
 import { StoreEmptyState } from '@/components/visitor/stores/StoreEmptyState';
 import { StoreFooter } from '@/components/visitor/stores/StoreFooter';
 import { StoreHeader } from '@/components/visitor/stores/StoreHeader';
 import { StoreHero } from '@/components/visitor/stores/StoreHero';
 import { StoreProductGrid } from '@/components/visitor/stores/StoreProductGrid';
 import { StoreSearch } from '@/components/visitor/stores/StoreSearch';
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 
-export default function StoreShow({ store, products, filters, categoryCounts, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
+export default function StoreShow({
+    store,
+    products,
+    filters,
+    categoryCounts,
+    reviews = [],
+    average_rating = 0,
+    reviews_count = 0,
+    rating_breakdown = {},
+}) {
     const [searchQuery, setSearchQuery] = useState(filters?.search || '');
     const [location, setLocation] = useState(filters?.location || '');
     const [viewMode, setViewMode] = useState('grid');
@@ -71,7 +81,10 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
     return (
         <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
             <Head title={store.name}>
-                <meta name="description" content={`${store.name} - ${storeDescription}${storeDescription.length >= 150 ? '...' : ''} Shop ${productCount} products on 2RBUAME marketplace.`} />
+                <meta
+                    name="description"
+                    content={`${store.name} - ${storeDescription}${storeDescription.length >= 150 ? '...' : ''} Shop ${productCount} products on 2RBUAME marketplace.`}
+                />
                 <meta name="keywords" content={`${store.name}, marketplace, shop, products, buy, Ghana, 2RBUAME`} />
                 <meta property="og:title" content={`${store.name} | 2RBUAME Marketplace`} />
                 <meta property="og:description" content={`Shop at ${store.name}. Browse ${productCount} products on 2RBUAME.`} />
@@ -88,7 +101,7 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
             {/* Back Button */}
             <div className="mx-auto max-w-7xl px-4 pt-4">
                 <button
-                    onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = '/marketplace'}
+                    onClick={() => (window.history.length > 1 ? window.history.back() : (window.location.href = '/marketplace'))}
                     className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
                 >
                     <ArrowLeft className="h-4 w-4" />
@@ -135,12 +148,53 @@ export default function StoreShow({ store, products, filters, categoryCounts, re
                 {hasProducts ? (
                     <StoreProductGrid products={products} viewMode={viewMode} />
                 ) : (
-                    <StoreEmptyState
-                        hasFilters={hasActiveFilters}
-                        onClearFilters={handleClearFilters}
-                        storeName={store.name}
-                    />
+                    <StoreEmptyState hasFilters={hasActiveFilters} onClearFilters={handleClearFilters} storeName={store.name} />
                 )}
+
+                {/* Store Videos */}
+                {store.video_links &&
+                    store.video_links.length > 0 &&
+                    (() => {
+                        const tallPlatforms = ['tiktok', 'instagram'];
+                        const tallVideos = store.video_links.filter((l) => tallPlatforms.includes(l.platform));
+                        const wideVideos = store.video_links.filter((l) => !tallPlatforms.includes(l.platform));
+                        return (
+                            <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Store Videos</h2>
+                                <div className="space-y-4">
+                                    {wideVideos.length > 0 && (
+                                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                            {wideVideos.map((link) => (
+                                                <VideoEmbed
+                                                    key={link.id}
+                                                    url={link.url}
+                                                    platform={link.platform}
+                                                    embedUrl={link.embed_url}
+                                                    tiktokVideoId={link.tiktok_video_id}
+                                                    title={link.title}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+                                    {tallVideos.length > 0 && (
+                                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                            {tallVideos.map((link) => (
+                                                <div key={link.id} className="min-h-[480px]" style={{ height: '480px' }}>
+                                                    <VideoEmbed
+                                                        url={link.url}
+                                                        platform={link.platform}
+                                                        embedUrl={link.embed_url}
+                                                        tiktokVideoId={link.tiktok_video_id}
+                                                        title={link.title}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })()}
 
                 {/* Reviews Section */}
                 <ReviewSection
