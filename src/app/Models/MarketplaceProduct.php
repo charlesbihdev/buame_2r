@@ -85,6 +85,11 @@ class MarketplaceProduct extends Model
         return $this->morphMany(Favorite::class, 'favoritable');
     }
 
+    public function videoLinks(): MorphMany
+    {
+        return $this->morphMany(VideoLink::class, 'linkable');
+    }
+
     public function primaryImage()
     {
         return $this->hasOne(ProductImage::class, 'product_id')->where('is_primary', true);

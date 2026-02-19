@@ -74,6 +74,11 @@ class Job extends Model
         return $this->morphMany(Favorite::class, 'favoritable');
     }
 
+    public function videoLinks(): MorphMany
+    {
+        return $this->morphMany(VideoLink::class, 'linkable');
+    }
+
     /**
      * Scope to filter jobs whose poster owners have active subscriptions.
      */

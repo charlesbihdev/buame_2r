@@ -85,6 +85,11 @@ class Hotel extends Model
         return $this->morphMany(Favorite::class, 'favoritable');
     }
 
+    public function videoLinks(): MorphMany
+    {
+        return $this->morphMany(VideoLink::class, 'linkable');
+    }
+
     public function primaryImage()
     {
         return $this->hasOne(HotelImage::class)->where('is_primary', true);

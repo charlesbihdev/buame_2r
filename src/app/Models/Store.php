@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Cache;
 
 class Store extends Model
@@ -60,6 +61,11 @@ class Store extends Model
     public function getProductLimitAttribute()
     {
         return config("categories.list.marketplace.tiers.{$this->tier}.product_limit", 10);
+    }
+
+    public function videoLinks(): MorphMany
+    {
+        return $this->morphMany(VideoLink::class, 'linkable');
     }
 
     public function getRemainingProductSlotsAttribute()

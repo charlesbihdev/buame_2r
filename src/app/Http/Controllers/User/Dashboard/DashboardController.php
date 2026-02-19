@@ -167,7 +167,7 @@ class DashboardController extends Controller
                     'remaining_slots' => $user->store->remaining_product_slots,
                     'products_count' => $user->store->products()->count(),
                 ] : null,
-                'products' => $user->marketplaceProducts()->with(['images', 'specifications', 'store'])->latest()->get(),
+                'products' => $user->marketplaceProducts()->with(['images', 'specifications', 'store', 'videoLinks'])->latest()->get(),
                 'tiers' => config('categories.list.marketplace.tiers', []),
                 'stats' => [
                     'total' => $user->marketplaceProducts()->count(),
