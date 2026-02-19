@@ -9,6 +9,7 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
+import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
 
 export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -100,6 +101,15 @@ export function TransportProfile({ profile }) {
                         isDirty: isDirty,
                         onClick: handleSubmit
                     }}
+                />
+            )}
+
+            {/* Share Link */}
+            {profile?.id && (
+                <DashboardShareLink
+                    label="Transport Service Link"
+                    url={`/transport/${profile.id}`}
+                    description="Share this link so customers can book a ride"
                 />
             )}
 

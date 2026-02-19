@@ -108,11 +108,10 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         <button
                                             key={index}
                                             onClick={() => setCurrentImageIndex(index)}
-                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${
-                                                index === currentImageIndex
+                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${index === currentImageIndex
                                                     ? 'ring-2 ring-[var(--primary)] ring-offset-2'
                                                     : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
-                                            }`}
+                                                }`}
                                         >
                                             <img
                                                 src={image}
@@ -424,9 +423,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                 <button
                                     key={index}
                                     onClick={() => setCurrentImageIndex(index)}
-                                    className={`h-2 w-2 rounded-full transition-all ${
-                                        index === currentImageIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
-                                    }`}
+                                    className={`h-2 w-2 rounded-full transition-all ${index === currentImageIndex ? 'w-8 bg-[var(--primary)]' : 'bg-white/50 hover:bg-white/75'
+                                        }`}
                                 />
                             ))}
                         </div>

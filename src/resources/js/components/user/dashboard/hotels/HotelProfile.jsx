@@ -9,6 +9,7 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
+import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
 
 export function HotelProfile({ profile }) {
     console.log('HotelProfile - profile:', profile);
@@ -105,6 +106,15 @@ export function HotelProfile({ profile }) {
                         isDirty: isDirty,
                         onClick: handleSubmit
                     }}
+                />
+            )}
+
+            {/* Share Link */}
+            {profile?.id && (
+                <DashboardShareLink
+                    label="Hotel Page Link"
+                    url={`/hotels/${profile.id}`}
+                    description="Share this link for people to book your hotel"
                 />
             )}
 
