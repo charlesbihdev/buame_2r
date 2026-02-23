@@ -52,8 +52,10 @@ export function ArtisanCard({ artisan }) {
             {/* Details */}
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
-                    <h3 className="text-lg font-bold text-foreground">{artisan.name}</h3>
-                    {artisan.company_name && <p className="text-sm font-medium text-primary">{artisan.company_name}</p>}
+                    <h3 className="text-lg font-bold leading-tight text-foreground">{artisan.name}</h3>
+                    {artisan.skill_type && (
+                        <p className="mt-0.5 text-xs font-medium text-muted-foreground">{formatSkillType(artisan.skill_type)} Professional</p>
+                    )}
                 </div>
 
                 <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
@@ -70,12 +72,17 @@ export function ArtisanCard({ artisan }) {
                 </div>
 
                 {artisan.specialties && artisan.specialties.length > 0 && (
-                    <div className="mb-3 flex flex-wrap gap-1">
-                        {artisan.specialties.map((spec, idx) => (
+                    <div className="mb-3 flex flex-wrap items-center gap-1">
+                        {artisan.specialties.slice(0, 3).map((spec, idx) => (
                             <span key={idx} className="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-semibold text-foreground">
                                 {spec}
                             </span>
                         ))}
+                        {artisan.specialties.length > 3 && (
+                            <span className="rounded-md bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground">
+                                +{artisan.specialties.length - 3} more
+                            </span>
+                        )}
                     </div>
                 )}
 
