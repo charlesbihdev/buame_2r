@@ -77,17 +77,17 @@ export default function Transport({ rides, typeCounts, filters }) {
             </Head>
 
             {/* Hero with Location Search */}
-            <div className="bg-gradient-to-r from-[var(--primary)]/20 via-[var(--primary)]/10 to-transparent dark:from-[var(--primary)]/10 dark:via-[var(--primary)]/5">
+            <div className="bg-gradient-to-r from-[var(--primary)]/20 via-[var(--primary)]/10 to-transparent">
                 <div className="mx-auto max-w-6xl px-4 py-12 md:px-8">
                     <div className="mb-6">
                         <BackToHome />
                     </div>
-                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white">
+                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)]">
                         Find Rides Near You
                     </h1>
 
                     {/* Location Search */}
-                    <div className="mx-auto max-w-4xl rounded-2xl bg-white p-6 shadow-xl dark:bg-[var(--card)]">
+                    <div className="mx-auto max-w-4xl rounded-2xl bg-white p-6 shadow-xl">
                         <div className="flex items-center gap-3">
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--primary)]">
                                 <MapPin className="h-5 w-5 text-white" />
@@ -98,7 +98,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                                 onChange={(e) => setLocation(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleLocationSearch()}
                                 placeholder="Search by location..."
-                                className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
+                                className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:border-[var(--primary)] focus:ring-[var(--primary)]"
                             />
                             <button
                                 onClick={handleLocationSearch}
@@ -116,13 +116,13 @@ export default function Transport({ rides, typeCounts, filters }) {
             <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
                 <div className="mb-8 flex items-center justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Available Rides</h2>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">{totalCount} transport options found</p>
+                        <h2 className="text-2xl font-bold text-[var(--foreground)]">Available Rides</h2>
+                        <p className="text-sm text-gray-600">{totalCount} transport options found</p>
                     </div>
                     <select
                         value={filters?.sort != null ? String(filters.sort) : 'rating'}
                         onChange={handleSortChange}
-                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
+                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
                     >
                         <option value="rating">Sort: Top Rated</option>
                         <option value="price_low">Price: Low to High</option>
@@ -139,7 +139,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                             onClick={() => handleTypeFilter(tab.value)}
                             className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors ${filters?.type === tab.value || (!filters?.type && tab.value === null)
                                 ? 'bg-[var(--primary)] text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-[var(--card)] dark:text-white dark:hover:bg-[#1a2e1a]'
+                                : 'bg-white text-gray-700 hover:bg-gray-50#1a2e1a]'
                                 }`}
                         >
                             <span className="text-lg">{tab.emoji}</span>
@@ -154,17 +154,17 @@ export default function Transport({ rides, typeCounts, filters }) {
                         rides.data.map((ride) => (
                             <div
                                 key={ride.id}
-                                className="group overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)]"
+                                className="group overflow-hidden rounded-xl border border-gray-100 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
                             >
                                 {/* Image */}
-                                <div className="relative h-48 overflow-hidden bg-gray-200 dark:bg-gray-800">
+                                <div className="relative h-48 overflow-hidden bg-gray-200">
                                     {ride.image ? (
                                         <div
                                             className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                                             style={{ backgroundImage: `url(${ride.image})` }}
                                         />
                                     ) : (
-                                        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--primary)]/10 to-[var(--primary)]/5 dark:from-[var(--primary)]/15 dark:to-[var(--primary)]/5">
+                                        <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--primary)]/10 to-[var(--primary)]/5">
                                             <span className="text-5xl" aria-hidden>
                                                 {ride.type === 'okada' ? '🛺' :
                                                     ride.type === 'car' ? '🚙' :
@@ -187,35 +187,35 @@ export default function Transport({ rides, typeCounts, filters }) {
 
                                 {/* Content */}
                                 <div className="p-4">
-                                    <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.driver_name}</h3>
+                                    <h3 className="mb-1 text-lg font-bold text-[var(--foreground)]">{ride.driver_name}</h3>
 
-                                    <div className="mb-3 flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
+                                    <div className="mb-3 flex items-center gap-1 text-sm text-gray-600">
                                         <MapPin className="h-4 w-4" />
                                         <span>{ride.location}</span>
                                     </div>
 
                                     <div className="mb-4 flex flex-wrap items-center gap-2 text-xs">
-                                        <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                        <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-700">
                                             <Users className="h-3.5 w-3.5" />
                                             {ride.seats_available != null && ride.seats_available !== '' ? ride.seats_available : '—'} seats
                                         </span>
                                         {Number(ride.reviews_count) > 0 ? (
-                                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 font-medium text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 font-medium text-amber-800">
                                                 <Star className="h-3.5 w-3.5 fill-amber-500" />
                                                 {ride.rating} · {ride.reviews_count} review{ride.reviews_count !== 1 ? 's' : ''}
                                             </span>
                                         ) : (
-                                            <span className="rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                                            <span className="rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-500">
                                                 No reviews yet
                                             </span>
                                         )}
                                     </div>
 
                                     {/* Price (if set) + CTA */}
-                                    <div className="border-t border-gray-100 pt-4 dark:border-gray-800">
+                                    <div className="border-t border-gray-100 pt-4">
                                         {Number(ride?.price_per_seat) > 0 && (
                                             <div className="mb-3">
-                                                <div className="text-lg font-bold text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
+                                                <div className="text-lg font-bold text-[var(--foreground)]">GH₵{ride.price_per_seat}</div>
                                                 <div className="text-xs text-gray-500">per seat</div>
                                             </div>
                                         )}
@@ -231,7 +231,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                         ))
                     ) : (
                         <div className="col-span-full py-12 text-center">
-                            <p className="text-lg text-gray-500 dark:text-gray-400">No transport services found. Be the first to list your service!</p>
+                            <p className="text-lg text-gray-500">No transport services found. Be the first to list your service!</p>
                             <Link href="/join-as-provider" className="mt-4 inline-block text-[var(--primary)] hover:underline">
                                 Join as Provider →
                             </Link>

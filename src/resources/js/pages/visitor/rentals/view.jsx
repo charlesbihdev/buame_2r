@@ -16,8 +16,8 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                     <meta name="robots" content="noindex, nofollow" />
                 </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                        <p className="text-lg text-gray-600 dark:text-gray-400">Rental not found.</p>
+                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center">
+                        <p className="text-lg text-gray-600">Rental not found.</p>
                         <div className="mt-6 flex justify-center">
                             <BackToHome to="/rentals" label="Back to Rentals" />
                         </div>
@@ -77,16 +77,16 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                         <RentalImageGallery images={rental.images} primaryImage={rental.primary_image} rentalName={rental.name} />
 
                         {/* Header */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
                             <div className="mb-4 flex items-start justify-between">
                                 <div>
                                     <div className="mb-2 flex items-center gap-2">
-                                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">{rental.name}</h1>
+                                        <h1 className="text-3xl font-bold text-[var(--foreground)]">{rental.name}</h1>
                                         <span className="rounded-full bg-[var(--primary)] px-3 py-1 text-sm font-bold text-white">
                                             {getTypeLabel(rental.type)}
                                         </span>
                                     </div>
-                                    <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                                    <div className="flex items-center gap-1 text-gray-600">
                                         <MapPin className="h-5 w-5" />
                                         {rental.location}
                                     </div>
@@ -100,8 +100,8 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                             const tallVideos = rental.video_links.filter((l) => tallPlatforms.includes(l.platform));
                             const wideVideos = rental.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                             return (
-                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)]">Videos</h2>
                                     <div className="space-y-4">
                                         {wideVideos.length > 0 && (
                                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -126,18 +126,18 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
 
                         {/* Description */}
                         {rental.description && (
-                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Description</h2>
-                                <p className="mb-4 text-gray-700 dark:text-gray-300">{rental.description}</p>
+                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Description</h2>
+                                <p className="mb-4 text-gray-700">{rental.description}</p>
 
                                 {rental.features && rental.features.length > 0 && (
                                     <div className="mb-4">
-                                        <h3 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Features</h3>
+                                        <h3 className="mb-2 text-sm font-semibold text-gray-700">Features</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {rental.features.map((feature, idx) => (
                                                 <span
                                                     key={idx}
-                                                    className="rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-white dark:text-[var(--primary)]"
+                                                    className="rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-white"
                                                 >
                                                     {feature}
                                                 </span>
@@ -150,9 +150,9 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
 
                         {/* Rental Terms */}
                         {rental.rental_terms && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Rental Terms</h2>
-                                <p className="text-gray-700 dark:text-gray-300">{rental.rental_terms}</p>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Rental Terms</h2>
+                                <p className="text-gray-700">{rental.rental_terms}</p>
                             </div>
                         )}
                     </div>
@@ -162,9 +162,9 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing */}
                             {rental.price && (
-                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                    <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Rental Price</div>
-                                    <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                    <div className="mb-2 text-sm text-gray-600">Rental Price</div>
+                                    <div className="mb-4 text-3xl font-black text-[var(--foreground)]">
                                         ₵{parseFloat(rental.price).toLocaleString()}
                                     </div>
                                     {rental.period && <div className="text-sm text-gray-500">{getPeriodLabel(rental.period)}</div>}
@@ -172,14 +172,14 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                             )}
 
                             {/* Contact */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Owner</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Contact Owner</h3>
 
-                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
-                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
-                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800">
+                                        <span className="mt-0.5 text-amber-600">🛡️</span>
                                         <span>
-                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900" onClick={(e) => {
                                                 e.preventDefault();
                                                 document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
                                             }}>Safe Transaction Notice</a> before contacting the owner.
@@ -191,19 +191,19 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                                     {rental.phone && (
                                         <a
                                             href={`tel:${rental.phone}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                         >
                                             <Phone className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{rental.phone}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{rental.phone}</span>
                                         </a>
                                     )}
                                     {rental.phone_2 && (
                                         <a
                                             href={`tel:${rental.phone_2}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                         >
                                             <Phone className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{rental.phone_2}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{rental.phone_2}</span>
                                         </a>
                                     )}
                                     {whatsappNumber && (
@@ -211,19 +211,19 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                                             href={whatsappUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                         >
                                             <MessageCircle className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">WhatsApp</span>
+                                            <span className="font-semibold text-[var(--foreground)]">WhatsApp</span>
                                         </a>
                                     )}
                                     {rental.email && (
                                         <a
                                             href={`mailto:${rental.email}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                         >
                                             <Mail className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{rental.email}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{rental.email}</span>
                                         </a>
                                     )}
                                 </div>

@@ -103,37 +103,37 @@ export default function Rentals({ rentals, filters, typeCounts }) {
             </Head>
 
             {/* Hero Section */}
-            <div className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-[var(--foreground)]">
+            <div className="border-b border-gray-200 bg-white">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8">
                     {/* Back Button */}
                     <div className="mb-6">
                         <BackToHome />
                     </div>
-                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">
+                    <h1 className="mb-8 text-center text-4xl font-black text-[var(--foreground)] md:text-5xl">
                         Rent Anything Across Western North and Beyond
                     </h1>
 
                     {/* Search Bar */}
                     <div className="mx-auto max-w-4xl">
-                        <form onSubmit={handleSearch} className="mb-4 flex flex-col gap-3 rounded-xl bg-gray-50 p-4 dark:bg-[var(--card)] md:flex-row">
-                            <div className="flex flex-1 items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[var(--foreground)]">
+                        <form onSubmit={handleSearch} className="mb-4 flex flex-col gap-3 rounded-xl bg-gray-50 p-4 md:flex-row">
+                            <div className="flex flex-1 items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
                                 <Search className="h-5 w-5 text-gray-400" />
                                 <input
                                     type="text"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     placeholder="What are you looking for?"
-                                    className="w-full border-none bg-transparent p-0 text-sm focus:outline-none focus:ring-0 dark:text-white"
+                                    className="w-full border-none bg-transparent p-0 text-sm focus:outline-none focus:ring-0"
                                 />
                             </div>
-                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-[var(--foreground)] md:w-48">
+                            <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 md:w-48">
                                 <MapPin className="h-5 w-5 text-gray-400" />
                                 <input
                                     type="text"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                     placeholder="Location"
-                                    className="w-full border-none bg-transparent p-0 text-sm focus:outline-none focus:ring-0 dark:text-white"
+                                    className="w-full border-none bg-transparent p-0 text-sm focus:outline-none focus:ring-0"
                                 />
                             </div>
                             <button
@@ -154,12 +154,12 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                         onClick={() => handleTypeFilter(isActive ? null : cat.type)}
                                         className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all ${isActive
                                             ? 'border-[var(--primary)] bg-[var(--primary)]/10'
-                                            : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:bg-[var(--card)]'
+                                            : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10'
                                             }`}
                                     >
                                         <cat.icon className="h-5 w-5 text-[var(--primary)]" />
-                                        <span className="text-sm dark:text-white">{cat.label}</span>
-                                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
+                                        <span className="text-sm">{cat.label}</span>
+                                        <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white">
                                             {cat.count}
                                         </span>
                                     </button>
@@ -191,7 +191,7 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                                 onClick={() => handleTypeFilter(filterType)}
                                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${isActive
                                     ? 'bg-[var(--primary)] text-white'
-                                    : 'border border-gray-300 bg-white hover:border-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white'
+                                    : 'border border-gray-300 bg-white hover:border-[var(--primary)]'
                                     }`}
                             >
                                 {filter}
@@ -213,8 +213,8 @@ export default function Rentals({ rentals, filters, typeCounts }) {
                         <RentalPagination rentals={rentals} filters={filters} />
                     </>
                 ) : (
-                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                        <p className="text-lg text-gray-600 dark:text-gray-400">No rentals found. Try adjusting your filters.</p>
+                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center">
+                        <p className="text-lg text-gray-600">No rentals found. Try adjusting your filters.</p>
                     </div>
                 )}
             </div>

@@ -34,16 +34,16 @@ export default function SelectCategory({ categories, registrationData }) {
         <>
             <Head title="Select Category" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12">
                 <div className="w-full max-w-4xl">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Choose Your Category</h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                        <h1 className="text-3xl font-bold text-[var(--foreground)]">Choose Your Category</h1>
+                        <p className="mt-2 text-gray-600">
                             Select the category you want to start with. You can add more later.
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm">
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                             {categories.map((category) => {
                                 const Icon = categoryIcons[category.value] || ShoppingBag;
@@ -56,7 +56,7 @@ export default function SelectCategory({ categories, registrationData }) {
                                         className={`group relative flex flex-col items-center gap-4 rounded-xl border-2 p-6 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/5 ${
                                             isSelected
                                                 ? 'border-[var(--primary)] bg-[var(--primary)]/10'
-                                                : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+                                                : 'border-gray-200 bg-white'
                                         }`}
                                     >
                                         {isSelected && (
@@ -67,15 +67,15 @@ export default function SelectCategory({ categories, registrationData }) {
                                         
                                         <div
                                             className={`flex h-16 w-16 items-center justify-center rounded-full transition-colors ${
-                                                isSelected ? 'bg-[var(--primary)] text-white' : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                                                isSelected ? 'bg-[var(--primary)] text-white' : 'bg-gray-100 text-gray-600'
                                             }`}
                                         >
                                             <Icon className="h-8 w-8" />
                                         </div>
 
                                         <div className="text-center">
-                                            <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{category.label}</h3>
-                                            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{category.description}</p>
+                                            <h3 className="text-lg font-bold text-[var(--foreground)]">{category.label}</h3>
+                                            <p className="mt-1 text-sm text-gray-600">{category.description}</p>
                                             <p className="mt-2 text-lg font-bold text-[var(--primary)]">GH₵ {category.price}</p>
                                         </div>
                                     </button>
@@ -93,8 +93,8 @@ export default function SelectCategory({ categories, registrationData }) {
                             </Button>
                         </div>
 
-                        <div className="mt-6 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <div className="mt-6 rounded-lg bg-gray-50 p-4">
+                            <p className="text-sm text-gray-600">
                                 💡 <strong>Note:</strong> You can switch between categories or add more categories later from your dashboard.
                             </p>
                         </div>

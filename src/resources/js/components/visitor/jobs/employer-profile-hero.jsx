@@ -44,9 +44,9 @@ export function EmployerProfileHero({
     ].filter(Boolean);
 
     return (
-        <div className="relative overflow-hidden bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/20 dark:via-[var(--card)] dark:to-[var(--primary)]/10">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
             {/* Decorative Background Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0 opacity-[0.03]">
                 <div className="absolute -right-20 -top-20 h-96 w-96 rounded-full bg-[var(--primary)]"></div>
                 <div className="absolute -bottom-20 -left-20 h-96 w-96 rounded-full bg-[var(--primary)]"></div>
             </div>
@@ -59,7 +59,7 @@ export function EmployerProfileHero({
                             {/* Logo */}
                             {poster.logo && (
                                 <div className="relative flex-shrink-0">
-                                    <div className="relative h-32 w-32 overflow-hidden rounded-2xl bg-white shadow-xl ring-4 ring-white/50 dark:bg-gray-800 dark:ring-gray-700/50 md:h-40 md:w-40">
+                                    <div className="relative h-32 w-32 overflow-hidden rounded-2xl bg-white shadow-xl ring-4 ring-white/50 md:h-40 md:w-40">
                                         <img
                                             src={poster.logo}
                                             alt={poster.name}
@@ -67,7 +67,7 @@ export function EmployerProfileHero({
                                         />
                                     </div>
                                     {poster.is_verified && (
-                                        <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] shadow-lg ring-4 ring-white dark:ring-[var(--card)]">
+                                        <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--primary)] shadow-lg ring-4 ring-white">
                                             <CheckCircle className="h-6 w-6 text-white" />
                                         </div>
                                     )}
@@ -79,7 +79,7 @@ export function EmployerProfileHero({
                                 {/* Title & Verification */}
                                 <div className="space-y-2">
                                     <div className="flex flex-wrap items-center gap-3">
-                                        <h1 className="text-3xl font-black text-[var(--foreground)] dark:text-white md:text-4xl lg:text-5xl">
+                                        <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl lg:text-5xl">
                                             {poster.name}
                                         </h1>
                                         {poster.is_verified && (
@@ -90,7 +90,7 @@ export function EmployerProfileHero({
                                         )}
                                     </div>
                                     {poster.location && (
-                                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                                        <div className="flex items-center gap-2 text-gray-600">
                                             <MapPin className="h-5 w-5" />
                                             <span className="text-lg font-medium">{poster.location}</span>
                                         </div>
@@ -99,7 +99,7 @@ export function EmployerProfileHero({
 
                                 {/* Description */}
                                 {poster.description && (
-                                    <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 md:text-lg">
+                                    <p className="text-base leading-relaxed text-gray-700 md:text-lg">
                                         {poster.description}
                                     </p>
                                 )}
@@ -111,10 +111,10 @@ export function EmployerProfileHero({
                                             <Briefcase className="h-5 w-5 text-[var(--primary)]" />
                                         </div>
                                         <div>
-                                            <div className="text-2xl font-black text-[var(--foreground)] dark:text-white">
+                                            <div className="text-2xl font-black text-[var(--foreground)]">
                                                 {jobCount}
                                             </div>
-                                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                                            <div className="text-xs text-gray-500">
                                                 {jobCount === 1 ? 'Job' : 'Jobs'} Posted
                                             </div>
                                         </div>
@@ -126,10 +126,10 @@ export function EmployerProfileHero({
                                                 <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                                             </div>
                                             <div>
-                                                <div className="text-2xl font-black text-[var(--foreground)] dark:text-white">
+                                                <div className="text-2xl font-black text-[var(--foreground)]">
                                                     {averageRating.toFixed(1)}
                                                 </div>
-                                                <div className="text-xs text-gray-500 dark:text-gray-400">
+                                                <div className="text-xs text-gray-500">
                                                     {reviewsCount} {reviewsCount === 1 ? 'Review' : 'Reviews'}
                                                 </div>
                                             </div>
@@ -147,7 +147,7 @@ export function EmployerProfileHero({
                             <Button
                                 onClick={onShare}
                                 variant="outline"
-                                className="w-full border-2 border-[var(--primary)]/20 bg-white/80 font-semibold hover:border-[var(--primary)] hover:bg-[var(--primary)]/5 dark:bg-gray-800/80"
+                                className="w-full border-2 border-[var(--primary)]/20 bg-white/80 font-semibold hover:border-[var(--primary)] hover:bg-[var(--primary)]/5"
                             >
                                 <Share2 className="mr-2 h-5 w-5" />
                                 Share Profile
@@ -157,7 +157,7 @@ export function EmployerProfileHero({
                         {/* Contact Actions */}
                         {contactActions.length > 0 && (
                             <div className="space-y-3">
-                                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">
                                     Contact Employer
                                 </h3>
                                 <div className="grid gap-2">
@@ -169,16 +169,16 @@ export function EmployerProfileHero({
                                                 href={action.href}
                                                 target={action.external ? '_blank' : undefined}
                                                 rel={action.external ? 'noopener noreferrer' : undefined}
-                                                className="group flex items-center gap-3 rounded-xl border-2 border-gray-200 bg-white/80 p-4 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/5 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/80 dark:hover:border-[var(--primary)]"
+                                                className="group flex items-center gap-3 rounded-xl border-2 border-gray-200 bg-white/80 p-4 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/5 hover:shadow-md"
                                             >
                                                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--primary)]/10 transition-colors group-hover:bg-[var(--primary)]/20">
                                                     <Icon className="h-6 w-6 text-[var(--primary)]" />
                                                 </div>
                                                 <div className="flex-1">
-                                                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                                                    <div className="text-xs font-semibold text-gray-500">
                                                         {action.label}
                                                     </div>
-                                                    <div className="font-bold text-[var(--foreground)] dark:text-white">
+                                                    <div className="font-bold text-[var(--foreground)]">
                                                         {action.value}
                                                     </div>
                                                 </div>

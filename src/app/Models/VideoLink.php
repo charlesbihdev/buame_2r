@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 
 class VideoLink extends Model
 {
@@ -15,6 +16,61 @@ class VideoLink extends Model
         'url',
         'platform',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (VideoLink $videoLink) {
+            if ($videoLink->platform === 'tiktok') {
+                $videoLink->url = static::resolveTiktokShortUrl($videoLink->url);
+            }
+        });
+    }
+
+    /**
+     * Resolve TikTok short URLs (vt.tiktok.com, vm.tiktok.com) to full URLs.
+     */
+    public static function resolveTiktokShortUrl(string $url): string
+    {
+        // If it already has /video/ID, no resolution needed
+        if (preg_match('/\/video\/(\d+)/', $url)) {
+            return $url;
+        }
+
+        // Try TikTok oEmbed API (works with short URLs)
+        try {
+            $response = Http::timeout(5)->get('https://www.tiktok.com/oembed', [
+                'url' => $url,
+            ]);
+
+            if ($response->successful()) {
+                $html = $response->json('html') ?? '';
+                if (preg_match('/cite="(https:\/\/www\.tiktok\.com\/@[^"]*\/video\/\d+)"/', $html, $matches)) {
+                    return $matches[1];
+                }
+            }
+        } catch (\Throwable) {
+            // Fall through to redirect approach
+        }
+
+        // Fallback: follow redirects for short URLs
+        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+        if (in_array($host, ['vt.tiktok.com', 'vm.tiktok.com'])) {
+            try {
+                $response = Http::timeout(5)
+                    ->withHeaders(['User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'])
+                    ->get($url);
+
+                $effectiveUrl = $response->effectiveUri()?->__toString();
+                if ($effectiveUrl && preg_match('/\/video\/(\d+)/', $effectiveUrl)) {
+                    return $effectiveUrl;
+                }
+            } catch (\Throwable) {
+                // Fall through
+            }
+        }
+
+        return $url;
+    }
 
     protected $appends = [
         'embed_url',

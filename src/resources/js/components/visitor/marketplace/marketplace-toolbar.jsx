@@ -56,7 +56,7 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                             className={`flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full px-4 text-sm font-bold shadow-sm transition-shadow ${
                                 isActive
                                     ? 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:shadow-md'
-                                    : 'border border-[var(--buame-border-light)] bg-white hover:border-[var(--primary)]/50 dark:border-white/20 dark:bg-white/5 dark:text-white'
+                                    : 'border border-[var(--buame-border-light)] bg-white hover:border-[var(--primary)]/50'
                             }`}
                         >
                             <Icon className="h-5 w-5" />
@@ -68,12 +68,12 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
 
             {/* Results Toolbar */}
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-medium text-gray-500">
                     {pagination.total ? (
                         <>
-                            Showing <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.from || 0}</span> -{' '}
-                            <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.to || 0}</span> of{' '}
-                            <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.total}</span> results
+                            Showing <span className="font-bold text-[var(--foreground)]">{pagination.from || 0}</span> -{' '}
+                            <span className="font-bold text-[var(--foreground)]">{pagination.to || 0}</span> of{' '}
+                            <span className="font-bold text-[var(--foreground)]">{pagination.total}</span> results
                         </>
                     ) : (
                         'No results found'
@@ -85,13 +85,13 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                         variant="outline"
                         size="icon"
                         onClick={onFilterToggle}
-                        className="flex size-10 items-center justify-center rounded-lg border border-[var(--buame-border-light)] bg-white lg:hidden dark:border-white/10 dark:bg-white/5"
+                        className="flex size-10 items-center justify-center rounded-lg border border-[var(--buame-border-light)] bg-white lg:hidden"
                     >
                         <Filter className="h-5 w-5" />
                     </Button>
                     {/* Sort Select */}
                     <Select value={filters.sort || 'recommended'} onValueChange={handleSortChange}>
-                        <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[var(--buame-border-light)] bg-white pr-8 pl-3 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-white/10 dark:bg-white/5 dark:text-white">
+                        <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[var(--buame-border-light)] bg-white pr-8 pl-3 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -103,7 +103,7 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                         </SelectContent>
                     </Select>
                     {/* View Toggle */}
-                    <div className="flex rounded-lg border border-[var(--buame-border-light)] bg-white p-1 dark:border-white/10 dark:bg-white/5">
+                    <div className="flex rounded-lg border border-[var(--buame-border-light)] bg-white p-1">
                         <Button
                             variant="ghost"
                             size="icon"
@@ -114,7 +114,7 @@ export function MarketplaceToolbar({ filters = {}, pagination = {}, onFilterTogg
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="flex size-8 items-center justify-center rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                            className="flex size-8 items-center justify-center rounded text-gray-400 hover:text-gray-600"
                         >
                             <List className="h-5 w-5" />
                         </Button>

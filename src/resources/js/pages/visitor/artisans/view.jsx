@@ -49,16 +49,16 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
             </Head>
 
             {/* Hero Section */}
-            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
+            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
                     <BackToHome to="/artisans" label="Back to Artisans" />
 
                     {/* Profile Header */}
-                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
+                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
                             {/* Profile Image */}
-                            <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl bg-gray-100 md:h-40 md:w-40 dark:bg-gray-800">
+                            <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl bg-gray-100 md:h-40 md:w-40">
                                 {artisan?.profile_image ? (
                                     <img src={artisan.profile_image} alt={artisan.name} className="h-full w-full object-cover" />
                                 ) : (
@@ -86,28 +86,28 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                 )}
 
                                 <div className="mb-4 flex flex-wrap items-center gap-2">
-                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl dark:text-white">{artisan?.name}</h1>
+                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl">{artisan?.name}</h1>
                                     {artisan?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                 </div>
 
                                 {/* Quick Stats */}
                                 <div className="mb-4 flex flex-wrap gap-4 text-sm">
-                                    <div className="flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1.5 font-semibold text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                    <div className="flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1.5 font-semibold text-yellow-700">
                                         <Star className="h-4 w-4 fill-current" />
                                         <span>{artisan?.rating}</span>
                                         <span className="text-xs opacity-75">({artisan?.reviews_count} reviews)</span>
                                     </div>
-                                    <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                    <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700">
                                         <Award className="h-4 w-4" />
                                         <span>{artisan?.experience_years} years experience</span>
                                     </div>
                                     {artisan?.experience_level && (
-                                        <div className="flex items-center gap-1.5 rounded-full bg-purple-100 px-3 py-1.5 font-semibold text-purple-700 capitalize dark:bg-purple-900/30 dark:text-purple-400">
+                                        <div className="flex items-center gap-1.5 rounded-full bg-purple-100 px-3 py-1.5 font-semibold text-purple-700 capitalize">
                                             <TrendingUp className="h-4 w-4" />
                                             <span>{artisan.experience_level}</span>
                                         </div>
                                     )}
-                                    <div className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                    <div className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 font-semibold text-gray-700">
                                         <Eye className="h-4 w-4" />
                                         <span>{artisan?.views_count} views</span>
                                     </div>
@@ -115,16 +115,16 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
                                 {/* Location & Availability */}
                                 <div className="flex flex-wrap items-center gap-3">
-                                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                                    <div className="flex items-center gap-1.5 text-gray-600">
                                         <MapPin className="h-4 w-4" />
                                         <span className="text-sm font-medium">{artisan?.location}</span>
                                     </div>
                                     {artisan?.is_available ? (
-                                        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
                                             ● Available Now
                                         </span>
                                     ) : (
-                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-700">
                                             ● Currently Busy
                                         </span>
                                     )}
@@ -133,12 +133,12 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
                             {/* Pricing Card - Desktop */}
                             {artisan?.show_price && artisan?.price_per_day && (
-                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block">
+                                    <p className="mb-1 text-sm font-medium text-gray-600">Starting from</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)]">
                                         GH₵{artisan.price_per_day}
                                     </p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
+                                    <p className="text-sm text-gray-600">per day</p>
                                 </div>
                             )}
                         </div>
@@ -152,16 +152,16 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-2">
                         {/* About Section */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">About {artisan?.name.split(' ')[0]}</h2>
-                            <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">About {artisan?.name.split(' ')[0]}</h2>
+                            <p className="mb-6 leading-relaxed text-gray-700">
                                 {artisan?.description || 'No description available.'}
                             </p>
 
                             {/* Specialties */}
                             {artisan?.specialties && artisan.specialties.length > 0 && (
                                 <div>
-                                    <h3 className="mb-3 text-lg font-bold text-[var(--foreground)] dark:text-white">Specialties</h3>
+                                    <h3 className="mb-3 text-lg font-bold text-[var(--foreground)]">Specialties</h3>
                                     <div className="flex flex-wrap gap-2">
                                         {artisan.specialties.map((spec, index) => (
                                             <span
@@ -177,9 +177,9 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                         </div>
 
                         {/* Portfolio Section */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Portfolio & Past Work</h2>
-                            <p className="mb-6 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Portfolio & Past Work</h2>
+                            <p className="mb-6 text-sm text-gray-600">
                                 View examples of {artisan?.name.split(' ')[0]}'s previous projects
                             </p>
                             <PortfolioGallery portfolio={artisan?.portfolio || []} />
@@ -193,8 +193,8 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                 const tallVideos = artisan.video_links.filter((l) => tallPlatforms.includes(l.platform));
                                 const wideVideos = artisan.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                                 return (
-                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Videos</h2>
                                         <div className="space-y-4">
                                             {wideVideos.length > 0 && (
                                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -231,18 +231,18 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             })()}
 
                         {/* Working Hours */}
-                        <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Working Hours</h2>
+                        <div className="rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Working Hours</h2>
                             <div className="space-y-3">
-                                <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50">
+                                <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
                                     <Clock className="h-5 w-5 text-[var(--primary)]" />
-                                    <span className="font-medium text-gray-700 dark:text-gray-300">
+                                    <span className="font-medium text-gray-700">
                                         {artisan?.working_hours || 'Contact for availability'}
                                     </span>
                                 </div>
-                                <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50">
+                                <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-4">
                                     <Calendar className="h-5 w-5 text-[var(--primary)]" />
-                                    <span className="text-sm text-gray-600 dark:text-gray-400">Usually responds within 2 hours</span>
+                                    <span className="text-sm text-gray-600">Usually responds within 2 hours</span>
                                 </div>
                             </div>
                         </div>
@@ -253,24 +253,24 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
                             {artisan?.show_price && artisan?.price_per_day && (
-                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden">
+                                    <p className="mb-1 text-sm font-medium text-gray-600">Starting from</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)]">
                                         GH₵{artisan.price_per_day}
                                     </p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">per day</p>
+                                    <p className="text-sm text-gray-600">per day</p>
                                 </div>
                             )}
 
                             {/* Contact Actions */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Get in Touch</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Get in Touch</h3>
 
-                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
-                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
-                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800">
+                                        <span className="mt-0.5 text-amber-600">🛡️</span>
                                         <span>
-                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900" onClick={(e) => {
                                                 e.preventDefault();
                                                 document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
                                             }}>Safe Transaction Notice</a> before reaching out.
@@ -323,39 +323,39 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             </div>
 
                             {/* Contact Info */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Information</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Contact Information</h3>
                                 <div className="space-y-3 text-sm">
                                     {artisan?.phone && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Phone className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{artisan.phone}</span>
+                                            <span className="font-medium text-gray-700">{artisan.phone}</span>
                                         </div>
                                     )}
                                     {artisan?.phone_2 && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Phone className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{artisan.phone_2}</span>
+                                            <span className="font-medium text-gray-700">{artisan.phone_2}</span>
                                         </div>
                                     )}
                                     {artisan?.email && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Mail className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium break-all text-gray-700 dark:text-gray-300">{artisan.email}</span>
+                                            <span className="font-medium break-all text-gray-700">{artisan.email}</span>
                                         </div>
                                     )}
                                     {artisan?.address && (
-                                        <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-3">
                                             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--primary)]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{artisan.address}</span>
+                                            <span className="font-medium text-gray-700">{artisan.address}</span>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
                             {/* Trust Indicators */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">
                                     Why Choose {artisan?.name.split(' ')[0]}?
                                 </h3>
                                 <div className="space-y-3 text-sm">
@@ -363,8 +363,8 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         <div className="flex items-start gap-3">
                                             <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 fill-[var(--primary)] text-white" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Verified Profile</p>
-                                                <p className="text-gray-600 dark:text-gray-400">Identity confirmed by 2RBUAME</p>
+                                                <p className="font-semibold text-[var(--foreground)]">Verified Profile</p>
+                                                <p className="text-gray-600">Identity confirmed by 2RBUAME</p>
                                             </div>
                                         </div>
                                     )}
@@ -372,8 +372,8 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         <div className="flex items-start gap-3">
                                             <Award className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Experienced Professional</p>
-                                                <p className="text-gray-600 dark:text-gray-400">{artisan.experience_years}+ years in the field</p>
+                                                <p className="font-semibold text-[var(--foreground)]">Experienced Professional</p>
+                                                <p className="text-gray-600">{artisan.experience_years}+ years in the field</p>
                                             </div>
                                         </div>
                                     )}
@@ -381,10 +381,10 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">
+                                                <p className="font-semibold text-[var(--foreground)]">
                                                     {parseFloat(artisan?.rating) > 4.0 ? `Highly Rated` : `Rated`}
                                                 </p>
-                                                <p className="text-gray-600 dark:text-gray-400">
+                                                <p className="text-gray-600">
                                                     {parseFloat(artisan?.rating)}/5.0 from {artisan?.reviews_count} reviews
                                                 </p>
                                             </div>

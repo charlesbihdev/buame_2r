@@ -8,8 +8,8 @@ export function PortfolioGallery({ portfolio }) {
 
     if (!portfolio || portfolio.length === 0) {
         return (
-            <div className="rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center dark:border-gray-700 dark:bg-gray-900">
-                <p className="text-gray-500 dark:text-gray-400">No portfolio items available yet</p>
+            <div className="rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-12 text-center">
+                <p className="text-gray-500">No portfolio items available yet</p>
             </div>
         );
     }
@@ -39,7 +39,7 @@ export function PortfolioGallery({ portfolio }) {
                     <button
                         key={item.id}
                         onClick={() => openLightbox(index)}
-                        className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800"
+                        className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100"
                     >
                         {item.image_path ? (
                             <>
@@ -50,7 +50,7 @@ export function PortfolioGallery({ portfolio }) {
                             </>
                         ) : (
                             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--primary)]/10 to-[var(--primary)]/5">
-                                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">No Image</span>
+                                <span className="text-sm font-medium text-gray-600">No Image</span>
                             </div>
                         )}
                         {item.item && (

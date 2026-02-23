@@ -6,13 +6,13 @@ export function ReviewList({ reviews, onLoadMore, hasMore, loading, onOpenForm }
     if (!reviews || reviews.length === 0) {
         return (
             <div className="p-12 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                     <MessageSquare className="h-8 w-8 text-gray-400" />
                 </div>
-                <h3 className="mb-2 font-semibold text-[var(--foreground)] dark:text-white">
+                <h3 className="mb-2 font-semibold text-[var(--foreground)]">
                     No Reviews Yet
                 </h3>
-                <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mb-6 text-sm text-gray-500">
                     Be the first to share your experience!
                 </p>
                 <Button onClick={onOpenForm}>
@@ -25,14 +25,14 @@ export function ReviewList({ reviews, onLoadMore, hasMore, loading, onOpenForm }
 
     return (
         <>
-            <div className="divide-y divide-gray-200 dark:divide-gray-800">
+            <div className="divide-y divide-gray-200">
                 {reviews.map((review) => (
                     <ReviewCard key={review.id} review={review} />
                 ))}
             </div>
 
             {hasMore && (
-                <div className="border-t border-gray-200 p-4 text-center dark:border-gray-800">
+                <div className="border-t border-gray-200 p-4 text-center">
                     <Button variant="ghost" onClick={onLoadMore} disabled={loading}>
                         {loading ? (
                             'Loading...'

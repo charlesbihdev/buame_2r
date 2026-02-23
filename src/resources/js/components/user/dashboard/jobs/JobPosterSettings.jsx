@@ -106,8 +106,8 @@ export function JobPosterSettings({ poster }) {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Employer Profile</h2>
-                <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your employer profile and contact information</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Employer Profile</h2>
+                <p className="mt-1 text-gray-600">Manage your employer profile and contact information</p>
             </div>
 
             {/* Visibility Banner with save button */}
@@ -124,17 +124,17 @@ export function JobPosterSettings({ poster }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Company Name and Slug */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="grid gap-6 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Employer Name *
                             </Label>
                             <Input id="name" value={data.name} onChange={handleNameChange} placeholder="Enter employer name" className="w-full" required />
                             <FormError error={errors.name} />
                         </div>
                         <div>
-                            <Label htmlFor="slug" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="slug" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Profile URL Slug
                             </Label>
                             <div className="flex items-center gap-2">
@@ -156,8 +156,8 @@ export function JobPosterSettings({ poster }) {
 
                 {/* Description and Link */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                             About Employer
                         </Label>
                         <Textarea
@@ -171,8 +171,8 @@ export function JobPosterSettings({ poster }) {
                         <FormError error={errors.description} />
                     </div>
 
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Your Profile Link</Label>
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">Your Profile Link</Label>
                         <div className="flex gap-2">
                             <Input value={posterUrl} readOnly className="flex-1 text-sm" />
                             <Button onClick={handleCopy} variant="outline" type="button" size="icon">
@@ -189,8 +189,8 @@ export function JobPosterSettings({ poster }) {
                 </div>
 
                 {/* Location */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <Label htmlFor="location" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <Label htmlFor="location" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                         Location
                     </Label>
                     <Input
@@ -204,11 +204,11 @@ export function JobPosterSettings({ poster }) {
                 </div>
 
                 {/* Contact Information */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 font-semibold text-[var(--foreground)] dark:text-white">Contact Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 font-semibold text-[var(--foreground)]">Contact Information</h3>
                     <div className="grid gap-4 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Phone Number *
                             </Label>
                             <Input
@@ -221,7 +221,7 @@ export function JobPosterSettings({ poster }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="whatsapp" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="whatsapp" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 WhatsApp
                             </Label>
                             <Input
@@ -234,7 +234,7 @@ export function JobPosterSettings({ poster }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="email" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="email" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Email
                             </Label>
                             <Input
@@ -248,7 +248,7 @@ export function JobPosterSettings({ poster }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="website" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="website" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Website
                             </Label>
                             <Input

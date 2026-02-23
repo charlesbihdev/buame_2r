@@ -36,12 +36,12 @@ export function EcosystemGrid() {
     ];
 
     return (
-        <div className="bg-white px-6 py-20 dark:bg-background-dark lg:px-20">
+        <div className="bg-white px-6 py-20 lg:px-20">
             <div className="mx-auto max-w-[1280px]">
                 <div className="mb-12 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
                     <div className="max-w-xl">
-                        <h2 className="mb-4 text-3xl font-bold dark:text-white">Our Connected Ecosystem</h2>
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <h2 className="mb-4 text-3xl font-bold">Our Connected Ecosystem</h2>
+                        <p className="text-gray-600">
                             2RBUAME isn't just a website; it's a network of real people and businesses working together.
                         </p>
                     </div>
@@ -65,13 +65,13 @@ export function EcosystemGrid() {
                         return (
                             <div
                                 key={item.title}
-                                className={`group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all ${colors.border} hover:shadow-lg dark:bg-white/5`}
+                                className={`group flex cursor-pointer flex-col items-center gap-4 rounded-xl border border-transparent bg-background-light p-6 text-center transition-all ${colors.border} hover:shadow-lg`}
                             >
-                                <div className={`flex size-16 items-center justify-center rounded-full ${colors.bg} ${colors.text} dark:${colors.bg.replace('/10', '/20')}`}>
+                                <div className={`flex size-16 items-center justify-center rounded-full ${colors.bg} ${colors.text}`}>
                                     <Icon className="h-8 w-8" />
                                 </div>
-                                <h3 className="font-bold dark:text-white">{item.title}</h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">{item.description}</p>
+                                <h3 className="font-bold">{item.title}</h3>
+                                <p className="text-sm text-gray-500">{item.description}</p>
                             </div>
                         );
                     })}

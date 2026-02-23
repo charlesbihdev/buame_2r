@@ -57,7 +57,7 @@ export function StoreSearch({
     };
 
     return (
-        <div className="sticky top-[57px] z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-[var(--background-dark)]/95">
+        <div className="sticky top-[57px] z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
             <div className="mx-auto max-w-7xl px-4 py-4">
                 {/* Search Bar */}
                 <form onSubmit={onSearch} className="flex flex-col gap-3 md:flex-row">
@@ -68,7 +68,7 @@ export function StoreSearch({
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search products in this store..."
-                            className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-12 pr-4 text-sm transition-colors focus:border-[var(--primary)] focus:bg-white focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none dark:border-gray-700 dark:bg-[var(--card)] dark:text-white dark:focus:bg-[var(--card)]"
+                            className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-12 pr-4 text-sm transition-colors focus:border-[var(--primary)] focus:bg-white focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none"
                         />
                     </div>
 
@@ -80,7 +80,7 @@ export function StoreSearch({
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                                 placeholder="Location"
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm transition-colors focus:border-[var(--primary)] focus:bg-white focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm transition-colors focus:border-[var(--primary)] focus:bg-white focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none"
                             />
                         </div>
 
@@ -95,8 +95,8 @@ export function StoreSearch({
                             type="button"
                             onClick={() => setShowFilters(!showFilters)}
                             className={`flex items-center gap-2 rounded-xl border px-4 py-3 font-semibold transition-all ${showFilters || hasActiveFilters
-                                ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)] dark:text-[var(--primary)]'
-                                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-gray-700 dark:bg-[var(--card)] dark:text-gray-400'
+                                ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]'
+                                : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                                 }`}
                         >
                             <SlidersHorizontal className="h-4 w-4" />
@@ -112,25 +112,25 @@ export function StoreSearch({
 
                 {/* Expandable Filters */}
                 {showFilters && (
-                    <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-[var(--card)]">
+                    <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
                         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                             {/* Categories */}
                             <div className="flex-1">
                                 <div className="mb-3 flex items-center justify-between">
-                                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">Categories</h3>
+                                    <h3 className="text-sm font-semibold text-gray-700">Categories</h3>
                                     <div className="relative w-48">
                                         <input
                                             type="text"
                                             placeholder="Find category..."
                                             value={categorySearch}
                                             onChange={(e) => setCategorySearch(e.target.value)}
-                                            className="w-full rounded-lg border border-gray-200 bg-white py-1.5 pl-8 pr-3 text-xs focus:border-[var(--primary)] focus:outline-none dark:border-gray-600 dark:bg-[var(--background-dark)] dark:text-gray-200"
+                                            className="w-full rounded-lg border border-gray-200 bg-white py-1.5 pl-8 pr-3 text-xs focus:border-[var(--primary)] focus:outline-none"
                                         />
                                         <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
                                     </div>
                                 </div>
 
-                                <div className="max-h-60 overflow-y-auto rounded-lg border border-gray-200 bg-white p-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-200 dark:border-gray-700 dark:bg-[var(--background-dark)] dark:scrollbar-thumb-gray-700">
+                                <div className="max-h-60 overflow-y-auto rounded-lg border border-gray-200 bg-white p-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-200">
                                     {filteredCategories.length > 0 ? (
                                         <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 md:grid-cols-3">
                                             {filteredCategories.map((cat) => {
@@ -142,7 +142,7 @@ export function StoreSearch({
                                                         onClick={() => handleCategorySelect(isActive ? null : cat.value)}
                                                         className={`flex items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-all ${isActive
                                                             ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
-                                                            : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                                                            : 'text-gray-700 hover:bg-gray-100'
                                                             }`}
                                                     >
                                                         <span className="truncate mr-2 flex items-center gap-2">
@@ -151,7 +151,7 @@ export function StoreSearch({
                                                         {count > 0 && (
                                                             <span className={`shrink-0 rounded-full px-1.5 py-0.5 text-xs ${isActive
                                                                 ? 'bg-[var(--foreground)]/20 text-[var(--foreground)]'
-                                                                : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                                                                : 'bg-gray-100 text-gray-600'
                                                                 }`}>
                                                                 {count}
                                                             </span>
@@ -161,7 +161,7 @@ export function StoreSearch({
                                             })}
                                         </div>
                                     ) : (
-                                        <div className="py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                                        <div className="py-8 text-center text-sm text-gray-500">
                                             No categories found matching "{categorySearch}"
                                         </div>
                                     )}
@@ -171,11 +171,11 @@ export function StoreSearch({
                             {/* Sort & View */}
                             <div className="flex flex-col gap-4 lg:w-64">
                                 <div>
-                                    <h3 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">Sort By</h3>
+                                    <h3 className="mb-3 text-sm font-semibold text-gray-700">Sort By</h3>
                                     <select
                                         value={filters?.sort != null ? String(filters.sort) : 'newest'}
                                         onChange={(e) => onFilterChange('sort', e.target.value)}
-                                        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none dark:border-gray-700 dark:bg-[var(--background-dark)] dark:text-white"
+                                        className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 focus:outline-none"
                                     >
                                         {sortOptions.map((option) => (
                                             <option key={option.value} value={option.value}>
@@ -186,13 +186,13 @@ export function StoreSearch({
                                 </div>
 
                                 <div>
-                                    <h3 className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">View</h3>
-                                    <div className="flex rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-[var(--background-dark)]">
+                                    <h3 className="mb-3 text-sm font-semibold text-gray-700">View</h3>
+                                    <div className="flex rounded-lg border border-gray-200 bg-white p-1">
                                         <button
                                             onClick={() => setViewMode('grid')}
                                             className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all ${viewMode === 'grid'
                                                 ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
-                                                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+                                                : 'text-gray-600 hover:bg-gray-100'
                                                 }`}
                                         >
                                             <Grid3X3 className="h-4 w-4" />
@@ -202,7 +202,7 @@ export function StoreSearch({
                                             onClick={() => setViewMode('list')}
                                             className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all ${viewMode === 'list'
                                                 ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
-                                                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
+                                                : 'text-gray-600 hover:bg-gray-100'
                                                 }`}
                                         >
                                             <LayoutList className="h-4 w-4" />
@@ -215,7 +215,7 @@ export function StoreSearch({
 
                         {/* Clear Filters */}
                         {hasActiveFilters && (
-                            <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700">
+                            <div className="mt-4 border-t border-gray-200 pt-4">
                                 <button
                                     onClick={() => {
                                         onClearFilters();
@@ -234,7 +234,7 @@ export function StoreSearch({
                 {/* Quick Category Pills (shown when filters are closed) */}
                 {!showFilters && (
                     <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-                        <span className="shrink-0 text-xs font-medium text-gray-500 dark:text-gray-400">Quick:</span>
+                        <span className="shrink-0 text-xs font-medium text-gray-500">Quick:</span>
                         {quickCategories.slice(0, 10).map((cat) => {
                             const count = categoryCounts?.[cat.value] || 0;
                             const isActive = filters?.category === cat.value;
@@ -244,7 +244,7 @@ export function StoreSearch({
                                     onClick={() => onFilterChange('category', isActive ? null : cat.value)}
                                     className={`flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${isActive
                                         ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                         }`}
                                 >
                                     <span>{cat.label}</span>

@@ -28,7 +28,7 @@ export function StoreFooter({ store }) {
     };
 
     return (
-        <footer className="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-background-dark">
+        <footer className="border-t border-gray-200 bg-white">
             <div className="mx-auto max-w-7xl px-4 py-8">
                 <div className="flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left">
                     {/* Store Info */}
@@ -37,8 +37,8 @@ export function StoreFooter({ store }) {
                             <Store className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                            <h3 className="font-bold text-foreground dark:text-white">{store.name}</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">Powered by 2RBUAME</p>
+                            <h3 className="font-bold text-foreground">{store.name}</h3>
+                            <p className="text-sm text-gray-600">Powered by 2RBUAME</p>
                         </div>
                     </div>
 
@@ -48,7 +48,7 @@ export function StoreFooter({ store }) {
                             <>
                                 <a
                                     href={`tel:${store.user.phone}`}
-                                    className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:border-primary hover:bg-primary/10 dark:border-gray-700 dark:bg-card dark:text-gray-300"
+                                    className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:border-primary hover:bg-primary/10"
                                 >
                                     <Phone className="h-4 w-4" />
                                     Call Store
@@ -73,8 +73,8 @@ export function StoreFooter({ store }) {
                 </div>
 
                 {/* Branding */}
-                <div className="mt-6 border-t border-gray-200 pt-6 text-center dark:border-gray-800">
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="mt-6 border-t border-gray-200 pt-6 text-center">
+                    <p className="text-xs text-gray-500">
                         Want your own online store?{' '}
                         <a href="/" className="font-semibold text-primary hover:underline">
                             Create one on 2RBUAME

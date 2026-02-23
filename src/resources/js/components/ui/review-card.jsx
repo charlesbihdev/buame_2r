@@ -58,20 +58,20 @@ export function ReviewCard({ review }) {
                     <div className="flex-1 min-w-0">
                         {/* Header Row */}
                         <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <span className="font-semibold text-[var(--foreground)] dark:text-white">
+                            <span className="font-semibold text-[var(--foreground)]">
                                 {review.reviewer_name}
                             </span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">•</span>
+                            <span className="text-sm text-gray-500">•</span>
                             <StarRating value={review.rating} readonly size="sm" />
-                            <span className="text-sm text-gray-500 dark:text-gray-400">•</span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                            <span className="text-sm text-gray-500">•</span>
+                            <span className="text-sm text-gray-500">
                                 {formatDate(review.created_at)}
                             </span>
                         </div>
 
                         {/* Comment */}
                         {review.comment && (
-                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                            <p className="text-gray-700 leading-relaxed mb-3">
                                 {review.comment}
                             </p>
                         )}
@@ -83,7 +83,7 @@ export function ReviewCard({ review }) {
                                     <button
                                         key={i}
                                         onClick={() => openLightbox(img.url)}
-                                        className="group relative h-20 w-20 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
+                                        className="group relative h-20 w-20 overflow-hidden rounded-lg bg-gray-100"
                                     >
                                         <img
                                             src={img.url}

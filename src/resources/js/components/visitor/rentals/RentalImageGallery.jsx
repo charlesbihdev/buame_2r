@@ -10,7 +10,7 @@ export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental'
 
     if (allImages.length === 0) {
         return (
-            <div className="mb-6 flex h-96 items-center justify-center overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800">
+            <div className="mb-6 flex h-96 items-center justify-center overflow-hidden rounded-xl bg-gray-200">
                 <Home className="h-24 w-24 text-gray-400" />
             </div>
         );
@@ -36,7 +36,7 @@ export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental'
     return (
         <>
             {/* Main Image Display */}
-            <div className="mb-4 h-96 overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800">
+            <div className="mb-4 h-96 overflow-hidden rounded-xl bg-gray-200">
                 {allImages[0] ? (
                     <button onClick={() => openLightbox(0)} className="group relative h-full w-full">
                         <img
@@ -62,7 +62,7 @@ export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental'
                         <button
                             key={index}
                             onClick={() => openLightbox(index + 1)}
-                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
+                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100"
                         >
                             <img
                                 src={image}
@@ -77,7 +77,7 @@ export function RentalImageGallery({ images, primaryImage, rentalName = 'Rental'
                     {allImages.length > 5 && (
                         <button
                             onClick={() => openLightbox(5)}
-                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
+                            className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100"
                         >
                             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                                 <span className="text-sm font-semibold text-white">+{allImages.length - 5}</span>

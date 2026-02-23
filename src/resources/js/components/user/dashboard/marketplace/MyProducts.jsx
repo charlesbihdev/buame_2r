@@ -51,8 +51,8 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">My Products</h2>
-                    <p className="mt-1 text-gray-600 dark:text-gray-400">
+                    <h2 className="text-2xl font-bold text-[var(--foreground)]">My Products</h2>
+                    <p className="mt-1 text-gray-600">
                         {productsCount} / {productLimit} products
                         {remainingSlots > 0 && (
                             <span className="ml-2 text-[var(--primary)]">({remainingSlots} slots remaining)</span>
@@ -71,15 +71,15 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
 
             {/* Limit Reached Warning - Gold for premium upgrade */}
             {remainingSlots === 0 && (
-                <div className="rounded-xl border border-[var(--secondary)]/30 bg-[var(--secondary)]/10 dark:border-[var(--secondary)]/20 dark:bg-[var(--secondary)]/5 p-4">
+                <div className="rounded-xl border border-[var(--secondary)]/30 bg-[var(--secondary)]/10 p-4">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex items-start gap-3">
-                            <AlertCircle className="h-5 w-5 text-[var(--secondary)] dark:text-[var(--secondary)] flex-shrink-0" />
+                            <AlertCircle className="h-5 w-5 text-[var(--secondary)] flex-shrink-0" />
                             <div>
-                                <p className="font-semibold text-[var(--secondary)] dark:text-[var(--secondary)]">
+                                <p className="font-semibold text-[var(--secondary)]">
                                     Product Limit Reached
                                 </p>
-                                <p className="mt-1 text-sm text-[var(--secondary)]/80 dark:text-[var(--secondary)]/70">
+                                <p className="mt-1 text-sm text-[var(--secondary)]/80">
                                     {isFreeAccess
                                         ? `You've reached your limit of ${productLimit} products. Upgrade options will be available after the free trial period.`
                                         : `You've reached your limit of ${productLimit} products. Upgrade to add more.`
@@ -103,13 +103,13 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
 
             {/* Store Not Active Warning - Blue for info/action needed */}
             {store && !store.is_active && (
-                <div className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:bg-[var(--accent)]/5 p-4">
+                <div className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/10 p-4">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex items-start gap-3">
-                            <AlertCircle className="h-5 w-5 text-[var(--accent)] dark:text-[var(--accent)] flex-shrink-0" />
+                            <AlertCircle className="h-5 w-5 text-[var(--accent)] flex-shrink-0" />
                             <div>
-                                <p className="font-semibold text-[var(--accent)] dark:text-[var(--accent)]">Store Not Active</p>
-                                <p className="mt-1 text-sm text-[var(--accent)]/80 dark:text-[var(--accent)]/70">
+                                <p className="font-semibold text-[var(--accent)]">Store Not Active</p>
+                                <p className="mt-1 text-sm text-[var(--accent)]/80">
                                     Your store is hidden from visitors. Activate it to make your products visible.
                                 </p>
                             </div>
@@ -118,7 +118,7 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                             onClick={() => navigateToSection('store')}
                             variant="outline"
                             size="sm"
-                            className="border-[var(--accent)]/30 text-[var(--accent)] hover:bg-[var(--accent)]/10 dark:border-[var(--accent)]/20 dark:text-[var(--accent)] dark:hover:bg-[var(--accent)]/10 flex-shrink-0"
+                            className="border-[var(--accent)]/30 text-[var(--accent)] hover:bg-[var(--accent)]/10 flex-shrink-0"
                         >
                             Store Settings
                         </Button>
@@ -133,9 +133,9 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                         return (
                             <div
                                 key={product.id}
-                                className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                                className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
                             >
-                                <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+                                <div className="aspect-video w-full bg-gray-100 relative overflow-hidden">
                                     {primaryImage ? (
                                         <img
                                             src={`/storage/${primaryImage.image_path}`}
@@ -154,11 +154,11 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                                     )}
                                 </div>
                                 <div className="p-4">
-                                    <h4 className="font-bold text-[var(--foreground)] dark:text-white">{product.title}</h4>
+                                    <h4 className="font-bold text-[var(--foreground)]">{product.title}</h4>
                                     {product.price > 0 && (
                                         <p className="mt-1 text-sm font-semibold text-[var(--primary)]">GH₵ {product.price}</p>
                                     )}
-                                    <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                    <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
                                         <MapPin className="h-3 w-3" />
                                         <span>{product.location}</span>
                                     </div>
@@ -189,9 +189,9 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                     })}
                 </div>
             ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
+                <div className="rounded-xl border-2 border-dashed border-gray-300 p-12 text-center">
                     <Package className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-4 text-lg font-medium text-gray-600 dark:text-gray-400">No products yet</p>
+                    <p className="mt-4 text-lg font-medium text-gray-600">No products yet</p>
                     <p className="mt-1 text-sm text-gray-500">Click "Add Product" above to add your first product</p>
                 </div>
             )}

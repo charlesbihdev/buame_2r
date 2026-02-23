@@ -132,14 +132,14 @@ function LinkCard({ url, platform }) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)] hover:shadow-md dark:border-gray-700 dark:bg-[var(--card)] dark:hover:border-[var(--primary)]"
+            className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)] hover:shadow-md"
         >
             <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg ${colorClass}`}>
                 <Play className="h-5 w-5 text-white" />
             </div>
             <div className="min-w-0 flex-1">
-                <p className="font-semibold text-[var(--foreground)] dark:text-white">Watch on {label}</p>
-                <p className="truncate text-sm text-gray-500 dark:text-gray-400">{url}</p>
+                <p className="font-semibold text-[var(--foreground)]">Watch on {label}</p>
+                <p className="truncate text-sm text-gray-500">{url}</p>
             </div>
             <ExternalLink className="h-5 w-5 flex-shrink-0 text-gray-400 transition-colors group-hover:text-[var(--primary)]" />
         </a>

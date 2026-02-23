@@ -52,7 +52,7 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                     <meta name="robots" content="noindex, nofollow" />
                 </Head>
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
-                    <p className="text-center text-gray-600 dark:text-gray-400">Transport service not found</p>
+                    <p className="text-center text-gray-600">Transport service not found</p>
                 </div>
             </VisitorLayout>
         );
@@ -92,18 +92,18 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
             </Head>
 
             {/* Hero Section */}
-            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
+            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
                     <BackToHome to="/transport" label="Back to Transport" />
 
                     {/* Profile Header */}
-                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
+                    <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
                             {/* Transport Info */}
                             <div className="flex-1">
                                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl dark:text-white">{ride?.driver_name}</h1>
+                                    <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl">{ride?.driver_name}</h1>
                                     {ride?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                     <span className="flex items-center gap-1 rounded-full bg-[var(--primary)] px-3 py-1 text-sm font-bold text-white">
                                         <TypeIcon className="h-4 w-4" />
@@ -113,18 +113,18 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
                                 {/* Quick Stats */}
                                 <div className="mb-4 flex flex-wrap gap-4 text-sm">
-                                    <div className="flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1.5 font-semibold text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
+                                    <div className="flex items-center gap-1.5 rounded-full bg-yellow-100 px-3 py-1.5 font-semibold text-yellow-700">
                                         <Star className="h-4 w-4 fill-current" />
                                         <span>{ride?.rating}</span>
                                         <span className="text-xs opacity-75">({ride?.reviews_count} reviews)</span>
                                     </div>
                                     {ride?.seats_available > 0 && (
-                                        <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                                        <div className="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-1.5 font-semibold text-blue-700">
                                             <Users className="h-4 w-4" />
                                             <span>{ride?.seats_available} seats</span>
                                         </div>
                                     )}
-                                    <div className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                    <div className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 font-semibold text-gray-700">
                                         <Eye className="h-4 w-4" />
                                         <span>{ride?.views_count} views</span>
                                     </div>
@@ -132,16 +132,16 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
                                 {/* Location */}
                                 <div className="flex flex-wrap items-center gap-3">
-                                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                                    <div className="flex items-center gap-1.5 text-gray-600">
                                         <MapPin className="h-4 w-4" />
                                         <span className="text-sm font-medium">{ride?.location}</span>
                                     </div>
                                     {ride?.is_active ? (
-                                        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
                                             Available
                                         </span>
                                     ) : (
-                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-bold text-gray-700">
                                             Currently Unavailable
                                         </span>
                                     )}
@@ -150,12 +150,12 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
 
                             {/* Pricing Card - Desktop */}
                             {Number(ride?.price_per_seat) > 0 && (
-                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="hidden shrink-0 rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-4 md:block">
+                                    <p className="mb-1 text-sm font-medium text-gray-600">Starting from</p>
+                                    <p className="text-3xl font-black text-[var(--foreground)]">
                                         GH₵{ride?.price_per_seat}
                                     </p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                    <p className="text-sm text-gray-600">per seat</p>
                                 </div>
                             )}
                         </div>
@@ -169,8 +169,8 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-2">
                         {/* Image Gallery */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Vehicle Images</h2>
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Vehicle Images</h2>
                             <TransportImageGallery images={ride?.images || []} />
                         </div>
 
@@ -182,8 +182,8 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                 const tallVideos = ride.video_links.filter((l) => tallPlatforms.includes(l.platform));
                                 const wideVideos = ride.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                                 return (
-                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                    <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                                        <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Videos</h2>
                                         <div className="space-y-4">
                                             {wideVideos.length > 0 && (
                                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -220,46 +220,46 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             })()}
 
                         {/* About Section */}
-                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">About {ride?.driver_name}</h2>
-                            <p className="mb-6 leading-relaxed text-gray-700 dark:text-gray-300">
+                        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">About {ride?.driver_name}</h2>
+                            <p className="mb-6 leading-relaxed text-gray-700">
                                 {ride?.description || 'No description available.'}
                             </p>
 
                             {/* Operating Hours */}
                             {ride?.operating_hours && (
                                 <div className="mb-4">
-                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)]">
                                         <Clock className="h-5 w-5 text-[var(--primary)]" />
                                         Operating Hours
                                     </h3>
-                                    <p className="text-gray-700 dark:text-gray-300">{ride.operating_hours}</p>
+                                    <p className="text-gray-700">{ride.operating_hours}</p>
                                 </div>
                             )}
 
                             {/* Operating Locations */}
                             {ride?.operating_locations && (
                                 <div>
-                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                                    <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-[var(--foreground)]">
                                         <MapPin className="h-5 w-5 text-[var(--primary)]" />
                                         Service Areas
                                     </h3>
-                                    <p className="text-gray-700 dark:text-gray-300">{ride.operating_locations}</p>
+                                    <p className="text-gray-700">{ride.operating_locations}</p>
                                 </div>
                             )}
                         </div>
 
                         {/* Payment Methods */}
                         {ride?.payment_methods && ride.payment_methods.length > 0 && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)] dark:text-white">Payment Methods</h2>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-4 text-2xl font-bold text-[var(--foreground)]">Payment Methods</h2>
                                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                                     {ride.payment_methods.map((method, idx) => {
                                         const Icon = paymentIcons[method.toLowerCase().replace(' ', '_')] || Wallet;
                                         return (
-                                            <div key={idx} className="flex items-center gap-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
+                                            <div key={idx} className="flex items-center gap-2 rounded-lg bg-gray-50 p-3">
                                                 <Icon className="h-5 w-5 text-[var(--primary)]" />
-                                                <span className="text-sm font-medium text-gray-700 capitalize dark:text-gray-300">{method}</span>
+                                                <span className="text-sm font-medium text-gray-700 capitalize">{method}</span>
                                             </div>
                                         );
                                     })}
@@ -273,24 +273,24 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                         <div className="sticky top-8 space-y-6">
                             {/* Pricing Card - Mobile */}
                             {Number(ride?.price_per_seat) > 0 && (
-                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden dark:border-gray-700 dark:from-[var(--primary)]/10 dark:to-[var(--primary)]/5">
-                                    <p className="mb-1 text-sm font-medium text-gray-600 dark:text-gray-400">Starting from</p>
-                                    <p className="text-4xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-[var(--primary)]/5 to-[var(--primary)]/10 p-6 md:hidden">
+                                    <p className="mb-1 text-sm font-medium text-gray-600">Starting from</p>
+                                    <p className="text-4xl font-black text-[var(--foreground)]">
                                         GH₵{ride?.price_per_seat}
                                     </p>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">per seat</p>
+                                    <p className="text-sm text-gray-600">per seat</p>
                                 </div>
                             )}
 
                             {/* Contact Actions */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Book a Ride</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Book a Ride</h3>
 
-                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
-                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
-                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800">
+                                        <span className="mt-0.5 text-amber-600">🛡️</span>
                                         <span>
-                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900" onClick={(e) => {
                                                 e.preventDefault();
                                                 document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
                                             }}>Safe Transaction Notice</a> before making a booking.
@@ -343,40 +343,40 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                             </div>
 
                             {/* Contact Info */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Information</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Contact Information</h3>
                                 <div className="space-y-3 text-sm">
                                     {ride?.phone && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Phone className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{ride.phone}</span>
+                                            <span className="font-medium text-gray-700">{ride.phone}</span>
                                         </div>
                                     )}
                                     {ride?.phone_2 && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Phone className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium text-gray-700 dark:text-gray-300">{ride.phone_2}</span>
+                                            <span className="font-medium text-gray-700">{ride.phone_2}</span>
                                         </div>
                                     )}
                                     {ride?.email && (
-                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+                                        <div className="flex items-center gap-3 rounded-lg bg-gray-50 p-3">
                                             <Mail className="h-4 w-4 text-[var(--primary)]" />
-                                            <span className="font-medium break-all text-gray-700 dark:text-gray-300">{ride.email}</span>
+                                            <span className="font-medium break-all text-gray-700">{ride.email}</span>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
                             {/* Trust Indicators */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Why Choose Us?</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Why Choose Us?</h3>
                                 <div className="space-y-3 text-sm">
                                     {ride?.is_verified && (
                                         <div className="flex items-start gap-3">
                                             <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 fill-[var(--primary)] text-white" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Verified Service</p>
-                                                <p className="text-gray-600 dark:text-gray-400">Verified by 2RBUAME</p>
+                                                <p className="font-semibold text-[var(--foreground)]">Verified Service</p>
+                                                <p className="text-gray-600">Verified by 2RBUAME</p>
                                             </div>
                                         </div>
                                     )}
@@ -384,10 +384,10 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                         <div className="flex items-start gap-3">
                                             <Star className="mt-0.5 h-5 w-5 shrink-0 fill-yellow-400 text-yellow-400" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">
+                                                <p className="font-semibold text-[var(--foreground)]">
                                                     {parseFloat(ride?.rating) > 4.0 ? `Highly Rated` : `Rated`}
                                                 </p>
-                                                <p className="text-gray-600 dark:text-gray-400">
+                                                <p className="text-gray-600">
                                                     {parseFloat(ride?.rating)}/5.0 from {parseInt(ride?.reviews_count) || 0} reviews
                                                 </p>
                                             </div>
@@ -398,8 +398,8 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
                                         <div className="flex items-start gap-3">
                                             <Users className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" />
                                             <div>
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Available Capacity</p>
-                                                <p className="text-gray-600 dark:text-gray-400">{ride.seats_available} seats available</p>
+                                                <p className="font-semibold text-[var(--foreground)]">Available Capacity</p>
+                                                <p className="text-gray-600">{ride.seats_available} seats available</p>
                                             </div>
                                         </div>
                                     )}

@@ -22,8 +22,8 @@ export function HotelProfile({ profile }) {
     if (!profile || !profile.id) {
         return (
             <div className="space-y-6">
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <p className="text-gray-600 dark:text-gray-400">Loading profile...</p>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <p className="text-gray-600">Loading profile...</p>
                 </div>
             </div>
         );
@@ -91,8 +91,8 @@ export function HotelProfile({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Hotel Profile</h2>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your hotel profile information</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Hotel Profile</h2>
+                <p className="mt-1 text-sm text-gray-600">Manage your hotel profile information</p>
             </div>
 
             {/* Visibility Banner with save button */}
@@ -120,15 +120,15 @@ export function HotelProfile({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Hotel Image</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Hotel Image</h3>
                     <div className="flex items-start gap-6">
                         {profileImagePreview ? (
                             <div className="relative">
                                 <img
                                     src={profileImagePreview}
                                     alt="Hotel"
-                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
+                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
                                 />
                                 <button
                                     type="button"
@@ -139,18 +139,18 @@ export function HotelProfile({ profile }) {
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50">
                                 <ImageIcon className="h-12 w-12 text-gray-400" />
                             </div>
                         )}
                         <div className="flex-1">
                             <Label htmlFor="primary_image">Primary Image</Label>
-                            <p className="mt-1 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                            <p className="mt-1 mb-3 text-xs text-gray-500">
                                 This image will be displayed as your hotel thumbnail to visitors
                             </p>
                             <label
                                 htmlFor="primary_image"
-                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6]#2a4d2a]#1a331a]#254225]"
                             >
                                 <Upload className="h-4 w-4" />
                                 {profileImagePreview ? 'Change Image' : 'Upload Image'}
@@ -162,8 +162,8 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Basic Information Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name">Hotel Name</Label>
@@ -210,9 +210,9 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
+                        <h3 className="text-lg font-bold text-[var(--foreground)]">Pricing</h3>
                         <div className="flex items-center gap-2">
                             <input
                                 type="checkbox"
@@ -221,7 +221,7 @@ export function HotelProfile({ profile }) {
                                 onChange={(e) => setShowPricing(e.target.checked)}
                                 className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600 dark:text-gray-400">
+                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600">
                                 Show pricing
                             </Label>
                         </div>
@@ -246,8 +246,8 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Description Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About Your Property</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">About Your Property</h3>
                     <div>
                         <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
@@ -263,8 +263,8 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="location">Location</Label>
@@ -342,11 +342,11 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Operating Hours Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">
                         Operating Hours <span className="text-sm font-normal text-gray-500">(Optional)</span>
                     </h3>
-                    <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                    <p className="mb-4 text-sm text-gray-600">
                         Set the hours when your hotel reception is open and available for guests
                     </p>
 
@@ -360,7 +360,7 @@ export function HotelProfile({ profile }) {
                                 onChange={(e) => setData('operating_hours_mode', e.target.value)}
                                 className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">No operating hours</span>
+                            <span className="text-sm text-gray-700">No operating hours</span>
                         </label>
 
                         <label className="flex cursor-pointer items-center gap-3">
@@ -372,7 +372,7 @@ export function HotelProfile({ profile }) {
                                 onChange={(e) => setData('operating_hours_mode', e.target.value)}
                                 className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Open 24/7</span>
+                            <span className="text-sm text-gray-700">Open 24/7</span>
                         </label>
 
                         <label className="flex cursor-pointer items-center gap-3">
@@ -384,7 +384,7 @@ export function HotelProfile({ profile }) {
                                 onChange={(e) => setData('operating_hours_mode', e.target.value)}
                                 className="h-4 w-4 border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <span className="text-sm text-gray-700 dark:text-gray-300">Custom hours</span>
+                            <span className="text-sm text-gray-700">Custom hours</span>
                         </label>
                     </div>
 
@@ -399,7 +399,7 @@ export function HotelProfile({ profile }) {
                                     onChange={(e) => setData('check_in_time', e.target.value)}
                                     className="mt-1"
                                 />
-                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception opens</p>
+                                <p className="mt-1 text-xs text-gray-500">When your reception opens</p>
                                 <FormError error={errors.check_in_time || pageErrors?.check_in_time} className="mt-1" />
                             </div>
 
@@ -412,7 +412,7 @@ export function HotelProfile({ profile }) {
                                     onChange={(e) => setData('check_out_time', e.target.value)}
                                     className="mt-1"
                                 />
-                                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When your reception closes</p>
+                                <p className="mt-1 text-xs text-gray-500">When your reception closes</p>
                                 <FormError error={errors.check_out_time || pageErrors?.check_out_time} className="mt-1" />
                             </div>
                         </div>

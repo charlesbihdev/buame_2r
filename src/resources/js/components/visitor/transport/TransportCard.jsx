@@ -35,10 +35,10 @@ export function TransportCard({ ride }) {
     return (
         <Link
             href={`/transport/${ride.id}`}
-            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)]"
+            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
         >
             {/* Transport Image */}
-            <div className="relative mb-4 h-40 w-full overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+            <div className="relative mb-4 h-40 w-full overflow-hidden rounded-xl bg-gray-100">
                 {ride.image ? (
                     <div
                         className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
@@ -47,7 +47,7 @@ export function TransportCard({ ride }) {
                         }}
                     />
                 ) : (
-                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--primary)]/10 to-[var(--primary)]/5 dark:from-[var(--primary)]/15 dark:via-[var(--primary)]/10 dark:to-[var(--primary)]/5">
+                    <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-gradient-to-br from-[var(--primary)]/20 via-[var(--primary)]/10 to-[var(--primary)]/5">
                         <TypeIcon className="h-14 w-14 text-[var(--primary)] opacity-90" aria-hidden />
                         <span className="text-xs font-medium text-[var(--primary)] opacity-80">{formatTransportType(ride.type)}</span>
                     </div>
@@ -66,37 +66,37 @@ export function TransportCard({ ride }) {
             {/* Details */}
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{ride.driver_name}</h3>
+                    <h3 className="text-lg font-bold text-[var(--foreground)]">{ride.driver_name}</h3>
                 </div>
 
-                <div className="mb-3 flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                <div className="mb-3 flex items-center gap-1 text-xs text-gray-600">
                     <MapPin className="h-3 w-3 shrink-0" />
                     <span>{ride.location}</span>
                 </div>
 
                 {/* Seats + Reviews row */}
                 <div className="mb-4 flex flex-wrap items-center gap-2 text-xs">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-700">
                         <Users className="h-3.5 w-3.5" />
                         {ride.seats_available != null && ride.seats_available !== '' ? ride.seats_available : '—'} seats
                     </span>
                     {Number(ride.reviews_count) > 0 ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 font-medium text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 font-medium text-amber-800">
                             <Star className="h-3.5 w-3.5 fill-amber-500" />
                             {ride.rating} · {ride.reviews_count} review{ride.reviews_count !== 1 ? 's' : ''}
                         </span>
                     ) : (
-                        <span className="rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                        <span className="rounded-full bg-gray-100 px-2.5 py-1 font-medium text-gray-500">
                             No reviews yet
                         </span>
                     )}
                 </div>
 
                 {/* Price (if set) + CTA */}
-                <div className="mt-auto border-t border-gray-100 pt-4 dark:border-gray-800">
+                <div className="mt-auto border-t border-gray-100 pt-4">
                     {Number(ride?.price_per_seat) > 0 && (
                         <div className="mb-3">
-                            <div className="text-lg font-bold text-[var(--foreground)] dark:text-[var(--primary)]">GH₵{ride.price_per_seat}</div>
+                            <div className="text-lg font-bold text-[var(--foreground)]">GH₵{ride.price_per_seat}</div>
                             <div className="text-xs text-gray-500">per seat</div>
                         </div>
                     )}

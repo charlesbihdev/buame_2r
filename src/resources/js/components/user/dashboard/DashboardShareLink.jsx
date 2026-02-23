@@ -19,10 +19,10 @@ export function DashboardShareLink({ label = "Share Profile Link", url, descript
     };
 
     return (
-        <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-            <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">{label}</Label>
+        <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+            <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">{label}</Label>
             <div className="flex gap-2">
-                <Input value={shareUrl} readOnly className="flex-1 text-sm bg-gray-50 dark:bg-gray-800" />
+                <Input value={shareUrl} readOnly className="flex-1 text-sm bg-gray-50" />
                 <Button onClick={handleCopy} variant="outline" type="button" size="icon" title="Copy Link">
                     {copied ? <CheckCircle className="h-4 w-4 text-[var(--primary)]" /> : <Copy className="h-4 w-4" />}
                 </Button>

@@ -96,24 +96,24 @@ export default function Payment({ category, amount, categories, user, tiers, sel
         <>
             <Head title={isFreeAccess ? 'Activate Free Access' : 'Payment'} />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12">
                 <div className="w-full max-w-2xl">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">
+                        <h1 className="text-3xl font-bold text-[var(--foreground)]">
                             {isFreeAccess ? 'Activate Free Access' : 'Complete Payment'}
                         </h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                        <p className="mt-2 text-gray-600">
                             {isFreeAccess
                                 ? 'Select your category to get started with free access!'
                                 : "You're almost there! Complete payment to activate your account."}
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm">
                         {/* Category Selection/Switcher - Always show */}
                         {categories && categories.length > 0 && (
-                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-                                <p className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                                <p className="mb-3 text-sm font-semibold text-gray-700">
                                     {category ? 'Want to switch category?' : 'Select a Category'}
                                 </p>
                                 <div className="flex flex-wrap gap-2">
@@ -124,7 +124,7 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                                                 cat.value === category
                                                     ? 'bg-[var(--primary)] text-white'
-                                                    : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600'
+                                                    : 'bg-white text-gray-700 hover:bg-gray-100'
                                             }`}
                                         >
                                             {cat.label}
@@ -136,18 +136,18 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
                         {/* Free Access Banner */}
                         {isFreeAccess && (
-                            <div className="mb-6 rounded-lg border-2 border-green-500 bg-green-50 p-6 dark:border-green-600 dark:bg-green-900/20">
+                            <div className="mb-6 rounded-lg border-2 border-green-500 bg-green-50 p-6">
                                 <div className="flex items-start gap-4">
                                     <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-white">
                                         <Gift className="h-6 w-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-bold text-green-700 dark:text-green-300">Free Access Period</h3>
-                                        <p className="mt-1 text-green-600 dark:text-green-400">
+                                        <h3 className="text-lg font-bold text-green-700">Free Access Period</h3>
+                                        <p className="mt-1 text-green-600">
                                             Get <strong>{freeAccessDays} days</strong> free access. No payment
                                             required!
                                         </p>
-                                        <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                                        <p className="mt-2 text-sm text-green-600">
                                             After your free period ends, you'll receive reminders to subscribe and continue using the platform.
                                         </p>
                                     </div>
@@ -157,8 +157,8 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
                         {/* Tier Selection for Marketplace */}
                         {category === 'marketplace' && tiers && (
-                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Select Your Store Plan</h3>
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Select Your Store Plan</h3>
                                 <div className="space-y-3">
                                     {Object.entries(tiers).map(([tierKey, tier]) => (
                                         <button
@@ -168,16 +168,16 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                             className={`w-full rounded-lg border-2 p-4 text-left transition-all ${
                                                 selectedTierState === tierKey
                                                     ? 'border-[var(--primary)] bg-[var(--primary)]/10'
-                                                    : 'border-gray-200 bg-white hover:border-[var(--primary)]/50 dark:border-gray-700 dark:bg-[var(--card)]'
+                                                    : 'border-gray-200 bg-white hover:border-[var(--primary)]/50'
                                             }`}
                                         >
                                             <div className="flex items-start justify-between">
                                                 <div className="flex-1">
                                                     <div className="flex items-center gap-2">
-                                                        <h4 className="font-bold text-[var(--foreground)] dark:text-white">{tier.name}</h4>
+                                                        <h4 className="font-bold text-[var(--foreground)]">{tier.name}</h4>
                                                         {selectedTierState === tierKey && <CheckCircle className="h-5 w-5 text-[var(--primary)]" />}
                                                     </div>
-                                                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{tier.description}</p>
+                                                    <p className="mt-1 text-sm text-gray-600">{tier.description}</p>
                                                     <p className="mt-2 text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                                 </div>
                                             </div>
@@ -189,36 +189,36 @@ export default function Payment({ category, amount, categories, user, tiers, sel
 
                         {/* Billing Cycle Selector - Hidden in free access mode */}
                         {!isFreeAccess && (
-                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
                                 <BillingCycleSelector selected={billingCycle} onChange={handleBillingCycleChange} pricing={pricing} />
                             </div>
                         )}
 
                         {/* Order Summary */}
-                        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-                            <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                        <div className="mb-8 rounded-lg border border-gray-200 bg-gray-50 p-6">
+                            <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">
                                 {isFreeAccess ? 'Selection Summary' : 'Order Summary'}
                             </h3>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-600 dark:text-gray-400">Category</span>
-                                    <span className="font-semibold text-[var(--foreground)] dark:text-white">{categoryLabels[category]}</span>
+                                    <span className="text-gray-600">Category</span>
+                                    <span className="font-semibold text-[var(--foreground)]">{categoryLabels[category]}</span>
                                 </div>
                                 {category === 'marketplace' && tiers && tiers[selectedTierState] && (
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600 dark:text-gray-400">Plan</span>
-                                        <span className="font-semibold text-[var(--foreground)] dark:text-white">{tiers[selectedTierState].name}</span>
+                                        <span className="text-gray-600">Plan</span>
+                                        <span className="font-semibold text-[var(--foreground)]">{tiers[selectedTierState].name}</span>
                                     </div>
                                 )}
                                 {isFreeAccess ? (
                                     <>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600 dark:text-gray-400">Access Period</span>
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{freeAccessDays} days</span>
+                                            <span className="text-gray-600">Access Period</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{freeAccessDays} days</span>
                                         </div>
-                                        <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
+                                        <div className="border-t border-gray-200 pt-2">
                                             <div className="flex justify-between">
-                                                <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
+                                                <span className="font-bold text-[var(--foreground)]">Total</span>
                                                 <div className="text-right">
                                                     <span className="text-2xl font-bold text-green-600">FREE</span>
                                                     <p className="text-xs text-gray-500">for {freeAccessDays} days</p>
@@ -229,18 +229,18 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                                 ) : (
                                     <>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600 dark:text-gray-400">Billing Cycle</span>
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white capitalize">{billingCycle}</span>
+                                            <span className="text-gray-600">Billing Cycle</span>
+                                            <span className="font-semibold text-[var(--foreground)] capitalize">{billingCycle}</span>
                                         </div>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600 dark:text-gray-400">Subscription Fee</span>
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">
+                                            <span className="text-gray-600">Subscription Fee</span>
+                                            <span className="font-semibold text-[var(--foreground)]">
                                                 GH₵ {displayAmount?.toFixed(2) || amount}
                                             </span>
                                         </div>
-                                        <div className="border-t border-gray-200 pt-2 dark:border-gray-700">
+                                        <div className="border-t border-gray-200 pt-2">
                                             <div className="flex justify-between">
-                                                <span className="font-bold text-[var(--foreground)] dark:text-white">Total</span>
+                                                <span className="font-bold text-[var(--foreground)]">Total</span>
                                                 <div className="text-right">
                                                     <span className="text-2xl font-bold text-[var(--primary)]">
                                                         GH₵ {displayAmount?.toFixed(2) || amount}
@@ -258,15 +258,15 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                             {/* Paystack Payment Option - Hidden in free access mode */}
                             {!isFreeAccess && (
                                 <div>
-                                    <label className="mb-3 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Payment Method</label>
+                                    <label className="mb-3 block text-sm font-semibold text-[var(--foreground)]">Payment Method</label>
                                     <div className="rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/10 p-4">
                                         <div className="flex items-center gap-4">
                                             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--primary)] text-white">
                                                 <CreditCard className="h-6 w-6" />
                                             </div>
                                             <div className="flex-1">
-                                                <p className="font-semibold text-[var(--foreground)] dark:text-white">Paystack</p>
-                                                <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                <p className="font-semibold text-[var(--foreground)]">Paystack</p>
+                                                <p className="text-xs text-gray-600">
                                                     Secure payment via card, bank transfer, or mobile money
                                                 </p>
                                             </div>
@@ -298,8 +298,8 @@ export default function Payment({ category, amount, categories, user, tiers, sel
                             </Button>
                         </form>
 
-                        <div className={`mt-6 rounded-lg p-4 ${isFreeAccess ? 'bg-green-50 dark:bg-green-900/20' : 'bg-blue-50 dark:bg-blue-900/20'}`}>
-                            <p className={`text-sm ${isFreeAccess ? 'text-green-800 dark:text-green-300' : 'text-blue-800 dark:text-blue-300'}`}>
+                        <div className={`mt-6 rounded-lg p-4 ${isFreeAccess ? 'bg-green-50' : 'bg-blue-50'}`}>
+                            <p className={`text-sm ${isFreeAccess ? 'text-green-800' : 'text-blue-800'}`}>
                                 {isFreeAccess ? (
                                     <>
                                         Your free access will be active for <strong>{freeAccessDays} days</strong>. We'll send you reminders before it

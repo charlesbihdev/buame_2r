@@ -35,23 +35,23 @@ export function TimelineSection() {
     return (
         <div className="px-6 py-16 lg:px-20">
             <div className="mx-auto max-w-[960px]">
-                <h2 className="mb-10 text-center text-3xl font-bold dark:text-white">Our Origins</h2>
+                <h2 className="mb-10 text-center text-3xl font-bold">Our Origins</h2>
                 <div className="relative">
                     {/* Vertical Line */}
-                    <div className="absolute left-[19px] top-0 bottom-0 w-[2px] bg-[#cfe7cf] dark:bg-white/20" />
+                    <div className="absolute left-[19px] top-0 bottom-0 w-[2px] bg-[#cfe7cf]" />
                     {timelineItems.map((item, index) => {
                         const Icon = item.icon;
                         return (
                             <div key={index} className="relative mb-12 flex gap-6 last:mb-0">
                                 <div className="z-10 flex flex-col items-center">
-                                    <div className="flex size-10 items-center justify-center rounded-full border-2 border-[var(--primary)] bg-background-light dark:bg-background-dark">
+                                    <div className="flex size-10 items-center justify-center rounded-full border-2 border-[var(--primary)] bg-background-light">
                                         <Icon className="h-5 w-5 text-[var(--primary)]" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col pt-1">
                                     <span className="mb-1 text-sm font-bold text-[var(--primary)]">{item.year}</span>
-                                    <h3 className="mb-2 text-xl font-bold text-[var(--foreground)] dark:text-white">{item.title}</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">{item.description}</p>
+                                    <h3 className="mb-2 text-xl font-bold text-[var(--foreground)]">{item.title}</h3>
+                                    <p className="text-gray-600">{item.description}</p>
                                 </div>
                             </div>
                         );

@@ -20,7 +20,7 @@ export function StoreProductGrid({ products, viewMode }) {
             {products.last_page > 1 && (
                 <div className="mt-8 flex flex-col items-center gap-4">
                     {/* Page Info */}
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600">
                         Showing <span className="font-semibold">{products.from}</span> to{' '}
                         <span className="font-semibold">{products.to}</span> of{' '}
                         <span className="font-semibold">{products.total}</span> products
@@ -32,13 +32,13 @@ export function StoreProductGrid({ products, viewMode }) {
                         {products.prev_page_url ? (
                             <Link
                                 href={products.prev_page_url}
-                                className="flex h-10 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-700 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-[var(--card)] dark:text-gray-300"
+                                className="flex h-10 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-700 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                             >
                                 <ChevronLeft className="h-4 w-4" />
                                 <span className="hidden sm:inline">Prev</span>
                             </Link>
                         ) : (
-                            <span className="flex h-10 cursor-not-allowed items-center gap-1 rounded-lg border border-gray-100 bg-gray-50 px-3 text-sm font-medium text-gray-400 dark:border-gray-800 dark:bg-[var(--buame-background-dark)]">
+                            <span className="flex h-10 cursor-not-allowed items-center gap-1 rounded-lg border border-gray-100 bg-gray-50 px-3 text-sm font-medium text-gray-400">
                                 <ChevronLeft className="h-4 w-4" />
                                 <span className="hidden sm:inline">Prev</span>
                             </span>
@@ -84,7 +84,7 @@ export function StoreProductGrid({ products, viewMode }) {
                                         className={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold transition-all ${
                                             link.active
                                                 ? 'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-md shadow-[var(--primary)]/25'
-                                                : 'border border-gray-200 bg-white text-gray-700 hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-[var(--card)] dark:text-gray-300'
+                                                : 'border border-gray-200 bg-white text-gray-700 hover:border-[var(--primary)] hover:bg-[var(--primary)]/10'
                                         }`}
                                     >
                                         {link.label}
@@ -97,13 +97,13 @@ export function StoreProductGrid({ products, viewMode }) {
                         {products.next_page_url ? (
                             <Link
                                 href={products.next_page_url}
-                                className="flex h-10 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-700 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-[var(--card)] dark:text-gray-300"
+                                className="flex h-10 items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 text-sm font-medium text-gray-700 transition-all hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                             >
                                 <span className="hidden sm:inline">Next</span>
                                 <ChevronRight className="h-4 w-4" />
                             </Link>
                         ) : (
-                            <span className="flex h-10 cursor-not-allowed items-center gap-1 rounded-lg border border-gray-100 bg-gray-50 px-3 text-sm font-medium text-gray-400 dark:border-gray-800 dark:bg-[var(--buame-background-dark)]">
+                            <span className="flex h-10 cursor-not-allowed items-center gap-1 rounded-lg border border-gray-100 bg-gray-50 px-3 text-sm font-medium text-gray-400">
                                 <span className="hidden sm:inline">Next</span>
                                 <ChevronRight className="h-4 w-4" />
                             </span>

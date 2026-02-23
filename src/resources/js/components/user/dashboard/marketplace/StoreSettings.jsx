@@ -96,8 +96,8 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Store Settings</h2>
-                <p className="mt-1 text-gray-600 dark:text-gray-400">Manage your store information and visibility</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Store Settings</h2>
+                <p className="mt-1 text-gray-600">Manage your store information and visibility</p>
             </div>
 
             {/* Store Visibility Toggle - Using reusable ListingVisibilityBanner (only when store exists, like artisans/hotels) */}
@@ -116,17 +116,17 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Store Name and Slug - Side by Side */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="grid gap-6 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Store Name
                             </Label>
                             <Input id="name" value={data.name} onChange={handleNameChange} placeholder="Enter your store name" className="w-full" />
                             <FormError error={errors.name || pageErrors?.name} className="mt-1" />
                         </div>
                         <div>
-                            <Label htmlFor="slug" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                            <Label htmlFor="slug" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                 Store URL Slug
                             </Label>
                             <div className="flex items-center gap-2">
@@ -148,8 +148,8 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
                 {/* Store Description and Link - Side by Side */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                             Store Description
                         </Label>
                         <Textarea
@@ -163,8 +163,8 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                         <FormError error={errors.description || pageErrors?.description} className="mt-1" />
                     </div>
 
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">Your Store Link</Label>
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">Your Store Link</Label>
                         <div className="flex gap-2">
                             <Input value={storeUrl} readOnly className="flex-1 text-sm" />
                             <Button onClick={handleCopy} variant="outline" type="button" size="icon">
@@ -199,12 +199,12 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
             <div className="grid gap-6 md:grid-cols-2">
                 {/* Current Tier */}
                 {currentTier && (
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <h4 className="mb-3 font-semibold text-[var(--foreground)] dark:text-white">Current Plan</h4>
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <h4 className="mb-3 font-semibold text-[var(--foreground)]">Current Plan</h4>
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-lg font-bold text-[var(--foreground)] dark:text-white">{currentTier.name}</p>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                <p className="text-lg font-bold text-[var(--foreground)]">{currentTier.name}</p>
+                                <p className="text-sm text-gray-600">
                                     {store?.products_count || 0} / {store?.product_limit || 10} products used
                                 </p>
                             </div>
@@ -221,16 +221,16 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
                 {/* Upgrade Options */}
                 {!isFreeAccess && availableTiers.length > 0 && (
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                        <h4 className="mb-3 font-semibold text-[var(--foreground)] dark:text-white">Upgrade Your Store</h4>
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                        <h4 className="mb-3 font-semibold text-[var(--foreground)]">Upgrade Your Store</h4>
                         <div className="space-y-3">
                             {availableTiers.map(([key, tier]) => (
                                 <div
                                     key={key}
-                                    className="flex items-center justify-between rounded-lg border border-gray-200 p-3 dark:border-gray-700"
+                                    className="flex items-center justify-between rounded-lg border border-gray-200 p-3"
                                 >
                                     <div>
-                                        <p className="font-semibold text-[var(--foreground)] dark:text-white">{tier.name}</p>
+                                        <p className="font-semibold text-[var(--foreground)]">{tier.name}</p>
                                         <p className="text-xs text-gray-500">Up to {tier.product_limit} products</p>
                                     </div>
                                     <div className="flex items-center gap-2">

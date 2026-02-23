@@ -25,12 +25,12 @@ export function JobsToolbar({ filters = {}, pagination = {}, onFilterToggle }) {
 
     return (
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            <p className="text-sm font-medium text-gray-500">
                 {pagination.total ? (
                     <>
-                        Showing <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.from || 0}</span> -{' '}
-                        <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.to || 0}</span> of{' '}
-                        <span className="font-bold text-[var(--foreground)] dark:text-white">{pagination.total}</span> results
+                        Showing <span className="font-bold text-[var(--foreground)]">{pagination.from || 0}</span> -{' '}
+                        <span className="font-bold text-[var(--foreground)]">{pagination.to || 0}</span> of{' '}
+                        <span className="font-bold text-[var(--foreground)]">{pagination.total}</span> results
                     </>
                 ) : (
                     'No results found'
@@ -40,7 +40,7 @@ export function JobsToolbar({ filters = {}, pagination = {}, onFilterToggle }) {
                 {/* Mobile Filter Toggle */}
                 <button
                     onClick={onFilterToggle}
-                    className="relative flex h-10 items-center gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white px-3 text-sm font-medium text-gray-700 transition-colors hover:border-[var(--primary)]/40 hover:text-[var(--primary)] lg:hidden dark:border-white/10 dark:bg-white/5 dark:text-gray-300"
+                    className="relative flex h-10 items-center gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white px-3 text-sm font-medium text-gray-700 transition-colors hover:border-[var(--primary)]/40 hover:text-[var(--primary)] lg:hidden"
                 >
                     <SlidersHorizontal className="h-4 w-4" />
                     <span>Filters</span>
@@ -52,7 +52,7 @@ export function JobsToolbar({ filters = {}, pagination = {}, onFilterToggle }) {
                 </button>
                 {/* Sort Select */}
                 <Select value={filters.sort || 'newest'} onValueChange={handleSortChange}>
-                    <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[var(--buame-border-light)] bg-white pr-8 pl-3 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-white/10 dark:bg-white/5 dark:text-white">
+                    <SelectTrigger className="h-10 cursor-pointer rounded-lg border border-[var(--buame-border-light)] bg-white pr-8 pl-3 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]">
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>

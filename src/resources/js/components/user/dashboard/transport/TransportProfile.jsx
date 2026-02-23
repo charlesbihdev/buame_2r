@@ -21,8 +21,8 @@ export function TransportProfile({ profile }) {
     if (!profile || !profile.id) {
         return (
             <div className="space-y-6">
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <p className="text-gray-600 dark:text-gray-400">Loading profile...</p>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <p className="text-gray-600">Loading profile...</p>
                 </div>
             </div>
         );
@@ -86,8 +86,8 @@ export function TransportProfile({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Transport Profile</h2>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your transport service information</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Transport Profile</h2>
+                <p className="mt-1 text-sm text-gray-600">Manage your transport service information</p>
             </div>
 
             {/* Visibility Banner with save button */}
@@ -115,15 +115,15 @@ export function TransportProfile({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Vehicle Image</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Vehicle Image</h3>
                     <div className="flex items-start gap-6">
                         {profileImagePreview ? (
                             <div className="relative">
                                 <img
                                     src={profileImagePreview}
                                     alt="Vehicle"
-                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
+                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
                                 />
                                 <button
                                     type="button"
@@ -134,18 +134,18 @@ export function TransportProfile({ profile }) {
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50">
                                 <ImageIcon className="h-12 w-12 text-gray-400" />
                             </div>
                         )}
                         <div className="flex-1">
                             <Label htmlFor="primary_image">Primary Image</Label>
-                            <p className="mt-1 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                            <p className="mt-1 mb-3 text-xs text-gray-500">
                                 This image will be displayed as your vehicle/service thumbnail to visitors
                             </p>
                             <label
                                 htmlFor="primary_image"
-                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6]#2a4d2a]#1a331a]#254225]"
                             >
                                 <Upload className="h-4 w-4" />
                                 {profileImagePreview ? 'Change Image' : 'Upload Image'}
@@ -157,8 +157,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Basic Information Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="driver_name">Driver/Rider Name</Label>
@@ -193,9 +193,9 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
+                        <h3 className="text-lg font-bold text-[var(--foreground)]">Pricing</h3>
                         <div className="flex items-center gap-2">
                             <input
                                 type="checkbox"
@@ -204,7 +204,7 @@ export function TransportProfile({ profile }) {
                                 onChange={(e) => setShowPricing(e.target.checked)}
                                 className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600 dark:text-gray-400">
+                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600">
                                 Show pricing
                             </Label>
                         </div>
@@ -242,8 +242,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Description Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About Your Service</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">About Your Service</h3>
                     <div>
                         <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
@@ -259,8 +259,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="location">Working Location</Label>
@@ -326,8 +326,8 @@ export function TransportProfile({ profile }) {
                 </div>
 
                 {/* Operating Hours Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Operating Hours</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Operating Hours</h3>
                     <div>
                         <Label htmlFor="operating_hours">Operating Hours <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input
@@ -337,7 +337,7 @@ export function TransportProfile({ profile }) {
                             className="mt-1"
                             placeholder="Daily: 5:00 AM - 8:00 PM"
                         />
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">When are you available for rides?</p>
+                        <p className="mt-1 text-xs text-gray-500">When are you available for rides?</p>
                         <FormError error={errors.operating_hours || pageErrors?.operating_hours} className="mt-1" />
                     </div>
                 </div>

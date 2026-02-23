@@ -18,8 +18,8 @@ export function RentalProfile({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                <p className="text-gray-600 dark:text-gray-400">Loading rental profile...</p>
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center">
+                <p className="text-gray-600">Loading rental profile...</p>
             </div>
         );
     }
@@ -105,11 +105,11 @@ export function RentalProfile({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Primary Image Upload */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Primary Image</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Primary Image</h3>
                     <div className="flex items-start gap-6">
                         <div
-                            className="relative h-40 w-40 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                            className="relative h-40 w-40 cursor-pointer overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)]"
                             onClick={() => fileInputRef.current?.click()}
                         >
                             {imagePreview || primaryImage?.image_path ? (
@@ -123,7 +123,7 @@ export function RentalProfile({ profile }) {
                             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
                         </div>
                         <div className="flex-1">
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600">
                                 Upload a primary image for your rental listing. This will be the main image shown in search results.
                             </p>
                             <p className="mt-2 text-xs text-gray-500">Recommended: 800x600px, max 5MB</p>
@@ -133,8 +133,8 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Basic Information */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name">Rental Name</Label>
@@ -154,7 +154,7 @@ export function RentalProfile({ profile }) {
                                 id="type"
                                 value={data.type}
                                 onChange={(e) => setData('type', e.target.value)}
-                                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
+                                className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
                             >
                                 {rentalTypes.map((type) => (
                                     <option key={type.value} value={type.value}>
@@ -181,9 +181,9 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Pricing</h3>
+                        <h3 className="text-lg font-bold text-[var(--foreground)]">Pricing</h3>
                         <div className="flex items-center gap-2">
                             <input
                                 type="checkbox"
@@ -192,7 +192,7 @@ export function RentalProfile({ profile }) {
                                 onChange={(e) => setShowPricing(e.target.checked)}
                                 className="h-4 w-4 rounded border-gray-300 text-[var(--primary)] focus:ring-[var(--primary)]"
                             />
-                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600 dark:text-gray-400">
+                            <Label htmlFor="showPricing" className="cursor-pointer text-sm text-gray-600">
                                 Show pricing
                             </Label>
                         </div>
@@ -220,7 +220,7 @@ export function RentalProfile({ profile }) {
                                     id="period"
                                     value={data.period}
                                     onChange={(e) => setData('period', e.target.value)}
-                                    className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--foreground)] dark:text-white"
+                                    className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
                                 >
                                     {periods.map((period) => (
                                         <option key={period.value} value={period.value}>
@@ -235,8 +235,8 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="location">Location</Label>
@@ -302,8 +302,8 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Rental Terms Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Terms</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Rental Terms</h3>
                     <div>
                         <Label htmlFor="rental_terms">Terms & Conditions <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
@@ -319,7 +319,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Save Button */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                     <div className="flex flex-wrap items-center justify-end gap-4">
                         {recentlySuccessful && (
                             <div className="flex items-center gap-2 text-sm text-green-600">

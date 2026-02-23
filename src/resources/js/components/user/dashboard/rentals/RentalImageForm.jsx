@@ -61,14 +61,14 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 dark:bg-[var(--card)]">
+            <div className="w-full max-w-md rounded-xl bg-white p-6">
                 <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
+                    <h3 className="text-lg font-bold text-[var(--foreground)]">
                         {image ? 'Edit Image' : 'Add New Image'}
                     </h3>
                     <button
                         onClick={handleClose}
-                        className="rounded-full p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        className="rounded-full p-1 hover:bg-gray-100"
                     >
                         <X className="h-5 w-5" />
                     </button>
@@ -79,7 +79,7 @@ export function RentalImageForm({ rentalId, image, isOpen, onClose }) {
                     <div>
                         <Label>Image</Label>
                         <div
-                            className="mt-2 flex h-48 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                            className="mt-2 flex h-48 cursor-pointer items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-[var(--primary)]"
                             onClick={() => fileInputRef.current?.click()}
                         >
                             {imagePreview ? (

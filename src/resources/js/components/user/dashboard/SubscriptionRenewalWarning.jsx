@@ -30,8 +30,8 @@ export default function SubscriptionRenewalWarning({ subscription, category, isF
                 title: 'Subscription Cancelled',
                 message:
                     'Your subscription has been cancelled. Your profile and listings are hidden from visitors, and editing is disabled. Subscribe again to restore access.',
-                className: 'bg-gray-50 border-gray-200 text-gray-800 dark:bg-gray-900/20 dark:border-gray-700 dark:text-gray-300',
-                iconClassName: 'text-gray-600 dark:text-gray-400',
+                className: 'bg-gray-50 border-gray-200 text-gray-800',
+                iconClassName: 'text-gray-600',
             };
         }
 
@@ -41,8 +41,8 @@ export default function SubscriptionRenewalWarning({ subscription, category, isF
                 title: 'Subscription Expired',
                 message:
                     'Your subscription has expired. Your profile and listings are no longer visible to visitors, and editing is disabled. Renew now to restore full access.',
-                className: 'bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-300',
-                iconClassName: 'text-red-600 dark:text-red-400',
+                className: 'bg-red-50 border-red-200 text-red-800',
+                iconClassName: 'text-red-600',
             };
         }
 
@@ -52,8 +52,8 @@ export default function SubscriptionRenewalWarning({ subscription, category, isF
                 icon: Clock,
                 title: 'Grace Period Active',
                 message: `Your subscription has expired. You have ${daysLeft} day${daysLeft !== 1 ? 's' : ''} left in your grace period before access is deactivated. Renew now to keep your services active.`,
-                className: 'bg-yellow-50 border-yellow-200 text-yellow-800 dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-300',
-                iconClassName: 'text-yellow-600 dark:text-yellow-400',
+                className: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+                iconClassName: 'text-yellow-600',
             };
         }
 
@@ -62,8 +62,8 @@ export default function SubscriptionRenewalWarning({ subscription, category, isF
                 icon: AlertTriangle,
                 title: 'Subscription Expiring Soon',
                 message: `Your subscription expires in ${days_until_expiry} day${days_until_expiry !== 1 ? 's' : ''} (${formatDate(expires_at)}). Renew now to avoid service interruption.`,
-                className: 'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-300',
-                iconClassName: 'text-orange-600 dark:text-orange-400',
+                className: 'bg-orange-50 border-orange-200 text-orange-800',
+                iconClassName: 'text-orange-600',
             };
         }
 
@@ -72,8 +72,8 @@ export default function SubscriptionRenewalWarning({ subscription, category, isF
                 icon: AlertTriangle,
                 title: 'Subscription Expires Today',
                 message: 'Your subscription expires today! Renew now to avoid any interruption to your services.',
-                className: 'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-900/20 dark:border-orange-800 dark:text-orange-300',
-                iconClassName: 'text-orange-600 dark:text-orange-400',
+                className: 'bg-orange-50 border-orange-200 text-orange-800',
+                iconClassName: 'text-orange-600',
             };
         }
 

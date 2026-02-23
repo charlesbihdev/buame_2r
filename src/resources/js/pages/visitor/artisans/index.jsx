@@ -94,14 +94,14 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
             </Head>
 
             {/* Hero with Search */}
-            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5 dark:from-[var(--primary)]/5 dark:via-[var(--foreground)] dark:to-[var(--primary)]/5">
+            <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 lg:px-12">
                     <div className="mb-6">
                         <BackToHome />
                     </div>
                     <div className="mb-8 text-center">
-                        <h1 className="mb-3 text-4xl font-black text-[var(--foreground)] dark:text-white md:text-5xl">Find Expert Artisans</h1>
-                        <p className="text-lg text-gray-600 dark:text-gray-300">Connect with verified skilled workers across Western North and beyond. We welcome customers from all backgrounds.</p>
+                        <h1 className="mb-3 text-4xl font-black text-[var(--foreground)] md:text-5xl">Find Expert Artisans</h1>
+                        <p className="text-lg text-gray-600">Connect with verified skilled workers across Western North and beyond. We welcome customers from all backgrounds.</p>
                     </div>
 
                     {/* Search Bar Component */}
@@ -129,7 +129,7 @@ export default function Artisans({ artisans, categoryCounts, filters }) {
                         artisans.data.map((artisan) => <ArtisanCard key={artisan.id} artisan={artisan} />)
                     ) : (
                         <div className="col-span-full py-12 text-center">
-                            <p className="text-lg text-gray-500 dark:text-gray-400">No artisans found. Be the first to join!</p>
+                            <p className="text-lg text-gray-500">No artisans found. Be the first to join!</p>
                             <Link href="/join-as-provider" className="mt-4 inline-block text-[var(--primary)] hover:underline">
                                 Join as Provider →
                             </Link>

@@ -14,7 +14,7 @@ export function RentalsListings({ listings }) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Rentals</h3>
+                <h3 className="text-lg font-bold text-[var(--foreground)]">My Rentals</h3>
                 <Button onClick={handleCreate} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                     <Plus className="mr-2 h-4 w-4" />
                     Add Rental
@@ -26,13 +26,13 @@ export function RentalsListings({ listings }) {
                     {listings.map((listing) => (
                         <div
                             key={listing.id}
-                            className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                            className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
                         >
-                            <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800" />
+                            <div className="aspect-video w-full bg-gray-100" />
                             <div className="p-4">
-                                <h4 className="font-bold text-[var(--foreground)] dark:text-white">{listing.title}</h4>
+                                <h4 className="font-bold text-[var(--foreground)]">{listing.title}</h4>
                                 <p className="mt-1 text-sm font-semibold text-[var(--primary)]">GH₵ {listing.price_per_month}/month</p>
-                                <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
                                     <MapPin className="h-3 w-3" />
                                     <span>{listing.location}</span>
                                 </div>
@@ -52,9 +52,9 @@ export function RentalsListings({ listings }) {
                     ))}
                 </div>
             ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
+                <div className="rounded-xl border-2 border-dashed border-gray-300 p-12 text-center">
                     <Home className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-4 text-gray-600 dark:text-gray-400">No rentals listed yet</p>
+                    <p className="mt-4 text-gray-600">No rentals listed yet</p>
                     <Button onClick={handleCreate} className="mt-4 cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Your First Rental

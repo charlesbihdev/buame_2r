@@ -30,13 +30,13 @@ export function StarRating({ value = 0, onChange, readonly = false, size = 'md',
                             'transition-colors',
                             star <= value
                                 ? 'fill-yellow-400 text-yellow-400'
-                                : 'text-gray-300 dark:text-gray-600',
+                                : 'text-gray-300',
                         )}
                     />
                 </button>
             ))}
             {showLabel && value > 0 && (
-                <span className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+                <span className="ml-2 text-sm font-medium text-gray-600">
                     {labels[value]}
                 </span>
             )}

@@ -60,10 +60,10 @@ export function PortfolioForm({ portfolio, onClose }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+            <div className="w-full max-w-md rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                 <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-[var(--foreground)] dark:text-white">{isEdit ? 'Edit Portfolio Item' : 'Add Portfolio Item'}</h3>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <h3 className="text-xl font-bold text-[var(--foreground)]">{isEdit ? 'Edit Portfolio Item' : 'Add Portfolio Item'}</h3>
+                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
                         <X className="h-5 w-5" />
                     </button>
                 </div>
@@ -77,7 +77,7 @@ export function PortfolioForm({ portfolio, onClose }) {
                                     <img
                                         src={preview}
                                         alt="Preview"
-                                        className="h-48 w-full rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
+                                        className="h-48 w-full rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
                                     />
                                     <button
                                         type="button"
@@ -90,14 +90,14 @@ export function PortfolioForm({ portfolio, onClose }) {
                             ) : (
                                 <label
                                     htmlFor="image"
-                                    className="flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+                                    className="flex h-48 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:bg-gray-50"
                                 >
                                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                         <Upload className="mb-3 h-10 w-10 text-gray-400" />
-                                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                        <p className="mb-2 text-sm text-gray-500">
                                             <span className="font-semibold">Click to upload</span> or drag and drop
                                         </p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 5MB</p>
+                                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
                                     </div>
                                     <input id="image" type="file" className="hidden" accept="image/*" onChange={handleImageChange} required={!isEdit || !preview} />
                                 </label>

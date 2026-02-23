@@ -22,7 +22,7 @@ export function JobsHero({ filters = {} }) {
     };
 
     return (
-        <div className="w-full border-b border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5">
+        <div className="w-full border-b border-[var(--buame-border-light)] bg-white">
             <div className="mx-auto max-w-[1440px]">
                 <div className="p-4 @[480px]:p-6">
                     <div className="relative mb-6">
@@ -43,20 +43,20 @@ export function JobsHero({ filters = {} }) {
                         </div>
                         <div className="z-10 mt-8 flex w-full max-w-[800px] flex-col">
                             <div className="flex w-full flex-col overflow-hidden rounded-lg shadow-xl sm:flex-row sm:items-stretch">
-                                <div className="relative flex w-full items-center border-b border-gray-200 bg-white px-4 py-3 sm:w-1/3 sm:border-r sm:border-b-0 sm:py-0 dark:border-white/10 dark:bg-white/5">
-                                    <MapPin className="absolute left-4 h-5 w-5 text-gray-400 dark:text-gray-500" />
+                                <div className="relative flex w-full items-center border-b border-gray-200 bg-white px-4 py-3 sm:w-1/3 sm:border-r sm:border-b-0 sm:py-0">
+                                    <MapPin className="absolute left-4 h-5 w-5 text-gray-400" />
                                     <Input
                                         type="text"
                                         value={location}
                                         onChange={(e) => setLocation(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                         placeholder="Location (e.g., Western North)"
-                                        className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14 dark:text-white"
+                                        className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14"
                                     />
                                 </div>
-                                <div className="relative flex-1 bg-white dark:bg-white/5">
+                                <div className="relative flex-1 bg-white">
                                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                                        <Search className="h-5 w-5 text-gray-400" />
                                     </div>
                                     <Input
                                         type="text"
@@ -64,7 +64,7 @@ export function JobsHero({ filters = {} }) {
                                         onChange={(e) => setSearch(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                                         placeholder="Search for jobs..."
-                                        className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14 dark:text-white"
+                                        className="h-12 border-none bg-transparent pr-4 pl-12 text-sm placeholder:text-gray-400 focus:ring-0 sm:h-14"
                                     />
                                 </div>
                                 <Button
