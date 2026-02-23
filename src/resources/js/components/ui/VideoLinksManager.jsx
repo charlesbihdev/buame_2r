@@ -115,7 +115,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                                     />
                                     <button
                                         onClick={() => handleDelete(link.id)}
-                                        className="absolute top-2 right-2 rounded-lg bg-red-500 p-2 text-white opacity-0 shadow-md transition-opacity hover:bg-red-600 group-hover:opacity-100"
+                                        className="absolute top-2 right-2 rounded-lg bg-red-500 p-2 text-white shadow-md transition-colors hover:bg-red-600"
                                         title="Delete video link"
                                     >
                                         <Trash2 className="h-4 w-4" />
@@ -129,7 +129,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                             {tallVideos.map((link) => (
                                 <div
                                     key={link.id}
-                                    className="group relative min-h-[480px] overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[var(--card)]"
+                                    className="relative min-h-[480px] overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[var(--card)]"
                                     style={{ height: '480px' }}
                                 >
                                     <VideoEmbed
@@ -141,7 +141,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                                     />
                                     <button
                                         onClick={() => handleDelete(link.id)}
-                                        className="absolute top-2 right-2 z-10 rounded-lg bg-red-500 p-2 text-white opacity-0 shadow-md transition-opacity hover:bg-red-600 group-hover:opacity-100"
+                                        className="absolute top-2 right-2 z-10 rounded-lg bg-red-500 p-2 text-white shadow-md transition-colors hover:bg-red-600"
                                         title="Delete video link"
                                     >
                                         <Trash2 className="h-4 w-4" />

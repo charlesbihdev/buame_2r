@@ -54,9 +54,6 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                     {/* Back Button */}
                     <BackToHome to="/artisans" label="Back to Artisans" />
 
-                    {/* Caution Banner */}
-                    <CautionBanner type="service" className="mb-8" />
-
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
                         <div className="flex flex-col gap-6 md:flex-row md:items-start">
@@ -268,6 +265,19 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             {/* Contact Actions */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Get in Touch</h3>
+
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
+                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                        <span>
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
+                                            }}>Safe Transaction Notice</a> before reaching out.
+                                        </span>
+                                    </p>
+                                </div>
+
                                 <div className="space-y-3">
                                     {whatsappUrl && (
                                         <Button asChild className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
@@ -384,6 +394,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Safe Transaction Notice */}
+                <div id="safe-transaction-notice" className="mb-8 scroll-mt-24">
+                    <CautionBanner type="service" />
                 </div>
 
                 {/* Reviews Section */}

@@ -52,9 +52,6 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                     <BackToHome to="/jobs" label="Back to Jobs" />
                 </div>
 
-                {/* Caution Banner */}
-                <CautionBanner type="job" className="mb-8" />
-
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         {/* Header */}
@@ -246,6 +243,19 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                             {/* Contact */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Apply Now</h3>
+
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
+                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                        <span>
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
+                                            }}>Safe Transaction Notice</a> before applying.
+                                        </span>
+                                    </p>
+                                </div>
+
                                 <div className="space-y-3">
                                     {job.phone && (
                                         <a
@@ -316,6 +326,11 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                             )}
                         </div>
                     </div>
+                </div>
+
+                {/* Safe Transaction Notice */}
+                <div id="safe-transaction-notice" className="mt-8 mb-8 scroll-mt-24">
+                    <CautionBanner type="job" />
                 </div>
             </div>
         </VisitorLayout>
