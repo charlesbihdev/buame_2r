@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
 
 export function CategoriesSection() {
     const categories = [
@@ -44,46 +43,30 @@ export function CategoriesSection() {
     return (
         <section className="bg-background px-4 py-16 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px]">
-                <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-                    <div>
-                        <h2 className="mb-2 text-3xl font-bold text-foreground">Browse Categories</h2>
-                        <p className="text-muted-foreground">Explore diverse opportunities across Western North and beyond. We welcome customers from all backgrounds.</p>
-                    </div>
-                    <Link href="/services" className="flex items-center gap-1 font-bold text-primary transition-all hover:gap-2">
-                        View All Categories <ArrowRight className="h-4 w-4" />
-                    </Link>
+                <div className="mb-8">
+                    <h2 className="text-foreground text-2xl font-bold md:text-3xl">What Are You Looking For?</h2>
                 </div>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-                    {categories.map((category, index) => {
-                        // Strategic color accents: Premium services (Hotel, Jobs) get gold, others vary
-                        const isPremium = category.name === 'Hotel' || category.name === 'Jobs';
-                        const isInfo = category.name === 'Marketplace'; // Marketplace gets blue (info/e-commerce)
-                        const hoverBorder = isPremium
-                            ? 'hover:border-[var(--secondary)]/30'
-                            : isInfo
-                              ? 'hover:border-[var(--accent)]/30'
-                              : 'hover:border-[var(--primary)]/30';
-                        return (
-                            <Link
-                                key={category.name}
-                                href={category.url}
-                                className={`group flex flex-col gap-3 rounded-xl border border-border bg-card p-4 transition-all ${hoverBorder} hover:shadow-lg`}
-                            >
-                                <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-muted">
-                                    <div
-                                        className="absolute inset-0 bg-cover bg-top transition-transform duration-500 group-hover:scale-110"
-                                        style={{
-                                            backgroundImage: `url(${category.image})`,
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-foreground">{category.name}</h3>
-                                    <p className="mt-1 text-xs text-muted-foreground">{category.description}</p>
-                                </div>
-                            </Link>
-                        );
-                    })}
+
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+                    {categories.map((category) => (
+                        <Link key={category.name} href={category.url} className="group relative overflow-hidden rounded-2xl">
+                            {/* Large image */}
+                            <div className="relative aspect-[4/3] w-full overflow-hidden">
+                                <div
+                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                    style={{ backgroundImage: `url(${category.image})` }}
+                                />
+                                {/* Gradient overlay for text readability */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                            </div>
+
+                            {/* Category name overlaid at bottom */}
+                            <div className="absolute right-0 bottom-0 left-0 p-4 md:p-5">
+                                <h3 className="text-xl font-extrabold text-white drop-shadow-sm md:text-xl">{category.name}</h3>
+                                <p className="mt-1 text-sm text-white/80">{category.description}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
         </section>

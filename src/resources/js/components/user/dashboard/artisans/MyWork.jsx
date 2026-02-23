@@ -61,7 +61,7 @@ export function Portfolio({ profile }) {
                                 ) : (
                                     <ImageIcon className="h-12 w-12 text-gray-400" />
                                 )}
-                                <div className="absolute top-2 right-2 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                                <div className="absolute top-2 right-2 flex gap-2">
                                     <button
                                         onClick={() => handleEdit(item)}
                                         className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100 dark:bg-[#1a331a] dark:hover:bg-[#254225]"

@@ -206,8 +206,8 @@ export function EditProductModal({ isOpen, onClose, product }) {
                                         <button
                                             type="button"
                                             onClick={() => toggleRemoveExistingImage(image.id)}
-                                            className={`absolute -top-2 -right-2 rounded-full p-1 text-white transition-opacity ${
-                                                isMarkedForRemoval ? 'bg-green-500 opacity-100' : 'bg-red-500 opacity-0 group-hover:opacity-100'
+                                            className={`absolute -top-2 -right-2 rounded-full p-1 text-white ${
+                                                isMarkedForRemoval ? 'bg-green-500' : 'bg-red-500'
                                             }`}
                                         >
                                             <X className="h-3 w-3" />
@@ -233,7 +233,7 @@ export function EditProductModal({ isOpen, onClose, product }) {
                                     <button
                                         type="button"
                                         onClick={() => removeNewImage(index)}
-                                        className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                        className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white"
                                     >
                                         <X className="h-3 w-3" />
                                     </button>

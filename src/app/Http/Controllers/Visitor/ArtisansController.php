@@ -50,12 +50,11 @@ class ArtisansController extends Controller
             $query->where('location', 'like', '%'.$request->location.'%');
         }
 
-        // Search by name, company_name, description, or specialties
+        // Search by name, description, or specialties
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('company_name', 'like', '%'.$search.'%')
                     ->orWhere('description', 'like', '%'.$search.'%')
                     ->orWhereHas('specialties', function ($sq) use ($search) {
                         $sq->where('specialty', 'like', '%'.$search.'%');
@@ -77,7 +76,6 @@ class ArtisansController extends Controller
             return [
                 'id' => $artisan->id,
                 'name' => $artisan->name,
-                'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
                 'rating' => $artisan->rating > 0 ? round($artisan->rating, 1) : 4.5, // Default rating for new artisans
                 'reviews_count' => $artisan->reviews_count,
@@ -156,7 +154,6 @@ class ArtisansController extends Controller
             'artisan' => [
                 'id' => $artisan->id,
                 'name' => $artisan->name,
-                'company_name' => $artisan->company_name,
                 'skill_type' => $artisan->skill_type,
                 'description' => $artisan->description,
                 'rating' => $artisan->average_rating ?: 0,

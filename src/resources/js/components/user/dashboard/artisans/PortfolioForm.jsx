@@ -70,20 +70,7 @@ export function PortfolioForm({ portfolio, onClose }) {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <Label htmlFor="item">Work Description</Label>
-                        <Input
-                            id="item"
-                            value={data.item}
-                            onChange={(e) => setData('item', e.target.value)}
-                            className="mt-1"
-                            placeholder="e.g., Custom dining tables"
-                            required
-                        />
-                        <FormError error={errors.item || pageErrors?.item} className="mt-1" />
-                    </div>
-
-                    <div>
-                        <Label htmlFor="image">Image (Optional)</Label>
+                        <Label htmlFor="image">Image *</Label>
                         <div className="mt-2">
                             {preview ? (
                                 <div className="relative">
@@ -112,11 +99,23 @@ export function PortfolioForm({ portfolio, onClose }) {
                                         </p>
                                         <p className="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, GIF up to 5MB</p>
                                     </div>
-                                    <input id="image" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                    <input id="image" type="file" className="hidden" accept="image/*" onChange={handleImageChange} required={!isEdit || !preview} />
                                 </label>
                             )}
                         </div>
                         <FormError error={errors.image || pageErrors?.image} className="mt-1" />
+                    </div>
+
+                    <div>
+                        <Label htmlFor="item">Work Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
+                        <Input
+                            id="item"
+                            value={data.item}
+                            onChange={(e) => setData('item', e.target.value)}
+                            className="mt-1"
+                            placeholder="e.g., Custom dining tables"
+                        />
+                        <FormError error={errors.item || pageErrors?.item} className="mt-1" />
                     </div>
 
                     <div className="flex items-center justify-end gap-3 pt-4">

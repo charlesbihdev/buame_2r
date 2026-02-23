@@ -51,6 +51,7 @@ export default function DashboardLayout({ user, children, activeCategory, active
     const navItems = getCategoryNavItems();
 
     const handleNavClick = (section) => {
+        setSidebarOpen(false);
         navigateToSection(section);
     };
 

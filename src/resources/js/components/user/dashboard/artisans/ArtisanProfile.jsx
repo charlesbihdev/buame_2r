@@ -21,7 +21,6 @@ export function ArtisanProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
-        company_name: profile?.company_name || '',
         skill_type: profile?.skill_type || '', // Removed default 'other' to encourage explicit selection
         description: profile?.description || '',
         experience_years: profile?.experience_years || '',
@@ -179,13 +178,13 @@ export function ArtisanProfile({ profile }) {
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
-                            <Label htmlFor="name">Full Name</Label>
+                            <Label htmlFor="name">Professional/Business Name</Label>
                             <Input
                                 id="name"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
                                 className="mt-1"
-                                placeholder="Kwame Mensah"
+                                placeholder="Mensah's Carpentry Works"
                             />
                             <FormError error={errors.name || pageErrors?.name} className="mt-1" />
                         </div>
@@ -205,18 +204,6 @@ export function ArtisanProfile({ profile }) {
                                 </SelectContent>
                             </Select>
                             <FormError error={errors.skill_type || pageErrors?.skill_type} className="mt-1" />
-                        </div>
-
-                        <div>
-                            <Label htmlFor="company_name">Company/Business Name <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
-                            <Input
-                                id="company_name"
-                                value={data.company_name}
-                                onChange={(e) => setData('company_name', e.target.value)}
-                                className="mt-1"
-                                placeholder="Mensah's Carpentry Works"
-                            />
-                            <FormError error={errors.company_name || pageErrors?.company_name} className="mt-1" />
                         </div>
 
                         <div>

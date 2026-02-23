@@ -46,7 +46,6 @@ class ArtisansController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'company_name' => ['nullable', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
              'skill_type' => [
@@ -97,7 +96,6 @@ class ArtisansController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'company_name' => ['nullable', 'string', 'max:255'],
             'skill_type' => [
                 'nullable',
                 'string',

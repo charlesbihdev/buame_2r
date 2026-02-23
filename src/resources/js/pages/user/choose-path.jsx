@@ -72,15 +72,14 @@ const categories = [
 export default function ChoosePath() {
     return (
         <VisitorLayout>
-            <Head title="Choose Your Path - 2RBUAME" />
+            <Head title="What Do You Do? - 2RBUAME" />
             <div className="bg-background py-16">
                 <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-40">
                     {/* Header */}
                     <div className="mb-12 text-center">
-                        <h1 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">Choose Your Path</h1>
+                        <h1 className="mb-4 text-4xl font-bold text-foreground md:text-5xl">What Do You Do?</h1>
                         <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-                            Select the category that fits your business. Whether you're an artisan, hotel owner, driver, property owner, trader, or
-                            employer, we have a place for you.
+                            Pick what best describes your business. We will set up your profile so customers can find you.
                         </p>
                     </div>
 

@@ -10,7 +10,7 @@ export function DashboardShareLink({ label = "Share Profile Link", url, descript
     // Construct full URL if a relative path is provided
     const shareUrl = url.startsWith('http')
         ? url
-        : `${import.meta.env.VITE_APP_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+        : `${window.location.origin}${url.startsWith('/') ? '' : '/'}${url}`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(shareUrl);

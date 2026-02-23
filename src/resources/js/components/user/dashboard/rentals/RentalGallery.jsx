@@ -85,8 +85,8 @@ export function RentalGallery({ profile }) {
                                 </div>
                             )}
 
-                            {/* Hover Actions */}
-                            <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                            {/* Action Buttons */}
+                            <div className="absolute bottom-2 right-2 flex gap-2">
                                 {!image.is_primary && (
                                     <Button
                                         size="sm"

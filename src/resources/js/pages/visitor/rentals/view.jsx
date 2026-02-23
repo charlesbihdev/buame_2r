@@ -71,9 +71,6 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
                 <BackToHome to="/rentals" label="Back to Rentals" />
 
-                {/* Caution Banner */}
-                <CautionBanner type="service" className="mb-8" />
-
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         {/* Image Gallery */}
@@ -177,6 +174,19 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                             {/* Contact */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Owner</h3>
+
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
+                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                        <span>
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
+                                            }}>Safe Transaction Notice</a> before contacting the owner.
+                                        </span>
+                                    </p>
+                                </div>
+
                                 <div className="space-y-3">
                                     {rental.phone && (
                                         <a
@@ -256,6 +266,11 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Safe Transaction Notice */}
+                <div id="safe-transaction-notice" className="mb-8 scroll-mt-24">
+                    <CautionBanner type="service" />
                 </div>
 
                 {/* Reviews Section */}

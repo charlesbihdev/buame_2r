@@ -74,7 +74,7 @@ export function TransportGallery({ profile }) {
                             alt="Primary"
                             className="h-64 w-full object-cover transition-transform group-hover:scale-105"
                         />
-                        <div className="absolute top-2 right-2 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="absolute top-2 right-2 flex gap-2">
                             <button
                                 onClick={() => handleEdit(primaryImage)}
                                 className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100 dark:bg-[#1a331a] dark:hover:bg-[#254225]"
@@ -104,7 +104,7 @@ export function TransportGallery({ profile }) {
                         >
                             <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-gray-100 dark:bg-gray-800">
                                 <img src={image.image_path} alt="Vehicle" className="h-full w-full object-cover" />
-                                <div className="absolute top-2 right-2 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                                <div className="absolute top-2 right-2 flex gap-2">
                                     <button
                                         onClick={() => handleSetPrimary(image.id)}
                                         className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100 dark:bg-[#1a331a] dark:hover:bg-[#254225]"

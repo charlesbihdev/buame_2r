@@ -31,7 +31,6 @@ export function ArtisansListings({ listings }) {
                             <div className="aspect-video w-full bg-gray-100 dark:bg-gray-800" />
                             <div className="p-4">
                                 <h4 className="font-bold text-[var(--foreground)] dark:text-white">{listing.name}</h4>
-                                <p className="mt-1 text-sm text-[#4c9a4c] dark:text-[#8fcc8f]">{listing.company_name}</p>
                                 <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                                     <MapPin className="h-3 w-3" />
                                     <span>{listing.location}</span>

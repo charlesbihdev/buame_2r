@@ -19,7 +19,7 @@ const formatSkillType = (skillType) => {
 };
 
 export default function ArtisanView({ artisan, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
-    const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your ${artisan?.company_name || 'services'}.`);
+    const whatsappUrl = buildWhatsAppUrl(artisan?.whatsapp, `Hello ${artisan?.name}, I'm interested in your services.`);
     const artisanDescription = artisan?.description
         ? artisan.description.substring(0, 150)
         : `Professional artisan with ${artisan?.experience_years || 'years of'} experience`;
@@ -27,23 +27,23 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
 
     return (
         <VisitorLayout>
-            <Head title={`${artisan?.name} - ${artisan?.company_name || 'Artisan'}`}>
+            <Head title={`${artisan?.name} - Artisan`}>
                 <meta
                     name="description"
-                    content={`${artisan?.name} - ${artisan?.company_name || 'Professional Artisan'} in ${artisan?.location}. Specializing in ${specialtiesText}. ${artisanDescription}${artisanDescription.length >= 150 ? '...' : ''}`}
+                    content={`${artisan?.name} - Professional Artisan in ${artisan?.location}. Specializing in ${specialtiesText}. ${artisanDescription}${artisanDescription.length >= 150 ? '...' : ''}`}
                 />
                 <meta
                     name="keywords"
-                    content={`${artisan?.name}, ${artisan?.company_name || 'artisan'}, ${artisan?.location}, ${specialtiesText}, hire artisan Ghana, 2RBUAME`}
+                    content={`${artisan?.name}, artisan, ${artisan?.location}, ${specialtiesText}, hire artisan Ghana, 2RBUAME`}
                 />
-                <meta property="og:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
+                <meta property="og:title" content={`${artisan?.name} - Artisan | 2RBUAME`} />
                 <meta
                     property="og:description"
                     content={`Professional artisan in ${artisan?.location}. ${artisan?.experience_years} years experience. Contact now on 2RBUAME.`}
                 />
                 <meta property="og:type" content="profile" />
                 {artisan?.profile_image && <meta property="og:image" content={artisan.profile_image} />}
-                <meta name="twitter:title" content={`${artisan?.name} - ${artisan?.company_name || 'Artisan'} | 2RBUAME`} />
+                <meta name="twitter:title" content={`${artisan?.name} - Artisan | 2RBUAME`} />
                 <meta name="twitter:description" content={`Professional artisan in ${artisan?.location}. Contact now on 2RBUAME.`} />
                 {artisan?.profile_image && <meta name="twitter:image" content={artisan.profile_image} />}
             </Head>
@@ -53,9 +53,6 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
                     {/* Back Button */}
                     <BackToHome to="/artisans" label="Back to Artisans" />
-
-                    {/* Caution Banner */}
-                    <CautionBanner type="service" className="mb-8" />
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8 dark:border-gray-800 dark:bg-[var(--card)]">
@@ -88,11 +85,10 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                                     </div>
                                 )}
 
-                                <div className="mb-3 flex flex-wrap items-center gap-2">
+                                <div className="mb-4 flex flex-wrap items-center gap-2">
                                     <h1 className="text-3xl font-black text-[var(--foreground)] md:text-4xl dark:text-white">{artisan?.name}</h1>
                                     {artisan?.is_verified && <BadgeCheck className="h-6 w-6 fill-[var(--primary)] text-white" />}
                                 </div>
-                                {artisan?.company_name && <p className="mb-4 text-xl font-semibold text-[var(--primary)]">{artisan.company_name}</p>}
 
                                 {/* Quick Stats */}
                                 <div className="mb-4 flex flex-wrap gap-4 text-sm">
@@ -269,6 +265,19 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             {/* Contact Actions */}
                             <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
                                 <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Get in Touch</h3>
+
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
+                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                        <span>
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                                e.preventDefault();
+                                                document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
+                                            }}>Safe Transaction Notice</a> before reaching out.
+                                        </span>
+                                    </p>
+                                </div>
+
                                 <div className="space-y-3">
                                     {whatsappUrl && (
                                         <Button asChild className="w-full bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
@@ -385,6 +394,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Safe Transaction Notice */}
+                <div id="safe-transaction-notice" className="mb-8 scroll-mt-24">
+                    <CautionBanner type="service" />
                 </div>
 
                 {/* Reviews Section */}

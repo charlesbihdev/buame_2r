@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('artisan_portfolios', function (Blueprint $table) {
             $table->id();
             $table->foreignId('artisan_id')->constrained()->onDelete('cascade');
-            $table->string('item');
+            $table->string('item')->nullable();
             $table->string('image_path')->nullable();
             $table->timestamps();
         });
