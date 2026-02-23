@@ -29,9 +29,9 @@ export function ProductCard({ product }) {
     return (
         <Link
             href={route('marketplace.view', product.id)}
-            className="group dark:bg-card rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-800"
+            className="group rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg"
         >
-            <div className="aspect-video w-full overflow-hidden rounded-t-xl bg-gray-100 dark:bg-gray-900">
+            <div className="aspect-video w-full overflow-hidden rounded-t-xl bg-gray-100">
                 {product.image ? (
                     <img src={product.image} alt={product.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                 ) : (
@@ -42,21 +42,21 @@ export function ProductCard({ product }) {
             </div>
             <div className="p-4">
                 <div className="mb-2 flex items-start justify-between gap-2">
-                    <h3 className="text-foreground group-hover:text-primary line-clamp-2 flex-1 font-bold dark:text-white">{product.title}</h3>
+                    <h3 className="text-foreground group-hover:text-primary line-clamp-2 flex-1 font-bold">{product.title}</h3>
                     {product.condition && (
-                        <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                        <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-600">
                             {getConditionLabel(product.condition)}
                         </span>
                     )}
                 </div>
-                <p className="mb-2 text-xs font-semibold text-gray-500 uppercase dark:text-gray-400">{getCategoryLabel(product.category)}</p>
+                <p className="mb-2 text-xs font-semibold text-gray-500 uppercase">{getCategoryLabel(product.category)}</p>
                 {product?.price > 0 && (
                     <div className="mb-2 flex items-center gap-1">
                         <span className="text-primary text-lg font-bold">GH₵ {product?.price}</span>
-                        {product?.price_type && <span className="text-sm text-gray-600 dark:text-gray-400">{product?.price_type}</span>}
+                        {product?.price_type && <span className="text-sm text-gray-600">{product?.price_type}</span>}
                     </div>
                 )}
-                <div className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400">
+                <div className="flex items-center gap-4 text-xs text-gray-600">
                     <div className="flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         <span>{product.location}</span>

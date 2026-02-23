@@ -7,10 +7,10 @@ export function AboutHero() {
             <div className="flex w-full max-w-[1280px] flex-col items-center gap-10 lg:flex-row">
                 <div className="flex flex-col gap-6 text-left lg:w-1/2">
                     <div className="flex flex-col gap-4">
-                        <h1 className="text-4xl leading-tight font-black tracking-[-0.033em] lg:text-5xl dark:text-white">
+                        <h1 className="text-4xl leading-tight font-black tracking-[-0.033em] lg:text-5xl">
                             Empowering Western North and Beyond through <span className="text-[var(--primary)]">Digital Connection</span>
                         </h1>
-                        <h2 className="text-lg leading-relaxed font-medium text-gray-700 dark:text-gray-300">
+                        <h2 className="text-lg leading-relaxed font-medium text-gray-700">
                             2RBUAME is the digital heartbeat connecting artisans, traders, and visitors across Western North and beyond in a
                             single trusted marketplace. We bridge the gap between tradition and technology, welcoming customers from all backgrounds.
                         </h2>
@@ -25,7 +25,7 @@ export function AboutHero() {
                         <Button
                             asChild
                             variant="outline"
-                            className="flex h-12 items-center justify-center rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-6 text-base font-medium text-[var(--accent)] transition-all hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50 dark:text-[var(--accent)]"
+                            className="flex h-12 items-center justify-center rounded-lg border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-6 text-base font-medium text-[var(--accent)] transition-all hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50"
                         >
                             <Link href="/services">View Services</Link>
                         </Button>

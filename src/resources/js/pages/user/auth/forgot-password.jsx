@@ -18,16 +18,16 @@ export default function ForgotPassword({ status }) {
         <>
             <Head title="Forgot Password" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 dark:bg-[var(--buame-background-dark)]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4">
                 <div className="w-full max-w-md">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Forgot Password?</h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                        <h1 className="text-3xl font-bold text-[var(--foreground)]">Forgot Password?</h1>
+                        <p className="mt-2 text-gray-600">
                             Enter your phone number and we'll send you a verification code to reset your password.
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm">
                         {status && (
                             <div className="mb-4 rounded-lg bg-[var(--primary)]/10 p-3 text-sm font-medium text-[var(--primary)]">
                                 {status}
@@ -36,7 +36,7 @@ export default function ForgotPassword({ status }) {
 
                         <form onSubmit={submit} className="space-y-6">
                             <div>
-                                <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Phone Number
                                 </label>
                                 <div className="relative">

@@ -68,9 +68,9 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                 <meta name="twitter:description" content={`Browse ${jobCount} job opportunities from ${poster.name} on 2RBUAME.`} />
             </Head>
 
-            <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
+            <div className="min-h-screen bg-[var(--background)]">
                 {/* Back Navigation */}
-                <div className="sticky top-0 z-10 border-b border-gray-200 bg-white/95 backdrop-blur-sm dark:border-gray-800 dark:bg-[var(--card)]/95">
+                <div className="sticky top-0 z-10 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
                     <div className="mx-auto max-w-7xl px-4 py-3 md:px-8">
                         <BackToHome to="/jobs" label="Back to All Jobs" />
                     </div>
@@ -86,7 +86,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                 />
 
                 {/* Jobs Section */}
-                <div className="border-t border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-[var(--buame-background-dark)]">
+                <div className="border-t border-gray-200 bg-gray-50">
                     <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
                         {/* Section Header */}
                         <div className="mb-6">
@@ -95,10 +95,10 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                     <Briefcase className="h-6 w-6 text-[var(--primary)]" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-black text-[var(--foreground)] dark:text-white md:text-3xl">
+                                    <h2 className="text-2xl font-black text-[var(--foreground)] md:text-3xl">
                                         Available Positions
                                     </h2>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    <p className="text-sm text-gray-500">
                                         {jobCount} {jobCount === 1 ? 'job opening' : 'job openings'} from {poster.name}
                                     </p>
                                 </div>
@@ -131,13 +131,13 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                             {/* Jobs Content */}
                             <div className="flex-1">
                                 {/* Toolbar */}
-                                <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-[var(--card)] sm:flex-row sm:items-center sm:justify-between">
-                                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                <div className="mb-6 flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="text-sm font-medium text-gray-600">
                                         {hasActiveFilters ? (
                                             <>
-                                                Showing <span className="font-bold text-[var(--foreground)] dark:text-white">{jobs?.from || 0}</span>-
-                                                <span className="font-bold text-[var(--foreground)] dark:text-white">{jobs?.to || 0}</span> of{' '}
-                                                <span className="font-bold text-[var(--foreground)] dark:text-white">{jobCount}</span> filtered results
+                                                Showing <span className="font-bold text-[var(--foreground)]">{jobs?.from || 0}</span>-
+                                                <span className="font-bold text-[var(--foreground)]">{jobs?.to || 0}</span> of{' '}
+                                                <span className="font-bold text-[var(--foreground)]">{jobCount}</span> filtered results
                                                 <button
                                                     onClick={handleClearFilters}
                                                     className="ml-2 text-[var(--primary)] hover:underline"
@@ -147,7 +147,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                             </>
                                         ) : (
                                             <>
-                                                Showing all <span className="font-bold text-[var(--foreground)] dark:text-white">{jobCount}</span> {jobCount === 1 ? 'job' : 'jobs'}
+                                                Showing all <span className="font-bold text-[var(--foreground)]">{jobCount}</span> {jobCount === 1 ? 'job' : 'jobs'}
                                             </>
                                         )}
                                     </div>
@@ -166,7 +166,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
 
                                         {/* Sort Dropdown */}
                                         <Select value={filters.sort || 'newest'} onValueChange={handleSortChange}>
-                                            <SelectTrigger className="h-10 w-[180px] rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+                                            <SelectTrigger className="h-10 w-[180px] rounded-lg border border-gray-200 bg-white">
                                                 <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -196,7 +196,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                                                 asChild
                                                                 variant="outline"
                                                                 disabled={!link.url}
-                                                                className="h-10 rounded-lg border border-gray-200 bg-white px-4 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800"
+                                                                className="h-10 rounded-lg border border-gray-200 bg-white px-4 disabled:opacity-50"
                                                             >
                                                                 <Link href={link.url || '#'} preserveState preserveScroll>
                                                                     {link.label === '&laquo; Previous' ? 'Previous' : 'Next'}
@@ -212,7 +212,7 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                                             key={index}
                                                             asChild
                                                             variant={link.active ? 'default' : 'outline'}
-                                                            className={`h - 10 rounded - lg px - 4 ${link.active ? 'bg-[var(--primary)] text-white' : 'border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'} `}
+                                                            className={`h - 10 rounded - lg px - 4 ${link.active ? 'bg-[var(--primary)] text-white' : 'border border-gray-200 bg-white'} `}
                                                         >
                                                             <Link href={link.url || '#'} preserveState preserveScroll>
                                                                 {link.label}
@@ -224,14 +224,14 @@ export default function JobPosterPage({ poster, jobs, filters = {}, typeCounts =
                                         )}
                                     </>
                                 ) : (
-                                    <div className="rounded-xl border-2 border-dashed border-gray-300 bg-white p-12 text-center dark:border-gray-700 dark:bg-[var(--card)]">
-                                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                                    <div className="rounded-xl border-2 border-dashed border-gray-300 bg-white p-12 text-center">
+                                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
                                             <Briefcase className="h-8 w-8 text-gray-400" />
                                         </div>
-                                        <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+                                        <h3 className="mb-2 text-xl font-bold text-gray-900">
                                             {hasActiveFilters ? 'No jobs match your filters' : 'No jobs posted yet'}
                                         </h3>
-                                        <p className="mb-4 text-gray-600 dark:text-gray-400">
+                                        <p className="mb-4 text-gray-600">
                                             {hasActiveFilters
                                                 ? 'Try adjusting your filters to see more results'
                                                 : `${poster.name} hasn't posted any job openings yet`}

@@ -23,7 +23,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                     <meta name="robots" content="noindex, nofollow" />
                 </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                    <p className="text-center text-gray-600 dark:text-gray-400">Job not found</p>
+                    <p className="text-center text-gray-600">Job not found</p>
                 </div>
             </VisitorLayout>
         );
@@ -55,21 +55,21 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                         {/* Header */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
                             <div className="mb-4">
                                 <div className="mb-2 flex items-center gap-2">
-                                    <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">{job.title}</h1>
+                                    <h1 className="text-3xl font-bold text-[var(--foreground)]">{job.title}</h1>
                                     {job.is_urgent && (
                                         <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">Urgent</span>
                                     )}
                                 </div>
                                 <div className="mb-4 flex items-center gap-2">
                                     <Briefcase className="h-5 w-5 text-gray-400" />
-                                    <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">{companyName}</span>
+                                    <span className="text-lg font-semibold text-gray-700">{companyName}</span>
                                 </div>
                                 {job.poster && (
                                     <div className="mb-4">
-                                        <span className="text-sm text-gray-600 dark:text-gray-400">Posted by </span>
+                                        <span className="text-sm text-gray-600">Posted by </span>
                                         <Link
                                             href={`/jobs/employer/${job.poster.slug}`}
                                             className="text-sm font-semibold text-[var(--primary)] hover:underline"
@@ -78,7 +78,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                         </Link>
                                     </div>
                                 )}
-                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
                                     <div className="flex items-center gap-1">
                                         <MapPin className="h-4 w-4" />
                                         {job.location}
@@ -101,8 +101,8 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                             const tallVideos = job.video_links.filter((l) => tallPlatforms.includes(l.platform));
                             const wideVideos = job.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                             return (
-                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Videos</h2>
+                                <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                    <h2 className="mb-4 text-xl font-bold text-[var(--foreground)]">Videos</h2>
                                     <div className="space-y-4">
                                         {wideVideos.length > 0 && (
                                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -126,16 +126,16 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                         })()}
 
                         {/* Description */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Job Description</h2>
-                            <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">{job.description}</p>
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Job Description</h2>
+                            <p className="mb-4 whitespace-pre-wrap text-gray-700">{job.description}</p>
                         </div>
 
                         {/* Requirements */}
                         {job.requirements && job.requirements.length > 0 && (
-                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Requirements</h2>
-                                <ul className="list-disc space-y-2 pl-5 text-gray-700 dark:text-gray-300">
+                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Requirements</h2>
+                                <ul className="list-disc space-y-2 pl-5 text-gray-700">
                                     {job.requirements.map((req, idx) => (
                                         <li key={idx}>{req}</li>
                                     ))}
@@ -145,9 +145,9 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
 
                         {/* Responsibilities */}
                         {job.responsibilities && job.responsibilities.length > 0 && (
-                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Responsibilities</h2>
-                                <ul className="list-disc space-y-2 pl-5 text-gray-700 dark:text-gray-300">
+                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Responsibilities</h2>
+                                <ul className="list-disc space-y-2 pl-5 text-gray-700">
                                     {job.responsibilities.map((resp, idx) => (
                                         <li key={idx}>{resp}</li>
                                     ))}
@@ -157,13 +157,13 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
 
                         {/* Benefits */}
                         {job.benefits && job.benefits.length > 0 && (
-                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Benefits</h2>
+                            <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Benefits</h2>
                                 <div className="flex flex-wrap gap-2">
                                     {job.benefits.map((benefit, idx) => (
                                         <span
                                             key={idx}
-                                            className="rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--primary)] dark:bg-[var(--primary)]/20"
+                                            className="rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--primary)]"
                                         >
                                             {benefit}
                                         </span>
@@ -174,8 +174,8 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
 
                         {/* How to Apply */}
                         {(job.application_link || job.application_instructions) && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">How to Apply</h2>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">How to Apply</h2>
                                 {job.application_link && (
                                     <div className="mb-4">
                                         <Button asChild className="mb-3 bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
@@ -186,7 +186,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                     </div>
                                 )}
                                 {job.application_instructions && (
-                                    <div className="prose max-w-none text-gray-700 dark:text-gray-300">
+                                    <div className="prose max-w-none text-gray-700">
                                         <p className="whitespace-pre-wrap">{job.application_instructions}</p>
                                     </div>
                                 )}
@@ -199,7 +199,7 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                         <div className="sticky top-8 space-y-6">
                             {/* Poster Info */}
                             {job.poster && (
-                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <div className="rounded-xl border border-gray-200 bg-white p-6">
                                     <div className="mb-4 flex items-center gap-3">
                                         {job.poster.logo && (
                                             <img
@@ -209,14 +209,14 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                             />
                                         )}
                                         <div className="flex-1">
-                                            <h4 className="font-bold text-[var(--foreground)] dark:text-white">{posterName}</h4>
+                                            <h4 className="font-bold text-[var(--foreground)]">{posterName}</h4>
                                             {job.poster.is_verified && (
                                                 <span className="text-xs text-[var(--primary)]">Verified Employer</span>
                                             )}
                                         </div>
                                     </div>
                                     {job.poster.description && (
-                                        <p className="mb-4 text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+                                        <p className="mb-4 text-sm text-gray-600 line-clamp-3">
                                             {job.poster.description}
                                         </p>
                                     )}
@@ -231,24 +231,24 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
 
                             {/* Salary */}
                             {job.salary && (
-                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                                <div className="rounded-xl border border-gray-200 bg-white p-6">
                                     <div className="mb-2 flex items-center gap-2">
                                         <Banknote className="h-5 w-5 text-[var(--primary)]" />
-                                        <div className="text-sm text-gray-600 dark:text-gray-400">Salary</div>
+                                        <div className="text-sm text-gray-600">Salary</div>
                                     </div>
-                                    <div className="text-2xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">{formatSalary(job.salary)}</div>
+                                    <div className="text-2xl font-black text-[var(--foreground)]">{formatSalary(job.salary)}</div>
                                 </div>
                             )}
 
                             {/* Contact */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Apply Now</h3>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Apply Now</h3>
 
-                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
-                                    <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
-                                        <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                                    <p className="flex items-start gap-2 text-sm text-amber-800">
+                                        <span className="mt-0.5 text-amber-600">🛡️</span>
                                         <span>
-                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                            For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900" onClick={(e) => {
                                                 e.preventDefault();
                                                 document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
                                             }}>Safe Transaction Notice</a> before applying.
@@ -260,19 +260,19 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                     {job.phone && (
                                         <a
                                             href={`tel:${job.phone}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]"
                                         >
                                             <Phone className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{job.phone}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{job.phone}</span>
                                         </a>
                                     )}
                                     {job.phone_2 && (
                                         <a
                                             href={`tel:${job.phone_2}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]"
                                         >
                                             <Phone className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{job.phone_2}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{job.phone_2}</span>
                                         </a>
                                     )}
                                     {whatsappUrl && (
@@ -280,19 +280,19 @@ export default function JobView({ job, reviews = [], average_rating = 0, reviews
                                             href={whatsappUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]"
                                         >
                                             <MessageCircle className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">WhatsApp</span>
+                                            <span className="font-semibold text-[var(--foreground)]">WhatsApp</span>
                                         </a>
                                     )}
                                     {job.email && (
                                         <a
                                             href={`mailto:${job.email}?subject=Application for ${job.title}`}
-                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] dark:border-gray-700 dark:bg-gray-800"
+                                            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]"
                                         >
                                             <Mail className="h-5 w-5 text-[var(--primary)]" />
-                                            <span className="font-semibold text-[var(--foreground)] dark:text-white">{job.email}</span>
+                                            <span className="font-semibold text-[var(--foreground)]">{job.email}</span>
                                         </a>
                                     )}
                                 </div>

@@ -17,11 +17,11 @@ export function ServicesHeader() {
         <section className="flex flex-col gap-3 pt-4">
             <div className="flex flex-wrap items-end justify-between gap-4">
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-3xl leading-tight font-bold tracking-tight text-[var(--foreground)] md:text-4xl dark:text-white">Our Core Services</h2>
-                    <p className="text-base font-normal text-[#4c9a4c] dark:text-gray-400">Explore the platform features designed for the region.</p>
+                    <h2 className="text-3xl leading-tight font-bold tracking-tight text-[var(--foreground)] md:text-4xl">Our Core Services</h2>
+                    <p className="text-base font-normal text-[#4c9a4c]">Explore the platform features designed for the region.</p>
                 </div>
                 {/* Filter/Category Tabs */}
-                {/* <div className="hidden gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white p-1 md:flex dark:border-white/10 dark:bg-white/5">
+                {/* <div className="hidden gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white p-1 md:flex">
                     {categories.map((category) => (
                         <Link
                             key={category.id}
@@ -30,7 +30,7 @@ export function ServicesHeader() {
                             className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                                 activeCategory === category.id
                                     ? 'bg-[var(--primary)]/10 font-bold text-[var(--primary)]'
-                                    : 'text-[#4c9a4c] hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10'
+                                    : 'text-[#4c9a4c] hover:bg-gray-100'
                             }`}
                         >
                             {category.name}

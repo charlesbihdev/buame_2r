@@ -19,13 +19,13 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
 
     return (
         <div className="mb-8 flex flex-wrap items-center gap-3">
-            <span className="font-semibold text-gray-700 dark:text-gray-300">Filter by:</span>
+            <span className="font-semibold text-gray-700">Filter by:</span>
 
             {/* Rental Type Filter */}
             <select
                 value={filters?.type != null ? String(filters.type) : 'all'}
                 onChange={(e) => onFilterChange('type', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
             >
                 <option value="all">All Types</option>
                 <option value="house">House</option>
@@ -41,7 +41,7 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
             <select
                 value={filters?.sort != null ? String(filters.sort) : 'newest'}
                 onChange={(e) => onFilterChange('sort', e.target.value)}
-                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)] dark:border-gray-700 dark:bg-[var(--card)] dark:text-white"
+                className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
             >
                 <option value="newest">Sort: Newest</option>
                 <option value="price_low">Price: Low to High</option>
@@ -58,8 +58,8 @@ export function RentalFilterBar({ filters, totalCount, onFilterChange, onClearFi
             )}
 
             {/* Results Count */}
-            <div className="ml-auto text-sm text-gray-600 dark:text-gray-400">
-                <span className="font-bold text-[var(--foreground)] dark:text-white">{totalCount}</span> rentals found
+            <div className="ml-auto text-sm text-gray-600">
+                <span className="font-bold text-[var(--foreground)]">{totalCount}</span> rentals found
             </div>
         </div>
     );

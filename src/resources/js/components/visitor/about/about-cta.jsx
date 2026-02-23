@@ -7,7 +7,7 @@ export function AboutCTA() {
             {/* Decorative circle */}
             <div className="absolute -top-20 -right-20 size-96 rounded-full bg-[var(--primary)]/10 blur-3xl" />
             <div className="relative z-10 mx-auto max-w-[960px] text-center">
-                <h2 className="mb-6 text-3xl font-black tracking-tight md:text-4xl dark:text-white">
+                <h2 className="mb-6 text-3xl font-black tracking-tight md:text-4xl">
                     Ready to be part of the Western North and beyond digital revolution?
                 </h2>
                 <p className="mx-auto mb-10 max-w-2xl text-lg text-gray-300">

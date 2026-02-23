@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { VideoEmbed } from '@/components/ui/video-embed';
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { Link2, Plus, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -18,10 +18,14 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
             { url: url.trim() },
             {
                 preserveScroll: true,
-                onSuccess: () => {
+                onSuccess: (page) => {
+                    setSubmitting(false);
+                    // Only clear input if there's no error flash
+                    if (page.props.flash?.error) {
+                        return;
+                    }
                     setUrl('');
                     setShowInput(false);
-                    setSubmitting(false);
                 },
                 onError: () => {
                     setSubmitting(false);
@@ -46,8 +50,8 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <div>
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Video Links</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="text-lg font-bold text-[var(--foreground)]">Video Links</h3>
+                    <p className="text-sm text-gray-600">
                         Add video links to showcase your listing ({videoLinks.length}/5)
                     </p>
                 </div>
@@ -64,14 +68,14 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
 
             {/* Add Video Input */}
             {showInput && (
-                <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-[var(--card)]">
+                <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-4">
                     <div className="flex-1">
                         <input
                             type="url"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="e.g., https://youtube.com/watch?v=... or https://tiktok.com/@user/video/..."
-                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-[var(--foreground)] placeholder-gray-400 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] focus:outline-none dark:border-gray-600 dark:bg-[#1a331a] dark:text-white"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-[var(--foreground)] placeholder-gray-400 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] focus:outline-none#1a331a]"
                             onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
                         />
                     </div>
@@ -104,7 +108,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                             {wideVideos.map((link) => (
                                 <div
                                     key={link.id}
-                                    className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[var(--card)]"
+                                    className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white"
                                 >
                                     <VideoEmbed
                                         url={link.url}
@@ -129,7 +133,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                             {tallVideos.map((link) => (
                                 <div
                                     key={link.id}
-                                    className="relative min-h-[480px] overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-[var(--card)]"
+                                    className="relative min-h-[480px] overflow-hidden rounded-xl border border-gray-200 bg-white"
                                     style={{ height: '480px' }}
                                 >
                                     <VideoEmbed
@@ -153,9 +157,9 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                 </div>
             ) : (
                 !showInput && (
-                    <div className="rounded-xl border-2 border-dashed border-gray-300 p-8 text-center dark:border-gray-700">
+                    <div className="rounded-xl border-2 border-dashed border-gray-300 p-8 text-center">
                         <Link2 className="mx-auto h-10 w-10 text-gray-400" />
-                        <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                        <p className="mt-3 text-sm text-gray-600">
                             No video links yet. Add YouTube, TikTok, or Instagram links to showcase your listing.
                         </p>
                     </div>

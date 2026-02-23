@@ -19,12 +19,12 @@ import {
 
 export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {}, isMobile = false, onClose }) {
     const jobTypes = [
-        { id: 'full_time', label: 'Full Time', color: 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' },
-        { id: 'part_time', label: 'Part Time', color: 'bg-purple-50 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' },
-        { id: 'contract', label: 'Contract', color: 'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
-        { id: 'internship', label: 'Internship', color: 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300' },
-        { id: 'daily_wage', label: 'Daily Wage', color: 'bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300' },
-        { id: 'apprenticeship', label: 'Apprenticeship', color: 'bg-teal-50 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' },
+        { id: 'full_time', label: 'Full Time', color: 'bg-blue-50 text-blue-700' },
+        { id: 'part_time', label: 'Part Time', color: 'bg-purple-50 text-purple-700' },
+        { id: 'contract', label: 'Contract', color: 'bg-amber-50 text-amber-700' },
+        { id: 'internship', label: 'Internship', color: 'bg-green-50 text-green-700' },
+        { id: 'daily_wage', label: 'Daily Wage', color: 'bg-orange-50 text-orange-700' },
+        { id: 'apprenticeship', label: 'Apprenticeship', color: 'bg-teal-50 text-teal-700' },
     ];
 
     const [expandedCategories, setExpandedCategories] = useState(() => {
@@ -203,10 +203,10 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
             className="group flex w-full items-center justify-between py-2"
         >
             <div className="flex items-center gap-2.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors group-hover:bg-[var(--primary)]/10 group-hover:text-[var(--primary)] dark:bg-white/10 dark:text-gray-400">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors group-hover:bg-[var(--primary)]/10 group-hover:text-[var(--primary)]">
                     <Icon className="h-3.5 w-3.5" />
                 </div>
-                <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{title}</span>
+                <span className="text-sm font-semibold text-gray-800">{title}</span>
                 {count > 0 && (
                     <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--primary)] px-1.5 text-[10px] font-bold text-white">
                         {count}
@@ -220,12 +220,12 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
     );
 
     return (
-        <aside className={`w-full shrink-0 flex-col bg-white dark:bg-white/5 ${isMobile ? 'flex h-full' : 'hidden lg:flex lg:w-80 lg:min-h-[calc(100vh-80px)] lg:border-r lg:border-[var(--buame-border-light)] dark:lg:border-white/10'}`}>
+        <aside className={`w-full shrink-0 flex-col bg-white ${isMobile ? 'flex h-full' : 'hidden lg:flex lg:w-80 lg:min-h-[calc(100vh-80px)] lg:border-r lg:border-[var(--buame-border-light)]'}`}>
             {/* Header */}
-            <div className={`flex items-center justify-between border-b border-gray-100 px-5 py-4 dark:border-white/10 ${isMobile ? '' : ''}`}>
+            <div className={`flex items-center justify-between border-b border-gray-100 px-5 py-4 ${isMobile ? '' : ''}`}>
                 <div className="flex items-center gap-2.5">
                     <SlidersHorizontal className="h-4.5 w-4.5 text-[var(--primary)]" />
-                    <h2 className="text-base font-bold text-gray-900 dark:text-white">Filters</h2>
+                    <h2 className="text-base font-bold text-gray-900">Filters</h2>
                     {activeFilterCount > 0 && (
                         <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--primary)] px-1.5 text-[10px] font-bold text-white">
                             {activeFilterCount}
@@ -241,7 +241,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                     </button>
                 )}
                 {isMobile && onClose && (
-                    <button onClick={onClose} className="ml-2 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-white/10">
+                    <button onClick={onClose} className="ml-2 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600">
                         <X className="h-5 w-5" />
                     </button>
                 )}
@@ -250,7 +250,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
             <div className={`flex-1 overflow-y-auto ${isMobile ? 'pb-24' : ''}`}>
                 {/* Active Filter Chips */}
                 {hasActiveFilters && (
-                    <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                    <div className="border-b border-gray-100 px-5 py-3">
                         <div className="flex flex-wrap gap-1.5">
                             {activeCategories.map(id => (
                                 <button
@@ -266,7 +266,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                 <button
                                     key={`sub-${id}`}
                                     onClick={() => removeFilter('sub_category', id)}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-indigo-50 py-1 pr-2 pl-2.5 text-xs font-medium text-indigo-600 transition-colors hover:bg-indigo-100 dark:bg-indigo-900/30 dark:text-indigo-300 dark:hover:bg-indigo-900/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-indigo-50 py-1 pr-2 pl-2.5 text-xs font-medium text-indigo-600 transition-colors hover:bg-indigo-100"
                                 >
                                     <span className="max-w-[120px] truncate">{getSubCategoryLabel(id)}</span>
                                     <X className="h-3 w-3 shrink-0 opacity-60 group-hover:opacity-100" />
@@ -276,7 +276,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                 <button
                                     key={`type-${id}`}
                                     onClick={() => removeFilter('type', id)}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-blue-50 py-1 pr-2 pl-2.5 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-100/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-blue-50 py-1 pr-2 pl-2.5 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-100"
                                 >
                                     <span>{getTypeLabel(id)}</span>
                                     <X className="h-3 w-3 shrink-0 opacity-60 group-hover:opacity-100" />
@@ -286,7 +286,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                 <button
                                     key={`sal-${id}`}
                                     onClick={() => removeFilter('salary', id)}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-emerald-50 py-1 pr-2 pl-2.5 text-xs font-medium text-emerald-600 transition-colors hover:bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-emerald-50 py-1 pr-2 pl-2.5 text-xs font-medium text-emerald-600 transition-colors hover:bg-emerald-100"
                                 >
                                     <span>{getSalaryLabel(id)}</span>
                                     <X className="h-3 w-3 shrink-0 opacity-60 group-hover:opacity-100" />
@@ -295,7 +295,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                             {filters.location && (
                                 <button
                                     onClick={() => { setLocation(''); removeFilter('location'); }}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-amber-50 py-1 pr-2 pl-2.5 text-xs font-medium text-amber-600 transition-colors hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-300 dark:hover:bg-amber-900/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-amber-50 py-1 pr-2 pl-2.5 text-xs font-medium text-amber-600 transition-colors hover:bg-amber-100"
                                 >
                                     <MapPin className="h-3 w-3" />
                                     <span>{filters.location}</span>
@@ -305,7 +305,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                             {filters.date_posted && filters.date_posted !== '0' && (
                                 <button
                                     onClick={() => removeFilter('date_posted')}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-violet-50 py-1 pr-2 pl-2.5 text-xs font-medium text-violet-600 transition-colors hover:bg-violet-100 dark:bg-violet-900/30 dark:text-violet-300 dark:hover:bg-violet-900/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-violet-50 py-1 pr-2 pl-2.5 text-xs font-medium text-violet-600 transition-colors hover:bg-violet-100"
                                 >
                                     <span>{datePostedOptions.find(o => o.id === filters.date_posted)?.label}</span>
                                     <X className="h-3 w-3 shrink-0 opacity-60 group-hover:opacity-100" />
@@ -314,7 +314,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                             {filters.urgent && (
                                 <button
                                     onClick={() => removeFilter('urgent')}
-                                    className="group inline-flex items-center gap-1 rounded-full bg-red-50 py-1 pr-2 pl-2.5 text-xs font-medium text-red-600 transition-colors hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
+                                    className="group inline-flex items-center gap-1 rounded-full bg-red-50 py-1 pr-2 pl-2.5 text-xs font-medium text-red-600 transition-colors hover:bg-red-100"
                                 >
                                     <Zap className="h-3 w-3" />
                                     <span>Urgent</span>
@@ -326,7 +326,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                 )}
 
                 {/* Categories Section */}
-                <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                <div className="border-b border-gray-100 px-5 py-3">
                     <SectionHeader icon={Layers} title="Category" section="category" count={activeCategories.length + activeSubCategories.length} />
                     {openSections.category && (
                         <div className="mt-1 space-y-0.5 pb-1">
@@ -340,7 +340,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
 
                                 return (
                                     <div key={category.id}>
-                                        <div className="flex items-center gap-1 rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                        <div className="flex items-center gap-1 rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50">
                                             <Label className="group flex flex-1 cursor-pointer items-center gap-2.5">
                                                 <Checkbox
                                                     checked={isCategoryChecked}
@@ -371,7 +371,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                                     }}
                                                     className="h-4 w-4 rounded border-gray-300 bg-transparent text-[var(--primary)] focus:ring-[var(--primary)]"
                                                 />
-                                                <span className={`text-[13px] leading-tight transition-colors group-hover:text-[var(--primary)] ${isCategoryChecked ? 'font-semibold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-300'}`}>
+                                                <span className={`text-[13px] leading-tight transition-colors group-hover:text-[var(--primary)] ${isCategoryChecked ? 'font-semibold text-gray-900' : 'font-medium text-gray-600'}`}>
                                                     {category.label}
                                                 </span>
                                             </Label>
@@ -384,7 +384,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                                     )}
                                                     <button
                                                         onClick={() => toggleCategory(category.id)}
-                                                        className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-[var(--primary)] dark:hover:bg-white/10"
+                                                        className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-[var(--primary)]"
                                                     >
                                                         <ChevronDown
                                                             className={`h-3.5 w-3.5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
@@ -396,11 +396,11 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
 
                                         {/* Sub-roles */}
                                         {hasSubRoles && isExpanded && (
-                                            <div className="ml-5 border-l-2 border-gray-100 pl-3 dark:border-white/10">
+                                            <div className="ml-5 border-l-2 border-gray-100 pl-3">
                                                 {category.subRoles.map((subRole) => {
                                                     const isSubChecked = activeSubCategories.includes(subRole.id);
                                                     return (
-                                                        <div key={subRole.id} className="rounded-md px-1 py-1 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                                        <div key={subRole.id} className="rounded-md px-1 py-1 transition-colors hover:bg-gray-50">
                                                             <Label className="group flex cursor-pointer items-center gap-2">
                                                                 <Checkbox
                                                                     checked={isSubChecked}
@@ -425,7 +425,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                                                     }}
                                                                     className="h-3.5 w-3.5 rounded border-gray-300 bg-transparent text-[var(--primary)] focus:ring-[var(--primary)]"
                                                                 />
-                                                                <span className={`text-xs transition-colors group-hover:text-[var(--primary)] ${isSubChecked ? 'font-medium text-gray-800 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400'}`}>
+                                                                <span className={`text-xs transition-colors group-hover:text-[var(--primary)] ${isSubChecked ? 'font-medium text-gray-800' : 'text-gray-500'}`}>
                                                                     {subRole.label}
                                                                 </span>
                                                             </Label>
@@ -442,7 +442,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                 </div>
 
                 {/* Job Type Section - Pill Style */}
-                <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                <div className="border-b border-gray-100 px-5 py-3">
                     <SectionHeader icon={Briefcase} title="Job Type" section="type" count={activeTypes.length} />
                     {openSections.type && (
                         <div className="mt-2 flex flex-wrap gap-2 pb-1">
@@ -470,7 +470,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                         className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition-all ${
                                             isChecked
                                                 ? 'border-[var(--primary)] bg-[var(--primary)] text-white shadow-sm'
-                                                : 'border-gray-200 bg-white text-gray-600 hover:border-[var(--primary)]/40 hover:text-[var(--primary)] dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:border-[var(--primary)]/40'
+                                                : 'border-gray-200 bg-white text-gray-600 hover:border-[var(--primary)]/40 hover:text-[var(--primary)]'
                                         }`}
                                     >
                                         {type.label}
@@ -482,7 +482,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                 </div>
 
                 {/* Location Section */}
-                <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                <div className="border-b border-gray-100 px-5 py-3">
                     <SectionHeader icon={MapPin} title="Location" section="location" count={filters.location ? 1 : 0} />
                     {openSections.location && (
                         <div className="mt-2 pb-1">
@@ -495,7 +495,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                     onChange={(e) => setLocation(e.target.value)}
                                     onBlur={handleLocationFilter}
                                     onKeyDown={(e) => e.key === 'Enter' && handleLocationFilter()}
-                                    className="h-9 rounded-lg border-gray-200 pl-9 text-sm dark:border-white/10"
+                                    className="h-9 rounded-lg border-gray-200 pl-9 text-sm"
                                 />
                             </div>
                         </div>
@@ -503,14 +503,14 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                 </div>
 
                 {/* Salary Range Section */}
-                <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                <div className="border-b border-gray-100 px-5 py-3">
                     <SectionHeader icon={Wallet} title="Salary Range" section="salary" count={activeSalaries.length} />
                     {openSections.salary && (
                         <div className="mt-1 space-y-0.5 pb-1">
                             {salaryRanges.map((range) => {
                                 const isChecked = activeSalaries.includes(range.id);
                                 return (
-                                    <div key={range.id} className="rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <div key={range.id} className="rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50">
                                         <Label className="group flex cursor-pointer items-center gap-2.5">
                                             <Checkbox
                                                 checked={isChecked}
@@ -532,7 +532,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                                 }}
                                                 className="h-4 w-4 rounded border-gray-300 bg-transparent text-[var(--primary)] focus:ring-[var(--primary)]"
                                             />
-                                            <span className={`text-[13px] transition-colors group-hover:text-[var(--primary)] ${isChecked ? 'font-semibold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-300'}`}>
+                                            <span className={`text-[13px] transition-colors group-hover:text-[var(--primary)] ${isChecked ? 'font-semibold text-gray-900' : 'font-medium text-gray-600'}`}>
                                                 {range.label}
                                             </span>
                                         </Label>
@@ -544,7 +544,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                 </div>
 
                 {/* Date Posted Section */}
-                <div className="border-b border-gray-100 px-5 py-3 dark:border-white/10">
+                <div className="border-b border-gray-100 px-5 py-3">
                     <SectionHeader icon={Clock} title="Date Posted" section="date" count={filters.date_posted && filters.date_posted !== '0' ? 1 : 0} />
                     {openSections.date && (
                         <div className="mt-2 pb-1">
@@ -554,7 +554,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                 className="space-y-0.5"
                             >
                                 {datePostedOptions.map((option) => (
-                                    <div key={option.id} className="rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <div key={option.id} className="rounded-lg px-1 py-1.5 transition-colors hover:bg-gray-50">
                                         <Label className="group flex cursor-pointer items-center gap-2.5">
                                             <RadioGroupItem
                                                 value={option.id}
@@ -562,8 +562,8 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                             />
                                             <span className={`text-[13px] transition-colors group-hover:text-[var(--primary)] ${
                                                 (filters.date_posted || '0') === option.id
-                                                    ? 'font-semibold text-gray-900 dark:text-white'
-                                                    : 'font-medium text-gray-600 dark:text-gray-300'
+                                                    ? 'font-semibold text-gray-900'
+                                                    : 'font-medium text-gray-600'
                                             }`}>
                                                 {option.label}
                                             </span>
@@ -584,24 +584,24 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
                                 onClick={() => updateFilter('urgent', filters.urgent === '1' ? '' : '1')}
                                 className={`flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 transition-all ${
                                     filters.urgent === '1'
-                                        ? 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20'
-                                        : 'border-gray-200 bg-white hover:border-red-200 hover:bg-red-50/50 dark:border-white/10 dark:bg-white/5 dark:hover:border-red-800'
+                                        ? 'border-red-200 bg-red-50'
+                                        : 'border-gray-200 bg-white hover:border-red-200 hover:bg-red-50/50'
                                 }`}
                             >
                                 <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${
                                     filters.urgent === '1'
-                                        ? 'bg-red-100 dark:bg-red-900/40'
-                                        : 'bg-gray-100 dark:bg-white/10'
+                                        ? 'bg-red-100'
+                                        : 'bg-gray-100'
                                 }`}>
                                     <Zap className={`h-4 w-4 ${filters.urgent === '1' ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
                                 </div>
                                 <div className="flex-1 text-left">
-                                    <p className={`text-sm font-medium ${filters.urgent === '1' ? 'text-red-700 dark:text-red-300' : 'text-gray-700 dark:text-gray-300'}`}>
+                                    <p className={`text-sm font-medium ${filters.urgent === '1' ? 'text-red-700' : 'text-gray-700'}`}>
                                         Urgent Only
                                     </p>
-                                    <p className="text-[11px] text-gray-400 dark:text-gray-500">Show jobs marked as urgent</p>
+                                    <p className="text-[11px] text-gray-400">Show jobs marked as urgent</p>
                                 </div>
-                                <div className={`h-5 w-9 rounded-full transition-colors ${filters.urgent === '1' ? 'bg-red-500' : 'bg-gray-200 dark:bg-white/20'}`}>
+                                <div className={`h-5 w-9 rounded-full transition-colors ${filters.urgent === '1' ? 'bg-red-500' : 'bg-gray-200'}`}>
                                     <div className={`h-5 w-5 rounded-full bg-white shadow-sm transition-transform ${filters.urgent === '1' ? 'translate-x-4' : 'translate-x-0'}`} />
                                 </div>
                             </button>
@@ -612,7 +612,7 @@ export function JobsFilters({ filters = {}, baseRoute = '/jobs', routeParams = {
 
             {/* Mobile: Fixed bottom action bar */}
             {isMobile && (
-                <div className="sticky bottom-0 border-t border-gray-100 bg-white p-4 dark:border-white/10 dark:bg-gray-900">
+                <div className="sticky bottom-0 border-t border-gray-100 bg-white p-4">
                     <button
                         onClick={onClose}
                         className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-6 py-3 text-sm font-bold text-white shadow-lg transition-colors hover:bg-[var(--buame-primary-dark)]"

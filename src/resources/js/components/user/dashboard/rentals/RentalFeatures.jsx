@@ -9,8 +9,8 @@ export function RentalFeatures({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                <p className="text-gray-600 dark:text-gray-400">Loading features...</p>
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center">
+                <p className="text-gray-600">Loading features...</p>
             </div>
         );
     }
@@ -44,14 +44,14 @@ export function RentalFeatures({ profile }) {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Features</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <h3 className="text-lg font-bold text-[var(--foreground)]">Rental Features</h3>
+                <p className="text-sm text-gray-600">
                     Add features that describe your rental (e.g., 2 Bedrooms, Air Conditioning, WiFi)
                 </p>
             </div>
 
             {/* Add Feature Form */}
-            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
                 <form onSubmit={handleAddFeature} className="flex gap-3">
                     <Input
                         value={newFeature}
@@ -71,20 +71,20 @@ export function RentalFeatures({ profile }) {
 
             {/* Features List */}
             {features.length > 0 ? (
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h4 className="mb-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h4 className="mb-4 text-sm font-semibold text-gray-700">
                         Added Features ({features.length})
                     </h4>
                     <div className="flex flex-wrap gap-2">
                         {features.map((feature) => (
                             <div
                                 key={feature.id}
-                                className="flex items-center gap-2 rounded-full bg-[var(--primary)]/10 px-4 py-2 text-sm font-medium text-white dark:bg-[var(--primary)]/20 dark:text-white"
+                                className="flex items-center gap-2 rounded-full bg-[var(--primary)]/10 px-4 py-2 text-sm font-medium text-white"
                             >
                                 <span>{feature.feature}</span>
                                 <button
                                     onClick={() => handleDeleteFeature(feature.id)}
-                                    className="rounded-full p-0.5 text-gray-500 hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900/30"
+                                    className="rounded-full p-0.5 text-gray-500 hover:bg-red-100 hover:text-red-600"
                                 >
                                     <Trash2 className="h-3.5 w-3.5" />
                                 </button>
@@ -93,8 +93,8 @@ export function RentalFeatures({ profile }) {
                     </div>
                 </div>
             ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-8 text-center dark:border-gray-700 dark:bg-gray-800/50">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-8 text-center">
+                    <p className="text-sm text-gray-500">
                         No features added yet. Type a feature above and click + to add.
                     </p>
                 </div>

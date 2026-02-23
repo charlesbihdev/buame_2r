@@ -125,7 +125,7 @@ export function Pagination({
     return (
         <div className={`flex flex-col items-center justify-center gap-4 ${className}`}>
             {isLoading && (
-                <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                <div className="flex items-center gap-2 text-gray-600">
                     <Loader2 className="h-5 w-5 animate-spin" />
                     <span className="text-sm">Loading more...</span>
                 </div>
@@ -134,7 +134,7 @@ export function Pagination({
                 <div ref={loadMoreRef} className="h-20 w-full" />
             )}
             {!hasMore && currentPage > 1 && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">No more items to load</p>
+                <p className="text-sm text-gray-500">No more items to load</p>
             )}
         </div>
     );

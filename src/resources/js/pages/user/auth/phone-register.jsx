@@ -42,17 +42,17 @@ export default function PhoneRegister({ category }) {
         <>
             <Head title="Register" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12">
                 <div className="w-full max-w-md">
                     <div className="mb-8 text-center">
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">
+                        <h1 className="text-3xl font-bold text-[var(--foreground)]">
                             {category ? `Register as ${categoryLabels[category] || 'Provider'}` : 'Create Account'}
                         </h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                        <p className="mt-2 text-gray-600">
                             {category ? `Join 2RBUAME as a ${categoryLabels[category] || 'provider'}` : 'Join 2RBUAME and grow your business'}
                         </p>
                         {!category && (
-                            <p className="mt-2 text-sm text-orange-600 dark:text-orange-400">
+                            <p className="mt-2 text-sm text-orange-600">
                                 Please select a category first from{' '}
                                 <Link href="/choose-path" className="font-semibold underline">
                                     Choose Your Path
@@ -61,10 +61,10 @@ export default function PhoneRegister({ category }) {
                         )}
                     </div>
 
-                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm">
                         <form onSubmit={submit} className="space-y-5">
                             <div>
-                                <label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Full Name
                                 </label>
                                 <div className="relative">
@@ -83,7 +83,7 @@ export default function PhoneRegister({ category }) {
                             </div>
 
                             <div>
-                                <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Phone Number
                                 </label>
                                 <div className="relative">
@@ -102,7 +102,7 @@ export default function PhoneRegister({ category }) {
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="email" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Email <span className="text-gray-400">(Optional)</span>
                                 </label>
                                 <div className="relative">
@@ -120,7 +120,7 @@ export default function PhoneRegister({ category }) {
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Password
                                 </label>
                                 <div className="relative">
@@ -145,7 +145,7 @@ export default function PhoneRegister({ category }) {
                             </div>
 
                             <div>
-                                <label htmlFor="password_confirmation" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="password_confirmation" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Confirm Password
                                 </label>
                                 <div className="relative">
@@ -179,7 +179,7 @@ export default function PhoneRegister({ category }) {
                         </form>
 
                         <div className="mt-6 text-center">
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                            <p className="text-sm text-gray-600">
                                 Already have an account?{' '}
                                 <Link href={route('user.login')} className="font-semibold text-[var(--primary)] hover:underline">
                                     Log in

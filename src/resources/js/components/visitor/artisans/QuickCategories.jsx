@@ -66,7 +66,7 @@ export function QuickCategories({ categoryCounts, activeSkillType, onCategoryCli
         <div className="mt-8 w-full">
             <div className="relative">
                 {/* Left fade indicator */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10 dark:from-[var(--background)]" />
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
 
                 <div className="overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
                     <div className="flex gap-3 px-4 min-w-max pb-4">
@@ -81,11 +81,11 @@ export function QuickCategories({ categoryCounts, activeSkillType, onCategoryCli
                                     className={`flex items-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition-all snap-start flex-shrink-0 ${isActive
                                         ? 'border-[var(--primary)] bg-[var(--primary)]/10'
                                         : 'border-[var(--primary)]/30 bg-white hover:border-[var(--primary)] hover:bg-[var(--primary)]/10'
-                                        } dark:bg-[var(--card)]`}
+                                        }`}
                                 >
                                     <cat.icon className="h-5 w-5 text-[var(--primary)]" />
-                                    <span className="text-sm dark:text-white whitespace-nowrap">{cat.label}</span>
-                                    <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white dark:text-[var(--primary)]">
+                                    <span className="text-sm whitespace-nowrap">{cat.label}</span>
+                                    <span className="rounded-full bg-[var(--primary)]/20 px-2 py-0.5 text-xs font-bold text-white">
                                         {count}
                                     </span>
                                 </button>
@@ -95,7 +95,7 @@ export function QuickCategories({ categoryCounts, activeSkillType, onCategoryCli
                 </div>
 
                 {/* Right fade indicator */}
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10 dark:from-[var(--background)]" />
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
             </div>
         </div>
     );

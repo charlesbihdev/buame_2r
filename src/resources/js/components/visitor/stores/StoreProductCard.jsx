@@ -31,10 +31,10 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
 
     const getConditionStyle = (condition) => {
         const styles = {
-            new: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-            like_new: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-            used: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-            refurbished: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+            new: 'bg-green-100 text-green-700',
+            like_new: 'bg-blue-100 text-blue-700',
+            used: 'bg-amber-100 text-amber-700',
+            refurbished: 'bg-purple-100 text-purple-700',
         };
         return styles[condition] || 'bg-gray-100 text-gray-700';
     };
@@ -60,14 +60,14 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
         return (
             <Link
                 href={route('marketplace.view', product.id)}
-                className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)] dark:hover:border-[var(--primary)]/50"
+                className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
             >
                 {/* Image */}
-                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-900">
+                <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-100">
                     {product.image ? (
                         <>
                             {!imageLoaded && (
-                                <div className="absolute inset-0 animate-pulse bg-gray-200 dark:bg-gray-800" />
+                                <div className="absolute inset-0 animate-pulse bg-gray-200" />
                             )}
                             <img
                                 src={product.image}
@@ -94,11 +94,11 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                 <div className="flex flex-1 flex-col justify-between">
                     <div>
                         <div className="mb-1 flex items-start justify-between gap-2">
-                            <h3 className="font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
+                            <h3 className="font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)]">
                                 {product.title}
                             </h3>
                         </div>
-                        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">
                             {getCategoryLabel(product.category)}
                         </p>
                     </div>
@@ -109,10 +109,10 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                                     {product.price !== null ? `GH₵ ${formatPrice(product.price)}` : 'Contact for price'}
                                 </span>
                                 {product.price !== null && product.price_type && (
-                                    <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
+                                    <span className="text-sm text-gray-500">/{product.price_type}</span>
                                 )}
                             </div>
-                            <div className="mt-1 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                            <div className="mt-1 flex items-center gap-3 text-xs text-gray-500">
                                 <span className="flex items-center gap-1">
                                     <MapPin className="h-3 w-3" />
                                     {product.location}
@@ -125,7 +125,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                                 )}
                             </div>
                         </div>
-                        <span className="rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-white transition-colors group-hover:bg-[var(--primary)] dark:text-white">
+                        <span className="rounded-lg bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-white transition-colors group-hover:bg-[var(--primary)]">
                             View Details
                         </span>
                     </div>
@@ -138,16 +138,16 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
     return (
         <Link
             href={route('marketplace.view', product.id)}
-            className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-xl dark:border-gray-800 dark:bg-[var(--card)] dark:hover:border-[var(--primary)]/50"
+            className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-xl"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Image Container */}
-            <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-900">
+            <div className="relative aspect-square overflow-hidden bg-gray-100">
                 {product.image ? (
                     <>
                         {!imageLoaded && (
-                            <div className="absolute inset-0 animate-pulse bg-gray-200 dark:bg-gray-800" />
+                            <div className="absolute inset-0 animate-pulse bg-gray-200" />
                         )}
                         <img
                             src={product.image}
@@ -197,22 +197,22 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
                         {getCategoryLabel(product.category)}
                     </p>
-                    <h3 className="line-clamp-2 font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
+                    <h3 className="line-clamp-2 font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)]">
                         {product.title}
                     </h3>
                 </div>
 
                 <div className="mt-auto">
                     <div className="mb-2 flex items-baseline gap-1">
-                        <span className="text-2xl font-black text-[var(--foreground)] dark:text-white">
+                        <span className="text-2xl font-black text-[var(--foreground)]">
                             {product.price !== null ? `GH₵ ${formatPrice(product.price)}` : 'Contact for price'}
                         </span>
                         {product.price !== null && product.price_type && (
-                            <span className="text-sm text-gray-500 dark:text-gray-400">/{product.price_type}</span>
+                            <span className="text-sm text-gray-500">/{product.price_type}</span>
                         )}
                     </div>
 
-                    <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{product.location}</span>
                     </div>

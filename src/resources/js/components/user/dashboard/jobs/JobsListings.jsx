@@ -50,7 +50,7 @@ export function JobsListings({ listings, onAddJob, poster }) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">My Job Postings</h3>
+                <h3 className="text-lg font-bold text-[var(--foreground)]">My Job Postings</h3>
                 {poster && (
                     <Button onClick={handleCreate} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90">
                         <Plus className="mr-2 h-4 w-4" />
@@ -64,13 +64,13 @@ export function JobsListings({ listings, onAddJob, poster }) {
                     {listings.map((listing) => (
                         <div
                             key={listing.id}
-                            className="rounded-xl border border-[var(--buame-border-light)] dark:border-[#2a4d2a] bg-white dark:bg-[#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                            className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
                         >
                             <div className="p-4">
                                 <div className="mb-2 flex items-start justify-between gap-2">
                                     <div className="flex-1">
-                                        <h4 className="font-bold text-[var(--foreground)] dark:text-white">{listing.title}</h4>
-                                        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{listing.company}</p>
+                                        <h4 className="font-bold text-[var(--foreground)]">{listing.title}</h4>
+                                        <p className="mt-1 text-sm text-gray-600">{listing.company}</p>
                                     </div>
                                     {listing.is_urgent && (
                                         <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-bold text-white">Urgent</span>
@@ -82,11 +82,11 @@ export function JobsListings({ listings, onAddJob, poster }) {
                                         {getTypeLabel(listing.type)}
                                     </span>
                                     {listing.salary && (
-                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{listing.salary}</span>
+                                        <span className="text-xs font-medium text-gray-600">{listing.salary}</span>
                                     )}
                                 </div>
 
-                                <div className="mt-2 flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                                <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">
                                     <MapPin className="h-3 w-3" />
                                     <span>{listing.location}</span>
                                 </div>
@@ -97,7 +97,7 @@ export function JobsListings({ listings, onAddJob, poster }) {
                                         variant={listing.is_active ? 'outline' : 'default'}
                                         size="sm"
                                         className={listing.is_active
-                                            ? 'flex-1 border-green-500 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20'
+                                            ? 'flex-1 border-green-500 text-green-600 hover:bg-green-50'
                                             : 'flex-1 bg-gray-500 text-white hover:bg-gray-600'}
                                     >
                                         {listing.is_active ? (
@@ -123,7 +123,7 @@ export function JobsListings({ listings, onAddJob, poster }) {
                                         onClick={() => handleDelete(listing)}
                                         variant="outline"
                                         size="sm"
-                                        className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
                                     >
                                         <Trash2 className="h-3 w-3" />
                                     </Button>
@@ -140,7 +140,7 @@ export function JobsListings({ listings, onAddJob, poster }) {
 
                                 {/* Video Links Section */}
                                 {videoLinksJobId === listing.id && (
-                                    <div className="mt-3 border-t border-gray-200 pt-3 dark:border-gray-700">
+                                    <div className="mt-3 border-t border-gray-200 pt-3">
                                         <VideoLinksManager
                                             videoLinks={listing.video_links || []}
                                             storeRouteName="user.dashboard.jobs.video-links.store"
@@ -154,9 +154,9 @@ export function JobsListings({ listings, onAddJob, poster }) {
                     ))}
                 </div>
             ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 p-12 text-center">
+                <div className="rounded-xl border-2 border-dashed border-gray-300 p-12 text-center">
                     <Briefcase className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-4 text-gray-600 dark:text-gray-400">
+                    <p className="mt-4 text-gray-600">
                         {poster ? 'No job postings yet. Start posting jobs!' : 'Please set up your employer profile first to post jobs.'}
                     </p>
                     {poster && (

@@ -79,7 +79,7 @@ export default function StoreShow({
     const storeDescription = store.description ? store.description.substring(0, 150) : `Shop at ${store.name} - Browse ${productCount} products`;
 
     return (
-        <div className="min-h-screen bg-[var(--background)] dark:bg-[var(--buame-background-dark)]">
+        <div className="min-h-screen bg-[var(--background)]">
             <Head title={store.name}>
                 <meta
                     name="description"
@@ -102,7 +102,7 @@ export default function StoreShow({
             <div className="mx-auto max-w-7xl px-4 pt-4">
                 <button
                     onClick={() => (window.history.length > 1 ? window.history.back() : (window.location.href = '/marketplace'))}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)] dark:text-gray-400"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition-colors hover:text-[var(--primary)]"
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back
@@ -136,9 +136,9 @@ export default function StoreShow({
             <main className="mx-auto max-w-7xl px-4 py-8">
                 {/* Results Header */}
                 <div className="mb-6 flex items-center justify-between">
-                    <h2 className="text-lg font-bold text-[var(--foreground)] dark:text-white">
+                    <h2 className="text-lg font-bold text-[var(--foreground)]">
                         {hasActiveFilters ? 'Search Results' : 'All Products'}
-                        <span className="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <span className="ml-2 text-sm font-normal text-gray-500">
                             ({productCount} {productCount === 1 ? 'item' : 'items'})
                         </span>
                     </h2>
@@ -159,8 +159,8 @@ export default function StoreShow({
                         const tallVideos = store.video_links.filter((l) => tallPlatforms.includes(l.platform));
                         const wideVideos = store.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                         return (
-                            <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Store Videos</h2>
+                            <div className="mb-8 rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)]">Store Videos</h2>
                                 <div className="space-y-4">
                                     {wideVideos.length > 0 && (
                                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

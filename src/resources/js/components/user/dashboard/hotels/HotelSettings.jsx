@@ -102,15 +102,15 @@ export function HotelSettings({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Hotel Settings</h2>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage amenities and features for your property</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Hotel Settings</h2>
+                <p className="mt-1 text-sm text-gray-600">Manage amenities and features for your property</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Amenities Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Amenities</h3>
-                    <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Amenities</h3>
+                    <p className="mb-4 text-sm text-gray-600">
                         Select amenities available at your property. These help guests find your property.
                     </p>
 
@@ -124,7 +124,7 @@ export function HotelSettings({ profile }) {
                                     type="button"
                                     onClick={() => handleAddAmenity(amenity)}
                                     disabled={amenities.includes(amenity)}
-                                    className="rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-1 text-xs font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                    className="rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-1 text-xs font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed#2a4d2a]#1a331a]#254225]"
                                 >
                                     {amenities.includes(amenity) ? '✓ ' : '+ '}
                                     {amenity}
@@ -168,7 +168,7 @@ export function HotelSettings({ profile }) {
                                 {amenities.map((amenity) => (
                                     <div
                                         key={amenity}
-                                        className="flex items-center gap-1 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm text-white dark:text-white"
+                                        className="flex items-center gap-1 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm text-white"
                                     >
                                         <span>{amenity}</span>
                                         <button
@@ -183,15 +183,15 @@ export function HotelSettings({ profile }) {
                             </div>
                         </div>
                     ) : (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">No amenities added yet</p>
+                        <p className="text-sm text-gray-500">No amenities added yet</p>
                     )}
                     <FormError error={errors.amenities || pageErrors?.amenities} className="mt-1" />
                 </div>
 
                 {/* Features Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Features & Services</h3>
-                    <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Features & Services</h3>
+                    <p className="mb-4 text-sm text-gray-600">
                         Add special features or services your property offers (e.g., "24/7 Reception", "Room Service").
                     </p>
 
@@ -233,9 +233,9 @@ export function HotelSettings({ profile }) {
                                 {features.map((feature, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center justify-between rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-2 dark:border-[#2a4d2a] dark:bg-[#1a331a]"
+                                        className="flex items-center justify-between rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-2#2a4d2a]#1a331a]"
                                     >
-                                        <span className="text-sm text-[var(--foreground)] dark:text-white">{feature}</span>
+                                        <span className="text-sm text-[var(--foreground)]">{feature}</span>
                                         <button
                                             type="button"
                                             onClick={() => handleRemoveFeature(index)}
@@ -248,7 +248,7 @@ export function HotelSettings({ profile }) {
                             </div>
                         </div>
                     ) : (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">No features added yet</p>
+                        <p className="text-sm text-gray-500">No features added yet</p>
                     )}
                     <FormError error={errors.features || pageErrors?.features} className="mt-1" />
                 </div>

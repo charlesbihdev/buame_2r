@@ -85,9 +85,9 @@ export function ReviewForm({ reviewableType, reviewableId, onSuccess, onCancel }
     };
 
     return (
-        <div className="border-t border-gray-200 p-6 dark:border-gray-800">
+        <div className="border-t border-gray-200 p-6">
             <div className="mx-auto max-w-2xl">
-                <h3 className="mb-6 text-lg font-bold text-[var(--foreground)] dark:text-white">
+                <h3 className="mb-6 text-lg font-bold text-[var(--foreground)]">
                     Share Your Experience
                 </h3>
 
@@ -144,13 +144,13 @@ export function ReviewForm({ reviewableType, reviewableId, onSuccess, onCancel }
                                             'h-8 w-8 transition-colors',
                                             (hoveredStar || data.rating) >= star
                                                 ? 'fill-yellow-400 text-yellow-400'
-                                                : 'text-gray-300 dark:text-gray-600 hover:text-yellow-300',
+                                                : 'text-gray-300 hover:text-yellow-300',
                                         )}
                                     />
                                 </button>
                             ))}
                             {data.rating > 0 && (
-                                <span className="ml-3 text-sm font-medium text-gray-600 dark:text-gray-400">
+                                <span className="ml-3 text-sm font-medium text-gray-600">
                                     {
                                         ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][
                                             data.rating
@@ -192,12 +192,12 @@ export function ReviewForm({ reviewableType, reviewableId, onSuccess, onCancel }
                                 'cursor-pointer rounded-xl border-2 border-dashed p-6 text-center transition-colors',
                                 isDragging
                                     ? 'border-[var(--primary)] bg-[var(--primary)]/5'
-                                    : 'border-gray-300 hover:border-[var(--primary)] dark:border-gray-700',
+                                    : 'border-gray-300 hover:border-[var(--primary)]',
                                 data.images.length >= 3 && 'cursor-not-allowed opacity-50',
                             )}
                         >
                             <Camera className="mx-auto h-10 w-10 text-gray-400" />
-                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            <p className="mt-2 text-sm text-gray-600">
                                 <span className="font-semibold text-[var(--primary)]">
                                     Click to upload
                                 </span>{' '}

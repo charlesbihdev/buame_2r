@@ -5,8 +5,6 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@custom-variant dark (&:is(.dark *));
-
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -169,67 +167,6 @@
     --buame-surface-light: #ffffff;
     --buame-surface-dark: #132920;
     --buame-border-light: #D4E5DC;
-    --buame-border-dark: #1F3D2E;
-}
-
-.dark {
-    --background: #0A1F14;
-    --foreground: #E8F0EC;
-    --card: #132920;
-    --card-foreground: #E8F0EC;
-    --popover: #132920;
-    --popover-foreground: #E8F0EC;
-
-    /* Primary: Deep Green (lighter for dark mode) */
-    --primary: #128A4F;
-    --primary-foreground: #ffffff;
-
-    /* Secondary: Golden Yellow */
-    --secondary: #F4B400;
-    --secondary-foreground: #1A2E23;
-
-    --muted: #1F3D2E;
-    --muted-foreground: #8BA89A;
-
-    /* Accent: Dark Blue (lighter for dark mode) */
-    --accent: #2E4A73;
-    --accent-foreground: #ffffff;
-
-    --destructive: #EF4444;
-    --destructive-foreground: #ffffff;
-
-    --border: #1F3D2E;
-    --input: #1F3D2E;
-    --ring: #128A4F;
-
-    /* Charts using brand colors */
-    --chart-1: #128A4F;
-    --chart-2: #FFCA28;
-    --chart-3: #2E4A73;
-    --chart-4: #0F6B3F;
-    --chart-5: #F4B400;
-
-    --sidebar: #132920;
-    --sidebar-foreground: #E8F0EC;
-    --sidebar-primary: #128A4F;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #1F3D2E;
-    --sidebar-accent-foreground: #E8F0EC;
-    --sidebar-border: #1F3D2E;
-    --sidebar-ring: #128A4F;
-
-    /* BUAME 2R Dark Mode Variables */
-    --buame-primary: #128A4F;
-    --buame-primary-dark: #0F6B3F;
-    --buame-secondary: #FFCA28;
-    --buame-accent: #2E4A73;
-    --buame-background-light: #132920;
-    --buame-background-dark: #0A1F14;
-    --buame-text-main: #E8F0EC;
-    --buame-text-sub: #8BA89A;
-    --buame-surface-light: #1F3D2E;
-    --buame-surface-dark: #132920;
-    --buame-border-light: #2A5040;
     --buame-border-dark: #1F3D2E;
 }
 

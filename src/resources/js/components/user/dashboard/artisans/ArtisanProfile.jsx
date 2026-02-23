@@ -105,8 +105,8 @@ export function ArtisanProfile({ profile }) {
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-2xl font-bold text-[var(--foreground)] dark:text-white">Artisan Profile</h2>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your artisan profile information</p>
+                <h2 className="text-2xl font-bold text-[var(--foreground)]">Artisan Profile</h2>
+                <p className="mt-1 text-sm text-gray-600">Manage your artisan profile information</p>
             </div>
 
             {/* Visibility Banner with save button */}
@@ -133,15 +133,15 @@ export function ArtisanProfile({ profile }) {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Profile Image</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Profile Image</h3>
                     <div className="flex items-start gap-6">
                         {profileImagePreview ? (
                             <div className="relative">
                                 <img
                                     src={profileImagePreview}
                                     alt="Profile"
-                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover dark:border-[#2a4d2a]"
+                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
                                 />
                                 <button
                                     type="button"
@@ -152,18 +152,18 @@ export function ArtisanProfile({ profile }) {
                                 </button>
                             </div>
                         ) : (
-                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                            <div className="flex h-32 w-32 items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50">
                                 <ImageIcon className="h-12 w-12 text-gray-400" />
                             </div>
                         )}
                         <div className="flex-1">
                             <Label htmlFor="profile_image">Profile Image (Thumbnail)</Label>
-                            <p className="mt-1 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                            <p className="mt-1 mb-3 text-xs text-gray-500">
                                 This image will be displayed as your thumbnail to visitors
                             </p>
                             <label
                                 htmlFor="profile_image"
-                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] dark:border-[#2a4d2a] dark:bg-[#1a331a] dark:text-white dark:hover:bg-[#254225]"
+                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6]#2a4d2a]#1a331a]#254225]"
                             >
                                 <Upload className="h-4 w-4" />
                                 {profileImagePreview ? 'Change Image' : 'Upload Image'}
@@ -174,8 +174,8 @@ export function ArtisanProfile({ profile }) {
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Basic Information</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name">Professional/Business Name</Label>
@@ -249,8 +249,8 @@ export function ArtisanProfile({ profile }) {
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">About</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">About</h3>
                     <div>
                         <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Textarea
@@ -265,8 +265,8 @@ export function ArtisanProfile({ profile }) {
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Specialties</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Specialties</h3>
                     <div className="flex gap-2">
                         <Input
                             value={newSpecialty}
@@ -284,7 +284,7 @@ export function ArtisanProfile({ profile }) {
                             {specialties.map((spec, index) => (
                                 <span
                                     key={index}
-                                    className="flex items-center gap-2 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--primary)] dark:text-[var(--primary)]"
+                                    className="flex items-center gap-2 rounded-md bg-[var(--primary)]/10 px-3 py-1 text-sm font-semibold text-[var(--primary)]"
                                 >
                                     {spec}
                                     <button type="button" onClick={() => handleRemoveSpecialty(index)} className="text-red-600 hover:text-red-800">
@@ -296,8 +296,8 @@ export function ArtisanProfile({ profile }) {
                     )}
                 </div>
 
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Location & Contact</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <Label htmlFor="location">Location</Label>
@@ -374,8 +374,8 @@ export function ArtisanProfile({ profile }) {
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6 dark:border-[#2a4d2a] dark:bg-[#1a331a]">
-                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Working Hours</h3>
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Working Hours</h3>
                     <div>
                         <Label htmlFor="working_hours">Working Hours <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
                         <Input

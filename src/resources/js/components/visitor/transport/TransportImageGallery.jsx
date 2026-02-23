@@ -8,8 +8,8 @@ export function TransportImageGallery({ images }) {
 
     if (!images || images.length === 0) {
         return (
-            <div className="flex h-64 w-full items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
-                <p className="text-gray-500 dark:text-gray-400">No images available</p>
+            <div className="flex h-64 w-full items-center justify-center rounded-xl bg-gray-100">
+                <p className="text-gray-500">No images available</p>
             </div>
         );
     }

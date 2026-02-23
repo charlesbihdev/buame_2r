@@ -150,7 +150,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                 </div>
                             ))}
                             {data.images.length < 10 && (
-                                <label className="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-[var(--primary)] dark:border-gray-600">
+                                <label className="flex aspect-square cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 transition-colors hover:border-[var(--primary)]">
                                     <input type="file" accept="image/*" multiple onChange={handleImageChange} className="hidden" />
                                     <ImagePlus className="h-6 w-6 text-gray-400" />
                                 </label>
@@ -329,7 +329,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                 </div>
                             ))}
                             {data.specifications.length === 0 && (
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                <p className="text-sm text-gray-500">
                                     Add product specifications to help buyers understand your product better.
                                 </p>
                             )}
@@ -368,7 +368,7 @@ export function ProductFormModal({ isOpen, onClose, store }) {
                                 </div>
                             ))}
                             {data.video_links.length === 0 && (
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                <p className="text-sm text-gray-500">
                                     Add video links to showcase your product in action.
                                 </p>
                             )}

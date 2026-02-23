@@ -77,10 +77,10 @@ export function ContactForm() {
     return (
         <div className="lg:col-span-7 xl:col-span-8">
             {alert.show && <Toast type={alert.type} message={alert.message} onHide={() => setAlert({ show: false, type: '', message: '' })} />}
-            <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-6 shadow-sm md:p-8 dark:border-white/10 dark:bg-white/5">
+            <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-6 shadow-sm md:p-8">
                 <div className="mb-8">
                     <h2 className="mb-2 text-2xl font-bold">Send us a Message</h2>
-                    <p className="text-[#4c9a4c] dark:text-gray-400">
+                    <p className="text-[#4c9a4c]">
                         Fill out the form below and our support team will get back to you within 24 hours.
                     </p>
                 </div>
@@ -101,7 +101,7 @@ export function ContactForm() {
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 placeholder="e.g. Kwame Mensah"
-                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                className="bg-background-light h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]"
                                 required
                             />
                         </div>
@@ -117,7 +117,7 @@ export function ContactForm() {
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 placeholder="e.g. user@example.com"
-                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                className="bg-background-light h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]"
                                 required
                             />
                         </div>
@@ -135,7 +135,7 @@ export function ContactForm() {
                                 value={formData.phone}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="e.g. 024 123 4567"
-                                className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                className="bg-background-light h-12 rounded-lg border border-[var(--buame-border-light)] px-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]"
                             />
                         </div>
                         {/* Inquiry Type */}
@@ -147,7 +147,7 @@ export function ContactForm() {
                                 <SelectTrigger
                                     id="inquiryType"
                                     name="inquiry_type"
-                                    className="bg-background-light dark:bg-background-dark h-12 rounded-lg border border-[var(--buame-border-light)] transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                                    className="bg-background-light h-12 rounded-lg border border-[var(--buame-border-light)] transition-all focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]"
                                 >
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
@@ -175,7 +175,7 @@ export function ContactForm() {
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             placeholder="How can we help you today?"
                             rows={5}
-                            className="bg-background-light dark:bg-background-dark resize-none rounded-lg border border-[var(--buame-border-light)] p-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] dark:border-white/10"
+                            className="bg-background-light resize-none rounded-lg border border-[var(--buame-border-light)] p-4 transition-all placeholder:text-[#4c9a4c]/50 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]"
                             required
                         />
                     </div>

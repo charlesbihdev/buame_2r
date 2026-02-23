@@ -28,7 +28,7 @@ export function AppHeader({ breadcrumbs = [] }) {
                             <SheetContent side="left" className="bg-sidebar flex h-full w-64 flex-col items-stretch justify-between">
                                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                                 <SheetHeader className="flex justify-start text-left">
-                                    <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
+                                    <AppLogoIcon className="h-6 w-6 fill-current text-black" />
                                 </SheetHeader>
                                 <div className="mt-6 flex h-full flex-1 flex-col space-y-4">
                                     {/* Navigation will be added here when dashboard is implemented */}
@@ -55,7 +55,7 @@ export function AppHeader({ breadcrumbs = [] }) {
                                 <Button variant="ghost" className="size-10 rounded-full p-1">
                                     <Avatar className="size-8 overflow-hidden rounded-full">
                                         <AvatarImage src={auth.user?.avatar} alt={auth.user?.name} />
-                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black">
                                             {auth.user ? getInitials(auth.user.name) : 'U'}
                                         </AvatarFallback>
                                     </Avatar>

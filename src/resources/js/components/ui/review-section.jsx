@@ -50,15 +50,15 @@ export function ReviewSection({
     };
 
     return (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-[var(--card)]">
+        <div className="mt-8 rounded-xl border border-gray-200 bg-white">
             {/* Header with gradient accent */}
-            <div className="border-b border-gray-200 bg-gradient-to-r from-[var(--primary)]/5 to-transparent p-6 dark:border-gray-800">
+            <div className="border-b border-gray-200 bg-gradient-to-r from-[var(--primary)]/5 to-transparent p-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl font-bold text-[var(--foreground)] dark:text-white">
+                        <h2 className="text-xl font-bold text-[var(--foreground)]">
                             Customer Reviews
                         </h2>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500">
                             See what others are saying
                         </p>
                     </div>
@@ -75,14 +75,14 @@ export function ReviewSection({
             {reviewsCount > 0 && (
                 <div className="grid gap-6 p-6 md:grid-cols-2">
                     {/* Left: Big Rating Display */}
-                    <div className="flex flex-col items-center justify-center rounded-xl bg-gray-50 p-6 dark:bg-gray-800/50">
-                        <div className="text-5xl font-black text-[var(--foreground)] dark:text-white">
+                    <div className="flex flex-col items-center justify-center rounded-xl bg-gray-50 p-6">
+                        <div className="text-5xl font-black text-[var(--foreground)]">
                             {averageRating.toFixed(1)}
                         </div>
                         <div className="mt-2 flex items-center gap-1">
                             <StarRating value={Math.round(averageRating)} readonly size="md" />
                         </div>
-                        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                        <p className="mt-2 text-sm text-gray-500">
                             Based on {reviewsCount} {reviewsCount === 1 ? 'review' : 'reviews'}
                         </p>
                     </div>
@@ -95,20 +95,20 @@ export function ReviewSection({
 
                             return (
                                 <div key={stars} className="flex items-center gap-3">
-                                    <span className="w-3 text-sm font-semibold text-gray-600 dark:text-gray-400">
+                                    <span className="w-3 text-sm font-semibold text-gray-600">
                                         {stars}
                                     </span>
                                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                                    <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                                    <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-200">
                                         <div
                                             className="h-full rounded-full bg-yellow-400 transition-all"
                                             style={{ width: `${percentage}%` }}
                                         />
                                     </div>
-                                    <span className="w-12 text-right text-sm text-gray-500 dark:text-gray-400">
+                                    <span className="w-12 text-right text-sm text-gray-500">
                                         {percentage}%
                                     </span>
-                                    <span className="w-8 text-right text-sm text-gray-500 dark:text-gray-400">
+                                    <span className="w-8 text-right text-sm text-gray-500">
                                         ({count})
                                     </span>
                                 </div>

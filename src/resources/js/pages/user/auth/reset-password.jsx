@@ -63,19 +63,19 @@ export default function ResetPassword({ phone, status }) {
         <>
             <Head title="Reset Password" />
 
-            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12 dark:bg-[var(--buame-background-dark)]">
+            <div className="flex min-h-screen items-center justify-center bg-[#f6f8f6] px-4 py-12">
                 <div className="w-full max-w-md">
                     <div className="mb-8 text-center">
                         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary)]/10">
                             <Shield className="h-8 w-8 text-[var(--primary)]" />
                         </div>
-                        <h1 className="text-3xl font-bold text-[var(--foreground)] dark:text-white">Reset Password</h1>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
+                        <h1 className="text-3xl font-bold text-[var(--foreground)]">Reset Password</h1>
+                        <p className="mt-2 text-gray-600">
                             We sent a code to <span className="font-semibold">{phone}</span>
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                    <div className="rounded-2xl border border-[var(--buame-border-light)] bg-white p-8 shadow-sm">
                         {status && (
                             <div className="mb-4 rounded-lg bg-[var(--primary)]/10 p-3 text-sm font-medium text-[var(--primary)]">
                                 {status}
@@ -85,7 +85,7 @@ export default function ResetPassword({ phone, status }) {
                         <form onSubmit={submit} className="space-y-5">
                             {/* Verification Code */}
                             <div>
-                                <label htmlFor="code" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="code" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Verification Code
                                 </label>
                                 <Input
@@ -104,7 +104,7 @@ export default function ResetPassword({ phone, status }) {
 
                             {/* New Password */}
                             <div>
-                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="password" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     New Password
                                 </label>
                                 <div className="relative">
@@ -130,7 +130,7 @@ export default function ResetPassword({ phone, status }) {
 
                             {/* Confirm Password */}
                             <div>
-                                <label htmlFor="password_confirmation" className="mb-2 block text-sm font-semibold text-[var(--foreground)] dark:text-white">
+                                <label htmlFor="password_confirmation" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                                     Confirm New Password
                                 </label>
                                 <div className="relative">
@@ -173,7 +173,7 @@ export default function ResetPassword({ phone, status }) {
                                     Resend Code
                                 </button>
                             ) : (
-                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                <p className="text-sm text-gray-600">
                                     Resend code in <span className="font-semibold">{formatTime(countdown)}</span>
                                 </p>
                             )}

@@ -46,7 +46,7 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                     />
                     {/* Drawer Panel */}
                     <div
-                        className={`absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out dark:bg-gray-900 ${showMobileFilters ? 'translate-x-0' : '-translate-x-full'}`}
+                        className={`absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${showMobileFilters ? 'translate-x-0' : '-translate-x-full'}`}
                     >
                         <JobsFilters
                             filters={filters}
@@ -56,7 +56,7 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                     </div>
                 </div>
 
-                <main className="flex flex-1 flex-col bg-background-light p-4 dark:bg-background-dark md:p-6 lg:p-8">
+                <main className="flex flex-1 flex-col bg-background-light p-4 md:p-6 lg:p-8">
                     <JobsToolbar filters={filters} pagination={pagination} onFilterToggle={() => setShowMobileFilters(!showMobileFilters)} />
                     <JobsGrid jobs={jobs} />
                     {/* Pagination */}
@@ -66,7 +66,7 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                                 asChild
                                 variant="outline"
                                 disabled={pagination.current_page === 1}
-                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
+                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50"
                             >
                                 <Link
                                     href={pagination.links?.find((link) => link.label === '&laquo; Previous')?.url || '#'}
@@ -90,7 +90,7 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                                             variant={isActive ? 'default' : 'outline'}
                                             className={`h-10 min-w-10 rounded-lg px-4 ${isActive
                                                 ? 'bg-[var(--primary)] text-white'
-                                                : 'border border-[var(--buame-border-light)] bg-white dark:border-white/10 dark:bg-white/5'
+                                                : 'border border-[var(--buame-border-light)] bg-white'
                                                 }`}
                                         >
                                             <Link href={link.url || '#'} preserveState preserveScroll>
@@ -104,7 +104,7 @@ export default function Jobs({ jobs = [], pagination = {}, filters = {} }) {
                                 asChild
                                 variant="outline"
                                 disabled={pagination.current_page === pagination.last_page}
-                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50 dark:border-white/10 dark:bg-white/5"
+                                className="h-10 rounded-lg border border-[var(--buame-border-light)] bg-white px-4 disabled:opacity-50"
                             >
                                 <Link
                                     href={pagination.links?.find((link) => link.label === 'Next &raquo;')?.url || '#'}

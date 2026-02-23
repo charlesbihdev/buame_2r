@@ -18,14 +18,14 @@ export function TeamSection() {
     ];
 
     return (
-        <div className="bg-background-light px-6 py-20 dark:bg-background-dark lg:px-20">
+        <div className="bg-background-light px-6 py-20 lg:px-20">
             <div className="mx-auto max-w-[1280px] text-center">
-                <h2 className="mb-12 text-3xl font-bold dark:text-white">Meet the Team</h2>
+                <h2 className="mb-12 text-3xl font-bold">Meet the Team</h2>
                 <div className="flex flex-wrap justify-center gap-10">
                     {teamMembers.map((member) => (
                         <div key={member.name} className="flex w-[200px] flex-col items-center gap-3">
                             <div
-                                className="size-32 overflow-hidden rounded-full border-4 border-white shadow-lg dark:border-white/10"
+                                className="size-32 overflow-hidden rounded-full border-4 border-white shadow-lg"
                                 style={{
                                     backgroundImage: `url(${member.image})`,
                                     backgroundSize: 'cover',
@@ -33,7 +33,7 @@ export function TeamSection() {
                                 }}
                             />
                             <div>
-                                <h3 className="text-lg font-bold dark:text-white">{member.name}</h3>
+                                <h3 className="text-lg font-bold">{member.name}</h3>
                                 <p className="text-sm font-medium text-[var(--primary)]">{member.role}</p>
                             </div>
                         </div>

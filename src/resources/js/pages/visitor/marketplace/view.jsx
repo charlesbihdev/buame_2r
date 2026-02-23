@@ -16,8 +16,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                     <meta name="robots" content="noindex, nofollow" />
                 </Head>
                 <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                        <p className="text-lg text-gray-600 dark:text-gray-400">Product not found.</p>
+                    <div className="rounded-xl border border-gray-200 bg-white p-12 text-center">
+                        <p className="text-lg text-gray-600">Product not found.</p>
                         <div className="mt-6 flex justify-center">
                             <BackToHome to="/marketplace" label="Back to Marketplace" />
                         </div>
@@ -86,7 +86,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                             {/* Primary Image */}
                             <button
                                 onClick={() => openLightbox(currentImageIndex)}
-                                className="group relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-200 dark:bg-gray-800"
+                                className="group relative mb-4 aspect-[4/3] w-full overflow-hidden rounded-xl bg-gray-200"
                             >
                                 <img
                                     src={currentImage}
@@ -105,7 +105,7 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         <button
                                             key={index}
                                             onClick={() => setCurrentImageIndex(index)}
-                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all dark:bg-gray-800 ${index === currentImageIndex
+                                            className={`group relative aspect-square overflow-hidden rounded-lg bg-gray-100 transition-all ${index === currentImageIndex
                                                 ? 'ring-2 ring-[var(--primary)] ring-offset-2'
                                                 : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
                                                 }`}
@@ -125,19 +125,19 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         </div>
 
                         {/* Header */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
                             <div className="mb-4">
                                 <div className="mb-2 flex items-center gap-2">
-                                    <span className="rounded-full bg-[var(--primary)]/20 px-3 py-1 text-sm font-semibold text-white dark:text-[var(--primary)]">
+                                    <span className="rounded-full bg-[var(--primary)]/20 px-3 py-1 text-sm font-semibold text-white">
                                         {product.category}
                                     </span>
                                     {product.condition && (
-                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                                        <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
                                             {product.condition}
                                         </span>
                                     )}
                                 </div>
-                                <h1 className="mb-3 text-3xl font-bold text-[var(--foreground)] dark:text-white">{product.title}</h1>
+                                <h1 className="mb-3 text-3xl font-bold text-[var(--foreground)]">{product.title}</h1>
                                 <div className="flex flex-wrap items-center gap-4">
                                     {(parseFloat(product?.rating) > 0 || parseInt(product?.reviews) > 0) && (
                                         <div className="flex items-center gap-1">
@@ -147,14 +147,14 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         </div>
                                     )}
 
-                                    <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                                    <div className="flex items-center gap-1 text-gray-600">
                                         <MapPin className="h-5 w-5" />
                                         {product.location}
                                     </div>
                                     {product.store && product.store.is_active && (
                                         <Link
                                             href={`/store/${product.store.slug}`}
-                                            className="group flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)]/20 dark:bg-[var(--primary)]/20"
+                                            className="group flex items-center gap-1.5 rounded-full bg-[var(--primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--primary)] transition-colors hover:bg-[var(--primary)]/20"
                                         >
                                             <Store className="h-4 w-4" />
                                             <span>{product.store.name}</span>
@@ -166,16 +166,16 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         </div>
 
                         {/* Description */}
-                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                            <h2 className="mb-3 text-xl font-bold text-[var(--foreground)] dark:text-white">Description</h2>
-                            <p className="mb-4 whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+                        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                            <h2 className="mb-3 text-xl font-bold text-[var(--foreground)]">Description</h2>
+                            <p className="mb-4 whitespace-pre-wrap text-gray-700">
                                 {product.description || 'No description available.'}
                             </p>
 
                             {product.specifications && product.specifications.length > 0 && (
                                 <div className="mb-4">
-                                    <h3 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">Specifications</h3>
-                                    <ul className="list-disc space-y-1 pl-5 text-sm text-gray-600 dark:text-gray-400">
+                                    <h3 className="mb-2 text-sm font-semibold text-gray-700">Specifications</h3>
+                                    <ul className="list-disc space-y-1 pl-5 text-sm text-gray-600">
                                         {product.specifications.map((spec, idx) => (
                                             <li key={idx}>{spec}</li>
                                         ))}
@@ -192,8 +192,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                 const tallVideos = product.video_links.filter((l) => tallPlatforms.includes(l.platform));
                                 const wideVideos = product.video_links.filter((l) => !tallPlatforms.includes(l.platform));
                                 return (
-                                    <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                        <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Product Videos</h2>
+                                    <div className="mb-6 rounded-xl border border-gray-200 bg-white p-6">
+                                        <h2 className="mb-4 text-xl font-bold text-[var(--foreground)]">Product Videos</h2>
                                         <div className="space-y-4">
                                             {/* Wide format: YouTube, Facebook, LinkCard */}
                                             {wideVideos.length > 0 && (
@@ -231,15 +231,15 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
 
                         {/* Delivery & Warranty */}
                         {(product.delivery_available || product.warranty) && (
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)] dark:text-white">Additional Information</h2>
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <h2 className="mb-4 text-xl font-bold text-[var(--foreground)]">Additional Information</h2>
                                 <div className="space-y-3">
                                     {product.delivery_available && (
                                         <div className="flex items-center gap-3">
                                             <Truck className="h-5 w-5 text-[var(--primary)]" />
                                             <div>
-                                                <div className="text-sm text-gray-600 dark:text-gray-400">Delivery</div>
-                                                <div className="font-semibold text-[var(--foreground)] dark:text-white">Available</div>
+                                                <div className="text-sm text-gray-600">Delivery</div>
+                                                <div className="font-semibold text-[var(--foreground)]">Available</div>
                                             </div>
                                         </div>
                                     )}
@@ -247,8 +247,8 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         <div className="flex items-center gap-3">
                                             <Package className="h-5 w-5 text-[var(--primary)]" />
                                             <div>
-                                                <div className="text-sm text-gray-600 dark:text-gray-400">Warranty</div>
-                                                <div className="font-semibold text-[var(--foreground)] dark:text-white">{product.warranty}</div>
+                                                <div className="text-sm text-gray-600">Warranty</div>
+                                                <div className="font-semibold text-[var(--foreground)]">{product.warranty}</div>
                                             </div>
                                         </div>
                                     )}
@@ -262,19 +262,19 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                         <div className="sticky top-8 space-y-6">
                             {/* Store Card */}
                             {product.store && product.store.is_active && (
-                                <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 p-5 dark:border-[var(--primary)]/30 dark:bg-[var(--primary)]/10">
+                                <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 p-5">
                                     <div className="mb-2 flex items-center gap-2">
                                         <Store className="h-5 w-5 text-[var(--primary)]" />
-                                        <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">Sold by</span>
+                                        <span className="text-sm font-semibold text-gray-600">Sold by</span>
                                     </div>
                                     <Link href={`/store/${product.store.slug}`} className="group mb-2 block">
-                                        <h3 className="text-lg font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] dark:text-white">
+                                        <h3 className="text-lg font-bold text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)]">
                                             {product.store.name}
                                             <ExternalLink className="ml-1.5 inline h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                                         </h3>
                                     </Link>
                                     {product.store.description && (
-                                        <p className="line-clamp-2 text-sm text-gray-600 dark:text-gray-400">{product.store.description}</p>
+                                        <p className="line-clamp-2 text-sm text-gray-600">{product.store.description}</p>
                                     )}
                                     <Link
                                         href={`/store/${product.store.slug}`}
@@ -286,23 +286,23 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                             )}
 
                             {/* Pricing */}
-                            <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">Price</div>
-                                <div className="mb-4 text-3xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                            <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                <div className="mb-2 text-sm text-gray-600">Price</div>
+                                <div className="mb-4 text-3xl font-black text-[var(--foreground)]">
                                     {product.price || 'Contact for price'}
                                 </div>
                             </div>
 
                             {/* Contact */}
                             {(product.phone || product.email || whatsappUrl) && (
-                                <div className="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-[var(--card)]">
-                                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)] dark:text-white">Contact Seller</h3>
+                                <div className="rounded-xl border border-gray-200 bg-white p-6">
+                                    <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Contact Seller</h3>
 
-                                    <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 dark:border-amber-800/50 dark:bg-amber-900/20">
-                                        <p className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-200">
-                                            <span className="mt-0.5 text-amber-600 dark:text-amber-400">🛡️</span>
+                                    <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                                        <p className="flex items-start gap-2 text-sm text-amber-800">
+                                            <span className="mt-0.5 text-amber-600">🛡️</span>
                                             <span>
-                                                For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900 dark:hover:text-amber-100" onClick={(e) => {
+                                                For your safety, please read our <a href="#safe-transaction-notice" className="font-bold underline transition-colors hover:text-amber-900" onClick={(e) => {
                                                     e.preventDefault();
                                                     document.getElementById('safe-transaction-notice')?.scrollIntoView({ behavior: 'smooth' });
                                                 }}>Safe Transaction Notice</a> before contacting the seller.
@@ -314,10 +314,10 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                         {product.phone && (
                                             <a
                                                 href={`tel:${product.phone}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                             >
                                                 <Phone className="h-5 w-5 text-[var(--primary)]" />
-                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.phone}</span>
+                                                <span className="font-semibold text-[var(--foreground)]">{product.phone}</span>
                                             </a>
                                         )}
                                         {whatsappUrl && (
@@ -325,19 +325,19 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                                                 href={whatsappUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                             >
                                                 <MessageCircle className="h-5 w-5 text-[var(--primary)]" />
-                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">WhatsApp</span>
+                                                <span className="font-semibold text-[var(--foreground)]">WhatsApp</span>
                                             </a>
                                         )}
                                         {product.email && (
                                             <a
                                                 href={`mailto:${product.email}`}
-                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10 dark:border-gray-700 dark:bg-gray-800"
+                                                className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 transition-colors hover:border-[var(--primary)] hover:bg-[var(--primary)]/10"
                                             >
                                                 <Mail className="h-5 w-5 text-[var(--primary)]" />
-                                                <span className="font-semibold text-[var(--foreground)] dark:text-white">{product.email}</span>
+                                                <span className="font-semibold text-[var(--foreground)]">{product.email}</span>
                                             </a>
                                         )}
                                     </div>

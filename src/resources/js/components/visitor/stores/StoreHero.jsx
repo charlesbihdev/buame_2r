@@ -31,9 +31,9 @@ export function StoreHero({ store, productCount }) {
     const hasThumbnail = store.thumbnail && !imageError;
 
     return (
-        <div className="dark:bg-background-dark relative border-b border-gray-200 bg-white dark:border-gray-800">
+        <div className="relative border-b border-gray-200 bg-white">
             {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
+            <div className="absolute inset-0 opacity-[0.02]">
                 <div
                     className="h-full w-full"
                     style={{
@@ -47,7 +47,7 @@ export function StoreHero({ store, productCount }) {
                     {/* Store Thumbnail/Avatar */}
                     <div className="shrink-0">
                         {hasThumbnail ? (
-                            <div className="h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36 dark:border-gray-800">
+                            <div className="h-28 w-28 overflow-hidden rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36">
                                 <img
                                     src={store.thumbnail}
                                     alt={store.name}
@@ -57,7 +57,7 @@ export function StoreHero({ store, productCount }) {
                             </div>
                         ) : (
                             <div
-                                className={`flex h-28 w-28 items-center justify-center rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36 dark:border-gray-800 ${storeColor.bg}`}
+                                className={`flex h-28 w-28 items-center justify-center rounded-2xl border-4 border-white shadow-lg md:h-36 md:w-36 ${storeColor.bg}`}
                             >
                                 <span className="text-4xl font-black text-white md:text-5xl">{getInitials(store.name)}</span>
                             </div>
@@ -67,19 +67,19 @@ export function StoreHero({ store, productCount }) {
                     {/* Store Info */}
                     <div className="flex-1 text-center md:text-left">
                         <div className="mb-1 flex items-center justify-center gap-2 md:justify-start">
-                            <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                            <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
                                 <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
                                 Open
                             </span>
                         </div>
 
-                        <h1 className="text-foreground mb-2 text-2xl font-black md:text-3xl lg:text-4xl dark:text-white">{store.name}</h1>
+                        <h1 className="text-foreground mb-2 text-2xl font-black md:text-3xl lg:text-4xl">{store.name}</h1>
 
-                        {store.description && <p className="mb-4 max-w-xl text-gray-600 dark:text-gray-400">{store.description}</p>}
+                        {store.description && <p className="mb-4 max-w-xl text-gray-600">{store.description}</p>}
 
                         {/* Store Meta */}
                         <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-                            <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center gap-1.5 text-sm text-gray-600">
                                 <Package className="h-4 w-4" />
                                 <span className="font-medium">
                                     {productCount} {productCount === 1 ? 'product' : 'products'}
@@ -87,9 +87,9 @@ export function StoreHero({ store, productCount }) {
                             </div>
                             {store.user?.name && (
                                 <>
-                                    <span className="text-gray-300 dark:text-gray-700">•</span>
-                                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                                        Sold by <span className="text-foreground font-medium dark:text-white">{store.user.name}</span>
+                                    <span className="text-gray-300">•</span>
+                                    <span className="text-sm text-gray-600">
+                                        Sold by <span className="text-foreground font-medium">{store.user.name}</span>
                                     </span>
                                 </>
                             )}

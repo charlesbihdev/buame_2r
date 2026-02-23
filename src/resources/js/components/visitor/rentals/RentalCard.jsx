@@ -45,10 +45,10 @@ export function RentalCard({ rental }) {
     return (
         <Link
             href={`/rentals/${rental.id}`}
-            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg dark:border-gray-800 dark:bg-[var(--card)]"
+            className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
         >
             {/* Rental Image */}
-            <div className="relative mb-4 h-40 w-full overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+            <div className="relative mb-4 h-40 w-full overflow-hidden rounded-xl bg-gray-100">
                 {rental.image ? (
                     <div
                         className="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
@@ -70,10 +70,10 @@ export function RentalCard({ rental }) {
             {/* Details */}
             <div className="flex flex-1 flex-col">
                 <div className="mb-2">
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">{rental.name}</h3>
+                    <h3 className="text-lg font-bold text-[var(--foreground)]">{rental.name}</h3>
                 </div>
 
-                <div className="mb-3 flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                <div className="mb-3 flex items-center gap-1 text-xs text-gray-600">
                     <MapPin className="h-3 w-3" />
                     {rental.location}
                 </div>
@@ -84,24 +84,24 @@ export function RentalCard({ rental }) {
                         {rental.features.slice(0, 3).map((feature, idx) => (
                             <span
                                 key={idx}
-                                className="rounded-md bg-[var(--primary)]/10 px-2 py-0.5 text-xs font-semibold text-white dark:text-[var(--primary)]"
+                                className="rounded-md bg-[var(--primary)]/10 px-2 py-0.5 text-xs font-semibold text-white"
                             >
                                 {feature}
                             </span>
                         ))}
                         {rental.features.length > 3 && (
-                            <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                            <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600">
                                 +{rental.features.length - 3}
                             </span>
                         )}
                     </div>
                 )}
 
-                <div className="mt-auto space-y-2 border-t border-gray-100 pt-3 dark:border-gray-800">
+                <div className="mt-auto space-y-2 border-t border-gray-100 pt-3">
                     {parseFloat(rental?.price) > 0 && (
                         <div className="flex items-center justify-between">
                             <div>
-                                <div className="text-xl font-black text-[var(--foreground)] dark:text-[var(--primary)]">
+                                <div className="text-xl font-black text-[var(--foreground)]">
                                     ₵{parseFloat(rental.price).toLocaleString()}
                                 </div>
                                 <div className="text-xs text-gray-500">{getPeriodLabel(rental.period)}</div>

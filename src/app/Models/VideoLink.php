@@ -31,21 +31,42 @@ class VideoLink extends Model
      */
     public static function resolveTiktokShortUrl(string $url): string
     {
-        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
-
-        if (! in_array($host, ['vt.tiktok.com', 'vm.tiktok.com'])) {
+        // If it already has /video/ID, no resolution needed
+        if (preg_match('/\/video\/(\d+)/', $url)) {
             return $url;
         }
 
+        // Try TikTok oEmbed API (works with short URLs)
         try {
-            $response = Http::withoutRedirecting()->get($url);
-            $location = $response->header('Location');
+            $response = Http::timeout(5)->get('https://www.tiktok.com/oembed', [
+                'url' => $url,
+            ]);
 
-            if ($location && str_contains($location, '/video/')) {
-                return $location;
+            if ($response->successful()) {
+                $html = $response->json('html') ?? '';
+                if (preg_match('/cite="(https:\/\/www\.tiktok\.com\/@[^"]*\/video\/\d+)"/', $html, $matches)) {
+                    return $matches[1];
+                }
             }
         } catch (\Throwable) {
-            // Fall through to return the original URL
+            // Fall through to redirect approach
+        }
+
+        // Fallback: follow redirects for short URLs
+        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+        if (in_array($host, ['vt.tiktok.com', 'vm.tiktok.com'])) {
+            try {
+                $response = Http::timeout(5)
+                    ->withHeaders(['User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'])
+                    ->get($url);
+
+                $effectiveUrl = $response->effectiveUri()?->__toString();
+                if ($effectiveUrl && preg_match('/\/video\/(\d+)/', $effectiveUrl)) {
+                    return $effectiveUrl;
+                }
+            } catch (\Throwable) {
+                // Fall through
+            }
         }
 
         return $url;

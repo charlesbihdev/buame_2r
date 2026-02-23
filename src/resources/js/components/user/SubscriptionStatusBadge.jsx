@@ -4,22 +4,22 @@ const statusConfig = {
     active: {
         icon: CheckCircle,
         label: 'Active',
-        className: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+        className: 'bg-green-100 text-green-700',
     },
     grace_period: {
         icon: Clock,
         label: 'Grace Period',
-        className: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+        className: 'bg-yellow-100 text-yellow-700',
     },
     expired: {
         icon: XCircle,
         label: 'Expired',
-        className: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+        className: 'bg-red-100 text-red-700',
     },
     cancelled: {
         icon: AlertCircle,
         label: 'Cancelled',
-        className: 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400',
+        className: 'bg-gray-100 text-gray-700',
     },
 };
 

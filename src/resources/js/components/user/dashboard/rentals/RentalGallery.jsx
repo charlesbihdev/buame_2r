@@ -11,8 +11,8 @@ export function RentalGallery({ profile }) {
 
     if (!profile) {
         return (
-            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-[var(--card)]">
-                <p className="text-gray-600 dark:text-gray-400">Loading gallery...</p>
+            <div className="rounded-xl border border-gray-200 bg-white p-8 text-center">
+                <p className="text-gray-600">Loading gallery...</p>
             </div>
         );
     }
@@ -52,8 +52,8 @@ export function RentalGallery({ profile }) {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h3 className="text-lg font-bold text-[var(--foreground)] dark:text-white">Rental Gallery</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <h3 className="text-lg font-bold text-[var(--foreground)]">Rental Gallery</h3>
+                    <p className="text-sm text-gray-600">
                         Manage images for your rental listing ({images.length} images)
                     </p>
                 </div>
@@ -69,7 +69,7 @@ export function RentalGallery({ profile }) {
                     {images.map((image) => (
                         <div
                             key={image.id}
-                            className="group relative aspect-square overflow-hidden rounded-xl border-2 border-gray-100 bg-gray-100 dark:border-gray-800 dark:bg-gray-800"
+                            className="group relative aspect-square overflow-hidden rounded-xl border-2 border-gray-100 bg-gray-100"
                         >
                             <img
                                 src={image.image_path}
@@ -119,10 +119,10 @@ export function RentalGallery({ profile }) {
                     ))}
                 </div>
             ) : (
-                <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center dark:border-gray-700 dark:bg-gray-800/50">
+                <div className="rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center">
                     <ImagePlus className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-                    <h4 className="mb-2 font-semibold text-gray-700 dark:text-gray-300">No images yet</h4>
-                    <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+                    <h4 className="mb-2 font-semibold text-gray-700">No images yet</h4>
+                    <p className="mb-4 text-sm text-gray-500">
                         Add images to showcase your rental listing
                     </p>
                     <Button onClick={handleAddImage} className="cursor-pointer bg-[var(--primary)] text-white hover:bg-[var(--primary)]">
