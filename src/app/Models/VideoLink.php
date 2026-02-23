@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 
 class VideoLink extends Model
 {
@@ -15,6 +16,40 @@ class VideoLink extends Model
         'url',
         'platform',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (VideoLink $videoLink) {
+            if ($videoLink->platform === 'tiktok') {
+                $videoLink->url = static::resolveTiktokShortUrl($videoLink->url);
+            }
+        });
+    }
+
+    /**
+     * Resolve TikTok short URLs (vt.tiktok.com, vm.tiktok.com) to full URLs.
+     */
+    public static function resolveTiktokShortUrl(string $url): string
+    {
+        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+
+        if (! in_array($host, ['vt.tiktok.com', 'vm.tiktok.com'])) {
+            return $url;
+        }
+
+        try {
+            $response = Http::withoutRedirecting()->get($url);
+            $location = $response->header('Location');
+
+            if ($location && str_contains($location, '/video/')) {
+                return $location;
+            }
+        } catch (\Throwable) {
+            // Fall through to return the original URL
+        }
+
+        return $url;
+    }
 
     protected $appends = [
         'embed_url',
