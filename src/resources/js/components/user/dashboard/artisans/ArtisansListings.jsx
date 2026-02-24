@@ -26,7 +26,7 @@ export function ArtisansListings({ listings }) {
                     {listings.map((listing) => (
                         <div
                             key={listing.id}
-                            className="overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg#2a4d2a]#1a331a]"
+                            className="overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg"
                         >
                             <div className="aspect-video w-full bg-gray-100" />
                             <div className="p-4">

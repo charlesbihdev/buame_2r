@@ -32,8 +32,8 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
     };
 
     return (
-        <div className="mb-6 rounded-xl border border-[var(--buame-border-light)] bg-white p-4#2a4d2a]#1a331a]">
-            <h3 className="mb-4 text-sm font-bold tracking-wide text-[#4c9a4c] uppercase#8fcc8f]">Your Categories</h3>
+        <div className="mb-6 rounded-xl border border-[var(--buame-border-light)] bg-white p-4">
+            <h3 className="mb-4 text-sm font-bold tracking-wide text-[#4c9a4c] uppercase">Your Categories</h3>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {Object.entries(categoryConfig).map(([value, config]) => {
                     const Icon = config.icon;
@@ -49,7 +49,7 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
                                 className={`flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 p-3 transition-all ${
                                     isActive
                                         ? 'border-[var(--primary)] bg-[var(--primary)]/10'
-                                        : 'border-[var(--buame-border-light)] hover:border-[var(--primary)]/50#2a4d2a]'
+                                        : 'border-[var(--buame-border-light)] hover:border-[var(--primary)]/50'
                                 }`}
                             >
                                 <div
@@ -61,7 +61,7 @@ export default function CategorySwitcher({ paidCategories, activeCategory, unpai
                                 </div>
                                 <span
                                     className={`text-xs font-semibold ${
-                                        isActive ? 'text-[var(--foreground)]' : 'text-[#4c9a4c]#8fcc8f]'
+                                        isActive ? 'text-[var(--foreground)]' : 'text-[#4c9a4c]'
                                     }`}
                                 >
                                     {config.label}

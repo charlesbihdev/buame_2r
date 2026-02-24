@@ -62,7 +62,7 @@ export function TransportImageForm({ image, onClose, profile }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-md rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+            <div className="w-full max-w-md rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <h3 className="text-xl font-bold text-[var(--foreground)]">{isEdit ? 'Edit Image' : 'Add Image'}</h3>
                     <button
@@ -82,7 +82,7 @@ export function TransportImageForm({ image, onClose, profile }) {
                                     <img
                                         src={preview}
                                         alt="Preview"
-                                        className="h-48 w-full rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
+                                        className="h-48 w-full rounded-lg border border-[var(--buame-border-light)] object-cover"
                                     />
                                     <button
                                         type="button"

@@ -7,7 +7,7 @@ export function ListingVisibilityBanner({ listing, routeName, label = 'Listing',
 
     return (
         <div
-            className={`rounded-xl border-2 p-6 ${isActive ? 'border-[var(--primary)] bg-[var(--buame-border-light)]#1a331a]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10'}`}
+            className={`rounded-xl border-2 p-6 ${isActive ? 'border-[var(--primary)] bg-[var(--buame-border-light)]' : 'border-[var(--accent)]/30 bg-[var(--accent)]/10'}`}
         >
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">

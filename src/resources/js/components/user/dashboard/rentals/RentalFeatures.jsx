@@ -51,7 +51,7 @@ export function RentalFeatures({ profile }) {
             </div>
 
             {/* Add Feature Form */}
-            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                 <form onSubmit={handleAddFeature} className="flex gap-3">
                     <Input
                         value={newFeature}
@@ -71,7 +71,7 @@ export function RentalFeatures({ profile }) {
 
             {/* Features List */}
             {features.length > 0 ? (
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h4 className="mb-4 text-sm font-semibold text-gray-700">
                         Added Features ({features.length})
                     </h4>

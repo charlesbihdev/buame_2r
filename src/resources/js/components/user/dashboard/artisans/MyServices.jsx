@@ -19,7 +19,7 @@ export function MyServices({ data }) {
                     {services.map((service) => (
                         <div
                             key={service.id}
-                            className="flex items-center justify-between rounded-lg border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] p-4"
+                            className="flex items-center justify-between rounded-lg border border-[var(--buame-border-light)] bg-white p-4"
                         >
                             <div className="flex items-center gap-4">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]/10">

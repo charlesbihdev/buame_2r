@@ -64,7 +64,7 @@ export function JobsListings({ listings, onAddJob, poster }) {
                     {listings.map((listing) => (
                         <div
                             key={listing.id}
-                            className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                            className="rounded-xl border border-[var(--buame-border-light)] bg-white overflow-hidden transition-all hover:shadow-lg"
                         >
                             <div className="p-4">
                                 <div className="mb-2 flex items-start justify-between gap-2">

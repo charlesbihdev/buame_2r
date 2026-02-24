@@ -124,7 +124,7 @@ export function JobPosterSettings({ poster }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Company Name and Slug */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="grid gap-6 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
@@ -156,7 +156,7 @@ export function JobPosterSettings({ poster }) {
 
                 {/* Description and Link */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                             About Employer
                         </Label>
@@ -171,7 +171,7 @@ export function JobPosterSettings({ poster }) {
                         <FormError error={errors.description} />
                     </div>
 
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">Your Profile Link</Label>
                         <div className="flex gap-2">
                             <Input value={posterUrl} readOnly className="flex-1 text-sm" />
@@ -189,7 +189,7 @@ export function JobPosterSettings({ poster }) {
                 </div>
 
                 {/* Location */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <Label htmlFor="location" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                         Location
                     </Label>
@@ -204,7 +204,7 @@ export function JobPosterSettings({ poster }) {
                 </div>
 
                 {/* Contact Information */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 font-semibold text-[var(--foreground)]">Contact Information</h3>
                     <div className="grid gap-4 md:grid-cols-2">
                         <div>

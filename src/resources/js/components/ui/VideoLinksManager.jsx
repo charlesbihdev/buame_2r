@@ -75,7 +75,7 @@ export function VideoLinksManager({ videoLinks = [], storeRouteName, destroyRout
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="e.g., https://youtube.com/watch?v=... or https://tiktok.com/@user/video/..."
-                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-[var(--foreground)] placeholder-gray-400 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] focus:outline-none#1a331a]"
+                            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-[var(--foreground)] placeholder-gray-400 focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] focus:outline-none"
                             onKeyDown={(e) => e.key === 'Enter' && handleAdd()}
                         />
                     </div>

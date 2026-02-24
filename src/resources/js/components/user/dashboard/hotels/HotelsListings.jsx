@@ -28,7 +28,7 @@ export function HotelsListings({ listings }) {
                         return (
                             <div
                                 key={listing.id}
-                                className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                                className="rounded-xl border border-[var(--buame-border-light)] bg-white overflow-hidden transition-all hover:shadow-lg"
                             >
                                 <div className="aspect-video w-full overflow-hidden bg-gray-100">
                                     {primaryImage ? (
@@ -45,7 +45,7 @@ export function HotelsListings({ listings }) {
                                 </div>
                                 <div className="p-4">
                                     <h4 className="font-bold text-[var(--foreground)]">{listing.name}</h4>
-                                    <p className="mt-1 text-sm text-[#4c9a4c]#8fcc8f]">
+                                    <p className="mt-1 text-sm text-[#4c9a4c]">
                                         {listing.type ? listing.type.replace('_', ' ').replace(/\b\w/g, (l) => l.toUpperCase()) : 'Hotel'}
                                     </p>
                                     <div className="mt-2 flex items-center gap-2 text-xs text-gray-600">

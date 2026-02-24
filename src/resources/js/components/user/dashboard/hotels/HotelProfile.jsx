@@ -22,7 +22,7 @@ export function HotelProfile({ profile }) {
     if (!profile || !profile.id) {
         return (
             <div className="space-y-6">
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <p className="text-gray-600">Loading profile...</p>
                 </div>
             </div>
@@ -120,7 +120,7 @@ export function HotelProfile({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Profile Image Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Hotel Image</h3>
                     <div className="flex items-start gap-6">
                         {profileImagePreview ? (
@@ -128,7 +128,7 @@ export function HotelProfile({ profile }) {
                                 <img
                                     src={profileImagePreview}
                                     alt="Hotel"
-                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover#2a4d2a]"
+                                    className="h-32 w-32 rounded-lg border border-[var(--buame-border-light)] object-cover"
                                 />
                                 <button
                                     type="button"
@@ -150,7 +150,7 @@ export function HotelProfile({ profile }) {
                             </p>
                             <label
                                 htmlFor="primary_image"
-                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6]#2a4d2a]#1a331a]#254225]"
+                                className="flex cursor-pointer items-center gap-2 rounded-md border border-[var(--buame-border-light)] bg-white px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6]"
                             >
                                 <Upload className="h-4 w-4" />
                                 {profileImagePreview ? 'Change Image' : 'Upload Image'}
@@ -162,7 +162,7 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Basic Information Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
@@ -210,7 +210,7 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-lg font-bold text-[var(--foreground)]">Pricing</h3>
                         <div className="flex items-center gap-2">
@@ -246,7 +246,7 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Description Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">About Your Property</h3>
                     <div>
                         <Label htmlFor="description">Description <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
@@ -263,7 +263,7 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
@@ -342,7 +342,7 @@ export function HotelProfile({ profile }) {
                 </div>
 
                 {/* Operating Hours Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">
                         Operating Hours <span className="text-sm font-normal text-gray-500">(Optional)</span>
                     </h3>

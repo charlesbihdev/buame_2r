@@ -4,13 +4,11 @@ import { Label } from '@/components/ui/label';
 import { CheckCircle, Copy, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
-export function DashboardShareLink({ label = "Share Profile Link", url, description = "Share this link to let people view your profile" }) {
+export function DashboardShareLink({ label = 'Share Profile Link', url, description = 'Share this link to let people view your profile' }) {
     const [copied, setCopied] = useState(false);
 
     // Construct full URL if a relative path is provided
-    const shareUrl = url.startsWith('http')
-        ? url
-        : `${window.location.origin}${url.startsWith('/') ? '' : '/'}${url}`;
+    const shareUrl = url.startsWith('http') ? url : `${window.location.origin}${url.startsWith('/') ? '' : '/'}${url}`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(shareUrl);
@@ -19,10 +17,10 @@ export function DashboardShareLink({ label = "Share Profile Link", url, descript
     };
 
     return (
-        <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+        <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
             <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">{label}</Label>
             <div className="flex gap-2">
-                <Input value={shareUrl} readOnly className="flex-1 text-sm bg-gray-50" />
+                <Input value={shareUrl} readOnly className="flex-1 bg-gray-50 text-sm" />
                 <Button onClick={handleCopy} variant="outline" type="button" size="icon" title="Copy Link">
                     {copied ? <CheckCircle className="h-4 w-4 text-[var(--primary)]" /> : <Copy className="h-4 w-4" />}
                 </Button>
