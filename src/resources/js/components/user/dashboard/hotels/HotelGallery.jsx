@@ -63,7 +63,7 @@ export function HotelGallery({ profile }) {
 
             {/* Primary Image */}
             {primaryImage && (
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-4#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-4">
                     <div className="mb-2 flex items-center gap-2">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                         <span className="text-sm font-semibold text-[var(--foreground)]">Primary Image</span>
@@ -77,14 +77,14 @@ export function HotelGallery({ profile }) {
                         <div className="absolute top-2 right-2 flex gap-2">
                             <button
                                 onClick={() => handleEdit(primaryImage)}
-                                className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                 title="Edit"
                             >
                                 <Edit className="h-4 w-4 text-[var(--primary)]" />
                             </button>
                             <button
                                 onClick={() => handleDelete(primaryImage.id)}
-                                className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                 title="Delete"
                             >
                                 <Trash2 className="h-4 w-4 text-red-600" />
@@ -100,28 +100,28 @@ export function HotelGallery({ profile }) {
                     {otherImages.map((image) => (
                         <div
                             key={image.id}
-                            className="group relative overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg#2a4d2a]#1a331a]"
+                            className="group relative overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg"
                         >
                             <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-gray-100">
                                 <img src={image.image_path} alt="Hotel" className="h-full w-full object-cover" />
                                 <div className="absolute top-2 right-2 flex gap-2">
                                     <button
                                         onClick={() => handleSetPrimary(image.id)}
-                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                         title="Set as Primary"
                                     >
                                         <Star className="h-4 w-4 text-yellow-400" />
                                     </button>
                                     <button
                                         onClick={() => handleEdit(image)}
-                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                         title="Edit"
                                     >
                                         <Edit className="h-4 w-4 text-[var(--primary)]" />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(image.id)}
-                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                         title="Delete"
                                     >
                                         <Trash2 className="h-4 w-4 text-red-600" />

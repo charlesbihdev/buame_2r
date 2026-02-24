@@ -57,7 +57,7 @@ export function HeroSection() {
             {/* Content */}
             <div className="relative z-10 flex flex-col items-center justify-center px-4 py-20 text-center md:px-8 lg:px-40 lg:py-28">
                 {/* Headline */}
-                <h1 className="mb-4 max-w-4xl text-4xl leading-tight font-black tracking-tight text-white drop-shadow-sm md:text-5xl lg:text-6xl">
+                <h1 className="mb-4 max-w-4xl text-3xl leading-tight font-black tracking-tight text-white drop-shadow-sm md:text-5xl lg:text-6xl">
                     Connecting Local Services & Opportunities in Western North and Beyond
                 </h1>
 

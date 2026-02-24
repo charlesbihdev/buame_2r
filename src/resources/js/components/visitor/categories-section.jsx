@@ -44,7 +44,7 @@ export function CategoriesSection() {
         <section className="bg-background px-4 py-16 md:px-8 lg:px-40">
             <div className="mx-auto max-w-[1200px]">
                 <div className="mb-8">
-                    <h2 className="text-foreground text-2xl font-bold md:text-3xl">What Are You Looking For?</h2>
+                    <h2 className="text-foreground text-xl font-bold md:text-3xl">What Are You Looking For?</h2>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">

@@ -105,7 +105,7 @@ export function RentalProfile({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Primary Image Upload */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Primary Image</h3>
                     <div className="flex items-start gap-6">
                         <div
@@ -133,7 +133,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Basic Information */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Basic Information</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
@@ -181,7 +181,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Pricing Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-lg font-bold text-[var(--foreground)]">Pricing</h3>
                         <div className="flex items-center gap-2">
@@ -235,7 +235,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Location & Contact Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Location & Contact</h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
@@ -302,7 +302,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Rental Terms Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Rental Terms</h3>
                     <div>
                         <Label htmlFor="rental_terms">Terms & Conditions <span className="text-sm font-normal text-gray-500">(Optional)</span></Label>
@@ -319,7 +319,7 @@ export function RentalProfile({ profile }) {
                 </div>
 
                 {/* Save Button */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="flex flex-wrap items-center justify-end gap-4">
                         {recentlySuccessful && (
                             <div className="flex items-center gap-2 text-sm text-green-600">

@@ -12,16 +12,16 @@ export function Overview({ categoryData }) {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 {/* Total Listings - Green (Primary) */}
-                <div className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] p-6">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="flex items-center justify-between">
-                        <p className="text-sm font-bold uppercase tracking-wide text-[var(--primary)]#8fcc8f]">Total Listings</p>
+                        <p className="text-sm font-bold uppercase tracking-wide text-[var(--primary)]">Total Listings</p>
                         <Package className="h-5 w-5 text-[var(--primary)]" />
                     </div>
                     <p className="mt-2 text-3xl font-bold text-[var(--primary)]">{stats.total || 0}</p>
                 </div>
 
                 {/* Active - Gold (Secondary/Premium) */}
-                <div className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] p-6">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="flex items-center justify-between">
                         <p className="text-sm font-bold uppercase tracking-wide text-[var(--secondary)]">Active</p>
                         <TrendingUp className="h-5 w-5 text-[var(--secondary)]" />
@@ -30,7 +30,7 @@ export function Overview({ categoryData }) {
                 </div>
 
                 {/* Total Views - Blue (Accent/Info) */}
-                <div className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] p-6">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="flex items-center justify-between">
                         <p className="text-sm font-bold uppercase tracking-wide text-[var(--accent)]">Total Views</p>
                         <Eye className="h-5 w-5 text-[var(--accent)]" />

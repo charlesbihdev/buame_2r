@@ -108,7 +108,7 @@ export function HotelSettings({ profile }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Amenities Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Amenities</h3>
                     <p className="mb-4 text-sm text-gray-600">
                         Select amenities available at your property. These help guests find your property.
@@ -124,7 +124,7 @@ export function HotelSettings({ profile }) {
                                     type="button"
                                     onClick={() => handleAddAmenity(amenity)}
                                     disabled={amenities.includes(amenity)}
-                                    className="rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-1 text-xs font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed#2a4d2a]#1a331a]#254225]"
+                                    className="rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-1 text-xs font-medium text-[var(--foreground)] transition-colors hover:bg-[#f6f8f6] disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {amenities.includes(amenity) ? '✓ ' : '+ '}
                                     {amenity}
@@ -189,7 +189,7 @@ export function HotelSettings({ profile }) {
                 </div>
 
                 {/* Features Section */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Features & Services</h3>
                     <p className="mb-4 text-sm text-gray-600">
                         Add special features or services your property offers (e.g., "24/7 Reception", "Room Service").
@@ -233,7 +233,7 @@ export function HotelSettings({ profile }) {
                                 {features.map((feature, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center justify-between rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-2#2a4d2a]#1a331a]"
+                                        className="flex items-center justify-between rounded-md border border-[var(--buame-border-light)] bg-white px-3 py-2"
                                     >
                                         <span className="text-sm text-[var(--foreground)]">{feature}</span>
                                         <button

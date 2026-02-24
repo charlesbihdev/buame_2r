@@ -116,7 +116,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Store Name and Slug - Side by Side */}
-                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                     <div className="grid gap-6 md:grid-cols-2">
                         <div>
                             <Label htmlFor="name" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
@@ -148,7 +148,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
                 {/* Store Description and Link - Side by Side */}
                 <div className="grid gap-6 md:grid-cols-2">
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <Label htmlFor="description" className="mb-2 block text-sm font-semibold text-[var(--foreground)]">
                             Store Description
                         </Label>
@@ -163,7 +163,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
                         <FormError error={errors.description || pageErrors?.description} className="mt-1" />
                     </div>
 
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <Label className="mb-2 block text-sm font-semibold text-[var(--foreground)]">Your Store Link</Label>
                         <div className="flex gap-2">
                             <Input value={storeUrl} readOnly className="flex-1 text-sm" />
@@ -199,7 +199,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
             <div className="grid gap-6 md:grid-cols-2">
                 {/* Current Tier */}
                 {currentTier && (
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <h4 className="mb-3 font-semibold text-[var(--foreground)]">Current Plan</h4>
                         <div className="flex items-center justify-between">
                             <div>
@@ -221,7 +221,7 @@ export function StoreSettings({ store, tiers, isFreeAccess = false }) {
 
                 {/* Upgrade Options */}
                 {!isFreeAccess && availableTiers.length > 0 && (
-                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6#2a4d2a]#1a331a]">
+                    <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                         <h4 className="mb-3 font-semibold text-[var(--foreground)]">Upgrade Your Store</h4>
                         <div className="space-y-3">
                             {availableTiers.map(([key, tier]) => (

@@ -53,7 +53,7 @@ export function Portfolio({ profile }) {
                     {portfolio.map((item) => (
                         <div
                             key={item.id}
-                            className="group relative overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg#2a4d2a]#1a331a]"
+                            className="group relative overflow-hidden rounded-xl border border-[var(--buame-border-light)] bg-white transition-all hover:shadow-lg"
                         >
                             <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-gray-100">
                                 {item.image_path ? (
@@ -64,14 +64,14 @@ export function Portfolio({ profile }) {
                                 <div className="absolute top-2 right-2 flex gap-2">
                                     <button
                                         onClick={() => handleEdit(item)}
-                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                         title="Edit"
                                     >
                                         <Edit className="h-4 w-4 text-[var(--primary)]" />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(item.id)}
-                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100#1a331a]#254225]"
+                                        className="rounded-lg bg-white p-2 shadow-md transition-colors hover:bg-gray-100"
                                         title="Delete"
                                     >
                                         <Trash2 className="h-4 w-4 text-red-600" />

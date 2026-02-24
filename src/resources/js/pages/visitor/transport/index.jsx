@@ -139,7 +139,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                             onClick={() => handleTypeFilter(tab.value)}
                             className={`flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 font-semibold transition-colors ${filters?.type === tab.value || (!filters?.type && tab.value === null)
                                 ? 'bg-[var(--primary)] text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-50#1a2e1a]'
+                                : 'bg-white text-gray-700 hover:bg-gray-50'
                                 }`}
                         >
                             <span className="text-lg">{tab.emoji}</span>

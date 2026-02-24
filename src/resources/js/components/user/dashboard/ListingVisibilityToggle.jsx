@@ -39,7 +39,7 @@ export function ListingVisibilityToggle({ listing, routeName, label = 'Listing',
     };
 
     return (
-        <div className="flex items-center gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white px-3 py-1.5 md:px-4 md:py-2#2a4d2a]#1a331a]">
+        <div className="] flex items-center gap-2 rounded-lg border border-[var(--buame-border-light)] bg-white px-3 py-1.5 md:px-4 md:py-2">
             {isActive ? <Eye className="h-4 w-4 text-[var(--primary)]" /> : <EyeOff className="h-4 w-4 text-gray-400" />}
             <div className="hidden flex-col md:flex">
                 <Label className="cursor-pointer text-xs font-semibold text-[var(--foreground)]">{isActive ? 'Visible' : 'Hidden'}</Label>

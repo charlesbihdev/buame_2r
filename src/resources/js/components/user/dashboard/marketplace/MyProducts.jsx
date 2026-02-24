@@ -133,7 +133,7 @@ export function MyProducts({ products, store, tiers, onAddProduct, isFreeAccess 
                         return (
                             <div
                                 key={product.id}
-                                className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] overflow-hidden transition-all hover:shadow-lg"
+                                className="rounded-xl border border-[var(--buame-border-light)] bg-white overflow-hidden transition-all hover:shadow-lg"
                             >
                                 <div className="aspect-video w-full bg-gray-100 relative overflow-hidden">
                                     {primaryImage ? (

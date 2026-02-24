@@ -17,14 +17,14 @@ export function PaymentSection({ payments, paidCategories }) {
                 </Button>
             </div>
 
-            <div className="rounded-xl border border-[var(--buame-border-light)]#2a4d2a] bg-white#1a331a] p-6">
+            <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
                 <h3 className="mb-4 text-lg font-bold text-[var(--foreground)]">Payment History</h3>
                 {payments && payments.length > 0 ? (
                     <div className="space-y-3">
                         {payments.map((payment) => (
                             <div
                                 key={payment.id}
-                                className="flex items-center justify-between rounded-lg border border-[var(--buame-border-light)]#2a4d2a] p-4"
+                                className="flex items-center justify-between rounded-lg border border-[var(--buame-border-light)] p-4"
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]/10">
