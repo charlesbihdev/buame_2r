@@ -43,6 +43,14 @@ Route::get('/terms', function () {
     return Inertia::render('visitor/terms');
 })->name('terms');
 
+Route::get('/acceptable-use', function () {
+    return Inertia::render('visitor/acceptable-use');
+})->name('acceptable-use');
+
+Route::get('/refund-policy', function () {
+    return Inertia::render('visitor/refund-policy');
+})->name('refund-policy');
+
 Route::get('/marketplace', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'index'])->name('marketplace');
 
 Route::get('/food-stay', function () {
