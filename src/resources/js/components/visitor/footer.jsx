@@ -128,12 +128,18 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="border-border flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
                     <p className="text-muted-foreground text-xs">© {currentYear} 2RBUAME. All rights reserved.</p>
-                    <div className="text-muted-foreground flex gap-6 text-xs">
+                    <div className="text-muted-foreground flex flex-wrap gap-6 text-xs">
                         <Link href="/privacy" className="hover:text-primary transition-colors">
                             Privacy Policy
                         </Link>
                         <Link href="/terms" className="hover:text-primary transition-colors">
                             Terms of Service
+                        </Link>
+                        <Link href="/acceptable-use" className="hover:text-primary transition-colors">
+                            Acceptable Use
+                        </Link>
+                        <Link href="/refund-policy" className="hover:text-primary transition-colors">
+                            Refund Policy
                         </Link>
                     </div>
                 </div>
