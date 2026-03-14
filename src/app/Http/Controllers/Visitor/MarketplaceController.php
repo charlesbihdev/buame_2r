@@ -106,6 +106,7 @@ class MarketplaceController extends Controller
 
             return [
                 'id' => $product->id,
+                'slug' => $product->slug,
                 'title' => $product->title,
                 'description' => $product->description,
                 'category' => config('categories.marketplace_categories.'.$product->category, ucfirst($product->category)),
@@ -196,10 +197,13 @@ class MarketplaceController extends Controller
     /**
      * Display the specified marketplace product.
      */
-    public function show(MarketplaceProduct $marketplaceProduct): Response
+    public function show(string $slug): Response
     {
         $product = MarketplaceProduct::query()
-            ->where('id', $marketplaceProduct->id)
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('id', is_numeric($slug) ? $slug : 0);
+            })
             ->where('is_active', true)
             // ->where('is_approved', true)
             ->withActiveSubscription()
@@ -304,6 +308,7 @@ class MarketplaceController extends Controller
         return Inertia::render('visitor/marketplace/view', [
             'product' => [
                 'id' => $product->id,
+                'slug' => $product->slug,
                 'title' => $product->title,
                 'category' => config('categories.marketplace_categories.'.$product->category, ucfirst($product->category)),
                 'price' => $priceDisplay,

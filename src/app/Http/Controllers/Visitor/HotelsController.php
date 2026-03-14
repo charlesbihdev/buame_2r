@@ -24,14 +24,14 @@ class HotelsController extends Controller
         $query->addSelect([
             'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
                 ->whereColumn('hotel_id', 'hotels.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Add subquery to count approved reviews
         $query->addSelect([
             'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
                 ->whereColumn('hotel_id', 'hotels.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Filter by type
@@ -74,6 +74,7 @@ class HotelsController extends Controller
 
             return [
                 'id' => $hotel->id,
+                'slug' => $hotel->slug,
                 'name' => $hotel->name,
                 'type' => $hotel->type,
                 'rating' => $hotel->rating > 0 ? round($hotel->rating, 1) : 4.5,
@@ -118,7 +119,7 @@ class HotelsController extends Controller
     /**
      * Display the specified hotel.
      */
-    public function show(string $id): Response
+    public function show(string $slug): Response
     {
         $hotel = Hotel::with(['images', 'features', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
@@ -128,7 +129,11 @@ class HotelsController extends Controller
                     ->limit(50);
             }])
             ->withActiveSubscription()
-            ->findOrFail($id);
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('id', is_numeric($slug) ? $slug : 0);
+            })
+            ->firstOrFail();
 
         // Increment view count
         $hotel->increment('views_count');
@@ -162,6 +167,7 @@ class HotelsController extends Controller
         return Inertia::render('visitor/hotels/view', [
             'hotel' => [
                 'id' => $hotel->id,
+                'slug' => $hotel->slug,
                 'name' => $hotel->name,
                 'type' => $hotel->type,
                 'description' => $hotel->description,

@@ -28,7 +28,7 @@ export function ProductCard({ product }) {
 
     return (
         <Link
-            href={route('marketplace.view', product.id)}
+            href={route('marketplace.view', product.slug)}
             className="group rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg"
         >
             <div className="aspect-video w-full overflow-hidden rounded-t-xl bg-gray-100">

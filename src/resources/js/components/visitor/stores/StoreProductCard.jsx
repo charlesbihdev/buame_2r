@@ -59,7 +59,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
     if (viewMode === 'list') {
         return (
             <Link
-                href={route('marketplace.view', product.id)}
+                href={route('marketplace.view', product.slug)}
                 className="group flex gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
             >
                 {/* Image */}
@@ -137,7 +137,7 @@ export function StoreProductCard({ product, viewMode = 'grid' }) {
     // Grid View
     return (
         <Link
-            href={route('marketplace.view', product.id)}
+            href={route('marketplace.view', product.slug)}
             className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all hover:border-[var(--primary)]/50 hover:shadow-xl"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}

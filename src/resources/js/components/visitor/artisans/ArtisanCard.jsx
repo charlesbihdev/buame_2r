@@ -14,7 +14,7 @@ const formatSkillType = (skillType) => {
 export function ArtisanCard({ artisan }) {
     return (
         <Link
-            href={`/artisans/${artisan.id}`}
+            href={`/artisans/${artisan.slug}`}
             className="group flex flex-col rounded-xl border-2 border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
         >
             {/* Profile Image */}

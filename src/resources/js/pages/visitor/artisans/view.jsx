@@ -9,6 +9,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head } from '@inertiajs/react';
 import { Award, BadgeCheck, Briefcase, Calendar, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, TrendingUp } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 
 // Helper function to format skill type for display
 const formatSkillType = (skillType) => {
@@ -51,8 +52,11 @@ export default function ArtisanView({ artisan, reviews = [], average_rating = 0,
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
-                    {/* Back Button */}
-                    <BackToHome to="/artisans" label="Back to Artisans" />
+                    {/* Back Button & Share */}
+                    <div className="flex items-center justify-between">
+                        <BackToHome to="/artisans" label="Back to Artisans" />
+                        <VisitorShareButton name={artisan?.name} url={`/artisans/${artisan?.slug}`} />
+                    </div>
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">

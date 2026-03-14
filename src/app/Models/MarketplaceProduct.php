@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SubscriptionStatus;
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,12 +13,15 @@ use Illuminate\Support\Facades\Cache;
 
 class MarketplaceProduct extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
+
+    protected string $slugSource = 'title';
 
     protected $fillable = [
         'user_id',
         'store_id',
         'title',
+        'slug',
         'category',
         'price',
         'price_type',

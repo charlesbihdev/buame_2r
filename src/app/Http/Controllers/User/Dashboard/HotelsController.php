@@ -102,6 +102,7 @@ class HotelsController extends Controller
         // Full profile update - validate all fields
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:hotels,slug,'.$hotel->id],
             'type' => ['required', 'string', 'in:hotel,guest_house,lodge,short_stay'],
             'location' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string'],
@@ -147,6 +148,7 @@ class HotelsController extends Controller
         // Update hotel data (amenities stored as JSON)
         $hotel->update([
             'name' => $validated['name'],
+            'slug' => $validated['slug'] ?? $hotel->slug,
             'type' => $validated['type'],
             'location' => $validated['location'],
             'address' => $validated['address'] ?? null,
@@ -187,12 +189,12 @@ class HotelsController extends Controller
         $user = Auth::user();
         $hotel = $user->hotels()->first();
 
-        if (!$hotel) {
+        if (! $hotel) {
             return back()->with('error', 'Hotel profile not found.');
         }
 
         // If trying to activate, validate required fields
-        if (!$hotel->is_active) {
+        if (! $hotel->is_active) {
             $errors = [];
 
             if (empty($hotel->name)) {
@@ -220,7 +222,7 @@ class HotelsController extends Controller
                 $errors['images'] = 'Please upload at least one image before making your hotel visible.';
             }
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 // Map field names to user-friendly labels
                 $fieldLabels = [
                     'name' => 'hotel name',
@@ -236,13 +238,13 @@ class HotelsController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your dashboard with '.implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
         }
 
-        $hotel->is_active = !$hotel->is_active;
+        $hotel->is_active = ! $hotel->is_active;
         $hotel->save();
 
         return back()->with('success', $hotel->is_active ? 'Hotel is now visible.' : 'Hotel is now hidden.');

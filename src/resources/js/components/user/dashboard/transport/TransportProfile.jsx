@@ -9,7 +9,7 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
+import { SlugEditor, generateSlugFromName } from '@/components/user/dashboard/SlugEditor';
 
 export function TransportProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -31,6 +31,7 @@ export function TransportProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         driver_name: profile?.driver_name || '',
+        slug: profile?.slug || '',
         type: profile?.type || 'okada',
         description: profile?.description || '',
         location: profile?.location || '',
@@ -104,13 +105,17 @@ export function TransportProfile({ profile }) {
                 />
             )}
 
-            {/* Share Link */}
+            {/* Slug & Share Link */}
             {profile?.id && (
-                <DashboardShareLink
-                    label="Transport Service Link"
-                    url={`/transport/${profile.id}`}
-                    description="Share this link so customers can book a ride"
-                />
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
+                    <SlugEditor
+                        slug={data.slug}
+                        prefix="/transport/"
+                        onSlugChange={(value) => setData('slug', value)}
+                        error={errors.slug || pageErrors?.slug}
+                        label="Transport URL Slug"
+                    />
+                </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -165,7 +170,12 @@ export function TransportProfile({ profile }) {
                             <Input
                                 id="driver_name"
                                 value={data.driver_name}
-                                onChange={(e) => setData('driver_name', e.target.value)}
+                                onChange={(e) => {
+                                    setData('driver_name', e.target.value);
+                                    if (!data.slug || data.slug === generateSlugFromName(data.driver_name)) {
+                                        setData('slug', generateSlugFromName(e.target.value));
+                                    }
+                                }}
                                 className="mt-1"
                                 placeholder="Kwame Asante"
                             />

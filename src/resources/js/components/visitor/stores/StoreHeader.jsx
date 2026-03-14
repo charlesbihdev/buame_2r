@@ -1,46 +1,8 @@
 import { Link } from '@inertiajs/react';
-import { Copy, Check, Phone, MessageCircle, Share2, Store, ChevronLeft } from 'lucide-react';
-import { useState } from 'react';
+import { Phone, MessageCircle, Store, ChevronLeft } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 
 export function StoreHeader({ store }) {
-    const [copied, setCopied] = useState(false);
-    const [showShareMenu, setShowShareMenu] = useState(false);
-
-    const storeUrl = typeof window !== 'undefined'
-        ? `${window.location.origin}/store/${store.slug}`
-        : `/store/${store.slug}`;
-
-    const handleCopyLink = async () => {
-        try {
-            await navigator.clipboard.writeText(storeUrl);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            console.error('Failed to copy:', err);
-        }
-    };
-
-    const handleWhatsAppShare = () => {
-        const text = `Check out ${store.name} on 2RBUAME! ${storeUrl}`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-    };
-
-    const handleNativeShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: store.name,
-                    text: `Check out ${store.name} on 2RBUAME!`,
-                    url: storeUrl,
-                });
-            } catch (err) {
-                console.error('Share failed:', err);
-            }
-        } else {
-            setShowShareMenu(!showShareMenu);
-        }
-    };
-
     return (
         <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
             <div className="mx-auto max-w-7xl px-4 py-3">
@@ -88,39 +50,7 @@ export function StoreHeader({ store }) {
                         )}
 
                         {/* Share Button */}
-                        <div className="relative">
-                            <button
-                                onClick={handleNativeShare}
-                                className="flex h-9 items-center gap-2 rounded-full bg-[var(--primary)] px-4 font-semibold text-[var(--primary-foreground)] transition-colors hover:bg-[var(--buame-primary-dark)]"
-                            >
-                                <Share2 className="h-4 w-4" />
-                                <span className="hidden sm:inline">Share</span>
-                            </button>
-
-                            {/* Share Dropdown */}
-                            {showShareMenu && (
-                                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
-                                    <button
-                                        onClick={handleCopyLink}
-                                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100"
-                                    >
-                                        {copied ? (
-                                            <Check className="h-4 w-4 text-[var(--primary)]" />
-                                        ) : (
-                                            <Copy className="h-4 w-4 text-gray-500" />
-                                        )}
-                                        <span>{copied ? 'Copied!' : 'Copy link'}</span>
-                                    </button>
-                                    <button
-                                        onClick={handleWhatsAppShare}
-                                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100"
-                                    >
-                                        <MessageCircle className="h-4 w-4 text-[#25D366]" />
-                                        <span>Share on WhatsApp</span>
-                                    </button>
-                                </div>
-                            )}
-                        </div>
+                        <VisitorShareButton name={store.name} url={`/store/${store.slug}`} />
                     </div>
                 </div>
             </div>

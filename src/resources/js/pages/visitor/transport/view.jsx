@@ -8,6 +8,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head } from '@inertiajs/react'; // Removed Link as it's no longer directly used
 import { BadgeCheck, Bike, Bus, Car, Clock, CreditCard, Eye, Mail, MapPin, MessageCircle, Phone, Star, Truck, Users, Wallet } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 
 // Transport type icon mapping
 const typeIcons = {
@@ -94,8 +95,11 @@ export default function TransportView({ ride, reviews = [], average_rating = 0, 
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
-                    {/* Back Button */}
-                    <BackToHome to="/transport" label="Back to Transport" />
+                    {/* Back Button & Share */}
+                    <div className="flex items-center justify-between">
+                        <BackToHome to="/transport" label="Back to Transport" />
+                        <VisitorShareButton name={ride?.driver_name} url={`/transport/${ride?.slug}`} />
+                    </div>
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">

@@ -25,14 +25,14 @@ class ArtisansController extends Controller
         $query->addSelect([
             'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
                 ->whereColumn('artisan_id', 'artisans.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Add subquery to count approved reviews
         $query->addSelect([
             'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
                 ->whereColumn('artisan_id', 'artisans.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Filter by skill type
@@ -75,6 +75,7 @@ class ArtisansController extends Controller
         $artisans = $query->paginate(12)->through(function ($artisan) {
             return [
                 'id' => $artisan->id,
+                'slug' => $artisan->slug,
                 'name' => $artisan->name,
                 'skill_type' => $artisan->skill_type,
                 'rating' => $artisan->rating > 0 ? round($artisan->rating, 1) : 4.5, // Default rating for new artisans
@@ -111,7 +112,7 @@ class ArtisansController extends Controller
     /**
      * Display the specified artisan.
      */
-    public function show(string $id): Response
+    public function show(string $slug): Response
     {
         $artisan = Artisan::with(['specialties', 'portfolio', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
@@ -123,7 +124,11 @@ class ArtisansController extends Controller
             ->where('is_active', true)
             ->where('is_available', true)
             ->withActiveSubscription()
-            ->findOrFail($id);
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('id', is_numeric($slug) ? $slug : 0);
+            })
+            ->firstOrFail();
 
         // Increment view count
         $artisan->increment('views_count');
@@ -153,6 +158,7 @@ class ArtisansController extends Controller
         return Inertia::render('visitor/artisans/view', [
             'artisan' => [
                 'id' => $artisan->id,
+                'slug' => $artisan->slug,
                 'name' => $artisan->name,
                 'skill_type' => $artisan->skill_type,
                 'description' => $artisan->description,

@@ -45,7 +45,7 @@ export function HotelCard({ hotel }) {
 
     return (
         <Link
-            href={`/hotels/${hotel.id}`}
+            href={`/hotels/${hotel.slug}`}
             className="group flex flex-col rounded-xl border-2 border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
         >
             {/* Hotel Image */}

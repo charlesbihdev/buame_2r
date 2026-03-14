@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
 import { artisanSkills } from '@/config/artisan-skills';
-import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
+import { SlugEditor, generateSlugFromName } from '@/components/user/dashboard/SlugEditor';
 
 export function ArtisanProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -21,6 +21,7 @@ export function ArtisanProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
+        slug: profile?.slug || '',
         skill_type: profile?.skill_type || '', // Removed default 'other' to encourage explicit selection
         description: profile?.description || '',
         experience_years: profile?.experience_years || '',
@@ -123,13 +124,17 @@ export function ArtisanProfile({ profile }) {
                 />
             )}
 
-            {/* Share Link */}
+            {/* Slug & Share Link */}
             {profile?.id && (
-                <DashboardShareLink
-                    label="Artisan Profile Link"
-                    url={`/artisans/${profile.id}`}
-                    description="Share this link to let people view your artisan profile"
-                />
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
+                    <SlugEditor
+                        slug={data.slug}
+                        prefix="/artisans/"
+                        onSlugChange={(value) => setData('slug', value)}
+                        error={errors.slug || pageErrors?.slug}
+                        label="Profile URL Slug"
+                    />
+                </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -182,7 +187,12 @@ export function ArtisanProfile({ profile }) {
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) => {
+                                    setData('name', e.target.value);
+                                    if (!data.slug || data.slug === generateSlugFromName(data.name)) {
+                                        setData('slug', generateSlugFromName(e.target.value));
+                                    }
+                                }}
                                 className="mt-1"
                                 placeholder="Mensah's Carpentry Works"
                             />

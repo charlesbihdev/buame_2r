@@ -23,14 +23,14 @@ class TransportController extends Controller
         $query->addSelect([
             'rating' => \App\Models\Review::selectRaw('COALESCE(AVG(rating), 0)')
                 ->whereColumn('transport_ride_id', 'transport_rides.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Add subquery to count approved reviews
         $query->addSelect([
             'reviews_count' => \App\Models\Review::selectRaw('COUNT(*)')
                 ->whereColumn('transport_ride_id', 'transport_rides.id')
-                ->where('status', 'approved')
+                ->where('status', 'approved'),
         ]);
 
         // Filter by type
@@ -65,6 +65,7 @@ class TransportController extends Controller
 
             return [
                 'id' => $ride->id,
+                'slug' => $ride->slug,
                 'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
                 'rating' => $ride->rating > 0 ? round($ride->rating, 1) : 4.5,
@@ -97,7 +98,7 @@ class TransportController extends Controller
     /**
      * Display the specified transport ride.
      */
-    public function show(string $id): Response
+    public function show(string $slug): Response
     {
         $ride = TransportRide::with(['images', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
@@ -106,7 +107,11 @@ class TransportController extends Controller
                     ->latest()
                     ->limit(50);
             }])
-            ->findOrFail($id);
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('id', is_numeric($slug) ? $slug : 0);
+            })
+            ->firstOrFail();
 
         // Increment view count
         $ride->increment('views_count');
@@ -136,6 +141,7 @@ class TransportController extends Controller
         return Inertia::render('visitor/transport/view', [
             'ride' => [
                 'id' => $ride->id,
+                'slug' => $ride->slug,
                 'driver_name' => $ride->driver_name,
                 'type' => $ride->type,
                 'description' => $ride->description,

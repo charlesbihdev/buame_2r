@@ -63,6 +63,7 @@ class RentalsController extends Controller
 
             return [
                 'id' => $rental->id,
+                'slug' => $rental->slug,
                 'name' => $rental->name,
                 'type' => $rental->type,
                 'price' => $rental->price,
@@ -83,7 +84,7 @@ class RentalsController extends Controller
     /**
      * Display the specified rental.
      */
-    public function show(string $id): Response
+    public function show(string $slug): Response
     {
         $rental = Rental::with(['images', 'features', 'user', 'videoLinks'])
             ->with(['reviews' => function ($query) {
@@ -94,7 +95,11 @@ class RentalsController extends Controller
             }])
             ->where('is_active', true)
             ->withActiveSubscription()
-            ->findOrFail($id);
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug)
+                    ->orWhere('id', is_numeric($slug) ? $slug : 0);
+            })
+            ->firstOrFail();
 
         // Increment views
         $rental->increment('views_count');
@@ -133,6 +138,7 @@ class RentalsController extends Controller
         return Inertia::render('visitor/rentals/view', [
             'rental' => [
                 'id' => $rental->id,
+                'slug' => $rental->slug,
                 'name' => $rental->name,
                 'type' => $rental->type,
                 'price' => $rental->price,

@@ -48,13 +48,15 @@ class ArtisansController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-             'skill_type' => [
+            'skill_type' => [
                 'nullable',
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (empty($value)) return;
+                    if (empty($value)) {
+                        return;
+                    }
                     $validSkills = array_keys(config('artisan_skills.skills', []));
-                    if (!in_array($value, $validSkills)) {
+                    if (! in_array($value, $validSkills)) {
                         $fail("The selected {$attribute} is invalid.");
                     }
                 },
@@ -96,13 +98,16 @@ class ArtisansController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:artisans,slug,'.$artisan->id],
             'skill_type' => [
                 'nullable',
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (empty($value)) return; // Allow null/empty if the field itself allows it
+                    if (empty($value)) {
+                        return;
+                    } // Allow null/empty if the field itself allows it
                     $validSkills = array_keys(config('artisan_skills.skills', []));
-                    if (!in_array($value, $validSkills)) {
+                    if (! in_array($value, $validSkills)) {
                         $fail("The selected {$attribute} is invalid.");
                     }
                 },
@@ -165,12 +170,12 @@ class ArtisansController extends Controller
         $user = Auth::user();
         $artisan = $user->artisans()->first();
 
-        if (!$artisan) {
+        if (! $artisan) {
             return back()->with('error', 'Artisan profile not found.');
         }
 
         // If trying to activate, validate required fields
-        if (!$artisan->is_active) {
+        if (! $artisan->is_active) {
             $errors = [];
 
             if (empty($artisan->name)) {
@@ -180,11 +185,11 @@ class ArtisansController extends Controller
             if (empty($artisan->skill_type)) {
                 $errors['skill_type'] = 'Skill type is required before making your profile visible.';
             } else {
-                 $validSkills = array_keys(config('artisan_skills.skills', []));
-                 
-                 if (!in_array($artisan->skill_type, $validSkills)) {
-                      $errors['skill_type'] = 'Selected skill type is currently invalid.';
-                 }
+                $validSkills = array_keys(config('artisan_skills.skills', []));
+
+                if (! in_array($artisan->skill_type, $validSkills)) {
+                    $errors['skill_type'] = 'Selected skill type is currently invalid.';
+                }
             }
 
             if (empty($artisan->location)) {
@@ -203,7 +208,7 @@ class ArtisansController extends Controller
                 $errors['profile_image'] = 'Please upload a profile image before making your profile visible.';
             }
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 // Map field names to user-friendly labels
                 $fieldLabels = [
                     'name' => 'name',
@@ -219,13 +224,13 @@ class ArtisansController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your dashboard with '.implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
         }
 
-        $artisan->is_active = !$artisan->is_active;
+        $artisan->is_active = ! $artisan->is_active;
         $artisan->save();
 
         return back()->with('success', $artisan->is_active ? 'Profile is now visible.' : 'Profile is now hidden.');
