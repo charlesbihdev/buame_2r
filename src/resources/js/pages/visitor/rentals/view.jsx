@@ -7,6 +7,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
 import { BackToHome } from '@/components/ui/back-to-home';
 import { ArrowLeft, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 
 export default function RentalView({ rental, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
     if (!rental) {
@@ -69,7 +70,10 @@ export default function RentalView({ rental, reviews = [], average_rating = 0, r
             </Head>
 
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                <BackToHome to="/rentals" label="Back to Rentals" />
+                <div className="flex items-center justify-between">
+                    <BackToHome to="/rentals" label="Back to Rentals" />
+                    <VisitorShareButton name={rental?.name} url={`/rentals/${rental?.slug}`} />
+                </div>
 
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">

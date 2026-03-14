@@ -6,6 +6,7 @@ import { VideoEmbed } from '@/components/ui/video-embed';
 import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { Head, Link } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight, ExternalLink, Mail, MapPin, MessageCircle, Package, Phone, Star, Store, Truck, X, ZoomIn } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 import { useState } from 'react';
 
 export default function MarketplaceView({ product, reviews = [], average_rating = 0, reviews_count = 0, rating_breakdown = {} }) {
@@ -77,7 +78,10 @@ export default function MarketplaceView({ product, reviews = [], average_rating 
                 {product.primary_image && <meta name="twitter:image" content={product.primary_image} />}
             </Head>
             <div className="mx-auto max-w-6xl px-4 py-8 md:px-8">
-                <BackToHome to="/marketplace" label="Back to Marketplace" />
+                <div className="flex items-center justify-between">
+                    <BackToHome to="/marketplace" label="Back to Marketplace" />
+                    <VisitorShareButton name={product?.title} url={`/marketplace/${product?.slug}`} />
+                </div>
 
                 <div className="grid gap-8 lg:grid-cols-3">
                     <div className="lg:col-span-2">

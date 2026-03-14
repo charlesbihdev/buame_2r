@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SubscriptionStatus;
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +13,14 @@ use Illuminate\Support\Facades\Cache;
 
 class Hotel extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
+
+    protected string $slugSource = 'name';
 
     protected $fillable = [
         'user_id',
         'name',
+        'slug',
         'type',
         'price_per_night',
         'location',

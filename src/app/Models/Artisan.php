@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SubscriptionStatus;
+use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +13,14 @@ use Illuminate\Support\Facades\Cache;
 
 class Artisan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasSlug;
+
+    protected string $slugSource = 'name';
 
     protected $fillable = [
         'user_id',
         'name',
+        'slug',
         'company_name',
         'skill_type',
         'experience_years',

@@ -8,7 +8,7 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { CheckCircle, Loader2, Save, Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
+import { SlugEditor, generateSlugFromName } from '@/components/user/dashboard/SlugEditor';
 
 export function RentalProfile({ profile }) {
     const { errors: pageErrors } = usePage().props;
@@ -27,6 +27,7 @@ export function RentalProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
+        slug: profile?.slug || '',
         type: profile?.type || 'house',
         description: profile?.description || '',
         price: profile?.price || '',
@@ -94,13 +95,17 @@ export function RentalProfile({ profile }) {
                 />
             )}
 
-            {/* Share Link */}
+            {/* Slug & Share Link */}
             {profile?.id && (
-                <DashboardShareLink
-                    label="Rental Listing Link"
-                    url={`/rentals/${profile.id}`}
-                    description="Share this link to show your property to potential tenants"
-                />
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
+                    <SlugEditor
+                        slug={data.slug}
+                        prefix="/rentals/"
+                        onSlugChange={(value) => setData('slug', value)}
+                        error={errors.slug || pageErrors?.slug}
+                        label="Rental URL Slug"
+                    />
+                </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -141,7 +146,12 @@ export function RentalProfile({ profile }) {
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) => {
+                                    setData('name', e.target.value);
+                                    if (!data.slug || data.slug === generateSlugFromName(data.name)) {
+                                        setData('slug', generateSlugFromName(e.target.value));
+                                    }
+                                }}
                                 className="mt-1"
                                 placeholder="2 Bedroom Apartment in Bekwai"
                             />

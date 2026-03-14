@@ -75,7 +75,7 @@ Route::get('/transport', [\App\Http\Controllers\Visitor\TransportController::cla
 
 Route::get('/rentals', [\App\Http\Controllers\Visitor\RentalsController::class, 'index'])->name('rentals');
 
-Route::get('/rentals/{id}', [\App\Http\Controllers\Visitor\RentalsController::class, 'show'])->name('rentals.view');
+Route::get('/rentals/{slug}', [\App\Http\Controllers\Visitor\RentalsController::class, 'show'])->name('rentals.view');
 
 Route::get('/store/{slug}', [\App\Http\Controllers\Visitor\StoreController::class, 'show'])->name('store.show');
 
@@ -84,13 +84,13 @@ Route::get('/restaurants', function () {
 })->name('restaurants');
 
 // View pages for categories
-Route::get('/artisans/{id}', [\App\Http\Controllers\Visitor\ArtisansController::class, 'show'])->name('artisans.view');
+Route::get('/artisans/{slug}', [\App\Http\Controllers\Visitor\ArtisansController::class, 'show'])->name('artisans.view');
 
-Route::get('/hotels/{id}', [\App\Http\Controllers\Visitor\HotelsController::class, 'show'])->name('hotels.view');
+Route::get('/hotels/{slug}', [\App\Http\Controllers\Visitor\HotelsController::class, 'show'])->name('hotels.view');
 
-Route::get('/transport/{id}', [\App\Http\Controllers\Visitor\TransportController::class, 'show'])->name('transport.view');
+Route::get('/transport/{slug}', [\App\Http\Controllers\Visitor\TransportController::class, 'show'])->name('transport.view');
 
-Route::get('/marketplace/{marketplaceProduct:id}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
+Route::get('/marketplace/{slug}', [\App\Http\Controllers\Visitor\MarketplaceController::class, 'show'])->name('marketplace.view');
 
 Route::get('/jobs/employer/{slug}', [\App\Http\Controllers\Visitor\JobPosterController::class, 'show'])->name('jobs.employer');
 

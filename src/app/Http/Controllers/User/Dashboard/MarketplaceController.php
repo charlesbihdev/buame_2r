@@ -39,20 +39,20 @@ class MarketplaceController extends Controller
     {
         $user = Auth::user();
         $store = $user->store;
-        if (!$store) {
+        if (! $store) {
             return back()->withErrors(['store' => 'Store not found. Please set up your store first.']);
         }
 
         // Check product limit
         if ($store->remaining_product_slots <= 0) {
             return back()->withErrors([
-                'limit' => 'You have reached your product limit (' . $store->product_limit . '). Please upgrade your tier to add more products.',
+                'limit' => 'You have reached your product limit ('.$store->product_limit.'). Please upgrade your tier to add more products.',
             ]);
         }
 
         // Check image sizes before validation (5MB = 5 * 1024 * 1024 bytes)
         $images = $request->file('images', []);
-        if (!empty($images)) {
+        if (! empty($images)) {
             foreach ($images as $image) {
                 if ($image && $image->getSize() > 5 * 1024 * 1024) {
                     return back()->withErrors([
@@ -66,7 +66,7 @@ class MarketplaceController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:' . $validCategories],
+            'category' => ['required', 'string', 'in:'.$validCategories],
             'has_price' => ['nullable', 'boolean'],
             'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],
@@ -91,7 +91,7 @@ class MarketplaceController extends Controller
 
         // Handle optional price - set to null if has_price is not checked
         $hasPrice = in_array($request->input('has_price'), ['true', '1', 'yes', true, 1], true);
-        if (!$hasPrice) {
+        if (! $hasPrice) {
             $validated['price'] = null;
             $validated['price_type'] = null;
         }
@@ -117,7 +117,7 @@ class MarketplaceController extends Controller
 
         // Handle specifications
         foreach ($specifications as $specification) {
-            if (!empty(trim($specification))) {
+            if (! empty(trim($specification))) {
                 ProductSpecification::create([
                     'product_id' => $product->id,
                     'specification' => trim($specification),
@@ -127,7 +127,7 @@ class MarketplaceController extends Controller
 
         // Handle video links
         foreach ($videoLinks as $link) {
-            if (!empty(trim($link))) {
+            if (! empty(trim($link))) {
                 $url = trim($link);
                 $product->videoLinks()->create([
                     'url' => $url,
@@ -165,7 +165,8 @@ class MarketplaceController extends Controller
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'in:' . $validCategories],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:marketplace_products,slug,'.$marketplace->id],
+            'category' => ['required', 'string', 'in:'.$validCategories],
             'has_price' => ['nullable', 'boolean'],
             'price' => ['nullable', 'numeric', 'min:0'],
             'price_type' => ['nullable', 'string', 'max:50'],
@@ -194,7 +195,7 @@ class MarketplaceController extends Controller
 
         // Handle optional price - set to null if has_price is not checked
         $hasPrice = in_array($request->input('has_price'), ['true', '1', 'yes', true, 1], true);
-        if (!$hasPrice) {
+        if (! $hasPrice) {
             $validated['price'] = null;
             $validated['price_type'] = null;
         }
@@ -212,7 +213,7 @@ class MarketplaceController extends Controller
         $marketplace->update($validated);
 
         // Remove selected images
-        if (!empty($removeImageIds)) {
+        if (! empty($removeImageIds)) {
             $imagesToDelete = ProductImage::where('product_id', $marketplace->id)
                 ->whereIn('id', $removeImageIds)
                 ->get();
@@ -244,7 +245,7 @@ class MarketplaceController extends Controller
         }
 
         // Remove selected specifications
-        if (!empty($removeSpecificationIds)) {
+        if (! empty($removeSpecificationIds)) {
             ProductSpecification::where('product_id', $marketplace->id)
                 ->whereIn('id', $removeSpecificationIds)
                 ->delete();
@@ -252,7 +253,7 @@ class MarketplaceController extends Controller
 
         // Add new specifications
         foreach ($specifications as $specification) {
-            if (!empty(trim($specification))) {
+            if (! empty(trim($specification))) {
                 ProductSpecification::create([
                     'product_id' => $marketplace->id,
                     'specification' => trim($specification),
@@ -261,13 +262,13 @@ class MarketplaceController extends Controller
         }
 
         // Remove selected video links
-        if (!empty($removeVideoLinkIds)) {
+        if (! empty($removeVideoLinkIds)) {
             $marketplace->videoLinks()->whereIn('id', $removeVideoLinkIds)->delete();
         }
 
         // Add new video links
         foreach ($videoLinks as $link) {
-            if (!empty(trim($link))) {
+            if (! empty(trim($link))) {
                 $url = trim($link);
                 $marketplace->videoLinks()->create([
                     'url' => $url,

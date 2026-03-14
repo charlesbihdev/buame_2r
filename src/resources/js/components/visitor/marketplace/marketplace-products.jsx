@@ -16,7 +16,7 @@ export function MarketplaceProducts({ products = [] }) {
             {products.map((product) => (
                 <Link
                     key={product.id}
-                    href={`/marketplace/${product.id}`}
+                    href={`/marketplace/${product.slug}`}
                     className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:shadow-xl"
                 >
                     {/* Image */}

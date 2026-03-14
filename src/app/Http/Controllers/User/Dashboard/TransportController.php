@@ -73,6 +73,7 @@ class TransportController extends Controller
         // Profile update - validate all fields
         $validated = $request->validate([
             'driver_name' => ['required', 'string', 'max:255'],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:transport_rides,slug,'.$transport->id],
             'type' => ['required', 'string', 'in:okada,car,taxi,bus,cargo,other'],
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
@@ -111,6 +112,7 @@ class TransportController extends Controller
         // Update transport data
         $transport->update([
             'driver_name' => $validated['driver_name'],
+            'slug' => $validated['slug'] ?? $transport->slug,
             'type' => $validated['type'],
             'location' => $validated['location'],
             'address' => $validated['address'] ?? null,
@@ -138,12 +140,12 @@ class TransportController extends Controller
         $user = Auth::user();
         $transport = $user->transportRides()->first();
 
-        if (!$transport) {
+        if (! $transport) {
             return back()->with('error', 'Transport profile not found.');
         }
 
         // If trying to activate, validate required fields
-        if (!$transport->is_active) {
+        if (! $transport->is_active) {
             $errors = [];
 
             if (empty($transport->driver_name)) {
@@ -171,7 +173,7 @@ class TransportController extends Controller
                 $errors['images'] = 'Please upload at least one image before making your service visible.';
             }
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 // Map field names to user-friendly labels
                 $fieldLabels = [
                     'driver_name' => 'driver/rider name',
@@ -187,13 +189,13 @@ class TransportController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your dashboard with '.implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
         }
 
-        $transport->is_active = !$transport->is_active;
+        $transport->is_active = ! $transport->is_active;
         $transport->save();
 
         return back()->with('success', $transport->is_active ? 'Transport service is now visible.' : 'Transport service is now hidden.');

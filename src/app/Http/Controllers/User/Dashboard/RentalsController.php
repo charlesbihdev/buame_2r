@@ -77,6 +77,7 @@ class RentalsController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:rentals,slug,'.$rental->id],
             'type' => ['required', 'string', 'in:house,equipment,tools,land,commercial,vehicle,store'],
             'location' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:20'],
@@ -104,7 +105,7 @@ class RentalsController extends Controller
             }
 
             // Upload new primary image
-            $path = $request->file('primary_image')->store('rentals/' . $rental->id, 'public');
+            $path = $request->file('primary_image')->store('rentals/'.$rental->id, 'public');
 
             $rental->images()->create([
                 'image_path' => Storage::url($path),
@@ -129,12 +130,12 @@ class RentalsController extends Controller
         $user = Auth::user();
         $rental = $user->rentals()->first();
 
-        if (!$rental) {
+        if (! $rental) {
             return back()->with('error', 'Rental profile not found.');
         }
 
         // If trying to activate, validate required fields
-        if (!$rental->is_active) {
+        if (! $rental->is_active) {
             $errors = [];
 
             if (empty($rental->name)) {
@@ -162,7 +163,7 @@ class RentalsController extends Controller
                 $errors['images'] = 'Please upload at least one image before making your rental visible.';
             }
 
-            if (!empty($errors)) {
+            if (! empty($errors)) {
                 // Map field names to user-friendly labels
                 $fieldLabels = [
                     'name' => 'rental name',
@@ -178,13 +179,13 @@ class RentalsController extends Controller
                     $missingFields[] = $fieldLabels[$field] ?? $field;
                 }
 
-                $errorMessage = 'Error: Update your dashboard with ' . implode(', ', $missingFields);
+                $errorMessage = 'Error: Update your dashboard with '.implode(', ', $missingFields);
 
                 return back()->withErrors($errors)->with('error', $errorMessage);
             }
         }
 
-        $rental->is_active = !$rental->is_active;
+        $rental->is_active = ! $rental->is_active;
         $rental->save();
 
         return back()->with('success', $rental->is_active ? 'Rental is now visible.' : 'Rental is now hidden.');
@@ -224,7 +225,7 @@ class RentalsController extends Controller
             'display_order' => ['nullable', 'integer', 'min:0'],
         ]);
 
-        $path = $request->file('image')->store('rentals/' . $rental->id, 'public');
+        $path = $request->file('image')->store('rentals/'.$rental->id, 'public');
 
         // If this is the first image, make it primary
         $isPrimary = $rental->images()->count() === 0;
@@ -258,7 +259,7 @@ class RentalsController extends Controller
             }
 
             // Upload new image
-            $path = $request->file('image')->store('rentals/' . $rental->id, 'public');
+            $path = $request->file('image')->store('rentals/'.$rental->id, 'public');
             $image->image_path = Storage::url($path);
         }
 

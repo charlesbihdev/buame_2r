@@ -44,7 +44,7 @@ export function RentalCard({ rental }) {
 
     return (
         <Link
-            href={`/rentals/${rental.id}`}
+            href={`/rentals/${rental.slug}`}
             className="group flex flex-col rounded-xl border-2 border-gray-100 bg-white p-5 transition-all hover:border-[var(--primary)]/50 hover:shadow-lg"
         >
             {/* Rental Image */}

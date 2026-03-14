@@ -9,7 +9,7 @@ import { CheckCircle, Image as ImageIcon, Loader2, Save, Upload, X } from 'lucid
 import { useState } from 'react';
 import { ListingVisibilityBanner } from '@/components/user/dashboard/ListingVisibilityBanner';
 import SaveButton from '@/components/user/dashboard/SaveButton';
-import { DashboardShareLink } from '@/components/user/dashboard/DashboardShareLink';
+import { SlugEditor, generateSlugFromName } from '@/components/user/dashboard/SlugEditor';
 
 export function HotelProfile({ profile }) {
     console.log('HotelProfile - profile:', profile);
@@ -32,6 +32,7 @@ export function HotelProfile({ profile }) {
     const { data, setData, post, processing, errors, recentlySuccessful, isDirty } = useForm({
         _method: 'PUT',
         name: profile?.name || '',
+        slug: profile?.slug || '',
         type: profile?.type || 'hotel',
         description: profile?.description || '',
         location: profile?.location || '',
@@ -109,13 +110,17 @@ export function HotelProfile({ profile }) {
                 />
             )}
 
-            {/* Share Link */}
+            {/* Slug & Share Link */}
             {profile?.id && (
-                <DashboardShareLink
-                    label="Hotel Page Link"
-                    url={`/hotels/${profile.id}`}
-                    description="Share this link for people to book your hotel"
-                />
+                <div className="rounded-xl border border-[var(--buame-border-light)] bg-white p-6">
+                    <SlugEditor
+                        slug={data.slug}
+                        prefix="/hotels/"
+                        onSlugChange={(value) => setData('slug', value)}
+                        error={errors.slug || pageErrors?.slug}
+                        label="Hotel URL Slug"
+                    />
+                </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -170,7 +175,12 @@ export function HotelProfile({ profile }) {
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) => {
+                                    setData('name', e.target.value);
+                                    if (!data.slug || data.slug === generateSlugFromName(data.name)) {
+                                        setData('slug', generateSlugFromName(e.target.value));
+                                    }
+                                }}
                                 className="mt-1"
                                 placeholder="Royal Palm Hotel"
                             />

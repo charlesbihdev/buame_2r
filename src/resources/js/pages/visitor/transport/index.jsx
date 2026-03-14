@@ -220,7 +220,7 @@ export default function Transport({ rides, typeCounts, filters }) {
                                             </div>
                                         )}
                                         <Link
-                                            href={`/transport/${ride.id}`}
+                                            href={`/transport/${ride.slug}`}
                                             className="block w-full rounded-lg bg-[var(--primary)] py-2.5 text-center text-sm font-semibold text-white transition-colors hover:opacity-95"
                                         >
                                             View Details

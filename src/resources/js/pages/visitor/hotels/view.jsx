@@ -8,6 +8,7 @@ import VisitorLayout from '@/layouts/visitor/visitor-layout';
 import { buildWhatsAppUrl } from '@/utils/phoneUtils';
 import { Head } from '@inertiajs/react';
 import { BadgeCheck, Calendar, Car, Clock, Eye, Mail, MapPin, MessageCircle, Phone, Star, Users, UtensilsCrossed, Wifi, Wind } from 'lucide-react';
+import { VisitorShareButton } from '@/components/visitor/VisitorShareButton';
 
 // Amenity icon mapping
 const amenityIcons = {
@@ -98,8 +99,11 @@ export default function HotelView({ hotel, reviews = [], average_rating = 0, rev
             {/* Hero Section */}
             <div className="w-full bg-gradient-to-br from-[var(--primary)]/10 via-white to-[var(--primary)]/5">
                 <div className="mx-auto max-w-7xl px-4 py-8 md:px-8">
-                    {/* Back Button */}
-                    <BackToHome to="/hotels" label="Back to Hotels" />
+                    {/* Back Button & Share */}
+                    <div className="flex items-center justify-between">
+                        <BackToHome to="/hotels" label="Back to Hotels" />
+                        <VisitorShareButton name={hotel?.name} url={`/hotels/${hotel?.slug}`} />
+                    </div>
 
                     {/* Profile Header */}
                     <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
